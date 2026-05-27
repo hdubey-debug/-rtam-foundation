@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "RTAM Foundation Color Tokens",
+  "version": "0.1.0",
+  "primary": {
+    "antiqueGold":   { "hex": "#C8A15A", "rgb": [200, 161, 90],  "role": "Sacred accent — bindu, wordmark, highlights" },
+    "warmIvory":     { "hex": "#F7F3E9", "rgb": [247, 243, 233], "role": "Primary background — light surfaces" },
+    "charcoalBlack": { "hex": "#1A1A1A", "rgb": [26, 26, 26],    "role": "Primary text — wordmarks on light surfaces; dark mode surface" },
+    "sandstone":     { "hex": "#E6DED1", "rgb": [230, 222, 209], "role": "Secondary surface, paper texture, low-contrast separators" }
+  },
+  "secondary": {
+    "deepIndigo": { "hex": "#1C1A3D", "rgb": [28, 26, 61],    "role": "Optional alternate dark surface — sacred night" },
+    "bronze":     { "hex": "#9B6A2F", "rgb": [155, 106, 47],  "role": "Optional accent — heavier weight than gold for print on ivory" },
+    "stoneGray":  { "hex": "#B8B1A4", "rgb": [184, 177, 164], "role": "Neutral metadata text, dividers, captions" }
+  }
+}

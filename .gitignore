@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Playwright cache (browsers live in ~/.cache/ms-playwright by default; ignore any local stash)
+.playwright/
+playwright-report/

@@ -1,0 +1,31 @@
+/* RTAM Foundation — color tokens
+ * Source of truth: brand/palette/colors.json
+ * Use these variables in every preview / mockup HTML and CSS file.
+ */
+
+:root {
+  /* Primary */
+  --rtam-gold:     #C8A15A;
+  --rtam-ivory:    #F7F3E9;
+  --rtam-charcoal: #1A1A1A;
+  --rtam-sandstone:#E6DED1;
+
+  /* Secondary */
+  --rtam-indigo:   #1C1A3D;
+  --rtam-bronze:   #9B6A2F;
+  --rtam-stone:    #B8B1A4;
+
+  /* Semantic aliases */
+  --rtam-bg:       var(--rtam-ivory);
+  --rtam-fg:       var(--rtam-charcoal);
+  --rtam-accent:   var(--rtam-gold);
+  --rtam-muted:    var(--rtam-stone);
+}
+
+/* Optional dark scheme — sacred night */
+.rtam-dark {
+  --rtam-bg:     var(--rtam-charcoal);
+  --rtam-fg:     var(--rtam-ivory);
+  --rtam-accent: var(--rtam-gold);
+  --rtam-muted:  var(--rtam-stone);
+}
