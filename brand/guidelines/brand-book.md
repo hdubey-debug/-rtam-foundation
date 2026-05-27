@@ -39,7 +39,7 @@ The wordmark is the foundation's voice in public. Five variants:
 | `rtam-wordmark-sacred-RTAM-dot.svg` | Canonical. Charcoal letters, gold bindu. |
 | `rtam-wordmark-gold.svg` | All-gold. For sacred contexts, embossed printing, dark backgrounds where gold + charcoal won't show. |
 | `rtam-wordmark-black.svg` | All-black. For pure-black reproduction (single-color printing, fax, microform). |
-| `rtam-wordmark-white.svg` | All-ivory. For overlay on charcoal or sacred-night indigo. |
+| `rtam-wordmark-white.svg` | All-ivory on a baked charcoal ground (so the file is visible when opened standalone). To overlay the ivory mark on indigo or a photograph, remove the first `<rect>` element. |
 | `rtam-wordmark-public-RTAM.svg` | ASCII-only, no bindu. **Use only** when the bindu cannot be reliably reproduced (low-resolution sign vinyl, embroidered shirts under 6 cm wide). |
 
 The bindu is **drawn as a separate `<circle>`** in every SVG. It is not a Unicode combining mark. This is deliberate: the bindu must remain exact in size and position across every reproduction surface.

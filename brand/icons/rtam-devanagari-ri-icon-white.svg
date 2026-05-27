@@ -4,5 +4,8 @@
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>
+  <!-- Charcoal ground so the ivory ऋ is visible when the file is opened standalone.
+       Remove this rect to overlay on an indigo or photographic surface. -->
+  <rect x="0" y="0" width="256" height="256" fill="#1A1A1A"/>
   <text x="128" y="215" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#F7F3E9">ऋ</text>
 </svg>

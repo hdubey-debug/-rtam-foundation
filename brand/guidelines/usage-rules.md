@@ -11,7 +11,7 @@ Quick reference. For the full rationale see `brand-book.md`.
 | Default. Anywhere the bindu reproduces. | `rtam-wordmark-sacred-RTAM-dot.svg` |
 | Sacred surface, embossed, foil, single-color gold print. | `rtam-wordmark-gold.svg` |
 | Pure-black reproduction (fax, microform, single-color). | `rtam-wordmark-black.svg` |
-| Overlay on charcoal or indigo. | `rtam-wordmark-white.svg` |
+| Charcoal ground (ivory wordmark on baked charcoal rect). For indigo / photographic overlays, remove the first `<rect>` in the SVG. | `rtam-wordmark-white.svg` |
 | Bindu cannot reproduce (small sign vinyl, embroidery < 6 cm). | `rtam-wordmark-public-RTAM.svg` |
 
 ---
