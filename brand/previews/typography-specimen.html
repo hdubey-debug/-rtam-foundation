@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RTAM Foundation — Typography Specimen</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Brand fonts (loaded from Google Fonts CDN; no local install required) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Marcellus&family=Inter:wght@300;400;500;600;700&family=Tiro+Devanagari+Sanskrit&family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../palette/colors.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    margin: 0;
+    background: var(--rtam-ivory);
+    color: var(--rtam-charcoal);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.4;
+  }
+
+  /* Layout */
+  .container { max-width: 1280px; margin: 0 auto; padding: 48px 56px 96px; }
+
+  header.page {
+    border-bottom: 1px solid var(--rtam-sandstone);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  header.page .eyebrow {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rtam-bronze);
+    margin: 0 0 12px;
+  }
+  header.page h1 {
+    font-family: Cinzel, "Marcellus", serif;
+    font-weight: 500;
+    font-size: 44px;
+    letter-spacing: 0.04em;
+    margin: 0 0 12px;
+    color: var(--rtam-charcoal);
+  }
+  header.page p {
+    font-size: 15px;
+    color: var(--rtam-charcoal);
+    max-width: 64ch;
+    margin: 0;
+    opacity: 0.78;
+  }
+  header.page .key {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    font-size: 12px;
+    color: var(--rtam-charcoal);
+    opacity: 0.7;
+  }
+  header.page .key code {
+    background: var(--rtam-sandstone);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 11px;
+  }
+
+  /* Section */
+  section.font-block {
+    margin-bottom: 72px;
+  }
+  section.font-block h2 {
+    font-family: Cinzel, "Marcellus", serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    margin: 0 0 4px;
+    text-transform: uppercase;
+    color: var(--rtam-charcoal);
+  }
+  section.font-block .font-meta {
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    color: var(--rtam-charcoal);
+    opacity: 0.6;
+    margin-bottom: 20px;
+    letter-spacing: 0.04em;
+  }
+  section.font-block .font-meta a { color: inherit; }
+
+  /* Color panels */
+  .panels { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--rtam-sandstone); border-radius: 2px; overflow: hidden; }
+  .panel { padding: 28px 32px; }
+  .panel + .panel { border-top: 1px solid var(--rtam-sandstone); }
+  .panel.ivory     { background: var(--rtam-ivory);    color: var(--rtam-charcoal); }
+  .panel.ivory-gold{ background: var(--rtam-ivory);    color: var(--rtam-gold); }
+  .panel.charcoal  { background: var(--rtam-charcoal); color: var(--rtam-ivory); }
+  .panel.charcoal-gold { background: var(--rtam-charcoal); color: var(--rtam-gold); }
+  .panel.black-only{ background: #ffffff;              color: #000000; }
+
+  .panel .panel-label {
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin: 0 0 14px;
+  }
+
+  /* Specimen line */
+  .specimen {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .specimen li {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    padding: 10px 0;
+  }
+  .specimen li + li { border-top: 1px dashed currentColor; border-color: rgba(128,128,128,0.18); }
+  .specimen .lbl {
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    min-width: 56px;
+    flex: 0 0 56px;
+  }
+  .specimen .str {
+    font-feature-settings: "kern", "liga";
+  }
+
+  /* Per-font test text classes — applied on the .str element */
+  .cinzel        { font-family: Cinzel, serif;        letter-spacing: 0.06em; }
+  .marcellus     { font-family: Marcellus, serif;     letter-spacing: 0.04em; }
+  .inter         { font-family: Inter, sans-serif;    letter-spacing: 0;      }
+  .tiro-dev      { font-family: "Tiro Devanagari Sanskrit", serif; }
+  .noto-serif-dv { font-family: "Noto Serif Devanagari", serif; }
+  .noto-sans-dv  { font-family: "Noto Sans Devanagari", sans-serif; }
+
+  /* Sizes for the size-ladder demo */
+  .sz-12  { font-size: 12px; }
+  .sz-14  { font-size: 14px; }
+  .sz-16  { font-size: 16px; }
+  .sz-20  { font-size: 20px; }
+  .sz-24  { font-size: 24px; }
+  .sz-32  { font-size: 32px; }
+  .sz-44  { font-size: 44px; }
+  .sz-64  { font-size: 64px; }
+
+  /* Diacritic glyph table */
+  .diacritic-table {
+    display: grid;
+    grid-template-columns: 160px repeat(9, 1fr);
+    border: 1px solid var(--rtam-sandstone);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--rtam-ivory);
+  }
+  .diacritic-table > div {
+    padding: 16px 12px;
+    border-right: 1px solid var(--rtam-sandstone);
+    border-bottom: 1px solid var(--rtam-sandstone);
+    text-align: center;
+    font-size: 32px;
+    line-height: 1;
+  }
+  .diacritic-table > div:nth-child(10n) { border-right: none; }
+  .diacritic-table > div.head {
+    background: var(--rtam-sandstone);
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rtam-charcoal);
+    text-align: left;
+    padding: 12px;
+  }
+  .diacritic-table > div.row-label {
+    background: var(--rtam-sandstone);
+    font-family: Inter, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 12px;
+    color: var(--rtam-charcoal);
+  }
+
+  /* Scale ladder */
+  .ladder {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 28px 32px;
+    background: var(--rtam-ivory);
+    border: 1px solid var(--rtam-sandstone);
+    border-radius: 2px;
+  }
+  .ladder .row {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+  }
+  .ladder .px {
+    font-family: Inter, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    min-width: 48px;
+  }
+
+  footer.page {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rtam-sandstone);
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    color: var(--rtam-charcoal);
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="page">
+    <p class="eyebrow">RTAM Foundation · Brand kit · US-2</p>
+    <h1>Typography Specimen</h1>
+    <p>
+      Visual validation of the five brand fonts against every required
+      Latin / IAST / Devanagari test string in every brand color combination.
+      Use this page to verify diacritic rendering, Devanagari shaping,
+      and small-size legibility <em>before</em> any logo work begins.
+    </p>
+    <div class="key">
+      <span>Fonts:</span>
+      <code>Cinzel</code><code>Marcellus</code><code>Inter</code>
+      <code>Tiro Devanagari Sanskrit</code><code>Noto Serif Devanagari</code><code>Noto Sans Devanagari</code>
+      <span>· Colors:</span>
+      <code>#C8A15A gold</code><code>#F7F3E9 ivory</code><code>#1A1A1A charcoal</code>
+    </div>
+  </header>
+
+  <!-- =================== 1. DIACRITIC GLYPH MATRIX =================== -->
+  <section class="font-block">
+    <h2>1 · IAST Diacritic Glyphs</h2>
+    <div class="font-meta">
+      Required glyph set: <strong>Ṛ ṛ ś ā ī ṇ ṣ ṃ ḥ</strong> —
+      shown across every brand font so missing-glyph fallbacks become obvious.
+    </div>
+
+    <div class="diacritic-table">
+      <div class="head">FONT</div>
+      <div class="head">Ṛ</div><div class="head">ṛ</div><div class="head">ś</div>
+      <div class="head">ā</div><div class="head">ī</div><div class="head">ṇ</div>
+      <div class="head">ṣ</div><div class="head">ṃ</div><div class="head">ḥ</div>
+
+      <div class="row-label">Cinzel</div>
+      <div class="cinzel">Ṛ</div><div class="cinzel">ṛ</div><div class="cinzel">ś</div>
+      <div class="cinzel">ā</div><div class="cinzel">ī</div><div class="cinzel">ṇ</div>
+      <div class="cinzel">ṣ</div><div class="cinzel">ṃ</div><div class="cinzel">ḥ</div>
+
+      <div class="row-label">Marcellus</div>
+      <div class="marcellus">Ṛ</div><div class="marcellus">ṛ</div><div class="marcellus">ś</div>
+      <div class="marcellus">ā</div><div class="marcellus">ī</div><div class="marcellus">ṇ</div>
+      <div class="marcellus">ṣ</div><div class="marcellus">ṃ</div><div class="marcellus">ḥ</div>
+
+      <div class="row-label">Inter</div>
+      <div class="inter">Ṛ</div><div class="inter">ṛ</div><div class="inter">ś</div>
+      <div class="inter">ā</div><div class="inter">ī</div><div class="inter">ṇ</div>
+      <div class="inter">ṣ</div><div class="inter">ṃ</div><div class="inter">ḥ</div>
+    </div>
+  </section>
+
+  <!-- =================== 2. LATIN — CINZEL =================== -->
+  <section class="font-block">
+    <h2>2 · Latin Display — Cinzel</h2>
+    <div class="font-meta">Primary face for the wordmark and section titles. Roman caps; high contrast; classical.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str cinzel sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">32 px</span><span class="str cinzel sz-32">RTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str cinzel sz-24">Ṛtam · Ṛta</span></li>
+          <li><span class="lbl">24 px</span><span class="str cinzel sz-24">Ṛtambhareśvara Mandira</span></li>
+          <li><span class="lbl">20 px</span><span class="str cinzel sz-20">Rtambhareshvara Mandir</span></li>
+        </ul>
+      </div>
+      <div class="panel ivory-gold">
+        <p class="panel-label">Gold on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str cinzel sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">32 px</span><span class="str cinzel sz-32">RTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str cinzel sz-24">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal">
+        <p class="panel-label">Ivory on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str cinzel sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">32 px</span><span class="str cinzel sz-32">RTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str cinzel sz-24">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal-gold">
+        <p class="panel-label">Gold on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str cinzel sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">32 px</span><span class="str cinzel sz-32">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+      <div class="panel black-only">
+        <p class="panel-label">Black-only test (pure black on white)</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str cinzel sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str cinzel sz-24">RTAM Foundation</span></li>
+          <li><span class="lbl">16 px</span><span class="str cinzel sz-16">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 3. LATIN — MARCELLUS =================== -->
+  <section class="font-block">
+    <h2>3 · Latin Display — Marcellus</h2>
+    <div class="font-meta">Alternate / fallback face. Slightly softer terminals than Cinzel; useful for body display where Cinzel feels too monumental.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str marcellus sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">32 px</span><span class="str marcellus sz-32">RTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str marcellus sz-24">Ṛtam · Ṛta</span></li>
+          <li><span class="lbl">24 px</span><span class="str marcellus sz-24">Ṛtambhareśvara Mandira</span></li>
+          <li><span class="lbl">20 px</span><span class="str marcellus sz-20">Rtambhareshvara Mandir</span></li>
+        </ul>
+      </div>
+      <div class="panel ivory-gold">
+        <p class="panel-label">Gold on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str marcellus sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str marcellus sz-24">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal">
+        <p class="panel-label">Ivory on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str marcellus sz-44">ṚTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str marcellus sz-24">Ṛtambhareśvara Mandira</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 4. LATIN — INTER (UI/body) =================== -->
+  <section class="font-block">
+    <h2>4 · Latin UI / Body — Inter</h2>
+    <div class="font-meta">UI, body copy, captions, metadata. Wide weight range; excellent diacritic coverage; not used for the wordmark.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">32 px</span><span class="str inter sz-32">RTAM Foundation</span></li>
+          <li><span class="lbl">24 px</span><span class="str inter sz-24">Ṛtambhareśvara Mandira</span></li>
+          <li><span class="lbl">16 px</span><span class="str inter sz-16">
+            Ṛtam (Sanskrit: ऋतम्) — the cosmic order; the lawful, harmonious flow of reality.
+            The Ṛtam Foundation supports Vedic scholarship, temple restoration, and contemplative arts.
+          </span></li>
+          <li><span class="lbl">14 px</span><span class="str inter sz-14">
+            Rtambhareshvara Mandir — donor portal · receipts · annual report.
+          </span></li>
+          <li><span class="lbl">12 px</span><span class="str inter sz-12">
+            Caption · 80G eligible · receipt no. 2026-05-26-0001 · ṛta · ṣaṭ · ṇa · ḥ · ṃ
+          </span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal">
+        <p class="panel-label">Ivory on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">16 px</span><span class="str inter sz-16">
+            Ṛtam (Sanskrit: ऋतम्) — the cosmic order; the lawful, harmonious flow of reality.
+          </span></li>
+          <li><span class="lbl">12 px</span><span class="str inter sz-12">
+            Footer caption · ṛta · ṣaṭ · ṇa · ḥ · ṃ
+          </span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 5. DEVANAGARI — TIRO DEVANAGARI SANSKRIT =================== -->
+  <section class="font-block">
+    <h2>5 · Devanagari Sacred — Tiro Devanagari Sanskrit</h2>
+    <div class="font-meta">Designed specifically for Sanskrit; correct conjunct shaping (mātrās, virāma, repha). First-choice Devanagari for sacred contexts.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str tiro-dev sz-44">ऋतम् फाउंडेशन</span></li>
+          <li><span class="lbl">44 px</span><span class="str tiro-dev sz-44">ऋतम् प्रतिष्ठान</span></li>
+          <li><span class="lbl">32 px</span><span class="str tiro-dev sz-32">ऋतम्भरेश्वर मंदिर</span></li>
+          <li><span class="lbl">20 px</span><span class="str tiro-dev sz-20">ऋतम् · ऋत · ऋषि · ब्रह्मन्</span></li>
+        </ul>
+      </div>
+      <div class="panel ivory-gold">
+        <p class="panel-label">Gold on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str tiro-dev sz-44">ऋतम् फाउंडेशन</span></li>
+          <li><span class="lbl">32 px</span><span class="str tiro-dev sz-32">ऋतम्भरेश्वर मंदिर</span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal">
+        <p class="panel-label">Ivory on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str tiro-dev sz-44">ऋतम् फाउंडेशन</span></li>
+          <li><span class="lbl">32 px</span><span class="str tiro-dev sz-32">ऋतम्भरेश्वर मंदिर</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 6. DEVANAGARI — NOTO SERIF =================== -->
+  <section class="font-block">
+    <h2>6 · Devanagari Serif — Noto Serif Devanagari</h2>
+    <div class="font-meta">Robust serif fallback when Tiro is unavailable. Use for long body text in Devanagari.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">44 px</span><span class="str noto-serif-dv sz-44">ऋतम् फाउंडेशन</span></li>
+          <li><span class="lbl">32 px</span><span class="str noto-serif-dv sz-32">ऋतम्भरेश्वर मंदिर</span></li>
+          <li><span class="lbl">20 px</span><span class="str noto-serif-dv sz-20">ऋतम् · ऋत · ऋषि · ब्रह्मन्</span></li>
+          <li><span class="lbl">16 px</span><span class="str noto-serif-dv sz-16">
+            ऋतम् (Ṛtam) सत्य का वह अटूट क्रम है जो ब्रह्माण्ड को नियमबद्ध रखता है।
+            ऋतम् फाउंडेशन वैदिक अध्ययन, मंदिर पुनरुद्धार और चिंतनशील कलाओं को समर्थन देती है।
+          </span></li>
+        </ul>
+      </div>
+      <div class="panel charcoal">
+        <p class="panel-label">Ivory on Charcoal</p>
+        <ul class="specimen">
+          <li><span class="lbl">32 px</span><span class="str noto-serif-dv sz-32">ऋतम्भरेश्वर मंदिर</span></li>
+          <li><span class="lbl">16 px</span><span class="str noto-serif-dv sz-16">ऋतम् फाउंडेशन — दान रसीद</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 7. DEVANAGARI — NOTO SANS =================== -->
+  <section class="font-block">
+    <h2>7 · Devanagari Sans — Noto Sans Devanagari</h2>
+    <div class="font-meta">For UI labels, navigation, form fields, captions in Devanagari.</div>
+
+    <div class="panels">
+      <div class="panel ivory">
+        <p class="panel-label">Charcoal on Ivory</p>
+        <ul class="specimen">
+          <li><span class="lbl">24 px</span><span class="str noto-sans-dv sz-24">ऋतम् फाउंडेशन</span></li>
+          <li><span class="lbl">16 px</span><span class="str noto-sans-dv sz-16">मुखपृष्ठ · हमारे बारे में · दान करें · संपर्क</span></li>
+          <li><span class="lbl">12 px</span><span class="str noto-sans-dv sz-12">रसीद संख्या २०२६-०५-२६-०००१ · ८०जी छूट उपलब्ध</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== 8. SCALE LADDER =================== -->
+  <section class="font-block">
+    <h2>8 · Scale Ladder — ṚTAM Foundation @ Cinzel</h2>
+    <div class="font-meta">Same string from 12 px → 64 px. Use this to spot legibility breakdowns at small sizes (favicon, footer, fineprint).</div>
+
+    <div class="ladder">
+      <div class="row"><span class="px">64 px</span><span class="cinzel sz-64">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">44 px</span><span class="cinzel sz-44">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">32 px</span><span class="cinzel sz-32">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">24 px</span><span class="cinzel sz-24">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">20 px</span><span class="cinzel sz-20">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">16 px</span><span class="cinzel sz-16">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">14 px</span><span class="cinzel sz-14">ṚTAM Foundation</span></div>
+      <div class="row"><span class="px">12 px</span><span class="cinzel sz-12">ṚTAM Foundation</span></div>
+    </div>
+  </section>
+
+  <section class="font-block">
+    <h2>9 · Scale Ladder — ऋतम् फाउंडेशन @ Tiro Devanagari Sanskrit</h2>
+    <div class="font-meta">Same Devanagari string from 12 px → 64 px. Verify mātrā placement and conjunct shaping survive the size run.</div>
+
+    <div class="ladder">
+      <div class="row"><span class="px">64 px</span><span class="tiro-dev sz-64">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">44 px</span><span class="tiro-dev sz-44">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">32 px</span><span class="tiro-dev sz-32">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">24 px</span><span class="tiro-dev sz-24">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">20 px</span><span class="tiro-dev sz-20">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">16 px</span><span class="tiro-dev sz-16">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">14 px</span><span class="tiro-dev sz-14">ऋतम् फाउंडेशन</span></div>
+      <div class="row"><span class="px">12 px</span><span class="tiro-dev sz-12">ऋतम् फाउंडेशन</span></div>
+    </div>
+  </section>
+
+  <footer class="page">
+    RTAM Foundation · Typography specimen · generated US-2 · fonts: Google Fonts CDN
+  </footer>
+</div>
+</body>
+</html>
