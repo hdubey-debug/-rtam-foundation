@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" role="img" aria-label="ṚTAM Foundation — 12-medallion seal">
+  <title>Secondary seal — 12 medallions around outer ring with central bindu</title>
+  <desc>Deliberately minimal geometric mark. One outer ring, twelve small gold medallions evenly spaced (30° apart), one central bindu — the same dot that signs the wordmark. No petals, no spokes, no flame. The twelve medallions read as: months of the ritual year, signs of the zodiac, hours of the day, or simply "the full circle". The mark is read at a glance, not parsed.</desc>
+  <!-- Outer ring -->
+  <circle cx="180" cy="180" r="160" fill="none" stroke="#C8A15A" stroke-width="2"/>
+  <!-- 12 medallions, one circle rotated about center -->
+  <g fill="#C8A15A">
+    <circle cx="180" cy="20" r="8" transform="rotate(0 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(30 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(60 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(90 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(120 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(150 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(180 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(210 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(240 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(270 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(300 180 180)"/>
+    <circle cx="180" cy="20" r="8" transform="rotate(330 180 180)"/>
+  </g>
+  <!-- Central bindu -->
+  <circle cx="180" cy="180" r="10" fill="#C8A15A"/>
+</svg>
