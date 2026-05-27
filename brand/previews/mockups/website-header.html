@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mockup — RTAM Foundation website header</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Tiro+Devanagari+Sanskrit&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+      background: var(--rtam-ivory);
+    }
+    header.site {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 64px;
+      border-bottom: 1px solid var(--rtam-sandstone);
+      background: var(--rtam-ivory);
+    }
+    header.site .brand svg {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--rtam-charcoal);
+      text-decoration: none;
+    }
+    nav a.cta {
+      color: var(--rtam-gold);
+      font-weight: 600;
+      border: 1px solid var(--rtam-gold);
+      padding: 10px 22px;
+      border-radius: 2px;
+    }
+    .hero {
+      padding: 120px 64px 160px;
+      text-align: center;
+      background: var(--rtam-ivory);
+    }
+    .hero h1 {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      font-size: 48px;
+      letter-spacing: 0.06em;
+      margin: 0 0 16px;
+    }
+    .hero .deva {
+      font-family: 'Tiro Devanagari Sanskrit', serif;
+      font-size: 28px;
+      color: var(--rtam-charcoal);
+      margin: 0 0 32px;
+    }
+    .hero .lede {
+      font-family: Inter, sans-serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--rtam-charcoal);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .hero .rule {
+      width: 80px;
+      height: 1px;
+      background: var(--rtam-gold);
+      margin: 32px auto;
+    }
+    footer.site {
+      padding: 24px 64px;
+      border-top: 1px solid var(--rtam-sandstone);
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240">
+        <g font-family="Cinzel, serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Temple</a></li>
+        <li><a href="#">Writings</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#" class="cta">Donate</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Order, returning.</h1>
+    <p class="deva">ऋतम् — the cosmic order that holds.</p>
+    <div class="rule"></div>
+    <p class="lede">The RTAM Foundation is a non-profit dedicated to the preservation, study, and lived practice of dharmic tradition — anchored at the Rtambhareshvara Mandir.</p>
+  </section>
+
+  <footer class="site">
+    <span>RTAM Foundation · est. 2026</span>
+    <span>ऋतम् फाउंडेशन</span>
+  </footer>
+</body>
+</html>

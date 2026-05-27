@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mockup — RTAM Foundation Instagram avatar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 48px;
+      background: #d9d4c8;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+    }
+    h1 {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-size: 24px;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+    .sub {
+      color: var(--rtam-stone);
+      font-size: 13px;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .avatar {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(26,26,26,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar.ivory   { background: var(--rtam-ivory); }
+    .avatar.charcoal { background: var(--rtam-charcoal); }
+    .avatar.indigo   { background: var(--rtam-indigo); }
+    .avatar svg { width: 64%; height: 64%; display: block; }
+    .caption {
+      margin-top: 12px;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      text-align: center;
+    }
+    .feed-row {
+      margin-top: 64px;
+      display: flex;
+      gap: 16px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: center;
+    }
+    .feed-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--rtam-ivory);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(26,26,26,0.10);
+      flex-shrink: 0;
+    }
+    .feed-avatar svg { width: 64%; height: 64%; display: block; }
+    .feed-meta .name {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+    }
+    .feed-meta .handle {
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      color: var(--rtam-stone);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Instagram avatar — R-monogram</h1>
+  <p class="sub">Square crop is rendered as a circle by every social platform. The R-monogram is sized so the bindu sits inside the safe inner 80% even after the platform's circular mask.</p>
+
+  <div class="grid">
+    <div>
+      <div class="avatar ivory">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <text x="128" y="184" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
+          <circle cx="132" cy="218" r="14" fill="#C8A15A"/>
+        </svg>
+      </div>
+      <div class="caption">Ivory · charcoal R · gold bindu</div>
+    </div>
+    <div>
+      <div class="avatar charcoal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <text x="128" y="184" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#F7F3E9">R</text>
+          <circle cx="132" cy="218" r="14" fill="#C8A15A"/>
+        </svg>
+      </div>
+      <div class="caption">Charcoal · ivory R · gold bindu</div>
+    </div>
+    <div>
+      <div class="avatar indigo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <text x="128" y="184" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#C8A15A">R</text>
+          <circle cx="132" cy="218" r="14" fill="#C8A15A"/>
+        </svg>
+      </div>
+      <div class="caption">Sacred-night indigo · all-gold</div>
+    </div>
+  </div>
+
+  <div class="feed-row">
+    <div class="feed-avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <text x="128" y="184" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
+        <circle cx="132" cy="218" r="14" fill="#C8A15A"/>
+      </svg>
+    </div>
+    <div class="feed-meta">
+      <div class="name">RTAM Foundation</div>
+      <div class="handle">@rtamfoundation · est. 2026</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mockup — RTAM Foundation letterhead</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Tiro+Devanagari+Sanskrit&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+      background: #d9d4c8;
+    }
+    .page {
+      width: 816px;
+      min-height: 1056px;
+      margin: 40px auto;
+      padding: 96px 88px;
+      background: var(--rtam-ivory);
+      box-shadow: 0 6px 28px rgba(26,26,26,0.08);
+      position: relative;
+    }
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rtam-gold);
+    }
+    .head .brand svg { height: 44px; width: auto; display: block; }
+    .head .meta {
+      text-align: right;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      line-height: 1.7;
+    }
+    .body-text {
+      margin-top: 64px;
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .body-text p { margin: 0 0 18px; }
+    .salute, .signoff { font-family: Cinzel, serif; font-weight: 500; }
+    .signoff { margin-top: 48px; }
+    .signature-line {
+      margin-top: 6px;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+    }
+    footer.page-foot {
+      position: absolute;
+      left: 88px;
+      right: 88px;
+      bottom: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: Inter, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      padding-top: 16px;
+      border-top: 1px solid var(--rtam-sandstone);
+    }
+    footer.page-foot svg { width: 36px; height: 36px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="head">
+      <div class="brand">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240">
+          <g font-family="Cinzel, serif">
+            <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+            <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+          </g>
+          <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+        </svg>
+      </div>
+      <div class="meta">
+        Rtambhareshvara Mandir<br>
+        registered trust · est. 2026<br>
+        contact@rtam.foundation
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p>26 May 2026</p>
+      <p class="salute">To the trustees,</p>
+      <p>The works of the foundation this quarter have proceeded along three lines: the preservation of the temple precincts, the publication of two short commentaries, and the convening of the Vaiśākha study circle for thirty participants.</p>
+      <p>The accompanying report records each in detail. We ask that the trustees approve the proposed allocation for the coming quarter, with the bulk directed to the temple's annual renovation cycle.</p>
+      <p>The work continues steadily, in keeping with the order it intends to serve.</p>
+      <p class="signoff">— The Secretariat</p>
+      <div class="signature-line">For and on behalf of the RTAM Foundation</div>
+    </div>
+
+    <footer class="page-foot">
+      <span>ऋतम् फाउंडेशन</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+        <circle cx="180" cy="180" r="160" fill="none" stroke="#C8A15A" stroke-width="2"/>
+        <g fill="#C8A15A">
+          <circle cx="180" cy="20" r="8" transform="rotate(0 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(30 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(60 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(90 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(120 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(150 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(180 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(210 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(240 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(270 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(300 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(330 180 180)"/>
+        </g>
+        <circle cx="180" cy="180" r="10" fill="#C8A15A"/>
+      </svg>
+      <span>page 1 of 1</span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mockup — favicon scale test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 64px;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+      background: var(--rtam-ivory);
+    }
+    h1 {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-size: 24px;
+      margin: 0 0 8px;
+    }
+    .sub { color: var(--rtam-stone); font-size: 13px; margin: 0 0 48px; max-width: 720px; }
+    .row {
+      display: flex;
+      gap: 48px;
+      align-items: flex-end;
+      padding: 48px 24px;
+      border: 1px solid var(--rtam-sandstone);
+      border-radius: 4px;
+      background: var(--rtam-ivory);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .row.dark { background: var(--rtam-charcoal); }
+    .step { text-align: center; }
+    .step .swatch {
+      background: transparent;
+      display: inline-block;
+    }
+    .step svg { display: block; }
+    .step .label {
+      margin-top: 12px;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+    }
+    .row.dark .step .label { color: var(--rtam-sandstone); }
+    .browser-tab {
+      margin-top: 48px;
+      max-width: 480px;
+      border: 1px solid var(--rtam-sandstone);
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(26,26,26,0.06);
+    }
+    .browser-tab .bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--rtam-sandstone);
+    }
+    .browser-tab .bar .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(26,26,26,0.20);
+    }
+    .browser-tab .tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--rtam-ivory);
+      border-radius: 4px 4px 0 0;
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: var(--rtam-charcoal);
+      max-width: 240px;
+    }
+    .browser-tab .tab svg { display: block; }
+  </style>
+</head>
+<body>
+  <h1>Favicon scale test — R-monogram</h1>
+  <p class="sub">The favicon SVG (32 viewBox) rendered at seven physical sizes — 16, 24, 32, 48, 64, 128, 256 px. The brief calls for the icon to remain recognizable at 16 px tab size.</p>
+
+  <div class="row">
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:16px;height:16px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">16 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:24px;height:24px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">24 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:32px;height:32px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">32 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:48px;height:48px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">48 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:64px;height:64px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">64 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:128px;height:128px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">128 px</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:256px;height:256px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">256 px</div>
+    </div>
+  </div>
+
+  <div class="row dark">
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:16px;height:16px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#F7F3E9">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">16 px on dark</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:32px;height:32px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#F7F3E9">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">32 px on dark</div>
+    </div>
+    <div class="step">
+      <div class="swatch"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:64px;height:64px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#F7F3E9">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg></div>
+      <div class="label">64 px on dark</div>
+    </div>
+  </div>
+
+  <div class="browser-tab">
+    <div class="bar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <div class="tab">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" style="width:16px;height:16px;"><text x="16" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text><circle cx="16.5" cy="27.5" r="2.2" fill="#C8A15A"/></svg>
+        <span>RTAM Foundation</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

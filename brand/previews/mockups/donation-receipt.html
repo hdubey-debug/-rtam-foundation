@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mockup — RTAM Foundation donation receipt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Tiro+Devanagari+Sanskrit&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+      background: #d9d4c8;
+    }
+    .page {
+      width: 816px;
+      min-height: 1056px;
+      margin: 40px auto;
+      padding: 88px 80px;
+      background: var(--rtam-ivory);
+      box-shadow: 0 6px 28px rgba(26,26,26,0.08);
+    }
+    .head {
+      text-align: center;
+      padding-bottom: 32px;
+    }
+    .head svg { width: 480px; height: auto; display: block; margin: 0 auto; }
+    .head .receipt-label {
+      margin-top: 24px;
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+    }
+    .ref {
+      text-align: center;
+      font-family: Inter, sans-serif;
+      font-size: 12px;
+      color: var(--rtam-stone);
+      letter-spacing: 0.15em;
+    }
+    .amount {
+      margin: 56px auto 32px;
+      text-align: center;
+    }
+    .amount .label {
+      font-family: Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      margin-bottom: 12px;
+    }
+    .amount .value {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      font-size: 56px;
+      color: var(--rtam-charcoal);
+      letter-spacing: 0.04em;
+    }
+    table.tx {
+      width: 100%;
+      margin: 32px 0;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    table.tx td {
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--rtam-sandstone);
+    }
+    table.tx td.k {
+      color: var(--rtam-stone);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      width: 40%;
+    }
+    table.tx td.v {
+      font-family: Inter, sans-serif;
+      font-weight: 400;
+      color: var(--rtam-charcoal);
+    }
+    .ack {
+      margin-top: 40px;
+      font-family: Inter, sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--rtam-charcoal);
+    }
+    .ack .deva {
+      font-family: 'Tiro Devanagari Sanskrit', serif;
+      font-size: 18px;
+      color: var(--rtam-charcoal);
+      margin-top: 12px;
+    }
+    .foot {
+      margin-top: 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .sig {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding-top: 8px;
+      border-top: 1px solid var(--rtam-charcoal);
+      width: 240px;
+      text-align: center;
+    }
+    .sig small {
+      display: block;
+      font-family: Inter, sans-serif;
+      font-weight: 300;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rtam-stone);
+      margin-top: 6px;
+    }
+    .foot svg { width: 80px; height: 80px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="head">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 360">
+        <g font-family="Cinzel, serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+        <line x1="420" y1="245" x2="660" y2="245" stroke="#C8A15A" stroke-width="1.5"/>
+        <text x="540" y="305" font-family="Inter, sans-serif" font-size="26" font-weight="300" letter-spacing="3" text-anchor="middle" fill="#B8B1A4">CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR</text>
+      </svg>
+      <div class="receipt-label">Receipt of contribution</div>
+    </div>
+
+    <div class="ref">No. RTM-2026-00214 · issued 26 May 2026</div>
+
+    <div class="amount">
+      <div class="label">Amount received</div>
+      <div class="value">₹ 21,000</div>
+    </div>
+
+    <table class="tx">
+      <tr><td class="k">Donor</td><td class="v">Shri Aniruddha Sharma</td></tr>
+      <tr><td class="k">PAN</td><td class="v">ABCDE1234F</td></tr>
+      <tr><td class="k">Mode</td><td class="v">UPI · transaction 412659874213</td></tr>
+      <tr><td class="k">Purpose</td><td class="v">Annual renovation — Rtambhareshvara Mandir</td></tr>
+      <tr><td class="k">80G exemption</td><td class="v">Eligible · ref. 2025-26/RTAM/0014</td></tr>
+    </table>
+
+    <div class="ack">
+      With gratitude. The contribution will be applied to the work it names, in keeping with the order it intends to serve.
+      <div class="deva">ऋतस्य पन्थाम् — the path of the cosmic order.</div>
+    </div>
+
+    <div class="foot">
+      <div class="sig">
+        Authorised Signatory
+        <small>for the RTAM Foundation</small>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+        <circle cx="180" cy="180" r="160" fill="none" stroke="#C8A15A" stroke-width="2"/>
+        <g fill="#C8A15A">
+          <circle cx="180" cy="20" r="8" transform="rotate(0 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(30 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(60 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(90 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(120 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(150 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(180 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(210 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(240 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(270 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(300 180 180)"/>
+          <circle cx="180" cy="20" r="8" transform="rotate(330 180 180)"/>
+        </g>
+        <circle cx="180" cy="180" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
