@@ -38,28 +38,33 @@ open     brand/previews/index.html   # macOS
 
 All previews load fonts from Google Fonts via CDN — no install required to view in a browser:
 
-- **Cinzel** (Latin display serif — wordmarks and headings)
+- **Cinzel** (Latin display serif — primary wordmark face)
+- **Marcellus** (Latin display serif — alternate / fallback face with softer terminals)
 - **Inter** (Latin sans — UI and body)
-- **Tiro Devanagari Sanskrit** (Devanagari sacred)
-- **Noto Serif Devanagari** (Devanagari fallback)
-- **Noto Sans Devanagari** (Devanagari sans / UI)
+- **Tiro Devanagari Sanskrit** (Devanagari sacred — wordmarks and sacred contexts)
+- **Noto Serif Devanagari** (Devanagari serif fallback — long body text)
+- **Noto Sans Devanagari** (Devanagari sans — UI labels, captions)
 
 SVG files reference these fonts by `font-family`. When opening an SVG in Inkscape / Illustrator / Figma without the fonts installed, install them locally first (or run **Path → Object to Path** in Inkscape / **Type → Create Outlines** in Illustrator) to convert text to outlined paths.
 
-### Installing fonts locally (Linux example)
+### Installing fonts locally
 
-```bash
-mkdir -p ~/.fonts && cd ~/.fonts
-# Cinzel
-curl -L -o Cinzel.zip "https://fonts.google.com/download?family=Cinzel" && unzip -o Cinzel.zip
-# Inter
-curl -L -o Inter.zip "https://fonts.google.com/download?family=Inter" && unzip -o Inter.zip
-# Tiro Devanagari Sanskrit
-curl -L -o TiroDevanagariSanskrit.zip "https://fonts.google.com/download?family=Tiro+Devanagari+Sanskrit" && unzip -o TiroDevanagariSanskrit.zip
-fc-cache -f
-```
+The most reliable path is the Google Fonts website itself:
 
-On macOS / Windows install via the system font manager.
+1. Visit each family's page (e.g. <https://fonts.google.com/specimen/Cinzel>) — search for the family name, then click **Download family**.
+2. Unzip the downloaded archive into your fonts directory:
+   - **Linux:** `~/.fonts/` then run `fc-cache -f`
+   - **macOS:** open each `.ttf`/`.otf` in Font Book → *Install Font*
+   - **Windows:** right-click each `.ttf`/`.otf` → *Install*
+
+Family URLs for the kit:
+
+- <https://fonts.google.com/specimen/Cinzel>
+- <https://fonts.google.com/specimen/Marcellus>
+- <https://fonts.google.com/specimen/Inter>
+- <https://fonts.google.com/specimen/Tiro+Devanagari+Sanskrit>
+- <https://fonts.google.com/specimen/Noto+Serif+Devanagari>
+- <https://fonts.google.com/specimen/Noto+Sans+Devanagari>
 
 The brand signature (the dot under **R**) is drawn as an SVG `<circle>` element, **not** the Unicode combining dot — so the bindu renders correctly regardless of font availability.
 

@@ -32,7 +32,14 @@ See [`../palette/colors.json`](../palette/colors.json) and [`../palette/colors.c
 
 ## 5. Typography
 
-Cinzel (Latin display), Inter (Latin UI/body), Tiro Devanagari Sanskrit (sacred Devanagari), Noto Devanagari (fallback). Full pairing rules in US-9.
+- **Cinzel** — Latin display (primary wordmark face)
+- **Marcellus** — Latin display (alternate / fallback)
+- **Inter** — Latin UI / body
+- **Tiro Devanagari Sanskrit** — Devanagari sacred (wordmarks, sacred contexts)
+- **Noto Serif Devanagari** — Devanagari serif fallback (long body)
+- **Noto Sans Devanagari** — Devanagari sans (UI, captions)
+
+Full pairing rules, sizing, and weight guidance in US-9. Specimen lives at `previews/typography-specimen.html`.
 
 ## 6. Spacing & Clear-Space
 
