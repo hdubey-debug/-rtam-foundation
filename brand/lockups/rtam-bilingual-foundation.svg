@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 380" role="img" aria-label="ṚTAM Foundation · ऋतम् फाउंडेशन">
+  <title>Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन</title>
+  <desc>Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
+  </defs>
+  <!-- Latin wordmark (matches US-3 sacred geometry, scaled to the lockup viewBox) -->
+  <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+    <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+    <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+  </g>
+  <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+  <!-- Divider -->
+  <line x1="420" y1="245" x2="660" y2="245" stroke="#C8A15A" stroke-width="1.5"/>
+  <!-- Devanagari (common-register: फाउंडेशन) -->
+  <text x="540" y="335" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="60" text-anchor="middle" fill="#1A1A1A">ऋतम् फाउंडेशन</text>
+</svg>
