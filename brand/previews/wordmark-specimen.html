@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RTAM Foundation — primary wordmark specimen (US-3)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Marcellus&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../palette/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 48px;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--rtam-charcoal);
+      background: var(--rtam-ivory);
+    }
+    h1 {
+      font-family: Cinzel, serif;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+    .sub {
+      color: var(--rtam-stone);
+      font-size: 13px;
+      margin: 0 0 40px;
+      max-width: 640px;
+    }
+    .panel {
+      margin-bottom: 32px;
+      border: 1px solid var(--rtam-sandstone);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 12px 20px;
+      background: var(--rtam-sandstone);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rtam-charcoal);
+    }
+    .panel-body {
+      padding: 56px 64px;
+      background: var(--rtam-ivory);
+    }
+    .panel-body.dark   { background: var(--rtam-charcoal); }
+    .panel-body.indigo { background: var(--rtam-indigo); }
+    .panel-body svg { width: 780px; max-width: 100%; height: auto; display: block; }
+    .small-row {
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      padding: 32px 64px;
+      background: var(--rtam-ivory);
+      border-top: 1px dashed var(--rtam-sandstone);
+    }
+    .small-row:first-of-type { border-top: none; }
+    .small-row .label {
+      font-size: 11px;
+      color: var(--rtam-stone);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 70px;
+    }
+    .small-row svg { height: auto; display: block; }
+    .w600 svg { width: 600px; }
+    .w400 svg { width: 400px; }
+    .w280 svg { width: 280px; }
+    .w180 svg { width: 180px; }
+  </style>
+</head>
+<body>
+  <h1>Primary wordmark — sacred &amp; public variants</h1>
+  <p class="sub">Five SVG variants of the primary wordmark. The under-dot beneath the R is drawn as a separate &lt;circle&gt; — it is the brand signature, not a Unicode combining mark.</p>
+
+  <!-- Sacred (canonical) -->
+  <div class="panel">
+    <div class="panel-head">1 · Sacred (charcoal letters, gold bindu) — canonical primary mark on ivory</div>
+    <div class="panel-body">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- All-gold -->
+  <div class="panel">
+    <div class="panel-head">2 · All-gold — premium / ceremonial</div>
+    <div class="panel-body">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#C8A15A">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Pure black -->
+  <div class="panel">
+    <div class="panel-head">3 · Pure-black — single-color print, fax, stamp, embossing</div>
+    <div class="panel-body">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#1A1A1A">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#1A1A1A"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Ivory on charcoal -->
+  <div class="panel">
+    <div class="panel-head">4 · Ivory on charcoal — dark backgrounds</div>
+    <div class="panel-body dark">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#F7F3E9">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#F7F3E9"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Ivory on indigo -->
+  <div class="panel">
+    <div class="panel-head">4b · Ivory on deep indigo (sacred night)</div>
+    <div class="panel-body indigo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#F7F3E9">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#F7F3E9"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Public ASCII -->
+  <div class="panel">
+    <div class="panel-head">5 · Public ASCII (no bindu) — URLs, email signatures, legal documents</div>
+    <div class="panel-body">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="RTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#1A1A1A">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Scale test -->
+  <div class="panel">
+    <div class="panel-head">Scale test — sacred variant at 600 / 400 / 280 / 180 px</div>
+    <div class="small-row w600">
+      <span class="label">600 px</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+    <div class="small-row w400">
+      <span class="label">400 px</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+    <div class="small-row w280">
+      <span class="label">280 px</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+    <div class="small-row w180">
+      <span class="label">180 px</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+        <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif">
+          <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
+          <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+        </g>
+        <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

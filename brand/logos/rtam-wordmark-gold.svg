@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
+  <title>ṚTAM Foundation — gold wordmark (all antique-gold)</title>
+  <desc>All-gold variant for premium / ceremonial contexts on ivory or dark backgrounds. Letters and bindu both #C8A15A.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;display=swap');</style>
+  </defs>
+  <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#C8A15A">
+    <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12">RTAM</text>
+    <text x="540" y="160" font-size="62" font-weight="400" letter-spacing="8">Foundation</text>
+  </g>
+  <circle cx="140" cy="188" r="10" fill="#C8A15A"/>
+</svg>
