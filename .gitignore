@@ -18,3 +18,7 @@ playwright-report/
 
 # Scratch renders / measurement output (never committed)
 brand/tools/_scratch/
+
+# Build output — outlined distribution masters are reproducible from brand.json
+# via `brand/tools/build.sh --write` (kept out of git to avoid stale artifacts)
+brand/dist/

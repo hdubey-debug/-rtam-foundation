@@ -2,9 +2,9 @@
   <title>Ṛ monogram in circle — charcoal ring on ivory</title>
   <desc>Enclosed mono variant: charcoal R, charcoal bindu, charcoal ring. Single-color seal for stamps, embossing, and contexts that disallow gold.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
-  <circle cx="128" cy="128" r="118" fill="none" stroke="#1A1A1A" stroke-width="5"/>
   <text x="127" y="161" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="152" text-anchor="middle" fill="#1A1A1A">R</text>
+  <circle cx="128" cy="128" r="118" fill="none" stroke="#1A1A1A" stroke-width="5"/>
   <circle cx="128" cy="189" r="12" fill="#1A1A1A"/>
 </svg>

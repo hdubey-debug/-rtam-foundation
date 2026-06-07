@@ -4,8 +4,6 @@
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>
-  <g font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" fill="#1A1A1A">
-    <text x="80" y="137" font-size="96">ऋतम्</text>
-    <text x="337" y="137" font-size="56">फाउंडेशन</text>
-  </g>
+  <text x="80" y="137" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="96" fill="#1A1A1A">ऋतम्</text>
+  <text x="337" y="137" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="56" fill="#1A1A1A">फाउंडेशन</text>
 </svg>

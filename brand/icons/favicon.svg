@@ -2,7 +2,7 @@
   <title>ṚTAM Foundation favicon</title>
   <desc>Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
   <text x="14.87" y="22" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
   <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>

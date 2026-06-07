@@ -2,7 +2,7 @@
   <title>Ṛ monogram — charcoal</title>
   <desc>Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
   <text x="119.9" y="166.33" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
   <circle cx="128" cy="213" r="16.67" fill="#1A1A1A"/>

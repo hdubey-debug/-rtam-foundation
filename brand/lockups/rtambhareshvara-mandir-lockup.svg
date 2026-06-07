@@ -2,9 +2,9 @@
   <title>Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर</title>
   <desc>Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>
-  <text x="640" y="160" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-size="72" font-weight="500" letter-spacing="6" text-anchor="middle" fill="#1A1A1A">RTAMBHARESHVARA MANDIR</text>
-  <line x1="520" y1="225" x2="760" y2="225" stroke="#C8A15A" stroke-width="1.5"/>
+  <text x="640" y="160" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="72" letter-spacing="6" text-anchor="middle" fill="#1A1A1A">RTAMBHARESHVARA MANDIR</text>
   <text x="640" y="320" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="68" text-anchor="middle" fill="#1A1A1A">ऋतम्भरेश्वर मंदिर</text>
+  <line x1="520" y1="225" x2="760" y2="225" stroke="#C8A15A" stroke-width="1.5"/>
 </svg>

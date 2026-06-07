@@ -2,11 +2,9 @@
   <title>Ṛtambhareśvara Mandir — diacritic wordmark (pronunciation form)</title>
   <desc>Mixed-diacritic pronunciation form: the leading R + gold bindu reads as Ṛ (vocalic-ṛ), the native Cinzel ś carries the palatal sibilant. Descriptor Mandir. The scholarly/sacred Latin register.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
-  <g font-family="Cinzel, Marcellus, 'Trajan Pro', serif" fill="#1A1A1A" text-anchor="middle">
-    <text x="540" y="120" font-size="66" font-weight="500" letter-spacing="4">Rtambhareśvara</text>
-    <text x="540" y="186" font-size="30" font-weight="400" letter-spacing="14">Mandir</text>
-  </g>
+  <text x="540" y="120" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="66" letter-spacing="4" text-anchor="middle" fill="#1A1A1A">Rtambhareśvara</text>
+  <text x="540" y="186" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="30" letter-spacing="14" text-anchor="middle" fill="#1A1A1A">Mandir</text>
   <circle cx="244.2" cy="135.4" r="5.5" fill="#C8A15A"/>
 </svg>

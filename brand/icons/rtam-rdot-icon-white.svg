@@ -2,10 +2,8 @@
   <title>Ṛ monogram — ivory</title>
   <desc>Single-glyph icon mark in ivory #F7F3E9. Use on charcoal / indigo / photographic dark surfaces.</desc>
   <defs>
-    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;display=swap');</style>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
-  <!-- Charcoal ground so the ivory R is visible when the file is opened standalone.
-       Remove this rect to overlay on an indigo or photographic surface. -->
   <rect x="0" y="0" width="256" height="256" fill="#1A1A1A"/>
   <text x="119.9" y="166.33" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="200" text-anchor="middle" fill="#F7F3E9">R</text>
   <circle cx="128" cy="213" r="16.67" fill="#F7F3E9"/>
