@@ -21,14 +21,35 @@ The visual system that follows is built to keep that mark intentional at every s
 | **ṚTAM Foundation** | Primary written form in Latin-script contexts. Always with the dot under R when typeset; **RTAM Foundation** is the public ASCII fallback. |
 | **ऋतम् फाउंडेशन** | Common-register Devanagari. Use in bilingual lockups, Hindi-speaking audiences, signage. |
 | **ऋतम् प्रतिष्ठान** | Pure-Sanskritic Devanagari (*pratiṣṭhāna* — "established institution"). For scholarly, sacred, or trust-deed contexts. |
-| **Rtambhareshvara Mandir** | The temple. Latin form for physical signage and donor materials. |
+| **Rtambhareshvara Mandir** | The temple. Plain-English Latin form for physical signage and donor materials. |
+| **Ṛtambhareśvara Mandir** | The temple, pronunciation form (mixed diacritic: leading Ṛ = R + bindu, native `ś`). Scholarly / sacred register. |
 | **ऋतम्भरेश्वर मंदिर** | The temple, Devanagari. Always present in the temple lockup. |
+
+**Spelling lock.** The canonical Latin spellings are exactly as written above —
+`RTAM` / `Rtambhareshvara` (and the all-caps `RTAMBHARESHVARA` in the temple
+lockup). Do not "correct" them to other IAST transliterations; the diacritic
+forms (`Ṛ`, `ś`) are an *additive* register, never a replacement.
 
 ---
 
 ## 3 · The Logo System
 
-The kit has **one primary**, **two icons**, **four lockups**, and **one secondary seal**. They do not share visual chrome; what they share is the bindu and the typographic family.
+The identity is a **two-entity × two-script tree** bound by one shared root mark.
+
+- **Two entities:** RTAM **Foundation** (the organisation) and **Rtambhareshvara
+  Mandir** (the temple).
+- **Two scripts:** Latin and Devanagari.
+- **One shared crest:** the vocalic-R — **Ṛ** (R + bindu) in Latin, **ऋ** in
+  Devanagari — because *both names begin with it* (**Ṛ**TAM, **Ṛ**tambhareshvara).
+  The crest names the family; the wordmark names the entity.
+
+Two layout rules fall out of the names: the **Foundation is set horizontally**
+(short acronym + smaller descriptor on one baseline); the **Temple is stacked**
+(its long name centred over the descriptor). Each entity keeps that structure
+across both scripts. **Latin forms carry the gold bindu under the leading R;
+Devanagari forms never do** — ऋ already *is* the vocalic-R, so adding a dot would
+be redundant. The pieces share no other chrome; what they share is this crest and
+the typographic family.
 
 ### 3.1 Primary wordmark
 
@@ -39,10 +60,27 @@ The wordmark is the foundation's voice in public. Five variants:
 | `rtam-wordmark-sacred-RTAM-dot.svg` | Canonical. Charcoal letters, gold bindu. |
 | `rtam-wordmark-gold.svg` | All-gold. For sacred contexts, embossed printing, dark backgrounds where gold + charcoal won't show. |
 | `rtam-wordmark-black.svg` | All-black. For pure-black reproduction (single-color printing, fax, microform). |
-| `rtam-wordmark-white.svg` | All-ivory on a baked charcoal ground (so the file is visible when opened standalone). To overlay the ivory mark on indigo or a photograph, remove the first `<rect>` element. |
+| `rtam-wordmark-white.svg` | All-ivory on a **transparent** ground — a true overlay for charcoal, indigo, or photographs. Intentionally invisible on white; always preview on the intended dark surface. |
 | `rtam-wordmark-public-RTAM.svg` | ASCII-only, no bindu. **Use only** when the bindu cannot be reliably reproduced (low-resolution sign vinyl, embroidered shirts under 6 cm wide). |
 
-The bindu is **drawn as a separate `<circle>`** in every SVG. It is not a Unicode combining mark. This is deliberate: the bindu must remain exact in size and position across every reproduction surface.
+The Foundation name also exists as a **standalone Devanagari wordmark** in both
+registers: `rtam-wordmark-devanagari-pratishthan.svg` (ऋतम् प्रतिष्ठान, the
+Sanskritic default) and `rtam-wordmark-devanagari-faundeshan.svg` (ऋतम् फाउंडेशन,
+the common register). Both set ऋतम् large with the descriptor smaller on a shared
+baseline, mirroring the Latin wordmark; neither carries a bindu.
+
+The bindu is **drawn as a separate `<circle>`** in every Latin SVG. It is not a Unicode combining mark. This is deliberate: the bindu must remain exact in size and position across every reproduction surface. Its geometry follows one rule everywhere — centred under the leading R, `cy = baseline + 0.233·fontsize`, `r = fontsize ÷ 12`.
+
+### 3.1a Temple wordmarks
+
+The temple name is set in three standalone renderings, all stacked (name over
+descriptor):
+
+| File | Use |
+|---|---|
+| `rtam-temple-wordmark-latin.svg` | Rtambhareshvara / Temple. Plain English form (signage, donor materials). Leading R carries the bindu. |
+| `rtam-temple-wordmark-diacritic.svg` | Ṛtambhareśvara / Mandir. The pronunciation form — leading R + bindu reads as Ṛ, the native Cinzel `ś` carries the palatal sibilant. Scholarly / sacred register. |
+| `rtam-temple-wordmark-devanagari.svg` | ऋतम्भरेश्वर / मंदिर. Devanagari, no bindu. |
 
 ### 3.2 R-monogram
 
@@ -65,14 +103,8 @@ Four variants: gold / black / ivory / circle-enclosed.
 |---|---|
 | `rtam-bilingual-foundation.svg` | Common-register: ṚTAM Foundation over ऋतम् फाउंडेशन. Default bilingual. |
 | `rtam-sanskritic-pratishthan.svg` | Pure-Sanskritic: ṚTAM Foundation over ऋतम् प्रतिष्ठान. Scholarly / sacred. |
-| `rtambhareshvara-mandir-lockup.svg` | Temple name, both scripts. Wider viewBox (1280) to fit the longest name. |
+| `rtambhareshvara-mandir-lockup.svg` | Temple name, both scripts, leading R carries the bindu. Wider viewBox (1280) to fit the longest name. |
 | `donation-lockup.svg` | Wordmark + thin gold rule + a single quiet stone-gray line. Header, not CTA. |
-
-### 3.5 Secondary seal
-
-The 12-medallion seal: one outer ring, twelve gold dots at 30° spacing, one central bindu. Reads as the months of the ritual year, the signs of the zodiac, the hours of the day — or simply *the full circle*. Use it as a **watermark**, never as the primary mark. The wordmark always wins.
-
-Two files: `rtam-12-medallion-seal.svg` (the mark) and `rtam-12-medallion-pattern.svg` (a tileable field at lower opacity for certificate backgrounds and envelope interiors).
 
 ---
 
@@ -92,6 +124,14 @@ Seven tokens. Use them by name, not by hex. The CSS variables live in `brand/pal
 
 **The wordmark must work in pure black.** This is a non-negotiable reproduction test — every variant of the wordmark has been verified in pure `#1A1A1A` for fax, single-color print, and microform.
 
+**Contrast (measured WCAG ratios).** Charcoal `#1A1A1A` on ivory is 15.9:1 —
+the body-text pairing, comfortably AAA. But two warm pairings fall **below** the
+4.5:1 AA threshold and are **decorative / large-only**: gold `#C8A15A` on ivory
+is **2.18:1**, and stone `#B8B1A4` on ivory is **1.92:1**. Use gold for the bindu,
+rules, and large display accents — never for body copy or small UI text on ivory.
+For functional text on ivory, use charcoal; reserve stone for quiet captions that
+are large enough not to need to be read at a glance.
+
 ---
 
 ## 5 · Typography
@@ -110,7 +150,7 @@ A printable font-installation note for vendors is in `brand/README.md`. SVG glyp
 
 ## 6 · Spacing & clear-space
 
-The wordmark gets a clear-space margin equal to the **cap-height of R** on every side. In the canonical 1080×240 viewBox that is ≈120 viewBox units. Nothing — image, fold, type, or border — may enter that zone.
+The wordmark gets a clear-space margin equal to the **cap-height of R** on every side. Measured in real Cinzel, that cap-height is ≈**84 viewBox units** in the canonical 1080×240 wordmark (not 120 — the earlier figure mistook the font-size for the cap-height). Nothing — image, fold, type, or border — may enter that zone.
 
 The R-monogram (square icon) gets a clear-space margin equal to ¼ of its width. The Devanagari ऋ monogram uses the same rule.
 
@@ -125,7 +165,7 @@ Lockups inherit their wordmark's clear-space. The temple lockup additionally req
 - Place the wordmark on ivory, charcoal, or sacred-night indigo.
 - Use the bindu in every reproduction where it is legible (≥ 6 cm wide).
 - Pair Cinzel with Tiro Devanagari Sanskrit; pair both with Inter for body.
-- Treat the seal as a watermark.
+- Keep the bindu on the Latin marks and off the Devanagari ones.
 
 **Don't**
 
@@ -133,8 +173,9 @@ Lockups inherit their wordmark's clear-space. The temple lockup additionally req
 - Don't substitute the Cinzel R with a different serif. The R's shape is part of the mark.
 - Don't render the wordmark on a busy photographic background. Use the ivory, charcoal, or indigo ground.
 - Don't outline, emboss, drop-shadow, or gradient the wordmark. The mark is flat. Always.
-- Don't promote the seal above the wordmark. The wordmark is primary; the seal supports.
+- Don't add a dot to the Devanagari ऋ marks. The glyph already carries the vocalic-R.
 - Don't use the public RTAM (no-bindu) variant when the bindu would reproduce correctly. It exists only as a fallback.
+- Don't set gold or stone as body text on ivory — both fall below AA contrast; they are decorative / large-only.
 
 ---
 
@@ -150,7 +191,7 @@ The brand kit ships HTML mockups for the most common contexts. See `brand/previe
 | `donation-poster.html` | Annual renovation drive poster (1080×1350, sacred-night indigo). |
 | `instagram-avatar.html` | Three avatar variants for social platforms. |
 | `youtube-banner.html` | 2560×1440 with explicit mobile-safe area. |
-| `certificate.html` | Certificate of Contribution with watermark seal. |
+| `certificate.html` | Certificate of Contribution with the bilingual lockup. |
 | `favicon-scale-test.html` | Browser-tab favicon at 16–256 px. |
 
 ---
@@ -159,22 +200,31 @@ The brand kit ships HTML mockups for the most common contexts. See `brand/previe
 
 ```
 brand/
+├── spec/brand.json                     # the asset tree as data — SINGLE SOURCE OF TRUTH
 ├── palette/colors.{json,css}           # design tokens
-├── logos/rtam-wordmark-*.svg           # 5 wordmark variants
-├── icons/rtam-rdot-icon-*.svg          # 5 R-monogram variants
+├── logos/rtam-wordmark-*.svg           # 5 Latin Foundation wordmark variants
+├── logos/rtam-wordmark-devanagari-*.svg# 2 Devanagari Foundation wordmarks (pratishthan, faundeshan)
+├── logos/rtam-temple-wordmark-*.svg    # 3 temple wordmarks (latin, diacritic, devanagari)
+├── icons/rtam-rdot-icon-*.svg          # 5 R-monogram variants (open + circle)
 ├── icons/rtam-devanagari-ri-icon-*.svg # 4 ऋ monogram variants
 ├── icons/favicon.svg                   # 32 viewBox favicon
 ├── lockups/*.svg                       # 4 lockup compositions
-├── seal/*.svg                          # mark + tileable pattern
 ├── previews/index.html                 # master gallery
-├── previews/typography-specimen.html
-├── previews/{wordmark,monogram,devanagari-monogram,lockups,seal}-specimen.html
-├── previews/mockups/*.html             # 8 application mockups
-├── guidelines/brand-book.md            # this document
-├── guidelines/usage-rules.md           # quick reference
+├── previews/{wordmark,monogram,devanagari-monogram,lockups}-specimen.html
+├── previews/mockups/*.html             # application mockups
+├── guidelines/{brand-book,usage-rules}.md
+├── tools/brandlib.py + generate.py + outline.py + parity.py + build.sh
+│                                       # generator: brand.json → source SVGs + outlined masters + gate
 ├── tools/render_*.py                   # SVG→PNG, HTML→PNG/PDF, MD→PDF
+├── dist/outlined/*.svg                 # built distribution masters (gitignored; `build.sh --write`)
 └── exports/{png,pdf,mockups}/          # rendered outputs
 ```
+
+**Editing the kit:** change `brand/spec/brand.json`, then run `brand/tools/build.sh --write`.
+Hand-editing the SVGs is no longer the workflow — the generator regenerates every
+source SVG and outlined master from the spec, and the parity gate proves fidelity.
+This is what keeps the bindu (and every other coordinate) identical across the
+whole tree.
 
 ---
 

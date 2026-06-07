@@ -132,13 +132,13 @@
     {
       "id": "wordmark-latin",
       "archetype": "horizontal-wordmark",
-      "$comment": "F6 microtypography (descriptor x = RTAM advance-end 471.3 + gap 56 = 527, vs current 540) is DEFERRED to US-15 — applied there together with the inline-preview sync so no drift is introduced mid-generator-build. Foundation x stays at the committed 540 here so US-13 reproduces the tree exactly (parity 0).",
+      "$comment": "F6 microtypography APPLIED (US-15): descriptor x = RTAM advance-end (471.3, fs120 ls12) + locked gap 56 = 527 (was 540). Same gap brand-wide — the 3 Foundation-bearing lockups use x=527 too. Eye-checked; wordmark inline preview copies synced in the same commit.",
       "viewBox": [1080, 240],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation",
       "runs": [
         { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 540, "y": 160, "letterSpacing": 8 }
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 }
       ],
       "shapes": [
         { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 188, "r": 10 }
@@ -241,7 +241,7 @@
       "label": "ṚTAM Foundation · ऋतम् प्रतिष्ठान",
       "runs": [
         { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 540, "y": 160, "letterSpacing": 8 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
         { "role": "devanagari", "text": "ऋतम् प्रतिष्ठान", "font": "tiro", "fs": 60, "x": 540, "y": 335, "anchor": "middle" }
       ],
       "shapes": [
@@ -261,7 +261,7 @@
       "label": "ṚTAM Foundation · ऋतम् फाउंडेशन",
       "runs": [
         { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 540, "y": 160, "letterSpacing": 8 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
         { "role": "devanagari", "text": "ऋतम् फाउंडेशन", "font": "tiro", "fs": 60, "x": 540, "y": 335, "anchor": "middle" }
       ],
       "shapes": [
@@ -276,19 +276,20 @@
     {
       "id": "lockup-temple",
       "archetype": "lockup",
-      "$comment": "US-15 will add the bindu and fix vertical centering / Devanagari content axis. Modelled here at committed values for US-13 reproduction.",
+      "$comment": "US-15: bindu added under the leading R (cx 64, measured leading-R ink center; cy = baseline + fs*0.233, r = fs/12 — same grammar as the temple wordmark); content shifted up 27u to vertically centre the lockup (was V-margins 108/54, now ~81/81). Devanagari axis verified centered (Δ0.5).",
       "viewBox": [1280, 380],
       "fontImport": ["cinzel", "tiro"],
       "label": "Rtambhareshvara Mandir · ऋतम्भरेश्वर मंदिर",
       "runs": [
-        { "role": "name", "text": "RTAMBHARESHVARA MANDIR", "font": "cinzel", "weight": 500, "fs": 72, "x": 640, "y": 160, "anchor": "middle", "letterSpacing": 6 },
-        { "role": "devanagari", "text": "ऋतम्भरेश्वर मंदिर", "font": "tiro", "fs": 68, "x": 640, "y": 320, "anchor": "middle" }
+        { "role": "name", "text": "RTAMBHARESHVARA MANDIR", "font": "cinzel", "weight": 500, "fs": 72, "x": 640, "y": 133, "anchor": "middle", "letterSpacing": 6 },
+        { "role": "devanagari", "text": "ऋतम्भरेश्वर मंदिर", "font": "tiro", "fs": 68, "x": 640, "y": 293, "anchor": "middle" }
       ],
       "shapes": [
-        { "role": "rule", "type": "line", "x1": 520, "y1": 225, "x2": 760, "y2": 225, "strokeWidth": 1.5 }
+        { "role": "bindu", "type": "circle", "cx": 64, "cy": 150, "r": 6 },
+        { "role": "rule", "type": "line", "x1": 520, "y1": 198, "x2": 760, "y2": 198, "strokeWidth": 1.5 }
       ],
       "outputs": [
-        { "path": "lockups/rtambhareshvara-mandir-lockup.svg", "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर", "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.", "colors": { "name": "ink", "devanagari": "ink", "rule": "gold" } }
+        { "path": "lockups/rtambhareshvara-mandir-lockup.svg", "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर", "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. The leading R carries the gold bindu (the vocalic-ṛ crest); ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.", "colors": { "name": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
       ]
     },
 
@@ -300,7 +301,7 @@
       "label": "ṚTAM Foundation — donation lockup",
       "runs": [
         { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 540, "y": 160, "letterSpacing": 8 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
         { "role": "support", "text": "CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR", "font": "inter", "weight": 300, "fs": 26, "x": 540, "y": 305, "anchor": "middle", "letterSpacing": 3 }
       ],
       "shapes": [

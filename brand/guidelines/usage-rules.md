@@ -11,8 +11,13 @@ Quick reference. For the full rationale see `brand-book.md`.
 | Default. Anywhere the bindu reproduces. | `rtam-wordmark-sacred-RTAM-dot.svg` |
 | Sacred surface, embossed, foil, single-color gold print. | `rtam-wordmark-gold.svg` |
 | Pure-black reproduction (fax, microform, single-color). | `rtam-wordmark-black.svg` |
-| Charcoal ground (ivory wordmark on baked charcoal rect). For indigo / photographic overlays, remove the first `<rect>` in the SVG. | `rtam-wordmark-white.svg` |
+| Any dark ground (charcoal / indigo / photo). Transparent overlay — invisible on white. | `rtam-wordmark-white.svg` |
 | Bindu cannot reproduce (small sign vinyl, embroidery < 6 cm). | `rtam-wordmark-public-RTAM.svg` |
+| Devanagari, Sanskritic register (default). | `rtam-wordmark-devanagari-pratishthan.svg` |
+| Devanagari, common register. | `rtam-wordmark-devanagari-faundeshan.svg` |
+| Temple, plain English. | `rtam-temple-wordmark-latin.svg` |
+| Temple, pronunciation form (Ṛ + ś). | `rtam-temple-wordmark-diacritic.svg` |
+| Temple, Devanagari. | `rtam-temple-wordmark-devanagari.svg` |
 
 ---
 
@@ -46,9 +51,9 @@ Quick reference. For the full rationale see `brand-book.md`.
 - Default ground: **ivory** (`#F7F3E9`).
 - Sacred ground: **indigo** (`#1C1A3D`).
 - Body text: **charcoal** (`#1A1A1A`).
-- Bindu and rules: **gold** (`#C8A15A`).
-- Quiet supporting copy: **stone gray** (`#B8B1A4`).
-- The wordmark MUST work in pure `#1A1A1A` — this is the reproduction floor.
+- Bindu and rules: **gold** (`#C8A15A`) — decorative only. Gold on ivory is 2.18:1, below AA; never body text.
+- Quiet supporting copy: **stone gray** (`#B8B1A4`) — large captions only. Stone on ivory is 1.92:1, below AA.
+- The wordmark MUST work in pure `#1A1A1A` — this is the reproduction floor. Charcoal on ivory is 15.9:1 (AAA).
 
 ---
 
@@ -65,7 +70,7 @@ Quick reference. For the full rationale see `brand-book.md`.
 
 ## 6 · Clear-space
 
-- **Wordmark:** clear-space = cap-height of R on every side (≈120 viewBox units in the 1080×240 canonical).
+- **Wordmark:** clear-space = cap-height of R on every side (≈84 viewBox units in the 1080×240 canonical — the measured Cinzel cap-height, not the font-size).
 - **R-monogram, ऋ-monogram:** clear-space = ¼ of icon width.
 - **Temple lockup:** preserve the full 1280×380 viewBox — no cropping, no letter-spacing reduction.
 
@@ -80,21 +85,13 @@ The bindu is **drawn**, not typed. It is a `<circle>` in the SVG with explicit `
 - recolor it independently of the wordmark variant,
 - shrink it below `r=10` in the 1080-wide wordmark (it becomes invisible).
 
-Need a different placement? Use the existing variant file or request a new variant. Don't edit in place.
+Need a different placement? Edit `brand/spec/brand.json` and run `brand/tools/build.sh --write` — never hand-edit the SVG in place. The generator keeps the bindu identical across the whole tree.
+
+The Devanagari marks (ऋ, ऋतम्…) take **no** bindu — the glyph already carries the vocalic-R.
 
 ---
 
-## 8 · The seal
-
-- Always smaller than the primary mark on the same surface.
-- Opacity 0.10–0.20 when used as a watermark (e.g. certificate ground).
-- Opacity 0.55–0.70 for the tiled pattern field (envelope interiors, brand-book endpapers).
-- Never substitute for the wordmark.
-- Never add petals, spokes, flame, or text inside the ring.
-
----
-
-## 9 · What never to do
+## 8 · What never to do
 
 - Render the wordmark on a busy photo background.
 - Outline, emboss, drop-shadow, or gradient the wordmark.

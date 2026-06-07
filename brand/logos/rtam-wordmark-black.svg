@@ -5,6 +5,6 @@
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
   <text x="80" y="160" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="120" letter-spacing="12" fill="#1A1A1A">RTAM</text>
-  <text x="540" y="160" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="62" letter-spacing="8" fill="#1A1A1A">Foundation</text>
+  <text x="527" y="160" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="62" letter-spacing="8" fill="#1A1A1A">Foundation</text>
   <circle cx="126.5" cy="188" r="10" fill="#1A1A1A"/>
 </svg>

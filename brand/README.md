@@ -10,17 +10,18 @@ This directory holds the complete RTAM Foundation visual identity as real, repro
 
 ```
 brand/
-├── palette/      colors.json + colors.css   (single source of truth)
-├── logos/        primary wordmark variants (5)
+├── spec/         brand.json — the asset tree as data (SINGLE SOURCE OF TRUTH)
+├── palette/      colors.json + colors.css
+├── logos/        Foundation wordmarks: 5 Latin + 2 Devanagari + 3 temple
 ├── icons/        Ṛ monogram (5) + ऋ monogram (4) + favicon
-├── lockups/      bilingual + temple + donation lockups (4)
-├── seal/         optional 12-medallion secondary mark
+├── lockups/      bilingual + sanskritic + temple + donation lockups (4)
 ├── previews/     HTML pages to view every asset in a browser
 │   ├── index.html                  master gallery
 │   ├── typography-specimen.html    every test string × every font
 │   └── mockups/                    letterhead, poster, avatar, etc.
 ├── guidelines/   brand-book.md + usage-rules.md
-├── tools/        rasterization helpers
+├── tools/        brandlib + generate/outline/parity + build.sh, rasterization helpers
+├── dist/         outlined distribution masters (built; gitignored)
 └── exports/      rendered PNGs (favicon sizes, mockups) and PDFs
 ```
 
@@ -106,8 +107,13 @@ The kit is built one user story at a time with an approval gate after each:
 4. **US-4** — Ṛ monogram icon
 5. **US-5** — Devanagari ऋ monogram icon
 6. **US-6** — bilingual + temple lockups
-7. **US-7** — optional 12-medallion seal
+7. **US-7** — ~~optional 12-medallion seal~~ *(built, then retired — the circle-enclosed Ṛ monogram is the system's contained "seal" mark)*
 8. **US-8** — master preview + application mockups
 9. **US-9** — brand book + usage rules + PDF export
+10. **US-10–17** — Phase-1 consolidation: the two-entity × two-script tree
+    (`spec/brand.json`), the generator + outlined-master pipeline + parity gate
+    (`tools/build.sh`), circle-monogram reset, the missing standalone wordmarks,
+    true overlay dark variants, and the retirement of the seal.
 
-See [`guidelines/brand-book.md`](guidelines/brand-book.md) once US-9 lands.
+To edit the kit, change `spec/brand.json` and run `tools/build.sh --write`.
+See [`guidelines/brand-book.md`](guidelines/brand-book.md) for the full system.
