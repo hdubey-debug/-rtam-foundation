@@ -1,0 +1,11 @@
+# Tooling deps for brand/tools/ (measure, render, outline, diff).
+# playwright also needs its Chromium: `playwright install chromium`
+cairosvg
+fonttools
+jinja2
+numpy
+Pillow
+playwright
+uharfbuzz
+skia-pathops
+picosvg

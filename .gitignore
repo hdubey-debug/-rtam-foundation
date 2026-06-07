@@ -15,3 +15,6 @@ Thumbs.db
 # Playwright cache (browsers live in ~/.cache/ms-playwright by default; ignore any local stash)
 .playwright/
 playwright-report/
+
+# Scratch renders / measurement output (never committed)
+brand/tools/_scratch/
