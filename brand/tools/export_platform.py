@@ -40,6 +40,22 @@ def hex_rgba(h):
     return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), 255)
 
 
+def write_ico(out: Path, png_paths) -> None:
+    """Assemble a multi-resolution .ico embedding each PNG frame verbatim (PNG-in-ICO,
+    universally supported for sizes <=256). Avoids PIL downsampling one source."""
+    import struct
+    frames = [(Path(p).stat().st_size, Path(p).read_bytes(), Image.open(p).size) for p in png_paths]
+    n = len(frames)
+    header = struct.pack("<HHH", 0, 1, n)
+    offset = 6 + 16 * n
+    entries, data = b"", b""
+    for size_bytes, raw, (w, h) in frames:
+        entries += struct.pack("<BBBBHHII", w & 0xFF, h & 0xFF, 0, 0, 1, 32, len(raw), offset)
+        data += raw
+        offset += len(raw)
+    out.write_bytes(header + entries + data)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     favicon = DIST / "icons" / "favicon.svg"
@@ -50,9 +66,10 @@ def main():
     # --- favicons (bare mark, transparent) ---
     for sz in (16, 32, 48):
         svg_png(favicon, sz).save(OUT / f"favicon-{sz}.png")
-    # multi-resolution .ico
-    Image.open(OUT / "favicon-48.png").save(
-        OUT / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
+    # multi-resolution .ico — embed each NATIVELY-rendered frame, NOT PIL's
+    # downsample-from-the-largest (a Lanczos 48→16 smears the 1px bindu). Build
+    # the container by hand so each entry is the crisp SVG-rendered PNG.
+    write_ico(OUT / "favicon.ico", [OUT / f"favicon-{s}.png" for s in (16, 32, 48)])
 
     # --- app icons (circle Ṛ on ivory) ---
     svg_png(circle, 180, bg=ivory, scale=0.88).save(OUT / "apple-touch-icon-180.png")
