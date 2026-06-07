@@ -36,11 +36,25 @@ approval.
 1. Any render used for an optical judgment MUST use `@font-face` +
    `file://` URIs to `brand/fonts/` — two of fifteen agents shipped
    fallback-font proofs; bare `@import` is banned for proof renders.
-2. F6's resolved RTAM↔Foundation gap (48) reads too tight — re-test 52–60
-   at US-11 before applying.
-3. Circle-icon composite sits low in the ring once F3's canonical gap is
-   applied — raise the icon R baseline-y, then recompute F2 x and F3 cy
-   (lever was unowned; now assigned to US-11 Track A).
+2. F6 — RESOLVED at US-11: the agent sheet's mash was a layout-arithmetic
+   bug (its F_x values ignored RTAM's advance width → near-negative gaps),
+   not the gap value. Corrected retest (F_x = advance-end + gap, real
+   Cinzel): **gap locked at 56** (52 acceptable). ALL F6 resolved
+   coordinates are invalidated and must be re-derived from the rule
+   (symmetric optical margins + gap=56) at US-13.
+3. Circle-icon composite — composite-centering rule (cy = baseline + capH/3,
+   composite bbox centered in cell/ring) APPLIED at US-11 to the PLAIN icons:
+   y=166.33/cy=213 — these stand. The CIRCLE variants (y=160.58/cy=200.25)
+   were SUPERSEDED at US-11′: on full-size faithful render the user rejected
+   them as lopsided — measurement confirmed the bbox was centered (cy 125.5)
+   but the large R crowded the ring (top corners only ~8u clear) over a wide
+   empty lower void holding a lonely bindu (R→bindu gap 25.8). Re-derived by
+   optical mass-balance (not bbox-centering): shrink the glyph off the ring
+   and pull the bindu up as an attached ṛ-accent. Locked from rendered
+   candidates + eye-check + per-quadrant clearance — R-circle x=127 y=161
+   fs=152, bindu cy=189 r=12 (was x=121.12 y=160.58 fs=170, cy=200.25 r=14.17);
+   ऋ-circle y=190 fs=184 (was y=186 fs=180), dropped so the heavy shirorekha
+   bar seats near center. Tooling: `brand/tools/_scratch/circlefix/sweep.py`.
 4. Stale radius-ownership references in F1/F14 (cite F5; F3 owns r) —
    clean up when applying.
 5. Multi-owner favicon reconciliation (checked at the gate): values compose
