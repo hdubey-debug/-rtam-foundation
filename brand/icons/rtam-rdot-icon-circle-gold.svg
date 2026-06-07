@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation seal mark">
-  <title>Ṛ monogram in circle — gold ring on ivory</title>
-  <desc>Enclosed icon variant: charcoal R + gold bindu inside a gold ring. Used as a profile avatar, social media mark, and seal where a contained form reads better than a floating glyph.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-circle-gold-title rtam-rdot-icon-circle-gold-desc">
+  <title id="rtam-rdot-icon-circle-gold-title">Ṛ monogram in circle — gold ring on ivory</title>
+  <desc id="rtam-rdot-icon-circle-gold-desc">Enclosed icon variant: charcoal R + gold bindu inside a gold ring. Used as a profile avatar, social media mark, and seal where a contained form reads better than a floating glyph.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 280" role="img" aria-label="ऋतम्भरेश्वर मंदिर">
-  <title>Rtambhareshvara Mandir — Devanagari wordmark</title>
-  <desc>Stacked Devanagari wordmark for the temple: ऋतम्भरेश्वर over मंदिर (Tiro Devanagari Sanskrit). No bindu — ऋ is the self-contained vocalic-R. Charcoal on transparent.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 280" role="img" aria-labelledby="rtam-temple-wordmark-devanagari-title rtam-temple-wordmark-devanagari-desc">
+  <title id="rtam-temple-wordmark-devanagari-title">Rtambhareshvara Mandir — Devanagari wordmark</title>
+  <desc id="rtam-temple-wordmark-devanagari-desc">Stacked Devanagari wordmark for the temple: ऋतम्भरेश्वर over मंदिर (Tiro Devanagari Sanskrit). No bindu — ऋ is the self-contained vocalic-R. Charcoal on transparent.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>

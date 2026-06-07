@@ -55,6 +55,22 @@ def faithful(svg: str) -> str:
     return svg
 
 
+def inject_bg(svg: str, hexcol: str) -> str:
+    """Insert a full-bleed background rect (render-only) so ink_mask can see the
+    glyph — light-on-transparent overlay variants are invisible on the default
+    white canvas. All three renders of a variant get the same injected ground."""
+    i = svg.index(">", svg.index("<svg")) + 1
+    m = re.search(r'viewBox="0 0 (\S+) (\S+)"', svg)
+    w, h = m.group(1), m.group(2)
+    return f'{svg[:i]}<rect width="{w}" height="{h}" fill="{hexcol}"/>{svg[i:]}'
+
+
+def render_bg(brand: dict, output: dict) -> str:
+    """Dark ground for light (ivory) overlay variants; light ground otherwise."""
+    vals = set(output.get("colors", {}).values())
+    return "#1A1A1A" if "ivory" in vals else "#FFFFFF"
+
+
 def normalize_geometry(svg: str) -> str:
     """For the renderer-independence check: strip any full-bleed ground rect and
     force every fill/stroke to black-on-white, so the comparison tests the
@@ -113,10 +129,11 @@ def main() -> int:
             committed = bl.BRAND / rel
             gen_live = bl.emit_livetext(brand, asset, output)
             gen_outl = bl.emit_outlined(brand, asset, output)
-            m_gen = chrome(faithful(gen_live), "gen", vb)
+            bg = render_bg(brand, output)
+            m_gen = chrome(inject_bg(faithful(gen_live), bg), "gen", vb)
             norm = normalize_geometry(gen_outl)
             m_outl_c = chrome(norm, "outlc", vb)        # for r-indep (black-on-white)
-            m_outl_pos = chrome(gen_outl, "outlp", vb)  # for drift (actual colours)
+            m_outl_pos = chrome(inject_bg(gen_outl, bg), "outlp", vb)  # for drift
             op = tmp / "outl_cairo.png"
             # match chrome's exact pixel dims (it rounds the CSS viewport then x SS);
             # a 1px height mismatch causes sub-pixel global misregistration -> fringe
@@ -129,7 +146,7 @@ def main() -> int:
             changed = bool(output.get("changed") or asset.get("changed"))
             # 1 coord-parity
             if committed.exists():
-                m_comm = chrome(faithful(committed.read_text()), "comm", vb)
+                m_comm = chrome(inject_bg(faithful(committed.read_text()), bg), "comm", vb)
                 parity = structural_diff(m_comm, m_gen)["max_blob"]
             else:
                 parity = None

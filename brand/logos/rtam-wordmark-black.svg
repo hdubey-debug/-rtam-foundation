@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
-  <title>ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)</title>
-  <desc>Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-labelledby="rtam-wordmark-black-title rtam-wordmark-black-desc">
+  <title id="rtam-wordmark-black-title">ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)</title>
+  <desc id="rtam-wordmark-black-desc">Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

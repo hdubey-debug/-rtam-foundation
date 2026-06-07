@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation Devanagari monogram">
-  <title>Devanagari ऋ monogram — charcoal</title>
-  <desc>Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-devanagari-ri-icon-black-title rtam-devanagari-ri-icon-black-desc">
+  <title id="rtam-devanagari-ri-icon-black-title">Devanagari ऋ monogram — charcoal</title>
+  <desc id="rtam-devanagari-ri-icon-black-desc">Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>

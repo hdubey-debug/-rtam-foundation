@@ -92,7 +92,7 @@
       "outputs": [
         { "path": "icons/rtam-rdot-icon-gold.svg", "title": "Ṛ monogram — gold", "desc": "Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.", "colors": { "glyph": "gold", "bindu": "gold" } },
         { "path": "icons/rtam-rdot-icon-black.svg", "title": "Ṛ monogram — charcoal", "desc": "Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.", "colors": { "glyph": "ink", "bindu": "ink" } },
-        { "path": "icons/rtam-rdot-icon-white.svg", "title": "Ṛ monogram — ivory", "desc": "Single-glyph icon mark in ivory #F7F3E9. Use on charcoal / indigo / photographic dark surfaces.", "colors": { "glyph": "ivory", "bindu": "ivory" }, "ground": "ink" }
+        { "path": "icons/rtam-rdot-icon-white.svg", "title": "Ṛ monogram — ivory", "desc": "Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.", "colors": { "glyph": "ivory", "bindu": "ivory" } }
       ]
     },
 
@@ -108,7 +108,7 @@
       "outputs": [
         { "path": "icons/rtam-devanagari-ri-icon-gold.svg", "title": "Devanagari ऋ monogram — gold", "desc": "Sanskrit ऋ (vocalic R) — the Devanagari counterpart to the Latin Ṛ monogram. Represents the same sacred sound the bindu signifies under R; therefore no separate dot is added. Tiro Devanagari Sanskrit. All gold #C8A15A.", "colors": { "glyph": "gold" } },
         { "path": "icons/rtam-devanagari-ri-icon-black.svg", "title": "Devanagari ऋ monogram — charcoal", "desc": "Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.", "colors": { "glyph": "ink" } },
-        { "path": "icons/rtam-devanagari-ri-icon-white.svg", "title": "Devanagari ऋ monogram — ivory", "desc": "Sanskrit ऋ in ivory #F7F3E9. Use on charcoal / indigo / photographic dark surfaces.", "colors": { "glyph": "ivory" }, "ground": "ink" }
+        { "path": "icons/rtam-devanagari-ri-icon-white.svg", "title": "Devanagari ऋ monogram — ivory", "desc": "Sanskrit ऋ in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; intentionally invisible on white.", "colors": { "glyph": "ivory" } }
       ]
     },
 
@@ -147,7 +147,7 @@
         { "path": "logos/rtam-wordmark-sacred-RTAM-dot.svg", "title": "ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)", "desc": "Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "gold" } },
         { "path": "logos/rtam-wordmark-black.svg", "title": "ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)", "desc": "Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "ink" } },
         { "path": "logos/rtam-wordmark-gold.svg", "title": "ṚTAM Foundation — gold wordmark (all antique-gold)", "desc": "All-gold variant for premium / ceremonial contexts on ivory or dark backgrounds. Letters and bindu both #C8A15A.", "colors": { "name": "gold", "descriptor": "gold", "bindu": "gold" } },
-        { "path": "logos/rtam-wordmark-white.svg", "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds", "desc": "Ivory variant for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Preview must always be checked on the intended dark surface.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "ivory" }, "ground": "ink" },
+        { "path": "logos/rtam-wordmark-white.svg", "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds", "desc": "Ivory variant on a transparent ground — a true overlay for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "ivory" } },
         { "path": "logos/rtam-wordmark-public-RTAM.svg", "label": "RTAM Foundation", "title": "RTAM Foundation — public ASCII wordmark (no bindu)", "desc": "Public / English-only variant. No bindu — used in plain ASCII contexts (URLs, email signatures, legal documents) where the sacred mark is inappropriate or unreliable. Matches sacred variant geometry exactly so swaps remain visually consistent.", "colors": { "name": "ink", "descriptor": "ink" }, "drop": ["bindu"] }
       ]
     },

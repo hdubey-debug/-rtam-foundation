@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation monogram">
-  <title>Ṛ monogram — ivory</title>
-  <desc>Single-glyph icon mark in ivory #F7F3E9. Use on charcoal / indigo / photographic dark surfaces.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-white-title rtam-rdot-icon-white-desc">
+  <title id="rtam-rdot-icon-white-title">Ṛ monogram — ivory</title>
+  <desc id="rtam-rdot-icon-white-desc">Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
-  <rect x="0" y="0" width="256" height="256" fill="#1A1A1A"/>
   <text x="119.9" y="166.33" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="200" text-anchor="middle" fill="#F7F3E9">R</text>
   <circle cx="128" cy="213" r="16.67" fill="#F7F3E9"/>
 </svg>

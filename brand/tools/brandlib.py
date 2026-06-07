@@ -186,11 +186,15 @@ def _text_el(brand: dict, r: dict) -> str:
 
 def _svg_open(brand: dict, asset: dict, output: dict) -> str:
     w, h = asset["viewBox"]
-    label = output.get("label", asset.get("label", ""))
     title = output.get("title", "")
     desc = output.get("desc", "")
+    # Accessible name from referenced <title>/<desc> (aria-labelledby), not a
+    # duplicated aria-label string. Ids are unique per file (each SVG is its own doc).
+    slug = Path(output["path"]).stem
+    tid, did = f"{slug}-title", f"{slug}-desc"
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" role="img" '
-            f'aria-label="{label}">\n  <title>{title}</title>\n  <desc>{desc}</desc>\n')
+            f'aria-labelledby="{tid} {did}">\n'
+            f'  <title id="{tid}">{title}</title>\n  <desc id="{did}">{desc}</desc>\n')
 
 
 def emit_livetext(brand: dict, asset: dict, output: dict) -> str:

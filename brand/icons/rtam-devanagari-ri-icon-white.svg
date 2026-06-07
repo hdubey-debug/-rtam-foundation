@@ -1,9 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation Devanagari monogram">
-  <title>Devanagari ऋ monogram — ivory</title>
-  <desc>Sanskrit ऋ in ivory #F7F3E9. Use on charcoal / indigo / photographic dark surfaces.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-devanagari-ri-icon-white-title rtam-devanagari-ri-icon-white-desc">
+  <title id="rtam-devanagari-ri-icon-white-title">Devanagari ऋ monogram — ivory</title>
+  <desc id="rtam-devanagari-ri-icon-white-desc">Sanskrit ऋ in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; intentionally invisible on white.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>
-  <rect x="0" y="0" width="256" height="256" fill="#1A1A1A"/>
   <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#F7F3E9">ऋ</text>
 </svg>

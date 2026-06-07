@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ṚTAM Foundation">
-  <title>ṚTAM Foundation favicon</title>
-  <desc>Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-labelledby="favicon-title favicon-desc">
+  <title id="favicon-title">ṚTAM Foundation favicon</title>
+  <desc id="favicon-desc">Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

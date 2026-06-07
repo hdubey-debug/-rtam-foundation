@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation monogram">
-  <title>Ṛ monogram — gold</title>
-  <desc>Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-gold-title rtam-rdot-icon-gold-desc">
+  <title id="rtam-rdot-icon-gold-title">Ṛ monogram — gold</title>
+  <desc id="rtam-rdot-icon-gold-desc">Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation monogram">
-  <title>Ṛ monogram — charcoal</title>
-  <desc>Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-black-title rtam-rdot-icon-black-desc">
+  <title id="rtam-rdot-icon-black-title">Ṛ monogram — charcoal</title>
+  <desc id="rtam-rdot-icon-black-desc">Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ऋतम् फाउंडेशन">
-  <title>RTAM Foundation — Devanagari wordmark (common register)</title>
-  <desc>Devanagari Foundation wordmark in the common Hindi register: ऋतम् (name) + फाउंडेशन (the borrowed transliteration of Foundation). For everyday, public-facing Hindi contexts. No bindu — ऋ is self-contained.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-labelledby="rtam-wordmark-devanagari-faundeshan-title rtam-wordmark-devanagari-faundeshan-desc">
+  <title id="rtam-wordmark-devanagari-faundeshan-title">RTAM Foundation — Devanagari wordmark (common register)</title>
+  <desc id="rtam-wordmark-devanagari-faundeshan-desc">Devanagari Foundation wordmark in the common Hindi register: ऋतम् (name) + फाउंडेशन (the borrowed transliteration of Foundation). For everyday, public-facing Hindi contexts. No bindu — ऋ is self-contained.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>

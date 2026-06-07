@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-label="ṚTAM Foundation">
-  <title>ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)</title>
-  <desc>Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-labelledby="rtam-wordmark-sacred-RTAM-dot-title rtam-wordmark-sacred-RTAM-dot-desc">
+  <title id="rtam-wordmark-sacred-RTAM-dot-title">ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)</title>
+  <desc id="rtam-wordmark-sacred-RTAM-dot-desc">Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

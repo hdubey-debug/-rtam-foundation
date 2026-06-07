@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 380" role="img" aria-label="Rtambhareshvara Mandir · ऋतम्भरेश्वर मंदिर">
-  <title>Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर</title>
-  <desc>Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 380" role="img" aria-labelledby="rtambhareshvara-mandir-lockup-title rtambhareshvara-mandir-lockup-desc">
+  <title id="rtambhareshvara-mandir-lockup-title">Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर</title>
+  <desc id="rtambhareshvara-mandir-lockup-desc">Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 260" role="img" aria-label="Rtambhareshvara Temple">
-  <title>Rtambhareshvara Temple — Latin wordmark</title>
-  <desc>Stacked Latin wordmark for the temple: the name Rtambhareshvara (Cinzel, leading R carrying the gold bindu = the vocalic-ṛ crest) over the descriptor Temple. Charcoal text, gold bindu on transparent ground.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 260" role="img" aria-labelledby="rtam-temple-wordmark-latin-title rtam-temple-wordmark-latin-desc">
+  <title id="rtam-temple-wordmark-latin-title">Rtambhareshvara Temple — Latin wordmark</title>
+  <desc id="rtam-temple-wordmark-latin-desc">Stacked Latin wordmark for the temple: the name Rtambhareshvara (Cinzel, leading R carrying the gold bindu = the vocalic-ṛ crest) over the descriptor Temple. Charcoal text, gold bindu on transparent ground.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

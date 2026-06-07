@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 360" role="img" aria-label="ṚTAM Foundation — donation lockup">
-  <title>Donation lockup — ṚTAM Foundation with supporting line</title>
-  <desc>Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy. No CTA chrome — the lockup is a header, not a button.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 360" role="img" aria-labelledby="donation-lockup-title donation-lockup-desc">
+  <title id="donation-lockup-title">Donation lockup — ṚTAM Foundation with supporting line</title>
+  <desc id="donation-lockup-desc">Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy. No CTA chrome — the lockup is a header, not a button.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap');</style>
   </defs>

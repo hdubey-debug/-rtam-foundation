@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ṚTAM Foundation seal mark">
-  <title>Ṛ monogram in circle — charcoal ring on ivory</title>
-  <desc>Enclosed mono variant: charcoal R, charcoal bindu, charcoal ring. Single-color seal for stamps, embossing, and contexts that disallow gold.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-circle-charcoal-title rtam-rdot-icon-circle-charcoal-desc">
+  <title id="rtam-rdot-icon-circle-charcoal-title">Ṛ monogram in circle — charcoal ring on ivory</title>
+  <desc id="rtam-rdot-icon-circle-charcoal-desc">Enclosed mono variant: charcoal R, charcoal bindu, charcoal ring. Single-color seal for stamps, embossing, and contexts that disallow gold.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>

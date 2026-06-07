@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 380" role="img" aria-label="ṚTAM Foundation · ऋतम् फाउंडेशन">
-  <title>Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन</title>
-  <desc>Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 380" role="img" aria-labelledby="rtam-bilingual-foundation-title rtam-bilingual-foundation-desc">
+  <title id="rtam-bilingual-foundation-title">Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन</title>
+  <desc id="rtam-bilingual-foundation-desc">Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
   </defs>
