@@ -30,7 +30,9 @@ def render(html_path: Path, out_path: Path, width: int, scale: float) -> None:
         # Give web fonts a final moment to settle after networkidle.
         page.wait_for_timeout(500)
         if out_path.suffix.lower() == ".pdf":
-            page.pdf(path=str(out_path), format="Letter", print_background=True)
+            # A4 is the foundation's document standard (Indian/international trust
+            # correspondence); letterhead + receipt are sized to A4 794x1123 @96dpi.
+            page.pdf(path=str(out_path), format="A4", print_background=True)
         else:
             page.screenshot(path=str(out_path), full_page=True)
         browser.close()
