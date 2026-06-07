@@ -53,7 +53,7 @@ Quick reference. For the full rationale see `brand-book.md`.
 - Body text: **charcoal** (`#1A1A1A`).
 - Bindu and rules: **gold** (`#C8A15A`) — decorative only. Gold on ivory is 2.18:1, below AA; never body text.
 - Quiet supporting copy: **stone gray** (`#B8B1A4`) — large captions only. Stone on ivory is 1.92:1, below AA.
-- The wordmark MUST work in pure `#1A1A1A` — this is the reproduction floor. Charcoal on ivory is 15.9:1 (AAA).
+- The wordmark MUST work in pure `#1A1A1A` — this is the reproduction floor. Charcoal on ivory is 15.7:1 (AAA).
 
 ---
 

@@ -124,7 +124,7 @@ Seven tokens. Use them by name, not by hex. The CSS variables live in `brand/pal
 
 **The wordmark must work in pure black.** This is a non-negotiable reproduction test — every variant of the wordmark has been verified in pure `#1A1A1A` for fax, single-color print, and microform.
 
-**Contrast (measured WCAG ratios).** Charcoal `#1A1A1A` on ivory is 15.9:1 —
+**Contrast (measured WCAG ratios).** Charcoal `#1A1A1A` on ivory is 15.7:1 —
 the body-text pairing, comfortably AAA. But two warm pairings fall **below** the
 4.5:1 AA threshold and are **decorative / large-only**: gold `#C8A15A` on ivory
 is **2.18:1**, and stone `#B8B1A4` on ivory is **1.92:1**. Use gold for the bindu,
