@@ -6,7 +6,7 @@ Usage:
 
 The markdown is rendered with the `tables`, `fenced_code`, and `attr_list`
 extensions, then embedded in a Cinzel/Inter-styled HTML template (matching
-the brand palette), then printed to Letter-size PDF.
+the brand palette), then printed to A4-size PDF.
 """
 
 import sys
@@ -35,7 +35,7 @@ TEMPLATE = """<!doctype html>
       --rtam-bronze: #9B6A2F;
       --rtam-stone: #B8B1A4;
     }}
-    @page {{ size: Letter; margin: 22mm 20mm; }}
+    @page {{ size: A4; margin: 22mm 20mm; }}
     * {{ box-sizing: border-box; }}
     body {{
       margin: 0;
@@ -170,7 +170,7 @@ def render(md_path: Path, pdf_path: Path) -> None:
             page.wait_for_timeout(500)
             page.pdf(
                 path=str(pdf_path),
-                format="Letter",
+                format="A4",
                 margin={"top": "22mm", "bottom": "22mm", "left": "20mm", "right": "20mm"},
                 print_background=True,
             )

@@ -42,7 +42,7 @@ FACE = f"""
 @font-face {{ font-family:'Cinzel'; font-weight:600; src:url('file://{F}/cinzel/cinzel-600.ttf'); }}
 @font-face {{ font-family:'Cinzel'; font-weight:700; src:url('file://{F}/cinzel/cinzel-700.ttf'); }}
 @font-face {{ font-family:'Tiro Devanagari Sanskrit'; src:url('file://{F}/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }}
-@font-face {{ font-family:'Inter'; font-weight:300; src:url('file://{F}/inter/inter-400.ttf'); }}
+@font-face {{ font-family:'Inter'; font-weight:300; src:url('file://{F}/inter/inter-300.ttf'); }}
 @font-face {{ font-family:'Inter'; font-weight:400; src:url('file://{F}/inter/inter-400.ttf'); }}
 @font-face {{ font-family:'Inter'; font-weight:500; src:url('file://{F}/inter/inter-500.ttf'); }}
 @font-face {{ font-family:'Inter'; font-weight:600; src:url('file://{F}/inter/inter-600.ttf'); }}

@@ -22,8 +22,7 @@
     "inter": {
       "family": "Inter, system-ui, sans-serif",
       "familyQuery": "Inter:wght@300;400;500;600",
-      "$comment": "Inter-300 is not vendored; weight 300 maps to inter-400.ttf for outlining (outlined master approximates the donation caption at 400). Live text keeps weight 300 (renders Inter-300 where the web font is available).",
-      "files": { "300": "inter/inter-400.ttf", "400": "inter/inter-400.ttf", "500": "inter/inter-500.ttf", "600": "inter/inter-600.ttf" }
+      "files": { "300": "inter/inter-300.ttf", "400": "inter/inter-400.ttf", "500": "inter/inter-500.ttf", "600": "inter/inter-600.ttf" }
     }
   },
   "assets": [
