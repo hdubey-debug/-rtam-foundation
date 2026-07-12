@@ -12,7 +12,12 @@
     "cinzel": {
       "family": "Cinzel, Marcellus, 'Trajan Pro', serif",
       "familyQuery": "Cinzel:wght@400;500;600;700",
-      "files": { "400": "cinzel/cinzel-400.ttf", "500": "cinzel/cinzel-500.ttf", "600": "cinzel/cinzel-600.ttf", "700": "cinzel/cinzel-700.ttf" }
+      "files": {
+        "400": "cinzel/cinzel-400.ttf",
+        "500": "cinzel/cinzel-500.ttf",
+        "600": "cinzel/cinzel-600.ttf",
+        "700": "cinzel/cinzel-700.ttf"
+      }
     },
     "tiro": {
       "family": "'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif",
@@ -22,308 +27,1072 @@
     "inter": {
       "family": "Inter, system-ui, sans-serif",
       "familyQuery": "Inter:wght@300;400;500;600",
-      "files": { "300": "inter/inter-300.ttf", "400": "inter/inter-400.ttf", "500": "inter/inter-500.ttf", "600": "inter/inter-600.ttf" }
+      "files": {
+        "300": "inter/inter-300.ttf",
+        "400": "inter/inter-400.ttf",
+        "500": "inter/inter-500.ttf",
+        "600": "inter/inter-600.ttf"
+      }
     }
   },
   "assets": [
     {
       "id": "rdot-icon-circle",
       "archetype": "circle-mark",
-      "viewBox": [256, 256],
+      "viewBox": [
+        256,
+        256
+      ],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation seal mark",
       "runs": [
-        { "role": "glyph", "text": "R", "font": "cinzel", "weight": 600, "fs": 152, "x": 127, "y": 161, "anchor": "middle" }
+        {
+          "role": "glyph",
+          "text": "R",
+          "font": "cinzel",
+          "weight": 600,
+          "fs": 152,
+          "x": 127,
+          "y": 161,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "ring", "type": "circle", "cx": 128, "cy": 128, "r": 118, "fillKind": "stroke", "strokeWidth": 5 },
-        { "role": "bindu", "type": "circle", "cx": 128, "cy": 189, "r": 12 }
+        {
+          "role": "ring",
+          "type": "circle",
+          "cx": 128,
+          "cy": 128,
+          "r": 118,
+          "fillKind": "stroke",
+          "strokeWidth": 5
+        },
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 128,
+          "cy": 189,
+          "r": 12
+        }
       ],
       "outputs": [
         {
           "path": "icons/rtam-rdot-icon-circle-gold.svg",
           "title": "Ṛ monogram in circle — gold ring on ivory",
           "desc": "Enclosed icon variant: charcoal R + gold bindu inside a gold ring. Used as a profile avatar, social media mark, and seal where a contained form reads better than a floating glyph.",
-          "colors": { "glyph": "ink", "ring": "gold", "bindu": "gold" }
+          "colors": {
+            "glyph": "ink",
+            "ring": "gold",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
         },
         {
           "path": "icons/rtam-rdot-icon-circle-charcoal.svg",
           "title": "Ṛ monogram in circle — charcoal ring on ivory",
           "desc": "Enclosed mono variant: charcoal R, charcoal bindu, charcoal ring. Single-color seal for stamps, embossing, and contexts that disallow gold.",
-          "colors": { "glyph": "ink", "ring": "ink", "bindu": "ink" }
+          "colors": {
+            "glyph": "ink",
+            "ring": "ink",
+            "bindu": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
         },
         {
           "path": "icons/rtam-rdot-icon-circle-allgold.svg",
           "title": "Ṛ monogram in circle — all gold (dark surfaces)",
           "desc": "Enclosed seal with R, ring, and bindu all antique gold on a transparent ground — the contained seal for charcoal / indigo / ceremonial dark surfaces (poster corners, certificates on dark stock). Intentionally low-contrast on white; always preview on the intended dark surface.",
-          "colors": { "glyph": "gold", "ring": "gold", "bindu": "gold" }
+          "colors": {
+            "glyph": "gold",
+            "ring": "gold",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
         }
       ]
     },
     {
       "id": "devanagari-ri-icon-circle",
       "archetype": "circle-mark",
-      "viewBox": [256, 256],
+      "viewBox": [
+        256,
+        256
+      ],
       "fontImport": "tiro",
       "label": "ṚTAM Foundation Devanagari seal mark",
       "runs": [
-        { "role": "glyph", "text": "ऋ", "font": "tiro", "fs": 184, "x": 128, "y": 190, "anchor": "middle" }
+        {
+          "role": "glyph",
+          "text": "ऋ",
+          "font": "tiro",
+          "fs": 184,
+          "x": 128,
+          "y": 190,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "ring", "type": "circle", "cx": 128, "cy": 128, "r": 118, "fillKind": "stroke", "strokeWidth": 5 }
+        {
+          "role": "ring",
+          "type": "circle",
+          "cx": 128,
+          "cy": 128,
+          "r": 118,
+          "fillKind": "stroke",
+          "strokeWidth": 5
+        }
       ],
       "outputs": [
         {
           "path": "icons/rtam-devanagari-ri-icon-circle.svg",
           "title": "Devanagari ऋ in circle — charcoal glyph, gold ring",
           "desc": "Enclosed seal variant: charcoal ऋ inside a gold ring. The Devanagari counterpart to the Latin circle-gold seal. Use as a sacred avatar, social profile mark, or stamped seal.",
-          "colors": { "glyph": "ink", "ring": "gold" }
+          "colors": {
+            "glyph": "ink",
+            "ring": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
         }
       ]
     },
-
     {
       "id": "rdot-icon",
       "archetype": "plain-mark",
-      "viewBox": [256, 256],
+      "viewBox": [
+        256,
+        256
+      ],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation monogram",
       "runs": [
-        { "role": "glyph", "text": "R", "font": "cinzel", "weight": 600, "fs": 200, "x": 119.9, "y": 166.33, "anchor": "middle" }
+        {
+          "role": "glyph",
+          "text": "R",
+          "font": "cinzel",
+          "weight": 600,
+          "fs": 200,
+          "x": 119.9,
+          "y": 166.33,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 128, "cy": 213, "r": 16.67 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 128,
+          "cy": 213,
+          "r": 16.67
+        }
       ],
       "outputs": [
-        { "path": "icons/rtam-rdot-icon-sacred.svg", "title": "Ṛ monogram — sacred (charcoal R, gold bindu)", "desc": "The canonical two-tone plain mark: charcoal R with the gold bindu — the monogram form of the sacred wordmark. Default plain mark on ivory/sandstone surfaces.", "colors": { "glyph": "ink", "bindu": "gold" } },
-        { "path": "icons/rtam-rdot-icon-gold.svg", "title": "Ṛ monogram — gold", "desc": "Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.", "colors": { "glyph": "gold", "bindu": "gold" } },
-        { "path": "icons/rtam-rdot-icon-black.svg", "title": "Ṛ monogram — charcoal", "desc": "Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.", "colors": { "glyph": "ink", "bindu": "ink" } },
-        { "path": "icons/rtam-rdot-icon-white.svg", "title": "Ṛ monogram — ivory", "desc": "Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.", "colors": { "glyph": "ivory", "bindu": "ivory" } },
-        { "path": "icons/rtam-rdot-icon-white-golddot.svg", "title": "Ṛ monogram — sacred on dark (ivory R, gold bindu)", "desc": "Dark-surface counterpart of the sacred plain mark: ivory R with the gold bindu preserved, on a transparent ground — the default plain mark on charcoal / indigo. Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "glyph": "ivory", "bindu": "gold" } }
+        {
+          "path": "icons/rtam-rdot-icon-sacred.svg",
+          "title": "Ṛ monogram — sacred (charcoal R, gold bindu)",
+          "desc": "The canonical two-tone plain mark: charcoal R with the gold bindu — the monogram form of the sacred wordmark. Default plain mark on ivory/sandstone surfaces.",
+          "colors": {
+            "glyph": "ink",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "icons/rtam-rdot-icon-gold.svg",
+          "title": "Ṛ monogram — gold",
+          "desc": "Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.",
+          "colors": {
+            "glyph": "gold",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "icons/rtam-rdot-icon-black.svg",
+          "title": "Ṛ monogram — charcoal",
+          "desc": "Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.",
+          "colors": {
+            "glyph": "ink",
+            "bindu": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "icons/rtam-rdot-icon-white.svg",
+          "title": "Ṛ monogram — ivory",
+          "desc": "Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.",
+          "colors": {
+            "glyph": "ivory",
+            "bindu": "ivory"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        },
+        {
+          "path": "icons/rtam-rdot-icon-white-golddot.svg",
+          "title": "Ṛ monogram — sacred on dark (ivory R, gold bindu)",
+          "desc": "Dark-surface counterpart of the sacred plain mark: ivory R with the gold bindu preserved, on a transparent ground — the default plain mark on charcoal / indigo. Intentionally invisible on white; always preview on the intended dark surface.",
+          "colors": {
+            "glyph": "ivory",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        }
       ]
     },
-
     {
       "id": "devanagari-ri-icon",
       "archetype": "plain-mark",
       "$comment": "P0.3 recenter (2026-07): ink bbox sat +5.8u low in the 256 box -> baseline 196->190. Optical size parity with the Latin R (ink 53% vs 79% of canvas) is the Phase-2 exp/letterform study, not a nudge.",
-      "viewBox": [256, 256],
+      "viewBox": [
+        256,
+        256
+      ],
       "fontImport": "tiro",
       "label": "ṚTAM Foundation Devanagari monogram",
       "runs": [
-        { "role": "glyph", "text": "ऋ", "font": "tiro", "fs": 210, "x": 128, "y": 190, "anchor": "middle" }
+        {
+          "role": "glyph",
+          "text": "ऋ",
+          "font": "tiro",
+          "fs": 210,
+          "x": 128,
+          "y": 190,
+          "anchor": "middle"
+        }
       ],
       "outputs": [
-        { "path": "icons/rtam-devanagari-ri-icon-gold.svg", "title": "Devanagari ऋ monogram — gold", "desc": "Sanskrit ऋ (vocalic R) — the Devanagari counterpart to the Latin Ṛ monogram. Represents the same sacred sound the bindu signifies under R; therefore no separate dot is added. Tiro Devanagari Sanskrit. All gold #C8A15A.", "colors": { "glyph": "gold" } },
-        { "path": "icons/rtam-devanagari-ri-icon-black.svg", "title": "Devanagari ऋ monogram — charcoal", "desc": "Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.", "colors": { "glyph": "ink" } },
-        { "path": "icons/rtam-devanagari-ri-icon-white.svg", "title": "Devanagari ऋ monogram — ivory", "desc": "Sanskrit ऋ in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; intentionally invisible on white.", "colors": { "glyph": "ivory" } }
+        {
+          "path": "icons/rtam-devanagari-ri-icon-gold.svg",
+          "title": "Devanagari ऋ monogram — gold",
+          "desc": "Sanskrit ऋ (vocalic R) — the Devanagari counterpart to the Latin Ṛ monogram. Represents the same sacred sound the bindu signifies under R; therefore no separate dot is added. Tiro Devanagari Sanskrit. All gold #C8A15A.",
+          "colors": {
+            "glyph": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "icons/rtam-devanagari-ri-icon-black.svg",
+          "title": "Devanagari ऋ monogram — charcoal",
+          "desc": "Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.",
+          "colors": {
+            "glyph": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "icons/rtam-devanagari-ri-icon-white.svg",
+          "title": "Devanagari ऋ monogram — ivory",
+          "desc": "Sanskrit ऋ in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; intentionally invisible on white.",
+          "colors": {
+            "glyph": "ivory"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        }
       ]
     },
-
     {
       "id": "favicon",
       "archetype": "plain-mark",
-      "viewBox": [32, 32],
+      "viewBox": [
+        32,
+        32
+      ],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation",
       "runs": [
-        { "role": "glyph", "text": "R", "font": "cinzel", "weight": 700, "fs": 26, "x": 14.87, "y": 22, "anchor": "middle" }
+        {
+          "role": "glyph",
+          "text": "R",
+          "font": "cinzel",
+          "weight": 700,
+          "fs": 26,
+          "x": 14.87,
+          "y": 22,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 16, "cy": 27.2, "r": 2.86 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 16,
+          "cy": 27.2,
+          "r": 2.86
+        }
       ],
       "outputs": [
-        { "path": "icons/favicon.svg", "title": "ṚTAM Foundation favicon", "desc": "Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.", "colors": { "glyph": "ink", "bindu": "gold" } },
-        { "path": "icons/favicon-dark.svg", "title": "ṚTAM Foundation favicon — dark tabs", "desc": "Dark-tab counterpart of the favicon: ivory R with the gold bindu on a transparent ground, for dark browser chrome and dark manifests. Same 32x32 geometry as favicon.svg.", "colors": { "glyph": "ivory", "bindu": "gold" } }
+        {
+          "path": "icons/favicon.svg",
+          "title": "ṚTAM Foundation favicon",
+          "desc": "Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.",
+          "colors": {
+            "glyph": "ink",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory"
+          ]
+        },
+        {
+          "path": "icons/favicon-dark.svg",
+          "title": "ṚTAM Foundation favicon — dark tabs",
+          "desc": "Dark-tab counterpart of the favicon: ivory R with the gold bindu on a transparent ground, for dark browser chrome and dark manifests. Same 32x32 geometry as favicon.svg.",
+          "colors": {
+            "glyph": "ivory",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        }
       ]
     },
-
     {
       "id": "wordmark-latin",
       "archetype": "horizontal-wordmark",
       "$comment": "F6 microtypography APPLIED (US-15): descriptor x = RTAM advance-end (471.3, fs120 ls12) + locked gap 56 = 527 (was 540). Same gap brand-wide — the 3 Foundation-bearing lockups use x=527 too. P0.3 recenter (2026-07): composite ink bbox sat +15.5u low in the 240 box -> baseline 160->144.5, bindu cy = baseline + fs*0.233 = 172.5 (spikes/center_audit.py before/after). Eye-checked.",
-      "viewBox": [1080, 240],
+      "viewBox": [
+        1080,
+        240
+      ],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 144.5, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 144.5, "letterSpacing": 8 }
+        {
+          "role": "name",
+          "text": "RTAM",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 120,
+          "x": 80,
+          "y": 144.5,
+          "letterSpacing": 12
+        },
+        {
+          "role": "descriptor",
+          "text": "Foundation",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 62,
+          "x": 527,
+          "y": 144.5,
+          "letterSpacing": 8
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 172.5, "r": 10 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 126.5,
+          "cy": 172.5,
+          "r": 10
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-wordmark-sacred-RTAM-dot.svg", "title": "ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)", "desc": "Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "gold" } },
-        { "path": "logos/rtam-wordmark-black.svg", "title": "ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)", "desc": "Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "ink" } },
-        { "path": "logos/rtam-wordmark-gold.svg", "title": "ṚTAM Foundation — gold wordmark (all antique-gold)", "desc": "All-gold variant for premium / ceremonial contexts on ivory or dark backgrounds. Letters and bindu both #C8A15A.", "colors": { "name": "gold", "descriptor": "gold", "bindu": "gold" } },
-        { "path": "logos/rtam-wordmark-white.svg", "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds", "desc": "Ivory variant on a transparent ground — a true overlay for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "ivory" } },
-        { "path": "logos/rtam-wordmark-white-golddot.svg", "title": "ṚTAM Foundation — sacred wordmark on dark (ivory letters, gold bindu)", "desc": "The sacred two-tone form for dark surfaces: ivory letters with the gold bindu preserved — the brand signature does not disappear on charcoal / indigo grounds. Transparent ground; always preview on the intended dark surface. This is the dark-surface counterpart of the primary sacred wordmark.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "gold" } },
-        { "path": "logos/rtam-wordmark-public-RTAM.svg", "label": "RTAM Foundation", "title": "RTAM Foundation — public ASCII wordmark (no bindu)", "desc": "Public / English-only variant. No bindu — used in plain ASCII contexts (URLs, email signatures, legal documents) where the sacred mark is inappropriate or unreliable. Matches sacred variant geometry exactly so swaps remain visually consistent.", "colors": { "name": "ink", "descriptor": "ink" }, "drop": ["bindu"] }
+        {
+          "path": "logos/rtam-wordmark-sacred-RTAM-dot.svg",
+          "title": "ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)",
+          "desc": "Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-black.svg",
+          "title": "ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)",
+          "desc": "Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "bindu": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-gold.svg",
+          "title": "ṚTAM Foundation — gold wordmark (all antique-gold)",
+          "desc": "All-gold variant for premium / ceremonial contexts on ivory or dark backgrounds. Letters and bindu both #C8A15A.",
+          "colors": {
+            "name": "gold",
+            "descriptor": "gold",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "ink",
+            "indigo"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-white.svg",
+          "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds",
+          "desc": "Ivory variant on a transparent ground — a true overlay for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Intentionally invisible on white; always preview on the intended dark surface.",
+          "colors": {
+            "name": "ivory",
+            "descriptor": "ivory",
+            "bindu": "ivory"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-white-golddot.svg",
+          "title": "ṚTAM Foundation — sacred wordmark on dark (ivory letters, gold bindu)",
+          "desc": "The sacred two-tone form for dark surfaces: ivory letters with the gold bindu preserved — the brand signature does not disappear on charcoal / indigo grounds. Transparent ground; always preview on the intended dark surface. This is the dark-surface counterpart of the primary sacred wordmark.",
+          "colors": {
+            "name": "ivory",
+            "descriptor": "ivory",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-public-RTAM.svg",
+          "label": "RTAM Foundation",
+          "title": "RTAM Foundation — public ASCII wordmark (no bindu)",
+          "desc": "Public / English-only variant. No bindu — used in plain ASCII contexts (URLs, email signatures, legal documents) where the sacred mark is inappropriate or unreliable. Matches sacred variant geometry exactly so swaps remain visually consistent.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink"
+          },
+          "drop": [
+            "bindu"
+          ],
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "wordmark-devanagari-pratishthan",
       "archetype": "horizontal-wordmark",
-      "viewBox": [1080, 240],
+      "viewBox": [
+        1080,
+        240
+      ],
       "fontImport": "tiro",
       "label": "ऋतम् प्रतिष्ठान",
       "runs": [
-        { "role": "name", "text": "ऋतम्", "font": "tiro", "fs": 96, "x": 80, "y": 137 },
-        { "role": "descriptor", "text": "प्रतिष्ठान", "font": "tiro", "fs": 56, "x": 337, "y": 137 }
+        {
+          "role": "name",
+          "text": "ऋतम्",
+          "font": "tiro",
+          "fs": 96,
+          "x": 80,
+          "y": 137
+        },
+        {
+          "role": "descriptor",
+          "text": "प्रतिष्ठान",
+          "font": "tiro",
+          "fs": 56,
+          "x": 337,
+          "y": 137
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-wordmark-devanagari-pratishthan.svg", "title": "RTAM Foundation — Devanagari wordmark (Sanskritic register)", "desc": "Devanagari Foundation wordmark in the pure Sanskritic register: ऋतम् (name) + प्रतिष्ठान (pratiṣṭhāna, established institution). Default Devanagari register for sacred, scholarly, trust-deed contexts. No bindu — ऋ is self-contained.", "colors": { "name": "ink", "descriptor": "ink" } }
+        {
+          "path": "logos/rtam-wordmark-devanagari-pratishthan.svg",
+          "title": "RTAM Foundation — Devanagari wordmark (Sanskritic register)",
+          "desc": "Devanagari Foundation wordmark in the pure Sanskritic register: ऋतम् (name) + प्रतिष्ठान (pratiṣṭhāna, established institution). Default Devanagari register for sacred, scholarly, trust-deed contexts. No bindu — ऋ is self-contained.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "wordmark-devanagari-faundeshan",
       "archetype": "horizontal-wordmark",
-      "viewBox": [1080, 240],
+      "viewBox": [
+        1080,
+        240
+      ],
       "fontImport": "tiro",
       "label": "ऋतम् फाउंडेशन",
       "runs": [
-        { "role": "name", "text": "ऋतम्", "font": "tiro", "fs": 96, "x": 80, "y": 137 },
-        { "role": "descriptor", "text": "फाउंडेशन", "font": "tiro", "fs": 56, "x": 337, "y": 137 }
+        {
+          "role": "name",
+          "text": "ऋतम्",
+          "font": "tiro",
+          "fs": 96,
+          "x": 80,
+          "y": 137
+        },
+        {
+          "role": "descriptor",
+          "text": "फाउंडेशन",
+          "font": "tiro",
+          "fs": 56,
+          "x": 337,
+          "y": 137
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-wordmark-devanagari-faundeshan.svg", "title": "RTAM Foundation — Devanagari wordmark (common register)", "desc": "Devanagari Foundation wordmark in the common Hindi register: ऋतम् (name) + फाउंडेशन (the borrowed transliteration of Foundation). For everyday, public-facing Hindi contexts. No bindu — ऋ is self-contained.", "colors": { "name": "ink", "descriptor": "ink" } }
+        {
+          "path": "logos/rtam-wordmark-devanagari-faundeshan.svg",
+          "title": "RTAM Foundation — Devanagari wordmark (common register)",
+          "desc": "Devanagari Foundation wordmark in the common Hindi register: ऋतम् (name) + फाउंडेशन (the borrowed transliteration of Foundation). For everyday, public-facing Hindi contexts. No bindu — ऋ is self-contained.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "temple-wordmark-latin",
       "archetype": "stacked-wordmark",
-      "viewBox": [1080, 260],
+      "viewBox": [
+        1080,
+        260
+      ],
       "fontImport": "cinzel",
       "label": "Rtambhareshvara Temple",
       "runs": [
-        { "role": "name", "text": "Rtambhareshvara", "font": "cinzel", "weight": 500, "fs": 66, "x": 540, "y": 120, "anchor": "middle", "letterSpacing": 4 },
-        { "role": "descriptor", "text": "Temple", "font": "cinzel", "weight": 400, "fs": 30, "x": 540, "y": 186, "anchor": "middle", "letterSpacing": 14 }
+        {
+          "role": "name",
+          "text": "Rtambhareshvara",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 66,
+          "x": 540,
+          "y": 120,
+          "anchor": "middle",
+          "letterSpacing": 4
+        },
+        {
+          "role": "descriptor",
+          "text": "Temple",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 30,
+          "x": 540,
+          "y": 186,
+          "anchor": "middle",
+          "letterSpacing": 14
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 217.8, "cy": 135.4, "r": 5.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 217.8,
+          "cy": 135.4,
+          "r": 5.5
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-temple-wordmark-latin.svg", "title": "Rtambhareshvara Temple — Latin wordmark", "desc": "Stacked Latin wordmark for the temple: the name Rtambhareshvara (Cinzel, leading R carrying the gold bindu = the vocalic-ṛ crest) over the descriptor Temple. Charcoal text, gold bindu on transparent ground.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "gold" } }
+        {
+          "path": "logos/rtam-temple-wordmark-latin.svg",
+          "title": "Rtambhareshvara Temple — Latin wordmark",
+          "desc": "Stacked Latin wordmark for the temple: the name Rtambhareshvara (Cinzel, leading R carrying the gold bindu = the vocalic-ṛ crest) over the descriptor Temple. Charcoal text, gold bindu on transparent ground.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "temple-wordmark-diacritic",
       "archetype": "stacked-wordmark",
-      "viewBox": [1080, 260],
+      "viewBox": [
+        1080,
+        260
+      ],
       "fontImport": "cinzel",
       "label": "Ṛtambhareśvara Mandir",
       "runs": [
-        { "role": "name", "text": "Rtambhareśvara", "font": "cinzel", "weight": 500, "fs": 66, "x": 540, "y": 120, "anchor": "middle", "letterSpacing": 4 },
-        { "role": "descriptor", "text": "Mandir", "font": "cinzel", "weight": 400, "fs": 30, "x": 540, "y": 186, "anchor": "middle", "letterSpacing": 14 }
+        {
+          "role": "name",
+          "text": "Rtambhareśvara",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 66,
+          "x": 540,
+          "y": 120,
+          "anchor": "middle",
+          "letterSpacing": 4
+        },
+        {
+          "role": "descriptor",
+          "text": "Mandir",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 30,
+          "x": 540,
+          "y": 186,
+          "anchor": "middle",
+          "letterSpacing": 14
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 244.2, "cy": 135.4, "r": 5.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 244.2,
+          "cy": 135.4,
+          "r": 5.5
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-temple-wordmark-diacritic.svg", "title": "Ṛtambhareśvara Mandir — diacritic wordmark (pronunciation form)", "desc": "Mixed-diacritic pronunciation form: the leading R + gold bindu reads as Ṛ (vocalic-ṛ), the native Cinzel ś carries the palatal sibilant. Descriptor Mandir. The scholarly/sacred Latin register.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "gold" } }
+        {
+          "path": "logos/rtam-temple-wordmark-diacritic.svg",
+          "title": "Ṛtambhareśvara Mandir — diacritic wordmark (pronunciation form)",
+          "desc": "Mixed-diacritic pronunciation form: the leading R + gold bindu reads as Ṛ (vocalic-ṛ), the native Cinzel ś carries the palatal sibilant. Descriptor Mandir. The scholarly/sacred Latin register.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "temple-wordmark-devanagari",
       "archetype": "stacked-wordmark",
-      "viewBox": [1080, 280],
+      "viewBox": [
+        1080,
+        280
+      ],
       "fontImport": "tiro",
       "label": "ऋतम्भरेश्वर मंदिर",
       "runs": [
-        { "role": "name", "text": "ऋतम्भरेश्वर", "font": "tiro", "fs": 76, "x": 540, "y": 130, "anchor": "middle" },
-        { "role": "descriptor", "text": "मंदिर", "font": "tiro", "fs": 40, "x": 540, "y": 210, "anchor": "middle" }
+        {
+          "role": "name",
+          "text": "ऋतम्भरेश्वर",
+          "font": "tiro",
+          "fs": 76,
+          "x": 540,
+          "y": 130,
+          "anchor": "middle"
+        },
+        {
+          "role": "descriptor",
+          "text": "मंदिर",
+          "font": "tiro",
+          "fs": 40,
+          "x": 540,
+          "y": 210,
+          "anchor": "middle"
+        }
       ],
       "outputs": [
-        { "path": "logos/rtam-temple-wordmark-devanagari.svg", "title": "Rtambhareshvara Mandir — Devanagari wordmark", "desc": "Stacked Devanagari wordmark for the temple: ऋतम्भरेश्वर over मंदिर (Tiro Devanagari Sanskrit). No bindu — ऋ is the self-contained vocalic-R. Charcoal on transparent.", "colors": { "name": "ink", "descriptor": "ink" } }
+        {
+          "path": "logos/rtam-temple-wordmark-devanagari.svg",
+          "title": "Rtambhareshvara Mandir — Devanagari wordmark",
+          "desc": "Stacked Devanagari wordmark for the temple: ऋतम्भरेश्वर over मंदिर (Tiro Devanagari Sanskrit). No bindu — ऋ is the self-contained vocalic-R. Charcoal on transparent.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "lockup-sanskritic-pratishthan",
       "archetype": "lockup",
       "$comment": "P0.3 recenter (2026-07): composite ink bbox sat +22.8u low in the 380 box -> all content up 23u (baseline 160->137, bindu cy = 137 + 120*0.233 = 165, rule 245->222, devanagari 335->312). Proof: spikes/center_audit.py.",
-      "viewBox": [1080, 380],
-      "fontImport": ["cinzel", "tiro"],
+      "viewBox": [
+        1080,
+        380
+      ],
+      "fontImport": [
+        "cinzel",
+        "tiro"
+      ],
       "label": "ṚTAM Foundation · ऋतम् प्रतिष्ठान",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 137, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 137, "letterSpacing": 8 },
-        { "role": "devanagari", "text": "ऋतम् प्रतिष्ठान", "font": "tiro", "fs": 60, "x": 540, "y": 312, "anchor": "middle" }
+        {
+          "role": "name",
+          "text": "RTAM",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 120,
+          "x": 80,
+          "y": 137,
+          "letterSpacing": 12
+        },
+        {
+          "role": "descriptor",
+          "text": "Foundation",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 62,
+          "x": 527,
+          "y": 137,
+          "letterSpacing": 8
+        },
+        {
+          "role": "devanagari",
+          "text": "ऋतम् प्रतिष्ठान",
+          "font": "tiro",
+          "fs": 60,
+          "x": 540,
+          "y": 312,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 165, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 222, "x2": 660, "y2": 222, "strokeWidth": 1.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 126.5,
+          "cy": 165,
+          "r": 10
+        },
+        {
+          "role": "rule",
+          "type": "line",
+          "x1": 420,
+          "y1": 222,
+          "x2": 660,
+          "y2": 222,
+          "strokeWidth": 1.5
+        }
       ],
       "outputs": [
-        { "path": "lockups/rtam-sanskritic-pratishthan.svg", "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् प्रतिष्ठान (pure Sanskritic register)", "desc": "Stacked bilingual lockup using the pure Sanskritic Devanagari form प्रतिष्ठान (pratiṣṭhāna — \"established institution\"), rather than the borrowed फाउंडेशन. For scholarly, sacred, or trust-deed contexts where the higher register is preferred.", "colors": { "name": "ink", "descriptor": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
+        {
+          "path": "lockups/rtam-sanskritic-pratishthan.svg",
+          "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् प्रतिष्ठान (pure Sanskritic register)",
+          "desc": "Stacked bilingual lockup using the pure Sanskritic Devanagari form प्रतिष्ठान (pratiṣṭhāna — \"established institution\"), rather than the borrowed फाउंडेशन. For scholarly, sacred, or trust-deed contexts where the higher register is preferred.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "devanagari": "ink",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "lockup-bilingual-foundation",
       "archetype": "lockup",
       "$comment": "P0.3 recenter (2026-07): same 23u lift as lockup-sanskritic-pratishthan (the two Foundation lockups share geometry).",
-      "viewBox": [1080, 380],
-      "fontImport": ["cinzel", "tiro"],
+      "viewBox": [
+        1080,
+        380
+      ],
+      "fontImport": [
+        "cinzel",
+        "tiro"
+      ],
       "label": "ṚTAM Foundation · ऋतम् फाउंडेशन",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 137, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 137, "letterSpacing": 8 },
-        { "role": "devanagari", "text": "ऋतम् फाउंडेशन", "font": "tiro", "fs": 60, "x": 540, "y": 312, "anchor": "middle" }
+        {
+          "role": "name",
+          "text": "RTAM",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 120,
+          "x": 80,
+          "y": 137,
+          "letterSpacing": 12
+        },
+        {
+          "role": "descriptor",
+          "text": "Foundation",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 62,
+          "x": 527,
+          "y": 137,
+          "letterSpacing": 8
+        },
+        {
+          "role": "devanagari",
+          "text": "ऋतम् फाउंडेशन",
+          "font": "tiro",
+          "fs": 60,
+          "x": 540,
+          "y": 312,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 165, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 222, "x2": 660, "y2": 222, "strokeWidth": 1.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 126.5,
+          "cy": 165,
+          "r": 10
+        },
+        {
+          "role": "rule",
+          "type": "line",
+          "x1": 420,
+          "y1": 222,
+          "x2": 660,
+          "y2": 222,
+          "strokeWidth": 1.5
+        }
       ],
       "outputs": [
-        { "path": "lockups/rtam-bilingual-foundation.svg", "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन", "desc": "Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).", "colors": { "name": "ink", "descriptor": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
+        {
+          "path": "lockups/rtam-bilingual-foundation.svg",
+          "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन",
+          "desc": "Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "devanagari": "ink",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     },
-
     {
       "id": "lockup-temple",
       "archetype": "lockup",
       "$comment": "US-15: bindu added under the leading R (cx 64, measured leading-R ink center; cy = baseline + fs*0.233, r = fs/12 — same grammar as the temple wordmark); content shifted up 27u to vertically centre the lockup (was V-margins 108/54, now ~81/81). Devanagari axis verified centered (Δ0.5).",
-      "viewBox": [1280, 380],
-      "fontImport": ["cinzel", "tiro"],
+      "viewBox": [
+        1280,
+        380
+      ],
+      "fontImport": [
+        "cinzel",
+        "tiro"
+      ],
       "label": "Rtambhareshvara Mandir · ऋतम्भरेश्वर मंदिर",
       "runs": [
-        { "role": "name", "text": "RTAMBHARESHVARA MANDIR", "font": "cinzel", "weight": 500, "fs": 72, "x": 640, "y": 133, "anchor": "middle", "letterSpacing": 6 },
-        { "role": "devanagari", "text": "ऋतम्भरेश्वर मंदिर", "font": "tiro", "fs": 68, "x": 640, "y": 293, "anchor": "middle" }
+        {
+          "role": "name",
+          "text": "RTAMBHARESHVARA MANDIR",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 72,
+          "x": 640,
+          "y": 133,
+          "anchor": "middle",
+          "letterSpacing": 6
+        },
+        {
+          "role": "devanagari",
+          "text": "ऋतम्भरेश्वर मंदिर",
+          "font": "tiro",
+          "fs": 68,
+          "x": 640,
+          "y": 293,
+          "anchor": "middle"
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 64, "cy": 150, "r": 6 },
-        { "role": "rule", "type": "line", "x1": 520, "y1": 198, "x2": 760, "y2": 198, "strokeWidth": 1.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 64,
+          "cy": 150,
+          "r": 6
+        },
+        {
+          "role": "rule",
+          "type": "line",
+          "x1": 520,
+          "y1": 198,
+          "x2": 760,
+          "y2": 198,
+          "strokeWidth": 1.5
+        }
       ],
       "outputs": [
-        { "path": "lockups/rtambhareshvara-mandir-lockup.svg", "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर", "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. The leading R carries the gold bindu (the vocalic-ṛ crest); ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.", "colors": { "name": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } },
-        { "path": "lockups/rtambhareshvara-mandir-lockup-white-golddot.svg", "title": "Temple lockup on dark — ivory scripts, gold bindu and rule", "desc": "Dark-surface form of the temple lockup: both scripts in ivory with the gold bindu and rule preserved, on a transparent ground — for indigo / charcoal / photographic dark surfaces (event banners, night signage). Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "name": "ivory", "devanagari": "ivory", "bindu": "gold", "rule": "gold" } }
+        {
+          "path": "lockups/rtambhareshvara-mandir-lockup.svg",
+          "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर",
+          "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. The leading R carries the gold bindu (the vocalic-ṛ crest); ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.",
+          "colors": {
+            "name": "ink",
+            "devanagari": "ink",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        },
+        {
+          "path": "lockups/rtambhareshvara-mandir-lockup-white-golddot.svg",
+          "title": "Temple lockup on dark — ivory scripts, gold bindu and rule",
+          "desc": "Dark-surface form of the temple lockup: both scripts in ivory with the gold bindu and rule preserved, on a transparent ground — for indigo / charcoal / photographic dark surfaces (event banners, night signage). Intentionally invisible on white; always preview on the intended dark surface.",
+          "colors": {
+            "name": "ivory",
+            "devanagari": "ivory",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "ink",
+            "indigo"
+          ]
+        }
       ]
     },
-
     {
       "id": "lockup-donation",
       "archetype": "lockup",
       "$comment": "P0.3 recenter (2026-07): composite ink bbox sat +9.2u low in the 360 box -> all content up 9u (baseline 160->151, bindu cy 188->179, rule 245->236, support 305->296). Proof: spikes/center_audit.py.",
-      "viewBox": [1080, 360],
-      "fontImport": ["cinzel", "inter"],
+      "viewBox": [
+        1080,
+        360
+      ],
+      "fontImport": [
+        "cinzel",
+        "inter"
+      ],
       "label": "ṚTAM Foundation — donation lockup",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 151, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 151, "letterSpacing": 8 },
-        { "role": "support", "text": "CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR", "font": "inter", "weight": 300, "fs": 26, "x": 540, "y": 296, "anchor": "middle", "letterSpacing": 3 }
+        {
+          "role": "name",
+          "text": "RTAM",
+          "font": "cinzel",
+          "weight": 500,
+          "fs": 120,
+          "x": 80,
+          "y": 151,
+          "letterSpacing": 12
+        },
+        {
+          "role": "descriptor",
+          "text": "Foundation",
+          "font": "cinzel",
+          "weight": 400,
+          "fs": 62,
+          "x": 527,
+          "y": 151,
+          "letterSpacing": 8
+        },
+        {
+          "role": "support",
+          "text": "CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR",
+          "font": "inter",
+          "weight": 300,
+          "fs": 26,
+          "x": 540,
+          "y": 296,
+          "anchor": "middle",
+          "letterSpacing": 3
+        }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 179, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 236, "x2": 660, "y2": 236, "strokeWidth": 1.5 }
+        {
+          "role": "bindu",
+          "type": "circle",
+          "cx": 126.5,
+          "cy": 179,
+          "r": 10
+        },
+        {
+          "role": "rule",
+          "type": "line",
+          "x1": 420,
+          "y1": 236,
+          "x2": 660,
+          "y2": 236,
+          "strokeWidth": 1.5
+        }
       ],
       "outputs": [
-        { "path": "lockups/donation-lockup.svg", "title": "Donation lockup — ṚTAM Foundation with supporting line", "desc": "Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy — charcoal at light weight (stone failed the 4.5:1 body floor on ivory at this size; the weight keeps it quiet, the colour keeps it legible). No CTA chrome — the lockup is a header, not a button.", "colors": { "name": "ink", "descriptor": "ink", "support": "ink", "bindu": "gold", "rule": "gold" } }
+        {
+          "path": "lockups/donation-lockup.svg",
+          "title": "Donation lockup — ṚTAM Foundation with supporting line",
+          "desc": "Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy — charcoal at light weight (stone failed the 4.5:1 body floor on ivory at this size; the weight keeps it quiet, the colour keeps it legible). No CTA chrome — the lockup is a header, not a button.",
+          "colors": {
+            "name": "ink",
+            "descriptor": "ink",
+            "support": "ink",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "ivory",
+            "sandstone"
+          ]
+        }
       ]
     }
   ]
