@@ -25,7 +25,8 @@ DIST = "../../../dist/outlined"
 
 
 def _img(src, style=""):
-    return f'<img src="{src}"{f" style=\"{style}\"" if style else ""}>'
+    attr = ' style="' + style + '"' if style else ""
+    return f'<img src="{src}"{attr}>'
 
 
 def _cell(head, body, cls="cell"):
