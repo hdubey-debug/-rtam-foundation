@@ -112,3 +112,38 @@ The Devanagari marks (ऋ, ऋतम्…) take **no** bindu — the glyph alre
 - Use the favicon SVG above 64 px.
 - Pair the brand with a competing serif display face.
 - Add a tagline directly under the wordmark inside its clear-space.
+
+---
+
+## 9 · v2 addenda (2026-07-12 — the Ṛtāmbhareśvara system)
+
+The icon system and substance palette are governed by brand-book §v2.
+Additional hard rules:
+
+**The icon.**
+- Never scale the ṛta-chakra below 48 px — step down the sanctity
+  ladder instead (anāhata for community surfaces, bindu below 48 px).
+- Never rotate the icon: one petal points due north, always.
+- Never recolor parts independently: use the four shipped cuts —
+  `rtam-chakra-garbhagriha` (dark surfaces), `-day` (light), `-kanaka`
+  (festival), `-mono` (single-ink) — plus the matching anahata/bindu.
+- The hub is the only gold inside the icon except in kanaka. Never
+  gild the petals outside the kanaka cut.
+
+**Grounds (v2).**
+- Dark surfaces are **mahakala `#141414`** — never indigo (retired
+  2026-07-12), never pure `#000000`.
+- Reading surfaces are **chandra `#EDEBE6`** — warmIvory grounds and
+  sandstone panels are retired; legacy assets only.
+- On mahakala: display type gold, body text bhasma; links gold. On
+  chandra: ink text, tāmra links/CTAs; gold is decorative only.
+
+**Voices.**
+- Every entity/script voice has a `-garbhagriha` cut for dark
+  surfaces; never place the charcoal cuts on mahakala.
+- City print leads Devanagari (≥ 2× its English support line); web
+  leads English.
+
+**Favicon.**
+- `favicon.svg` / `favicon-dark.svg` are the **bindu** (since P3.4).
+  Never use a typographic R below 48 px.

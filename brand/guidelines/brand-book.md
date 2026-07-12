@@ -249,6 +249,84 @@ whole tree.
 
 ---
 
+## v2 · The Ṛtāmbhareśvara system (2026-07-12)
+
+Everything above remains true of the wordmark; this chapter records the
+convergence that followed — the icon, its ladder, and the substance
+palette — all founder-locked. Where an earlier section contradicts this
+chapter (grounds, night colour, favicon), **this chapter wins**; legacy
+assets keep their files until migration completes.
+
+### v2.1 The icon — the Ṛta-chakra
+
+The icon is the temple's own murti seen from above: a corolla of
+**twelve lotus petals** (the E3 *mukta* silhouette — narrow attachment,
+full body) rising from the jaladhari, the water's calm, and a stone rim
+pierced by **twelve Āditya windows aligned with the petal tips**, the
+**Shivalinga gold at the hub**. Every radius derives from
+`iconography/geometry/grid.json`; the mark is generated from
+`spec/brand.json` (assets `rta-chakra`, `anahata-mark`, `bindu-mark`)
+— never drawn by hand.
+
+### v2.2 The sanctity ladder — reduction as theology
+
+One geometry, three rungs, the same gold centre at every scale:
+
+| rung | mark | meaning | use |
+|---|---|---|---|
+| **ṛta-chakra** | full icon | the Lord bearing the cosmic order | ≥ 48 px; brand surfaces |
+| **anāhata** | bare corolla | the Lord in the heart | community/devotee surfaces, avatars |
+| **bindu** | circled gold point | the Lord alone | < 48 px, favicon, seal-dot |
+
+**The ladder rule:** below 48 px the chakra is never shrunk — it steps
+down a rung. The favicon *is* the bindu. The dot under the R of RTAM
+and the hub of the chakra are the same point.
+
+### v2.3 The substance palette
+
+Colours are the ritual substances that touch the Lord — never
+decoration (canon: `palette/colors.json` v0.2.0):
+
+| substance | token | hex | role |
+|---|---|---|---|
+| Mahākāla | `mahakala` | `#141414` | the linga stone, the sanctum dark — **the brand ground** |
+| Dīpa | `gold` | `#C8A15A` | the lamp flame — god-points, display on black, **foil in print**; decorative-only on light (2.03:1) |
+| Bhasma | `bhasma` / `stoneGray` / `bhasmaDeep` | `#C9C2B6` `#B8B1A4` `#8F887C` | vibhūti ash — body text (10.42 AAA) and captions (5.25 AA) on mahakala |
+| Kansya | `bronze` | `#9B6A2F` | bell-metal — large sizes/ornament on mahakala only (3.94) |
+| Tāmra | `tamraCopper` | `#7A5423` | abhisheka copper — links/CTAs on light (5.65 on chandra; Pantone 1405C) |
+| Chandra | `chandra` | `#EDEBE6` | the moon-paper — the reading ground |
+
+**Retired from brand surfaces:** deepIndigo, jala teal, warmIvory as a
+ground, sandstone as a panel. Ceremonial accents (kumkum `#C41E3A` on
+light, flame-ember `#D98E32` on dark) appear on festival surfaces only
+— never UI, never body text.
+
+### v2.4 The registers
+
+| register | ground | type | when |
+|---|---|---|---|
+| **Garbhagriha** (leads) | mahakala | gold display · bhasma body | all dark surfaces, city print, video |
+| **Bhasma-day** | chandra | charcoal ink · tāmra accents · gold once | website body, documents |
+| **Kanaka** | mahakala | all-gold mark · ash text | festivals, invitations — foil on matte soft-touch |
+
+### v2.5 Entities and scripts
+
+Two entities, two scripts, one icon. The Foundation speaks as **RTAM
+Foundation / ऋतम् प्रतिष्ठान**; the temple as **Ṛtambhareśvara Mandir /
+ऋतम्भरेश्वर मंदिर**. Devanagari leads on city surfaces; English leads on
+web — same grid either way, Devanagari at least 2× its support line.
+Every voice ships in light and garbhagriha forms (`*-garbhagriha.svg`).
+The murti's front elevation (24 tattvas) is reserved for a future
+consecrated Mandir mark.
+
+### v2.6 Print finish
+
+Ceremonial print is **matte soft-touch mahakala with hot-stamp gold
+foil** — gloss against matte. Flex/outdoor prints gold as ink; reading
+stationery is uncoated chandra stock with gold used once per page.
+
+---
+
 *The work continues steadily, in keeping with the order it intends to serve.*
 
 — **ऋतस्य पन्थाम्**
