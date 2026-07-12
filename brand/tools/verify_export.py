@@ -34,11 +34,15 @@ C = {
     "charcoal": _canon["charcoalBlack"],
     "sandstone": _canon["sandstone"],
     "indigo": _canon["deepIndigo"],
+    # v2 substances (2026-07-12)
+    "mahakala": _canon["mahakala"],
+    "bhasma": _canon["bhasmaLight"],
+    "chandra": _canon["chandraMoon"],
 }
 
 PROBES = {
     "exports/mockups/donation-poster.png": [
-        ("point", (0.03, 0.50), "indigo"),
+        ("point", (0.03, 0.50), "mahakala"),
         ("contains", (0.15, 0.28, 0.85, 0.55), "ivory", 500),
         ("contains", (0.20, 0.80, 0.80, 0.95), "gold", 150),
     ],
@@ -72,8 +76,8 @@ PROBES = {
         ("contains", (0.00, 0.00, 1.00, 0.55), "gold", 30),
     ],
     "exports/mockups/youtube-banner.png": [
-        ("contains", (0.00, 0.00, 1.00, 1.00), "indigo", 10000),
-        ("contains", (0.20, 0.20, 0.80, 0.80), "ivory", 300),
+        ("contains", (0.00, 0.00, 1.00, 1.00), "mahakala", 10000),
+        ("contains", (0.20, 0.20, 0.80, 0.80), "bhasma", 300),
     ],
     "exports/png/wordmark-specimen.png": [
         ("point", (0.50, 0.999), "ivory"),
@@ -89,8 +93,8 @@ PROBES = {
         ("contains", (0.00, 0.00, 1.00, 0.40), "charcoal", 300),
     ],
     "exports/png/lockups-specimen.png": [
-        ("point", (0.50, 0.999), "ivory"),
-        ("contains", (0.00, 0.00, 1.00, 1.00), "indigo", 5000),
+        ("point", (0.50, 0.999), "chandra"),
+        ("contains", (0.00, 0.00, 1.00, 1.00), "mahakala", 5000),
         ("contains", (0.00, 0.00, 1.00, 0.40), "charcoal", 300),
     ],
     "exports/png/typography-specimen.png": [
@@ -104,6 +108,31 @@ PROBES = {
     "exports/png/rtam-wordmark-ivory.png": [
         ("point", (0.02, 0.02), "charcoal"),
         ("contains", (0.00, 0.00, 1.00, 1.00), "ivory", 500),
+    ],
+    "exports/kits/youtube-channel-art.png": [
+        ("point", (0.02, 0.50), "mahakala"),
+        ("contains", (0.2, 0.3, 0.8, 0.7), "gold", 400),
+        ("contains", (0.2, 0.3, 0.8, 0.7), "bhasma", 2000),
+    ],
+    "exports/kits/city-poster-night.png": [
+        ("point", (0.50, 0.02), "mahakala"),
+        ("contains", (0, 0, 1, 1), "gold", 2000),
+        ("contains", (0, 0, 1, 1), "bhasma", 3000),
+    ],
+    "exports/kits/city-poster-day.png": [
+        ("point", (0.50, 0.02), "chandra"),
+        ("contains", (0, 0, 1, 1), "charcoal", 3000),
+        ("contains", (0, 0, 1, 1), "gold", 500),
+    ],
+    "exports/kits/street-banner.png": [
+        ("point", (0.02, 0.05), "mahakala"),
+        ("contains", (0, 0, 1, 1), "bhasma", 3000),
+        ("contains", (0, 0, 1, 1), "gold", 800),
+    ],
+    "exports/kits/avatar-sheet.png": [
+        ("point", (0.02, 0.50), "mahakala"),
+        ("point", (0.98, 0.50), "chandra"),
+        ("contains", (0, 0, 1, 1), "gold", 500),
     ],
     "exports/platform/favicon-16.png": [("contains", (0, 0, 1, 1), "charcoal", 8)],
     "exports/platform/favicon-32.png": [("contains", (0, 0, 1, 1), "charcoal", 30)],

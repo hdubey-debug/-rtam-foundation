@@ -40,6 +40,12 @@ HTML_JOBS = [
     ("previews/devanagari-monogram-specimen.html",  "exports/png/devanagari-monogram-specimen.png",  1200, 2),
     ("previews/lockups-specimen.html",              "exports/png/lockups-specimen.png",              1200, 2),
     ("previews/typography-specimen.html",           "exports/png/typography-specimen.png",           1200, 2),
+    # v2 platform kits (task #16) — production sizes, scale 1 = exact pixels
+    ("previews/kits/youtube-channel-art.html",  "exports/kits/youtube-channel-art.png",  2560, 1),
+    ("previews/kits/city-poster-night.html",    "exports/kits/city-poster-night.png",    1754, 1),
+    ("previews/kits/city-poster-day.html",      "exports/kits/city-poster-day.png",      1754, 1),
+    ("previews/kits/street-banner.html",        "exports/kits/street-banner.png",        3600, 1),
+    ("previews/kits/avatar-sheet.html",         "exports/kits/avatar-sheet.png",         1600, 1),
 ]
 
 # overlay variants proven on their intended dark ground (charcoal)
