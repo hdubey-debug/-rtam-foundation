@@ -132,6 +132,33 @@ def start_x_for(brand: dict, run: dict) -> float:
     return x - adv / 2 if anchor == "middle" else x - adv
 
 
+# ---- constructed-mark geometry (rta-grid helpers; Phase-1) ------------------
+def polar(cx: float, cy: float, r: float, deg: float) -> tuple[float, float]:
+    """Point at radius r / angle deg (SVG coords: 0° = +x, 90° = +y/down)."""
+    import math
+    a = math.radians(deg)
+    return (cx + r * math.cos(a), cy + r * math.sin(a))
+
+
+def petal_path(cx: float, cy: float, tip_r: float, base_r: float,
+               center_deg: float, half_w_deg: float, belly: float = 1.35) -> str:
+    """Pointed lotus-petal outline (stroke path, unclosed): base->tip->base.
+    The murti's petal, parametric — same construction as
+    iconography/geometry/construct.py, centre-explicit for reuse."""
+    def F(v):
+        return f"{v:.2f}".rstrip("0").rstrip(".")
+    tx, ty = polar(cx, cy, tip_r, center_deg)
+    b1 = polar(cx, cy, base_r, center_deg - half_w_deg)
+    b2 = polar(cx, cy, base_r, center_deg + half_w_deg)
+    mid_r = base_r + (tip_r - base_r) * 0.55
+    c1 = polar(cx, cy, mid_r, center_deg - half_w_deg * belly)
+    c2 = polar(cx, cy, tip_r * 0.97, center_deg - half_w_deg * 0.35)
+    c3 = polar(cx, cy, tip_r * 0.97, center_deg + half_w_deg * 0.35)
+    c4 = polar(cx, cy, mid_r, center_deg + half_w_deg * belly)
+    return (f"M {F(b1[0])} {F(b1[1])} C {F(c1[0])} {F(c1[1])} {F(c2[0])} {F(c2[1])} {F(tx)} {F(ty)} "
+            f"C {F(c3[0])} {F(c3[1])} {F(c4[0])} {F(c4[1])} {F(b2[0])} {F(b2[1])}")
+
+
 # ---- variant resolution ----------------------------------------------------
 def color(brand: dict, token_or_hex: str) -> str:
     return brand["tokens"].get(token_or_hex, token_or_hex)
