@@ -1,0 +1,46 @@
+{
+  "$comment": "The rta-grid: locked constants of the Rtambhareshvara murti, measured from reference/shivalinga-sanctum-reference.jpeg (front-ellipse pixel ratios) and optically tuned on the construction drawings. Every constructed mark and every layout derives from these numbers — see ../rtambhareshvara-murti.md §4/§8. construct.py generates the drawings from this file.",
+  "counts": {
+    "medallions": 12,
+    "petalsPerTier": 12,
+    "tiers": 2,
+    "tattvas": 24
+  },
+  "anglesDeg": {
+    "spoke": 30,
+    "tierOffset": 15
+  },
+  "rings": {
+    "$comment": "Plan-view radii normalized to the rim outer radius = 1.0. 'measured' = photo ratio; the working value is the tuned one used by all drawings.",
+    "linga": 0.22,
+    "lingaMeasured": 0.23,
+    "jaladhari": 0.32,
+    "tier1PetalTip": 0.48,
+    "tier2PetalTip": 0.62,
+    "waterOuter": 0.84,
+    "medallionCenter": 0.92,
+    "medallionRadius": 0.045,
+    "rimOuter": 1.0
+  },
+  "nali": {
+    "$comment": "The spout that breaks the circle — the system's index mark. Width spans the linga diameter; it points toward the devotee (south, 6 o'clock) in operational marks; the north-pointing (12 o'clock) consecrated orientation is a Phase-2 study.",
+    "widthOverR": 0.18,
+    "lengthBeyondRimOverR": 0.14,
+    "orientationDeg": 90
+  },
+  "elevation": {
+    "$comment": "Front-elevation proportions, same normalization (rim outer radius = 1.0 => basin full width 2.0).",
+    "rimHeight": 0.46,
+    "waterlineOverRimHeight": 0.88,
+    "lotusCupTopAboveRim": 0.18,
+    "lingaHeightAboveLotus": 0.92,
+    "poolWidth": 0.5,
+    "poolDepth": 0.12
+  },
+  "layout": {
+    "$comment": "Web/print layout inherits the murti's constants: 12 columns like the 12 spokes; spacing steps on the 6/12/24 doubling; rotational elements only at 30°/15° steps.",
+    "columns": 12,
+    "spacingScale": [6, 12, 24, 48, 96],
+    "allowedAnglesDeg": [15, 30, 45, 60, 90]
+  }
+}
