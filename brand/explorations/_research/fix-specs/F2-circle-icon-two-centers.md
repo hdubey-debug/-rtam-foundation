@@ -29,9 +29,9 @@ measurement governs; numbers below are the corrected ones.
 ## Files touched
 1. `brand/icons/rtam-rdot-icon-circle-gold.svg`
 2. `brand/icons/rtam-rdot-icon-circle-charcoal.svg`
-3. `brand/icons/rtam-rdot-icon-black.svg`
+3. `brand/icons/rtam-rdot-icon-charcoal.svg`
 4. `brand/icons/rtam-rdot-icon-gold.svg`
-5. `brand/icons/rtam-rdot-icon-white.svg`
+5. `brand/icons/rtam-rdot-icon-ivory.svg`
 6. `brand/icons/favicon.svg`  *(beyond the 5 named in the finding — same defect,
    same fix; see "Residual risk". Include it; it is the favicon and is the most
    widely seen mark. Likely no overlap with another F-finding, but flag for the
@@ -55,7 +55,7 @@ file (`x="16"` for the favicon). Full before → after for each `<text>`:
 (circle-gold `fill="#1A1A1A"`, circle-charcoal `fill="#1A1A1A"` — fill unchanged;
 both share the identical text geometry.)
 
-**rtam-rdot-icon-black.svg** (line 7), **-gold.svg** (line 7),
+**rtam-rdot-icon-charcoal.svg** (line 7), **-gold.svg** (line 7),
 **-white.svg** (line 10) — fs=200, wt=600:
 ```
 - <text x="128" y="184" ... font-weight="600" font-size="200" text-anchor="middle" fill="...">R</text>

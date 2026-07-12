@@ -267,7 +267,7 @@ def gallery():
     <div class="banner">
       <div class="safe">
         <img src="candidates/chakra-night.svg" width="76" height="76">
-        <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:34px">
+        <img src="{dist}/rtam-wordmark-ivory-golddot.svg" style="height:34px">
       </div>
       <span class="hint">dashed = mobile/desktop safe area &middot; at real size this lockup is &asymp;2.6&times; larger than shown</span>
     </div>
@@ -313,7 +313,7 @@ def gallery():
     </div>
     <div class="lockup n">
       <img src="candidates/chakra-night.svg" width="58" height="58">
-      <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:34px">
+      <img src="{dist}/rtam-wordmark-ivory-golddot.svg" style="height:34px">
     </div>
     <div class="stacked l">
       <img src="candidates/chakra-light.svg" width="76" height="76"><br>
@@ -321,7 +321,7 @@ def gallery():
     </div>
     <div class="stacked n">
       <img src="candidates/chakra-night.svg" width="76" height="76"><br>
-      <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:28px; margin-top:12px;">
+      <img src="{dist}/rtam-wordmark-ivory-golddot.svg" style="height:28px; margin-top:12px;">
     </div>
   </div></div>
 

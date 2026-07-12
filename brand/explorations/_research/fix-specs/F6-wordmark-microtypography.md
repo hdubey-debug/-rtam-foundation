@@ -41,8 +41,8 @@ Change the two `<text>` `x` attributes in all 8, and the bindu `<circle cx>` in
 the 7 that carry a bindu:
 
 - `brand/logos/rtam-wordmark-gold.svg`            (text ×2 + circle cx)
-- `brand/logos/rtam-wordmark-black.svg`           (text ×2 + circle cx)
-- `brand/logos/rtam-wordmark-white.svg`           (text ×2 + circle cx)
+- `brand/logos/rtam-wordmark-charcoal.svg`           (text ×2 + circle cx)
+- `brand/logos/rtam-wordmark-ivory.svg`           (text ×2 + circle cx)
 - `brand/logos/rtam-wordmark-sacred-RTAM-dot.svg` (text ×2 + circle cx)
 - `brand/logos/rtam-wordmark-public-RTAM.svg`     (text ×2 **only — no bindu circle in this variant**)
 - `brand/lockups/rtam-bilingual-foundation.svg`   (text ×2 + circle cx; divider & Devanagari unchanged)

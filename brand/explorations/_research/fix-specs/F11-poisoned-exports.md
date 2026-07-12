@@ -11,8 +11,8 @@ has been silently replaced by a generic fallback and **baked into the pixels**:
 
 1. **cairosvg cannot load web fonts** (`tools/render_svg_to_png.py` calls
    `cairosvg.svg2png`). For any live-text SVG it substitutes a generic
-   sans-serif. `exports/png/rtam-wordmark-white.png` and
-   `rtam-rdot-icon-white.png` are such renders — the "RTAM Foundation"
+   sans-serif. `exports/png/rtam-wordmark-ivory.png` and
+   `rtam-rdot-icon-ivory.png` are such renders — the "RTAM Foundation"
    wordmark and the "Ṛ" monogram ship in a plain sans, not Cinzel.
 
 2. **Network web-font failure in the Chromium PDF path**
@@ -36,8 +36,8 @@ were rendered by Chromium (`render_html_to_png.py`) and reproduce faithfully.
 Regeneration replaces poisoned export **bytes** (no source SVG/MD/HTML edits —
 those are owned by other findings):
 
-- `brand/exports/png/rtam-wordmark-white.png`  (regenerate)
-- `brand/exports/png/rtam-rdot-icon-white.png`  (regenerate)
+- `brand/exports/png/rtam-wordmark-ivory.png`  (regenerate)
+- `brand/exports/png/rtam-rdot-icon-ivory.png`  (regenerate)
 - `brand/exports/pdf/brand-book.pdf`  (regenerate)
 - `brand/exports/pdf/usage-rules.pdf`  (regenerate)
 
@@ -64,8 +64,8 @@ CAIROSVG" = committed export vs a cairosvg re-render of the same SVG.
 
 | Export | Source | Renderer used | committed vs CHROMIUM | committed vs CAIROSVG | Verdict |
 |---|---|---|---|---|---|
-| png/rtam-wordmark-white.png | logos/…white.svg (live text) | cairosvg | **217062 px** / IoU 0.064 | 184 px / IoU 0.918 | **POISONED** |
-| png/rtam-rdot-icon-white.png | icons/…white.svg (live text) | cairosvg | **84363 px** / IoU 0.578 | 166 px / IoU 0.994 | **POISONED** |
+| png/rtam-wordmark-ivory.png | logos/…white.svg (live text) | cairosvg | **217062 px** / IoU 0.064 | 184 px / IoU 0.918 | **POISONED** |
+| png/rtam-rdot-icon-ivory.png | icons/…white.svg (live text) | cairosvg | **84363 px** / IoU 0.578 | 166 px / IoU 0.994 | **POISONED** |
 | png/rtam-12-medallion-seal.png | seal/…seal.svg (geometry) | cairosvg | 704 px* | 27 px | CLEAN |
 | png/rtam-12-medallion-pattern.png | seal/…pattern.svg (geometry) | cairosvg | 4649 px* | 22 px | CLEAN |
 | png/wordmark-specimen.png | previews/wordmark-specimen.html | Chromium | 0 px / IoU 1.000 | — | CLEAN |
@@ -116,10 +116,10 @@ network dependency**:
 
 ```
 # once outline.py exists (US-13 Track C):
-python3 brand/tools/outline.py brand/logos/rtam-wordmark-white.svg  /tmp/wm.outlined.svg
-python3 brand/tools/render_svg_to_png.py /tmp/wm.outlined.svg brand/exports/png/rtam-wordmark-white.png 2160
-python3 brand/tools/outline.py brand/icons/rtam-rdot-icon-white.svg /tmp/ic.outlined.svg
-python3 brand/tools/render_svg_to_png.py /tmp/ic.outlined.svg brand/exports/png/rtam-rdot-icon-white.png 512
+python3 brand/tools/outline.py brand/logos/rtam-wordmark-ivory.svg  /tmp/wm.outlined.svg
+python3 brand/tools/render_svg_to_png.py /tmp/wm.outlined.svg brand/exports/png/rtam-wordmark-ivory.png 2160
+python3 brand/tools/outline.py brand/icons/rtam-rdot-icon-ivory.svg /tmp/ic.outlined.svg
+python3 brand/tools/render_svg_to_png.py /tmp/ic.outlined.svg brand/exports/png/rtam-rdot-icon-ivory.png 512
 ```
 
 **Interim path (until `outline.py` lands): faithful Chromium render of the
@@ -127,22 +127,22 @@ source live-text SVG**, transparent-background screenshot at native viewBox ×
 integer scale (keeps the baked charcoal `<rect>` ground the SVG contains):
 
 ```
-# rtam-wordmark-white.png  (viewBox 1080×240, render at 2× -> 2160×480)
+# rtam-wordmark-ivory.png  (viewBox 1080×240, render at 2× -> 2160×480)
 python3 - <<'PY'
 from playwright.sync_api import sync_playwright
 from pathlib import Path
-svg = Path("brand/logos/rtam-wordmark-white.svg").resolve()
+svg = Path("brand/logos/rtam-wordmark-ivory.svg").resolve()
 with sync_playwright() as p:
     b = p.chromium.launch()
     pg = b.new_context(viewport={"width":1080,"height":240},
                        device_scale_factor=2).new_page()
     pg.goto(svg.as_uri(), wait_until="networkidle")
     pg.evaluate("() => document.fonts.ready"); pg.wait_for_timeout(400)
-    pg.screenshot(path="brand/exports/png/rtam-wordmark-white.png")
+    pg.screenshot(path="brand/exports/png/rtam-wordmark-ivory.png")
     b.close()
 PY
-# rtam-rdot-icon-white.png  (viewBox 256×256, render at 2× -> 512×512) — same
-# block with svg=icons/rtam-rdot-icon-white.svg, viewport 256×256, scale 2.
+# rtam-rdot-icon-ivory.png  (viewBox 256×256, render at 2× -> 512×512) — same
+# block with svg=icons/rtam-rdot-icon-ivory.svg, viewport 256×256, scale 2.
 ```
 
 The interim path works on this cluster today (the SVG `@import` *does* deliver
@@ -262,14 +262,14 @@ spans embed.)
 ## Proof
 
 - `brand/explorations/_research/fix-specs/proofs/F11-wordmark-poisoned-sidebyside.png`
-  — top: committed `rtam-wordmark-white.png`; bottom: faithful Chromium render
+  — top: committed `rtam-wordmark-ivory.png`; bottom: faithful Chromium render
   of the same SVG. The eye sees the committed export in a flat geometric
   **sans-serif** ("RTAM Foundation"), while the faithful render is **Cinzel** —
   Trajan-like serifed Roman caps with classic stroke modulation and small-cap
   "FOUNDATION". Different typeface entirely; the gold bindu dot (a `<circle>`)
   is the only element identical in both.
 - `brand/explorations/_research/fix-specs/proofs/F11-icon-poisoned-sidebyside.png`
-  — left: committed `rtam-rdot-icon-white.png` (plain sans "R"); right: faithful
+  — left: committed `rtam-rdot-icon-ivory.png` (plain sans "R"); right: faithful
   Cinzel "Ṛ" with serifs and the characteristic curved leg. Bindu identical.
 - `brand/explorations/_research/fix-specs/proofs/F11-pdf-devanagari-conjunct-check.png`
   — strengthener for the PDF recipe: the temple/Sanskritic strings rendered

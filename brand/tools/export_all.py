@@ -44,8 +44,8 @@ HTML_JOBS = [
 
 # overlay variants proven on their intended dark ground (charcoal)
 SVG_JOBS = [
-    ("dist/outlined/icons/rtam-rdot-icon-white.svg", "exports/png/rtam-rdot-icon-white.png", 512),
-    ("dist/outlined/logos/rtam-wordmark-white.svg",  "exports/png/rtam-wordmark-white.png", 1080),
+    ("dist/outlined/icons/rtam-rdot-icon-ivory.svg", "exports/png/rtam-rdot-icon-ivory.png", 512),
+    ("dist/outlined/logos/rtam-wordmark-ivory.svg",  "exports/png/rtam-wordmark-ivory.png", 1080),
 ]
 
 PDF_JOBS = [

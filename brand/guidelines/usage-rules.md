@@ -9,10 +9,10 @@ Quick reference. For the full rationale see `brand-book.md`.
 | Context | File |
 |---|---|
 | Default. Anywhere the bindu reproduces. | `rtam-wordmark-sacred-RTAM-dot.svg` |
-| Default on dark grounds (charcoal / indigo / photo) — the sacred form with the gold bindu preserved. Transparent overlay, invisible on white. | `rtam-wordmark-white-golddot.svg` |
+| Default on dark grounds (charcoal / indigo / photo) — the sacred form with the gold bindu preserved. Transparent overlay, invisible on white. | `rtam-wordmark-ivory-golddot.svg` |
 | Sacred surface, embossed, foil, single-color gold print. | `rtam-wordmark-gold.svg` |
-| Single-colour charcoal reproduction (fax, microform, mono print). | `rtam-wordmark-black.svg` |
-| Dark ground where a second colour (gold) cannot reproduce — all-ivory overlay. | `rtam-wordmark-white.svg` |
+| Single-colour charcoal reproduction (fax, microform, mono print). | `rtam-wordmark-charcoal.svg` |
+| Dark ground where a second colour (gold) cannot reproduce — all-ivory overlay. | `rtam-wordmark-ivory.svg` |
 | Bindu cannot reproduce (small sign vinyl, embroidery < 6 cm). | `rtam-wordmark-public-RTAM.svg` |
 | Devanagari, Sanskritic register (default). | `rtam-wordmark-devanagari-pratishthan.svg` |
 | Devanagari, common register. | `rtam-wordmark-devanagari-faundeshan.svg` |
@@ -27,9 +27,9 @@ Quick reference. For the full rationale see `brand-book.md`.
 | Context | File |
 |---|---|
 | Default plain mark on light grounds (charcoal R, gold bindu). | `rtam-rdot-icon-sacred.svg` |
-| Dark theme (ivory R, gold bindu). | `rtam-rdot-icon-white-golddot.svg` |
+| Dark theme (ivory R, gold bindu). | `rtam-rdot-icon-ivory-golddot.svg` |
 | Warm / ceremonial all-gold mark on light grounds. | `rtam-rdot-icon-gold.svg` |
-| Single-colour charcoal (mono print, stamps). | `rtam-rdot-icon-black.svg` |
+| Single-colour charcoal (mono print, stamps). | `rtam-rdot-icon-charcoal.svg` |
 | App icon / avatar needing a visual frame. | `rtam-rdot-icon-circle-gold.svg` |
 | Framed icon, single-colour charcoal. | `rtam-rdot-icon-circle-charcoal.svg` |
 | Framed icon on dark / ceremonial grounds — all gold. | `rtam-rdot-icon-circle-allgold.svg` |
@@ -47,7 +47,7 @@ Quick reference. For the full rationale see `brand-book.md`.
 | Default bilingual (website footer, certificate, letterhead). | `rtam-bilingual-foundation.svg` |
 | Scholarly / sacred / trust deed. | `rtam-sanskritic-pratishthan.svg` |
 | Temple signage, donor materials. | `rtambhareshvara-mandir-lockup.svg` |
-| Temple lockup on dark grounds (event banners, night signage). | `rtambhareshvara-mandir-lockup-white-golddot.svg` |
+| Temple lockup on dark grounds (event banners, night signage). | `rtambhareshvara-mandir-lockup-ivory-golddot.svg` |
 | Donation receipts, fundraising pages, contribution forms. | `donation-lockup.svg` |
 
 ---
@@ -60,7 +60,7 @@ Quick reference. For the full rationale see `brand-book.md`.
 - Bindu and rules: **gold** (`#C8A15A`) — decorative only. Gold on ivory is 2.18:1, below AA; never body or UI text on ivory. (An AA-passing functional accent is under study — until it ships, functional text and CTAs on ivory are charcoal.)
 - **Stone gray** (`#B8B1A4`) is decorative-only on ivory (1.92:1): dividers, oversized folios — never text that must be read. Shipped assets no longer set stone as text; for quiet copy use charcoal at light weight (the donation lockup's pattern).
 - The wordmark MUST work in single-colour charcoal `#1A1A1A` — this is the reproduction floor. Charcoal on ivory is 15.7:1 (AAA).
-- File-name legend: `-white` = ivory, `-black` = charcoal, `-golddot` = gold bindu preserved on a two-tone mark.
+- File-name legend (v2, token-truthful): `-ivory` = ivory, `-charcoal` = charcoal, `-garbhagriha` = bhasma ash on mahakala, `-golddot` = gold bindu preserved on a two-tone mark.
 
 ---
 

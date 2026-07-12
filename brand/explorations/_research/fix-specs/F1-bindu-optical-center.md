@@ -37,9 +37,9 @@ one contains the identical text element
 **no wrapping `transform`** and the identical circle `cx="118" cy="188" r="10"`
 (verified — only the `fill` color differs per variant, which is left untouched):
 
-- `brand/logos/rtam-wordmark-black.svg`
+- `brand/logos/rtam-wordmark-charcoal.svg`
 - `brand/logos/rtam-wordmark-gold.svg`
-- `brand/logos/rtam-wordmark-white.svg`
+- `brand/logos/rtam-wordmark-ivory.svg`
 - `brand/logos/rtam-wordmark-sacred-RTAM-dot.svg`
 - `brand/lockups/rtam-sanskritic-pratishthan.svg`
 - `brand/lockups/rtam-bilingual-foundation.svg`

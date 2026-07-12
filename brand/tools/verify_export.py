@@ -97,11 +97,11 @@ PROBES = {
         ("point", (0.50, 0.999), "ivory"),
         ("contains", (0.00, 0.00, 1.00, 0.10), "charcoal", 300),
     ],
-    "exports/png/rtam-rdot-icon-white.png": [
+    "exports/png/rtam-rdot-icon-ivory.png": [
         ("point", (0.02, 0.02), "charcoal"),
         ("contains", (0.00, 0.00, 1.00, 1.00), "ivory", 500),
     ],
-    "exports/png/rtam-wordmark-white.png": [
+    "exports/png/rtam-wordmark-ivory.png": [
         ("point", (0.02, 0.02), "charcoal"),
         ("contains", (0.00, 0.00, 1.00, 1.00), "ivory", 500),
     ],

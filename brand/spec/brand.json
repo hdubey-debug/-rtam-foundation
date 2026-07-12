@@ -228,7 +228,7 @@
           ]
         },
         {
-          "path": "icons/rtam-rdot-icon-black.svg",
+          "path": "icons/rtam-rdot-icon-charcoal.svg",
           "title": "Ṛ monogram — charcoal",
           "desc": "Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.",
           "colors": {
@@ -241,7 +241,7 @@
           ]
         },
         {
-          "path": "icons/rtam-rdot-icon-white.svg",
+          "path": "icons/rtam-rdot-icon-ivory.svg",
           "title": "Ṛ monogram — ivory",
           "desc": "Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.",
           "colors": {
@@ -254,7 +254,7 @@
           ]
         },
         {
-          "path": "icons/rtam-rdot-icon-white-golddot.svg",
+          "path": "icons/rtam-rdot-icon-ivory-golddot.svg",
           "title": "Ṛ monogram — sacred on dark (ivory R, gold bindu)",
           "desc": "Dark-surface counterpart of the sacred plain mark: ivory R with the gold bindu preserved, on a transparent ground — the default plain mark on charcoal / indigo. Intentionally invisible on white; always preview on the intended dark surface.",
           "colors": {
@@ -303,7 +303,7 @@
           ]
         },
         {
-          "path": "icons/rtam-devanagari-ri-icon-black.svg",
+          "path": "icons/rtam-devanagari-ri-icon-charcoal.svg",
           "title": "Devanagari ऋ monogram — charcoal",
           "desc": "Sanskrit ऋ in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.",
           "colors": {
@@ -315,7 +315,7 @@
           ]
         },
         {
-          "path": "icons/rtam-devanagari-ri-icon-white.svg",
+          "path": "icons/rtam-devanagari-ri-icon-ivory.svg",
           "title": "Devanagari ऋ monogram — ivory",
           "desc": "Sanskrit ऋ in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; intentionally invisible on white.",
           "colors": {
@@ -442,7 +442,7 @@
           ]
         },
         {
-          "path": "logos/rtam-wordmark-black.svg",
+          "path": "logos/rtam-wordmark-charcoal.svg",
           "title": "ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)",
           "desc": "Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.",
           "colors": {
@@ -471,7 +471,7 @@
           ]
         },
         {
-          "path": "logos/rtam-wordmark-white.svg",
+          "path": "logos/rtam-wordmark-ivory.svg",
           "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds",
           "desc": "Ivory variant on a transparent ground — a true overlay for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Intentionally invisible on white; always preview on the intended dark surface.",
           "colors": {
@@ -485,7 +485,7 @@
           ]
         },
         {
-          "path": "logos/rtam-wordmark-white-golddot.svg",
+          "path": "logos/rtam-wordmark-ivory-golddot.svg",
           "title": "ṚTAM Foundation — sacred wordmark on dark (ivory letters, gold bindu)",
           "desc": "The sacred two-tone form for dark surfaces: ivory letters with the gold bindu preserved — the brand signature does not disappear on charcoal / indigo grounds. Transparent ground; always preview on the intended dark surface. This is the dark-surface counterpart of the primary sacred wordmark.",
           "colors": {
@@ -1048,7 +1048,7 @@
           ]
         },
         {
-          "path": "lockups/rtambhareshvara-mandir-lockup-white-golddot.svg",
+          "path": "lockups/rtambhareshvara-mandir-lockup-ivory-golddot.svg",
           "title": "Temple lockup on dark — ivory scripts, gold bindu and rule",
           "desc": "Dark-surface form of the temple lockup: both scripts in ivory with the gold bindu and rule preserved, on a transparent ground — for indigo / charcoal / photographic dark surfaces (event banners, night signage). Intentionally invisible on white; always preview on the intended dark surface.",
           "colors": {

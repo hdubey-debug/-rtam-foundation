@@ -21,8 +21,8 @@ Two independent defects, both systemic across the 21 shipped assets.
   mechanism to do so).
 
 **(b) Overlay suppression via baked grounds.** The three `-white` variants
-(`rtam-wordmark-white.svg`, `rtam-rdot-icon-white.svg`,
-`rtam-devanagari-ri-icon-white.svg`) each bake a *full-bleed opaque*
+(`rtam-wordmark-ivory.svg`, `rtam-rdot-icon-ivory.svg`,
+`rtam-devanagari-ri-icon-ivory.svg`) each bake a *full-bleed opaque*
 `<rect ... fill="#1A1A1A"/>`. The mark is therefore NOT overlay-ready: dropped onto
 indigo or a photo it punches an identical charcoal hole regardless of what is behind
 it (proof `F12-overlay-ready-matrix.png`, CURRENT row — the same black box appears on
@@ -55,9 +55,9 @@ Every emitted SVG drops `aria-label` and gains `aria-labelledby` + `aria-describ
 and the `id=` attributes on the existing `<title>`/`<desc>` of all 21 files.
 
 ### B. Remove baked grounds — overlay-readiness (edit, 3 files)
-- `logos/rtam-wordmark-white.svg` — delete the comment + opaque `<rect>` (lines 7–9).
-- `icons/rtam-rdot-icon-white.svg` — delete the comment + opaque `<rect>`.
-- `icons/rtam-devanagari-ri-icon-white.svg` — delete the comment + opaque `<rect>`.
+- `logos/rtam-wordmark-ivory.svg` — delete the comment + opaque `<rect>` (lines 7–9).
+- `icons/rtam-rdot-icon-ivory.svg` — delete the comment + opaque `<rect>`.
+- `icons/rtam-devanagari-ri-icon-ivory.svg` — delete the comment + opaque `<rect>`.
 After this edit, `-white` = transparent all-ivory knockout (true overlay; the dark
 analog of `-black`).
 
@@ -80,12 +80,12 @@ Ivory glyph + gold ring + gold bindu, transparent ground.
 | Asset | Why no on-dark file |
 |---|---|
 | `logos/rtam-wordmark-gold.svg` | all-gold, transparent ground; gold passes ≥3 on charcoal (7.21) & indigo (6.88). Ground-agnostic. |
-| `logos/rtam-wordmark-black.svg` | single-color mono floor; light-only by definition (the dark analog *is* `-white`). |
+| `logos/rtam-wordmark-charcoal.svg` | single-color mono floor; light-only by definition (the dark analog *is* `-white`). |
 | `icons/rtam-rdot-icon-gold.svg` | all-gold, transparent. Ground-agnostic. |
-| `icons/rtam-rdot-icon-black.svg` | mono, light-only. |
+| `icons/rtam-rdot-icon-charcoal.svg` | mono, light-only. |
 | `icons/rtam-rdot-icon-circle-charcoal.svg` | all-charcoal mono seal, light-only by definition. |
 | `icons/rtam-devanagari-ri-icon-gold.svg` | all-gold, transparent. Ground-agnostic. |
-| `icons/rtam-devanagari-ri-icon-black.svg` | mono, light-only. |
+| `icons/rtam-devanagari-ri-icon-charcoal.svg` | mono, light-only. |
 | `seal/rtam-12-medallion-seal.svg` | all-gold on transparent (verified: no opaque ground). Ground-agnostic. |
 | `seal/rtam-12-medallion-pattern.svg` | all-gold tile fill on transparent (the `<rect fill="url(#tile)">` is the pattern paint, not an opaque ground). Ground-agnostic. |
 | `logos/rtam-wordmark-public-RTAM.svg` | light-only original kept; its dark analog is the new §C `-on-dark`. |
@@ -131,7 +131,7 @@ Rules the generator must enforce:
 
 ### §2 — Remove baked grounds (3 `-white` files)
 
-Delete these exact lines from each (example = `rtam-wordmark-white.svg`):
+Delete these exact lines from each (example = `rtam-wordmark-ivory.svg`):
 ```xml
   <!-- Charcoal ground so the ivory wordmark is visible when the file is opened standalone.
        Remove this rect to overlay the ivory mark on an indigo or photographic surface. -->

@@ -35,8 +35,8 @@ different finding and are **not** touched here):
 
 Shipped icon SVGs (the 4 ऋ variants):
 - `brand/icons/rtam-devanagari-ri-icon-gold.svg` — open, fs=210
-- `brand/icons/rtam-devanagari-ri-icon-black.svg` — open, fs=210
-- `brand/icons/rtam-devanagari-ri-icon-white.svg` — open, fs=210 (ivory on baked charcoal rect)
+- `brand/icons/rtam-devanagari-ri-icon-charcoal.svg` — open, fs=210
+- `brand/icons/rtam-devanagari-ri-icon-ivory.svg` — open, fs=210 (ivory on baked charcoal rect)
 - `brand/icons/rtam-devanagari-ri-icon-circle.svg` — circle, fs=180, inside gold ring
 
 Previews that **inline** the same `<text>` (verified: live text, not `<img>` refs — so

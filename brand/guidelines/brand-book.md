@@ -58,10 +58,10 @@ The wordmark is the foundation's voice in public. Six variants:
 | File | Use |
 |---|---|
 | `rtam-wordmark-sacred-RTAM-dot.svg` | Canonical. Charcoal letters, gold bindu. |
-| `rtam-wordmark-white-golddot.svg` | The sacred form **on dark**: ivory letters, gold bindu preserved. Default on charcoal / indigo / photographic dark surfaces. |
+| `rtam-wordmark-ivory-golddot.svg` | The sacred form **on dark**: ivory letters, gold bindu preserved. Default on charcoal / indigo / photographic dark surfaces. |
 | `rtam-wordmark-gold.svg` | All-gold. For sacred contexts, embossed printing, foil. |
-| `rtam-wordmark-black.svg` | All-charcoal. For single-color reproduction (mono printing, fax, microform). |
-| `rtam-wordmark-white.svg` | All-ivory on a **transparent** ground — for dark surfaces where a second colour (the gold bindu) cannot reproduce. Intentionally invisible on white; always preview on the intended dark surface. |
+| `rtam-wordmark-charcoal.svg` | All-charcoal. For single-color reproduction (mono printing, fax, microform). |
+| `rtam-wordmark-ivory.svg` | All-ivory on a **transparent** ground — for dark surfaces where a second colour (the gold bindu) cannot reproduce. Intentionally invisible on white; always preview on the intended dark surface. |
 | `rtam-wordmark-public-RTAM.svg` | ASCII-only, no bindu. **Use only** when the bindu cannot be reliably reproduced (low-resolution sign vinyl, embroidered shirts under 6 cm wide). |
 
 The Foundation name also exists as a **standalone Devanagari wordmark** in both
@@ -105,7 +105,7 @@ Four variants: gold / black / ivory / circle-enclosed.
 | `rtam-bilingual-foundation.svg` | Common-register: ṚTAM Foundation over ऋतम् फाउंडेशन. Default bilingual. |
 | `rtam-sanskritic-pratishthan.svg` | Pure-Sanskritic: ṚTAM Foundation over ऋतम् प्रतिष्ठान. Scholarly / sacred. |
 | `rtambhareshvara-mandir-lockup.svg` | Temple name, both scripts, leading R carries the bindu. Wider viewBox (1280) to fit the longest name. |
-| `rtambhareshvara-mandir-lockup-white-golddot.svg` | The temple lockup on dark: ivory scripts, gold bindu + rule. Event banners, night signage. |
+| `rtambhareshvara-mandir-lockup-ivory-golddot.svg` | The temple lockup on dark: ivory scripts, gold bindu + rule. Event banners, night signage. |
 | `donation-lockup.svg` | Wordmark + thin gold rule + a single quiet supporting line (charcoal at light weight — quiet by weight, legible by colour). Header, not CTA. |
 
 ---
@@ -126,10 +126,12 @@ Seven tokens. Use them by name, not by hex. The CSS variables live in `brand/pal
 
 **The wordmark must work in single-colour charcoal.** This is a non-negotiable reproduction test — every variant of the wordmark has been verified in flat `#1A1A1A` (one ink, no gold) for fax, single-color print, and microform. (`#1A1A1A` is charcoal, not `#000000`; the earlier "pure black" wording overstated the hex. If a vendor's process demands literal K-100 black, the charcoal files may be reproduced at 100% K — the geometry is the test, not the 10% luminance difference.)
 
-**File names vs. tokens (historical, kept until the v2 rename):** the `-white`
-suffix means **ivory** `#F7F3E9`; the `-black` suffix means **charcoal**
-`#1A1A1A`; `-golddot` marks two-tone variants that preserve the gold bindu on
-an otherwise single-colour mark.
+**File names vs. tokens (v2 rename applied, 2026-07-12):** file suffixes are
+now token-truthful — `-ivory` means ivory `#F7F3E9`, `-charcoal` means
+charcoal `#1A1A1A`, `-garbhagriha` means the bhasma-ash-on-mahakala register;
+`-golddot` still marks two-tone variants that preserve the gold bindu on an
+otherwise single-colour mark. (The historical `-white`/`-black` suffixes are
+gone from the tree.)
 
 **Contrast (measured WCAG ratios).** Charcoal `#1A1A1A` on ivory is 15.7:1 —
 the body-text pairing, comfortably AAA. But two warm pairings fall **below** the

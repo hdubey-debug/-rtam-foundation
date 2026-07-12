@@ -113,7 +113,7 @@ def emit_battery(branch_dir: Path, m: dict) -> Path:
     {station('dark_indigo', 'Sacred night — indigo ground', lambda p: _img(p, 'width:300px'), 'cell dark-i')}
     {station('dark_charcoal', 'Working dark — charcoal ground', lambda p: _img(p, 'width:300px'), 'cell dark-c')}
     {station('cobrand', 'Bilingual co-brand — mark + shipped lockup', lambda p: f'<span class="co">{_img(p, "width:120px")}</span><span class="co">{_img(DIST + "/lockups/rtam-bilingual-foundation.svg", "width:430px")}</span>', 'cell full')}
-    {station('poster_mark', 'Donation-poster header simulation', lambda p: f'<img class="mark" src="{p}"><img class="wm" src="{DIST}/logos/rtam-wordmark-white-golddot.svg">', 'cell poster-sim')}
+    {station('poster_mark', 'Donation-poster header simulation', lambda p: f'<img class="mark" src="{p}"><img class="wm" src="{DIST}/logos/rtam-wordmark-ivory-golddot.svg">', 'cell poster-sim')}
     {station('receipt_mark', 'Receipt / letterhead header simulation', lambda p: f'<img class="mark" src="{p}"><img class="wm" src="{DIST}/lockups/donation-lockup.svg">', 'cell receipt-sim')}
     {station('mono', '6 cm mono print / embroidery simulation', lambda p: _img(p), 'cell mono-sim')}
     {_cell('Mini specimen — everything this direction ships', specimen or '<span class="missing">none</span>', 'cell full')}

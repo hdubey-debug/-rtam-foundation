@@ -190,7 +190,7 @@ def gallery():
         <figure class="night">
           <img src="candidates/{name}-night.svg" width="210" height="210">
           <div class="nlock"><img src="candidates/{name}-night.svg" width="40" height="40">
-          <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:26px"></div>
+          <img src="{dist}/rtam-wordmark-ivory-golddot.svg" style="height:26px"></div>
         </figure>
       </div>
     </section>""")

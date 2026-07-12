@@ -53,9 +53,9 @@ emit the canonical ratio (F3 blesses them, F1 owns their cx) and the favicon is
 F14's exception.
 
 **F3 changes geometry (5 files):**
-1. `brand/icons/rtam-rdot-icon-black.svg` — bindu r 14→16.67, cy 218→230.67
+1. `brand/icons/rtam-rdot-icon-charcoal.svg` — bindu r 14→16.67, cy 218→230.67
 2. `brand/icons/rtam-rdot-icon-gold.svg` — bindu r 14→16.67, cy 218→230.67
-3. `brand/icons/rtam-rdot-icon-white.svg` — bindu r 14→16.67, cy 218→230.67
+3. `brand/icons/rtam-rdot-icon-ivory.svg` — bindu r 14→16.67, cy 218→230.67
 4. `brand/icons/rtam-rdot-icon-circle-gold.svg` — bindu r 11→14.17, cy 207→217.67
 5. `brand/icons/rtam-rdot-icon-circle-charcoal.svg` — bindu r 11→14.17, cy 207→217.67
 

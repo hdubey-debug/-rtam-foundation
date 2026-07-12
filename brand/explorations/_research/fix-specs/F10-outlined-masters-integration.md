@@ -175,16 +175,16 @@ The `desc`/`title`/`aria_label` strings are copied **verbatim** from the current
 | 1 | logos/rtam-wordmark-sacred-RTAM-dot.svg | wordmark | 0 0 1080 240 | — | yes | charcoal | RTAM@80,160 · Foundation@540,160 (start) | gold | wordmark_primary, wordmark_secondary |
 | 2 | logos/rtam-wordmark-public-RTAM.svg | wordmark | 0 0 1080 240 | — | yes | charcoal | RTAM · Foundation (start) | **hidden** | wordmark_primary, wordmark_secondary |
 | 3 | logos/rtam-wordmark-gold.svg | wordmark | 0 0 1080 240 | — | yes | gold | RTAM · Foundation (start) | gold | wordmark_primary, wordmark_secondary |
-| 4 | logos/rtam-wordmark-white.svg | wordmark | 0 0 1080 240 | **charcoal** | yes | ivory | RTAM · Foundation (start) | ivory | wordmark_primary, wordmark_secondary |
-| 5 | logos/rtam-wordmark-black.svg | wordmark | 0 0 1080 240 | — | yes | charcoal | RTAM · Foundation (start) | charcoal | wordmark_primary, wordmark_secondary |
+| 4 | logos/rtam-wordmark-ivory.svg | wordmark | 0 0 1080 240 | **charcoal** | yes | ivory | RTAM · Foundation (start) | ivory | wordmark_primary, wordmark_secondary |
+| 5 | logos/rtam-wordmark-charcoal.svg | wordmark | 0 0 1080 240 | — | yes | charcoal | RTAM · Foundation (start) | charcoal | wordmark_primary, wordmark_secondary |
 | 6 | icons/rtam-rdot-icon-gold.svg | monogram | 0 0 256 256 | — | yes | gold | R@128,184 (middle) | gold @128,218 r14 · **cy_ratio 0.170, r_ratio 0.070** | monogram_R |
-| 7 | icons/rtam-rdot-icon-black.svg | monogram | 0 0 256 256 | — | yes | charcoal | R (middle) | charcoal · cy_ratio 0.170, r_ratio 0.070 | monogram_R |
-| 8 | icons/rtam-rdot-icon-white.svg | monogram | 0 0 256 256 | **charcoal** | yes | ivory | R (middle) | ivory · cy_ratio 0.170, r_ratio 0.070 | monogram_R |
+| 7 | icons/rtam-rdot-icon-charcoal.svg | monogram | 0 0 256 256 | — | yes | charcoal | R (middle) | charcoal · cy_ratio 0.170, r_ratio 0.070 | monogram_R |
+| 8 | icons/rtam-rdot-icon-ivory.svg | monogram | 0 0 256 256 | **charcoal** | yes | ivory | R (middle) | ivory · cy_ratio 0.170, r_ratio 0.070 | monogram_R |
 | 9 | icons/rtam-rdot-icon-circle-gold.svg | monogram-circle | 0 0 256 256 | — | yes | charcoal | R@128,178 (middle) | gold @128,207 r11 · ring gold · **cy_ratio 0.171, r_ratio 0.065** | monogram_R_circle |
 | 10 | icons/rtam-rdot-icon-circle-charcoal.svg | monogram-circle | 0 0 256 256 | — | yes | charcoal | R (middle) | charcoal · ring charcoal · cy_ratio 0.171, r_ratio 0.065 | monogram_R_circle |
 | 11 | icons/rtam-devanagari-ri-icon-gold.svg | monogram | 0 0 256 256 | — | yes | gold | ऋ@128,215 (middle) | **none** (ऋ self-signs) | monogram_ri |
-| 12 | icons/rtam-devanagari-ri-icon-black.svg | monogram | 0 0 256 256 | — | yes | charcoal | ऋ (middle) | none | monogram_ri |
-| 13 | icons/rtam-devanagari-ri-icon-white.svg | monogram | 0 0 256 256 | **charcoal** | yes | ivory | ऋ (middle) | none | monogram_ri |
+| 12 | icons/rtam-devanagari-ri-icon-charcoal.svg | monogram | 0 0 256 256 | — | yes | charcoal | ऋ (middle) | none | monogram_ri |
+| 13 | icons/rtam-devanagari-ri-icon-ivory.svg | monogram | 0 0 256 256 | **charcoal** | yes | ivory | ऋ (middle) | none | monogram_ri |
 | 14 | icons/rtam-devanagari-ri-icon-circle.svg | monogram-circle | 0 0 256 256 | — | yes | charcoal | ऋ@128,210 (middle) | none · ring gold | monogram_ri_circle |
 | 15 | icons/favicon.svg | favicon | 0 0 32 32 | — | yes | charcoal | R@16,22 (middle) | gold @16,27.5 r2.2 · **cy_ratio 0.212, r_ratio 0.085** | favicon_R |
 | 16 | lockups/rtambhareshvara-mandir-lockup.svg | lockup-centered | 0 0 1280 380 | — | yes | charcoal | RTAMBHARESHVARA MANDIR@640,160 (middle) · rule@520–760,225 · ऋतम्भरेश्वर मंदिर@640,320 (middle) | none | temple_latin, temple_deva |
