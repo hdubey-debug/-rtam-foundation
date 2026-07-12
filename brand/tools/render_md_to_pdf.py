@@ -16,6 +16,9 @@ from pathlib import Path
 import markdown
 from playwright.sync_api import sync_playwright
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from palette_sync import css_root_vars  # noqa: E402  (palette canon: colors.json)
+
 
 TEMPLATE = """<!doctype html>
 <html lang="en">
@@ -27,13 +30,7 @@ TEMPLATE = """<!doctype html>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Tiro+Devanagari+Sanskrit&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
     :root {{
-      --rtam-gold: #C8A15A;
-      --rtam-ivory: #F7F3E9;
-      --rtam-charcoal: #1A1A1A;
-      --rtam-sandstone: #E6DED1;
-      --rtam-indigo: #1C1A3D;
-      --rtam-bronze: #9B6A2F;
-      --rtam-stone: #B8B1A4;
+{palette}
     }}
     @page {{ size: A4; margin: 22mm 20mm; }}
     * {{ box-sizing: border-box; }}
@@ -153,7 +150,7 @@ def render(md_path: Path, pdf_path: Path) -> None:
         output_format="html5",
     )
     title = md_path.stem.replace("-", " ").title()
-    html_doc = TEMPLATE.format(title=title, body=body_html)
+    html_doc = TEMPLATE.format(title=title, body=body_html, palette=css_root_vars(indent="      "))
     pdf_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
         mode="w", suffix=".html", delete=False, encoding="utf-8"

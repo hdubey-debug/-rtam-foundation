@@ -11,6 +11,9 @@ WRITE="${1:-}"
 echo "== brand.json =="
 python3 -c "import json,sys; json.load(open('../spec/brand.json')); print('  valid JSON')"
 
+echo "== palette canon (colors.json -> colors.css + brand.json tokens) =="
+if [ "$WRITE" = "--write" ]; then python3 palette_sync.py --write; else python3 palette_sync.py; fi
+
 echo "== parity gate (generator + outliner vs committed design) =="
 python3 parity.py
 

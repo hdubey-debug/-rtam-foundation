@@ -1,19 +1,17 @@
 /* RTAM Foundation — color tokens
- * Source of truth: brand/palette/colors.json
- * Use these variables in every preview / mockup HTML and CSS file.
+ * GENERATED from brand/palette/colors.json by tools/palette_sync.py --write.
+ * Do not edit by hand: change colors.json and regenerate (build.sh gates drift).
+ * Name mapping per line: CSS var · colors.json name · brand.json spec token.
  */
 
 :root {
-  /* Primary */
-  --rtam-gold:     #C8A15A;
-  --rtam-ivory:    #F7F3E9;
-  --rtam-charcoal: #1A1A1A;
-  --rtam-sandstone:#E6DED1;
-
-  /* Secondary */
-  --rtam-indigo:   #1C1A3D;
-  --rtam-bronze:   #9B6A2F;
-  --rtam-stone:    #B8B1A4;
+  --rtam-gold: #C8A15A;  /* colors.json: antiqueGold · brand.json: gold */
+  --rtam-ivory: #F7F3E9;  /* colors.json: warmIvory · brand.json: ivory */
+  --rtam-charcoal: #1A1A1A;  /* colors.json: charcoalBlack · brand.json: ink */
+  --rtam-sandstone: #E6DED1;  /* colors.json: sandstone · brand.json: sandstone */
+  --rtam-indigo: #1C1A3D;  /* colors.json: deepIndigo · brand.json: indigo */
+  --rtam-bronze: #9B6A2F;  /* colors.json: bronze */
+  --rtam-stone: #B8B1A4;  /* colors.json: stoneGray · brand.json: stone */
 
   /* Semantic aliases */
   --rtam-bg:       var(--rtam-ivory);

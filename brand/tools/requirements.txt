@@ -1,11 +1,14 @@
-# Tooling deps for brand/tools/ (measure, render, outline, diff).
+# Tooling deps for brand/tools/ (measure, render, outline, diff, docs).
 # playwright also needs its Chromium: `playwright install chromium`
-cairosvg
-fonttools
-jinja2
-numpy
-Pillow
-playwright
-uharfbuzz
-skia-pathops
-picosvg
+# Pinned to the versions the pipeline was calibrated against (parity-gate
+# thresholds are renderer-sensitive; upgrade deliberately, then re-run build.sh).
+cairosvg==2.8.2
+fonttools==4.60.1
+jinja2==3.1.6
+markdown==3.9
+numpy==2.0.2
+Pillow==11.3.0
+playwright==1.60.0
+uharfbuzz==0.51.7
+skia-pathops==0.8.0.post2
+picosvg==0.22.3
