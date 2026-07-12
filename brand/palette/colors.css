@@ -20,9 +20,19 @@
   --rtam-muted:    var(--rtam-stone);
 }
 
-/* Optional dark scheme — sacred night */
+/* Dark scheme — charcoal working dark (docs, UI) */
 .rtam-dark {
   --rtam-bg:     var(--rtam-charcoal);
+  --rtam-fg:     var(--rtam-ivory);
+  --rtam-accent: var(--rtam-gold);
+  --rtam-muted:  var(--rtam-stone);
+}
+
+/* Night scheme — sacred-night indigo (posters, ceremony, video end-cards).
+ * Gold clears AA as TEXT on indigo (6.88:1) — on dark grounds the accent
+ * may speak, not just ornament. */
+.rtam-night {
+  --rtam-bg:     var(--rtam-indigo);
   --rtam-fg:     var(--rtam-ivory);
   --rtam-accent: var(--rtam-gold);
   --rtam-muted:  var(--rtam-stone);

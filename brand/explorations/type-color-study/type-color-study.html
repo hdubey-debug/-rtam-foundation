@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RTAM — Phase-1 type &amp; colour study</title>
+<link rel="stylesheet" href="../../palette/colors.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=EB+Garamond:wght@500&display=swap" rel="stylesheet">
+<style>
+  /* vendored faces via file:// — bare CDN @import is banned in proofs */
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Marcellus'; font-weight:400; src:url('../../fonts/marcellus/marcellus-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:300; src:url('../../fonts/inter/inter-300.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro Devanagari Sanskrit'; src:url('../../fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--rtam-ivory); color: var(--rtam-charcoal);
+         font-family: Inter, sans-serif; padding: 48px 64px 96px; }
+  h1 { font-family: Cinzel, serif; font-weight:500; font-size:30px; letter-spacing:.05em; margin:0 0 8px; }
+  h2 { font-family: Cinzel, serif; font-weight:500; font-size:19px; letter-spacing:.05em;
+       margin:56px 0 6px; border-bottom:1px solid var(--rtam-gold); padding-bottom:6px; }
+  .note { font-size:13px; color:#555; max-width:860px; line-height:1.6; margin:0 0 20px; }
+  table.spec { border-collapse: collapse; width:100%; }
+  table.spec td { padding: 14px 18px; border-bottom: 1px solid var(--rtam-sandstone); vertical-align: middle; }
+  td.who { width:230px; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#777; }
+  .big { font-size:44px; line-height:1.15; }
+  .mid { font-size:22px; }
+  .cinzel { font-family:Cinzel, serif; font-weight:500; }
+  .marcellus { font-family:Marcellus, serif; }
+  .cormorant { font-family:Cormorant, serif; font-weight:600; }
+  .garamond { font-family:'EB Garamond', serif; font-weight:500; }
+  .tiro { font-family:'Tiro Devanagari Sanskrit', serif; }
+  .inter { font-family:Inter, sans-serif; font-weight:400; }
+
+  .quoteband { display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+  .qcard { border:1px solid var(--rtam-sandstone); padding:22px 24px; background:#fff9; }
+  .qcard .tag { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#888; margin-bottom:10px; }
+  .qcard .deva { font-size:24px; margin-bottom:8px; }
+  .qcard .lat { font-size:17.5px; line-height:1.65; }
+
+  .swrow { display:flex; gap:0; margin: 14px 0 26px; border:1px solid var(--rtam-sandstone); }
+  .sw { flex:1; padding:18px 14px 14px; min-height:118px; }
+  .sw .chip { font-size:26px; font-weight:600; font-family:Inter; margin-bottom:2px; }
+  .sw .lab { font-size:11.5px; letter-spacing:.04em; line-height:1.5; opacity:.85; }
+  .sw .body { font-size:13.5px; margin-top:8px; }
+</style>
+</head>
+<body>
+  <h1>Type &amp; Colour Study — Phase 1</h1>
+  <p class="note">Feeds all four Phase-2 experiment branches. Sections: (1) the mixed-case question — can the system say <em>Ṛtam</em>, not only ṚTAM; (2) the Tiro-Latin embrace — the "unsanctioned face" already leaking into mockups, evaluated on purpose; (3) accent candidates with measured WCAG ratios. Fonts: vendored files (Cinzel, Marcellus, Inter, Tiro) + CDN candidates (Cormorant, EB Garamond).</p>
+
+  <h2>1 · Mixed-case candidates — "Ṛtambhareśvara" with true lowercase</h2>
+  <p class="note">Cinzel has no lowercase (it small-caps everything): the brand cannot currently whisper. Marcellus is already vendored (the reserve face) and carries a Trajan-adjacent voice WITH lowercase. Cormorant / EB Garamond are outside candidates for comparison. Watch the Ṛ and ś diacritics — dotted-under R is composed (R + U+0323), so mind mark placement.</p>
+  <table class="spec">
+    <tr><td class="who">Cinzel 500 (current voice)</td><td class="big cinzel">Ṛtambhareśvara — Ṛtam</td></tr>
+    <tr><td class="who">Cinzel 500 — lowercase test</td><td class="mid cinzel">the order that holds — carried at the centre</td></tr>
+    <tr><td class="who">Marcellus 400 (vendored reserve)</td><td class="big marcellus">Ṛtambhareśvara — Ṛtam</td></tr>
+    <tr><td class="who">Marcellus — lowercase test</td><td class="mid marcellus">the order that holds — carried at the centre</td></tr>
+    <tr><td class="who">Cormorant 600 (CDN candidate)</td><td class="big cormorant">Ṛtambhareśvara — Ṛtam</td></tr>
+    <tr><td class="who">Cormorant — lowercase test</td><td class="mid cormorant">the order that holds — carried at the centre</td></tr>
+    <tr><td class="who">EB Garamond 500 (CDN candidate)</td><td class="big garamond">Ṛtambhareśvara — Ṛtam</td></tr>
+    <tr><td class="who">Tiro Latin (built-in Latin)</td><td class="big tiro">Ṛtambhareśvara — Ṛtam</td></tr>
+  </table>
+
+  <h2>2 · The Tiro-Latin embrace — quote / body serif</h2>
+  <p class="note">Tiro Devanagari Sanskrit ships harmonized Latin glyphs, already vendored, already leaking into mockups. Candidate rule: Devanagari-with-translation settings may set BOTH scripts in Tiro; standalone Latin body stays Inter. Judge the harmony below.</p>
+  <div class="quoteband">
+    <div class="qcard"><div class="tag">Tiro + Tiro Latin (the embrace)</div>
+      <div class="deva tiro">ऋतस्य पन्थाम्</div>
+      <div class="lat tiro">— the path of the cosmic order. The works of the foundation proceed steadily, in keeping with the order they intend to serve.</div></div>
+    <div class="qcard"><div class="tag">Tiro + Inter (current rule)</div>
+      <div class="deva tiro">ऋतस्य पन्थाम्</div>
+      <div class="lat inter">— the path of the cosmic order. The works of the foundation proceed steadily, in keeping with the order they intend to serve.</div></div>
+    <div class="qcard"><div class="tag">Tiro + Cormorant</div>
+      <div class="deva tiro">ऋतस्य पन्थाम्</div>
+      <div class="lat cormorant" style="font-weight:500">— the path of the cosmic order. The works of the foundation proceed steadily, in keeping with the order they intend to serve.</div></div>
+  </div>
+
+  <h2>3 · Accent candidates — measured WCAG (see accent-study.md for the full table)</h2>
+  <p class="note">Functional accent must clear 4.5:1 as text on ivory AND sandstone. Deep bronze #7A5423: ivory 6.07 · sandstone 5.04. Gold stays the decorative accent on light and becomes the functional accent on dark (on indigo 6.88 · on charcoal 7.21). Ceremonial: kumkum #C41E3A on light (ivory 5.27), flame-ember #D98E32 on dark (indigo 6.22).</p>
+
+  <div class="swrow" style="background:var(--rtam-ivory)">
+    <div class="sw"><div class="chip" style="color:#7A5423">Aa 6.07</div><div class="lab">deep bronze #7A5423 on ivory — functional accent (links, CTAs)</div><div class="body" style="color:#7A5423">Donate to the renovation drive →</div></div>
+    <div class="sw"><div class="chip" style="color:#C41E3A">Aa 5.27</div><div class="lab">kumkum #C41E3A on ivory — ceremonial accent</div><div class="body" style="color:#C41E3A">Vaiśākha utsava · śubhārambha</div></div>
+    <div class="sw"><div class="chip" style="color:#C8A15A">Aa 2.18</div><div class="lab">gold #C8A15A on ivory — decorative only (bindu, rules)</div><div class="body" style="color:#C8A15A">ornament, never information</div></div>
+    <div class="sw"><div class="chip" style="color:#94652D">Aa 4.56</div><div class="lab">minimal-shift bronze #94652D — rejected (fails sandstone 3.78)</div><div class="body" style="color:#94652D">too little margin</div></div>
+  </div>
+  <div class="swrow" style="background:var(--rtam-sandstone)">
+    <div class="sw"><div class="chip" style="color:#7A5423">Aa 5.04</div><div class="lab">deep bronze on sandstone — still AA</div><div class="body" style="color:#7A5423">works on the secondary surface</div></div>
+    <div class="sw"><div class="chip" style="color:#C41E3A">Aa 4.38</div><div class="lab">kumkum on sandstone — large/ceremonial only</div><div class="body" style="color:#C41E3A">headline register</div></div>
+    <div class="sw"><div class="chip" style="color:#1A1A1A">Aa 13.0</div><div class="lab">charcoal on sandstone — body floor</div><div class="body">the working text colour</div></div>
+    <div class="sw"><div class="chip" style="color:#B8B1A4">✕</div><div class="lab">stone on sandstone — dividers only</div><div class="body" style="color:#B8B1A4">never text</div></div>
+  </div>
+  <div class="swrow" style="background:var(--rtam-indigo)">
+    <div class="sw"><div class="chip" style="color:#C8A15A">Aa 6.88</div><div class="lab" style="color:#F7F3E9">gold on indigo — functional accent on dark</div><div class="body" style="color:#C8A15A">rtam.foundation / donate</div></div>
+    <div class="sw"><div class="chip" style="color:#D98E32">Aa 6.22</div><div class="lab" style="color:#F7F3E9">flame-ember #D98E32 on indigo — ceremonial on dark</div><div class="body" style="color:#D98E32">dīpa · the lamp register</div></div>
+    <div class="sw"><div class="chip" style="color:#F7F3E9">Aa 15.0</div><div class="lab" style="color:#F7F3E9">ivory on indigo — body on dark</div><div class="body" style="color:#F7F3E9">sacred-night reading text</div></div>
+    <div class="sw"><div class="chip" style="color:#7A5423">✕ 2.47</div><div class="lab" style="color:#F7F3E9">deep bronze on indigo — fails; gold takes over on dark</div><div class="body" style="color:#7A5423">(demonstrating the failure)</div></div>
+  </div>
+</body>
+</html>
