@@ -27,9 +27,15 @@ if [ "$WRITE" = "--write" ]; then
   python3 outline.py --write
   echo "== re-verify after write =="
   python3 parity.py
-  echo "BUILD OK (written + verified)"
+  echo "== render all exports =="
+  python3 export_all.py
+  echo "== export colour gate =="
+  python3 verify_export.py
+  echo "BUILD OK (written + verified + exports rendered + colour-gated)"
 else
   echo "== generate (dry-run) =="; python3 generate.py
   echo "== outline (dry-run) =="; python3 outline.py
+  echo "== export colour gate (committed exports) =="
+  python3 verify_export.py
   echo "BUILD OK (dry-run; pass --write to apply)"
 fi
