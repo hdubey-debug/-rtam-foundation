@@ -14,13 +14,23 @@ Stations:
   3  circle avatars on platform grounds: YouTube dark #0F0F0F,
      X black #000000, Instagram white #FFFFFF — ivory and indigo
      discs, 80 px + 40 px
-  4  YouTube channel banner (indigo, night lockup)
-  5  YouTube thumbnail 480x270 (indigo, ivory display type)
+  4  YouTube channel banner at TRUE proportions: desktop crop of the
+     2560x1440 art is a 2560x423 strip with a 1546x423 safe area —
+     simulated to scale with the safe area outlined (founder asked
+     whether the first sim's small lockup would scale: yes, and this
+     station now shows the real geometry)
+  5  YouTube thumbnail 480x270 (indigo, ivory display type; mark fully
+     inside the frame, spelling per repo convention — founder fixes)
   6  donation poster header (ivory, stacked lockup, gold rule)
   7  receipt / letterhead header (quiet, small mark, charcoal text)
   8  six-centimetre embroidery simulation, single ink on sandstone
      (227 px ~ 6 cm at 96 dpi) + 128 px
   9  lockups: horizontal + stacked, light + night
+ 10  the four voices — two entities x two scripts: the icon locked up
+     with Foundation EN, Foundation Devanagari (pratishthan), Mandir
+     EN (diacritic), Mandir Devanagari. All four wordmarks are shipped
+     Phase-0 masters; night variants of the Devanagari/temple voices
+     do not exist yet (named Phase-3 gap).
 
 Marks are regenerated here from the finalized geometry (single source
 of truth for the study; Phase 3 moves it into brand.json).
@@ -163,16 +173,24 @@ def gallery():
   .plat.yt .who, .plat.x .who {{ color:#ddd; }}
   .plat.ig .who {{ color:#333; }}
 
-  .banner {{ width:1000px; height:170px; background:var(--rtam-indigo); display:flex;
-            align-items:center; justify-content:center; gap:22px; }}
+  .banner {{ width:968px; height:160px; background:var(--rtam-indigo); position:relative;
+            display:flex; align-items:center; justify-content:center; }}
+  .banner .safe {{ width:585px; height:160px; border-left:1px dashed rgba(247,243,233,.35);
+                  border-right:1px dashed rgba(247,243,233,.35); display:flex;
+                  align-items:center; justify-content:center; gap:20px; }}
+  .banner .hint {{ position:absolute; right:10px; bottom:6px; font-size:9.5px; color:rgba(247,243,233,.45);
+                  letter-spacing:.06em; }}
   .thumb {{ width:480px; height:270px; background:var(--rtam-indigo); position:relative;
            overflow:hidden; padding:26px 28px; }}
   .thumb .t1 {{ font-family:Cinzel,serif; font-size:30px; color:var(--rtam-ivory); line-height:1.25;
                width:250px; }}
   .thumb .t2 {{ font-size:12px; letter-spacing:.18em; color:var(--rtam-gold); margin-top:10px; }}
-  .thumb img.mark {{ position:absolute; right:-34px; bottom:-34px; width:230px; height:230px; opacity:.98; }}
+  .thumb img.mark {{ position:absolute; right:22px; bottom:22px; width:172px; height:172px; }}
   .thumb .chip {{ position:absolute; right:10px; top:10px; background:rgba(0,0,0,.7); color:#fff;
                  font-size:11px; padding:2px 6px; border-radius:3px; }}
+  .voices {{ display:flex; flex-direction:column; gap:14px; }}
+  .voices .lockup {{ background:var(--rtam-ivory); border:1px solid var(--rtam-sandstone); }}
+  .voices .tag {{ font-size:10px; color:#999; letter-spacing:.08em; width:200px; }}
 
   .poster {{ width:640px; background:var(--rtam-ivory); border:1px solid var(--rtam-sandstone);
             text-align:center; padding:44px 30px 34px; }}
@@ -244,16 +262,21 @@ def gallery():
     </div>
   </div>
 
-  <h2>4 · YouTube channel banner</h2>
-  <div class="st"><div class="banner">
-    <img src="candidates/chakra-night.svg" width="64" height="64">
-    <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:30px">
-  </div></div>
+  <h2>4 · YouTube channel banner — true desktop-crop geometry (2560&times;423 strip, 1546&times;423 safe area, scaled &times;0.378)</h2>
+  <div class="st">
+    <div class="banner">
+      <div class="safe">
+        <img src="candidates/chakra-night.svg" width="76" height="76">
+        <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:34px">
+      </div>
+      <span class="hint">dashed = mobile/desktop safe area &middot; at real size this lockup is &asymp;2.6&times; larger than shown</span>
+    </div>
+  </div>
 
-  <h2>5 · YouTube thumbnail 480&times;270</h2>
+  <h2>5 · YouTube thumbnail 480&times;270 — mark whole, spelling per repo convention</h2>
   <div class="st"><div class="thumb">
-    <div class="t1">Rudr&#257;bhi&#7779;eka</div>
-    <div class="t2">LIVE &middot; MAH&#256; &#346;IVAR&#256;TRI</div>
+    <div class="t1">Rudrabhisheka</div>
+    <div class="t2">LIVE &middot; MAHA SHIVARATRI</div>
     <img class="mark" src="candidates/chakra-night.svg">
     <span class="chip">3:12:44</span>
   </div></div>
@@ -301,6 +324,43 @@ def gallery():
       <img src="{dist}/rtam-wordmark-white-golddot.svg" style="height:28px; margin-top:12px;">
     </div>
   </div></div>
+
+  <h2>10 · the four voices — two entities &times; two scripts, one icon</h2>
+  <div class="st"><div class="voices">
+    <div class="row">
+      <div class="lockup">
+        <img src="candidates/chakra-light.svg" width="54" height="54">
+        <img src="{dist}/rtam-wordmark-sacred-RTAM-dot.svg" style="height:34px">
+      </div>
+      <span class="tag">FOUNDATION &middot; ENGLISH</span>
+    </div>
+    <div class="row">
+      <div class="lockup">
+        <img src="candidates/chakra-light.svg" width="54" height="54">
+        <img src="{dist}/rtam-wordmark-devanagari-pratishthan.svg" style="height:34px">
+      </div>
+      <span class="tag">FOUNDATION &middot; DEVANAGARI</span>
+    </div>
+    <div class="row">
+      <div class="lockup">
+        <img src="candidates/chakra-light.svg" width="54" height="54">
+        <img src="{dist}/rtam-temple-wordmark-diacritic.svg" style="height:42px">
+      </div>
+      <span class="tag">MANDIR &middot; ENGLISH</span>
+    </div>
+    <div class="row">
+      <div class="lockup">
+        <img src="candidates/chakra-light.svg" width="54" height="54">
+        <img src="{dist}/rtam-temple-wordmark-devanagari.svg" style="height:46px">
+      </div>
+      <span class="tag">MANDIR &middot; DEVANAGARI</span>
+    </div>
+  </div>
+  <p style="font-size:11.5px; color:#888; margin:14px 0 0; line-height:1.6;">All four wordmarks are shipped
+  Phase-0 masters (font-free, outlined). Named gap for Phase&nbsp;3: night (ivory-ink) variants of the
+  Devanagari and Mandir voices do not exist yet; and per the perspective-family architecture the Mandir may
+  receive its own elevation mark — these lockups prove the chakra pairs with every voice meanwhile.</p>
+  </div>
 </body>
 </html>
 """
