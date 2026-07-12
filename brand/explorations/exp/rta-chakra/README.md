@@ -15,6 +15,13 @@ Versions are kept side by side so any of them can be returned to:
   ogival tip), podium rebalanced (tips reach .70 R). Candidates keep
   their v1 numbers — 1 tanka, 2 utkirna, 3 shila, 4 dvitala, 6 aditya —
   each faithful to its own identity; no components mixed between them.
+- **`petal-study/`** — the petal silhouette isolated (founder: the v2
+  petals are "terrible"). Six options — A shastra (temple flame),
+  B marquise (yantra oval), C mukula (bud), D kalasha (dome),
+  E patra (shield), F shikhara (lancet) — each shown as single petal /
+  bare corolla / in shila / 64+32, with the rejected petal dimmed at
+  top for calibration. The winner gets applied across all five
+  candidates.
 - *(git only, reverted)* commit `78bd12e` — a synthesis iteration
   (ratna/mala) that mixed candidate 6's gold into candidate 3; rejected:
   candidates stay pure.
