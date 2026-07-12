@@ -19,6 +19,5 @@ playwright-report/
 # Scratch renders / measurement output (never committed)
 brand/tools/_scratch/
 
-# Build output — outlined distribution masters are reproducible from brand.json
-# via `brand/tools/build.sh --write` (kept out of git to avoid stale artifacts)
-brand/dist/
+# Build output: brand/dist/outlined/ IS committed (P0.2) — consumers use the
+# font-free masters without running the pipeline; parity.py gates staleness.
