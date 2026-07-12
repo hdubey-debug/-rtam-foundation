@@ -107,10 +107,12 @@ def g_anahata(c):
 
 def g_chakra(c):
     """The Lord bearing the cosmic order: the corolla seated in shila's
-    pierced rim among the twelve Aditya windows."""
+    pierced rim among the twelve Aditya windows. Medallions on the petal
+    angles (founder-finalized 2026-07-12: aligned, bare hub) — each
+    petal's ray runs tip-to-sun."""
     els = [ring(C, C, 213.5, c["ink"], 33)]
     for k in range(12):
-        a = math.radians(-75 + k * 30)
+        a = math.radians(-90 + k * 30)
         els.append(dot(C + MED * math.cos(a), C + MED * math.sin(a), MEDR, c["punch"]))
     els += corolla(c, 5)
     els.append(dot(C, C, LINGA, c["gold"]))

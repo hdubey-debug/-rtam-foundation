@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <circle cx="256" cy="256" r="213.5" fill="none" stroke="#F7F3E9" stroke-width="33"/>
-  <circle cx="310.77" cy="51.61" r="10.35" fill="#1C1A3D"/>
-  <circle cx="405.62" cy="106.38" r="10.35" fill="#1C1A3D"/>
-  <circle cx="460.39" cy="201.23" r="10.35" fill="#1C1A3D"/>
-  <circle cx="460.39" cy="310.77" r="10.35" fill="#1C1A3D"/>
-  <circle cx="405.62" cy="405.62" r="10.35" fill="#1C1A3D"/>
-  <circle cx="310.77" cy="460.39" r="10.35" fill="#1C1A3D"/>
-  <circle cx="201.23" cy="460.39" r="10.35" fill="#1C1A3D"/>
-  <circle cx="106.38" cy="405.62" r="10.35" fill="#1C1A3D"/>
-  <circle cx="51.61" cy="310.77" r="10.35" fill="#1C1A3D"/>
-  <circle cx="51.61" cy="201.23" r="10.35" fill="#1C1A3D"/>
-  <circle cx="106.38" cy="106.38" r="10.35" fill="#1C1A3D"/>
-  <circle cx="201.23" cy="51.61" r="10.35" fill="#1C1A3D"/>
+  <circle cx="256" cy="44.4" r="10.35" fill="#1C1A3D"/>
+  <circle cx="361.8" cy="72.75" r="10.35" fill="#1C1A3D"/>
+  <circle cx="439.25" cy="150.2" r="10.35" fill="#1C1A3D"/>
+  <circle cx="467.6" cy="256" r="10.35" fill="#1C1A3D"/>
+  <circle cx="439.25" cy="361.8" r="10.35" fill="#1C1A3D"/>
+  <circle cx="361.8" cy="439.25" r="10.35" fill="#1C1A3D"/>
+  <circle cx="256" cy="467.6" r="10.35" fill="#1C1A3D"/>
+  <circle cx="150.2" cy="439.25" r="10.35" fill="#1C1A3D"/>
+  <circle cx="72.75" cy="361.8" r="10.35" fill="#1C1A3D"/>
+  <circle cx="44.4" cy="256" r="10.35" fill="#1C1A3D"/>
+  <circle cx="72.75" cy="150.2" r="10.35" fill="#1C1A3D"/>
+  <circle cx="150.2" cy="72.75" r="10.35" fill="#1C1A3D"/>
   <path d="M 245.5 182.4 C 239 176 230.5 164 227.5 148 C 225.6 130 242 108 256 95 C 270 108 286.4 130 284.5 148 C 281.5 164 273 176 266.5 182.4 Z" fill="#F7F3E9" stroke="#1C1A3D" stroke-width="5" stroke-linejoin="round"/>
   <path d="M 283.71 187.01 C 281.28 178.22 279.92 163.58 285.32 148.22 C 292.67 131.68 317.88 120.83 336.5 116.57 C 342.12 134.83 345.33 162.08 334.68 176.72 C 324.08 189.08 310.72 195.22 301.89 197.51 Z" fill="#F7F3E9" stroke="#1C1A3D" stroke-width="5" stroke-linejoin="round"/>
   <path d="M 314.49 210.11 C 316.78 201.28 322.92 187.92 335.28 177.32 C 349.92 166.67 377.17 169.88 395.43 175.5 C 391.17 194.12 380.32 219.33 363.78 226.68 C 348.42 232.08 333.78 230.72 324.99 228.29 Z" fill="#F7F3E9" stroke="#1C1A3D" stroke-width="5" stroke-linejoin="round"/>
