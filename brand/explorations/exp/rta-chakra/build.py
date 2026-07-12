@@ -1,30 +1,35 @@
 #!/usr/bin/env python3
-"""exp/rta-chakra — round five, after the founder converged: keep the R-dot
-wordmark (the name) and make the icon the murti's own plan view — 12 petals,
-12 medallions, the Lord at the hub. The verdict of four rejected rounds is
-that the 12+12 GEOMETRY was never the problem — the CRAFT was: flat
-equal-weight hairlines read spa (round P2b); architectural drawing read
-literal (P2c); ritual metaphors dropped the 12+12 (P2d).
+"""exp/rta-chakra v2 — the synthesis round, after the founder's first
+positive read of v1 (commit 00a547f).
 
-So this round holds the geometry constant and varies only the craft.
-Every radius is the murti's own, from iconography/geometry/grid.json
-(normalized to rim R): linga .22 · jaladhari .32 · tier-1 tips .48 ·
-tier-2 tips .62 · water to .84 · medallions at .92 (r .045) · rim 1.0.
-Petals at 30 deg, tiers and medallions offset 15 deg. Gold at god-points
-only: the linga-bindu always; the twelve Adityas only in the ceremonial
-candidate.
+His verdict on v1: good direction. shila (relief) liked most; aditya's
+gold medallions liked most as an element; the gold middle IS the
+Shivalinga and stays; utkirna has aspects to keep and innovate from;
+tanka mildly liked (kept for the physical register); jala rejected
+outright; dvitala unmentioned (retired). The R-dot wordmark lockup in
+every row is now a locked system requirement.
 
-Six craft registers:
+His one correction, now law: FROM THE TOP ONLY TWELVE PETALS ARE
+VISIBLE. The 24 (two tiers) belong to the front elevation reading only.
+So the plan-view icon carries a single 12-petal corolla — base at the
+jaladhari (.32 R), tips at the lower tier's reach (.62 R), petals wide
+enough (hw 13 deg) to close into a corolla, separated by ground-colour
+seams. All other radii unchanged from iconography/geometry/grid.json.
 
-  tanka     struck coin — the plan engraved into one solid disc
-  utkirna   mason's twin-line — mala rim channel, heavy/light chisel tiers
-  shila     pure relief — ink is stone, ivory is light, no outlines
-  dvitala   the faithful portrait — solid upper tier, fine lower tier
-  jala      water is space — rim broken at the nali, the drop leaves
-  aditya    ceremonial glory — twelve gold suns set in carved seats
+Four candidates, converged from six:
 
-The tier-1 petals carry a ground-colour masking stroke so the lower tier
-reads as passing BENEATH them (depth without literal shading).
+  shila   his pick, corrected to twelve — pure relief, pierced rim,
+          gold linga at true scale
+  ratna   the synthesis he described: shila's relief + aditya's gold —
+          the twelve suns shine THROUGH the rim's pierced windows
+  mala    utkirna's aspects innovated: twin-line channel with seated
+          gold beads, relief petals carrying a carved ivory vein,
+          the god-point circled
+  tanka   the struck coin, corrected to twelve — the emboss/foil/wax
+          register, monochrome by nature, gold only at the hub
+
+Gold at god-points only: the linga always; the Adityas where they are
+set as stones (ratna, mala).
 
     python3 build.py    # writes candidates/*.svg + gallery.html
 """
@@ -46,20 +51,20 @@ C = 256.0
 R = 230.0                      # rim outer radius on the 512 canvas
 LINGA = 0.22 * R               # 50.6  — gold bindu at true scale
 JAL = 0.32 * R                 # 73.6  — jaladhari ring / petal bases
-T1 = 0.48 * R                  # 110.4 — upper-tier petal tips
-T2 = 0.62 * R                  # 142.6 — lower-tier petal tips
-WATER = 0.84 * R               # 193.2 — waterline (outer edge of water)
+PB = JAL                       # petal base
+PT = 0.62 * R                  # 142.6 — petal tips (lower tier's reach)
+HW = 13.0                      # petal half-width, deg — closes the corolla
+WATER = 0.84 * R               # 193.2 — waterline groove
 MED = 0.92 * R                 # 211.6 — medallion centres
 MEDR = 0.045 * R               # 10.35 — medallion radius
-T2B = 96.0                     # lower-tier visible base (tucks under tier 1)
 
 
 def A1(k):
-    return -90 + k * 30        # tier-1 petals: one tip due north
+    return -90 + k * 30        # petals: one tip due north
 
 
 def A2(k):
-    return -75 + k * 30        # tier-2 petals + medallions: offset 15 deg
+    return -75 + k * 30        # medallions: offset 15 deg, between tips
 
 
 def F(v):
@@ -80,27 +85,9 @@ def path(d, col, sw, cap="round", fill="none"):
             f'stroke-linecap="{cap}" stroke-linejoin="round"/>')
 
 
-def arc(cx, cy, r, a0, a1, col, sw, cap="butt"):
-    p0 = (cx + r * math.cos(math.radians(a0)), cy + r * math.sin(math.radians(a0)))
-    p1 = (cx + r * math.cos(math.radians(a1)), cy + r * math.sin(math.radians(a1)))
-    large = 1 if (a1 - a0) % 360 > 180 else 0
-    return path(f"M {F(p0[0])} {F(p0[1])} A {F(r)} {F(r)} 0 {large} 1 {F(p1[0])} {F(p1[1])}",
-                col, sw, cap=cap)
-
-
-def teardrop(cx, top_y, h, col):
-    w = h * 0.62
-    by = top_y + h * 0.70
-    return (f'<path d="M {F(cx)} {F(top_y)} '
-            f'C {F(cx - w * 0.22)} {F(top_y + h * 0.34)} {F(cx - w / 2)} {F(by - h * 0.24)} {F(cx - w / 2)} {F(by)} '
-            f'A {F(w / 2)} {F(w / 2)} 0 1 0 {F(cx + w / 2)} {F(by)} '
-            f'C {F(cx + w / 2)} {F(by - h * 0.24)} {F(cx + w * 0.22)} {F(top_y + h * 0.34)} {F(cx)} {F(top_y)} Z" '
-            f'fill="{col}"/>')
-
-
 def fpetal(tip_r, base_r, deg, hw, fill, stroke=None, sw=0):
-    """Closed solid petal; the optional ground-colour stroke masks whatever
-    passes beneath its edges (how tier 1 sits OVER tier 2)."""
+    """Closed solid petal; the ground-colour stroke is the seam that keeps
+    neighbouring petals distinct where the corolla closes."""
     d = petal_path(C, C, tip_r, base_r, deg, hw) + " Z"
     s = (f' stroke="{stroke}" stroke-width="{F(sw)}" stroke-linejoin="round"'
          if stroke else "")
@@ -114,135 +101,93 @@ def spetal(tip_r, base_r, deg, hw, col, sw):
             f'stroke-linecap="round" stroke-linejoin="round"/>')
 
 
-def med_dots(els, col, r_med=MED, r_dot=MEDR):
+def corolla(els, c, sw_seam, veins=None, vein_sw=2.6, vein_reach=0.62):
+    """The single 12-petal corolla, optionally with a carved radial vein.
+    On solid petals keep the vein short (a base groove) — a full midrib
+    turns the petals into leaves; full length is for engraved outlines."""
     for k in range(12):
-        x, y = polar(C, C, r_med, A2(k))
-        els.append(dot(x, y, r_dot, col))
+        els.append(fpetal(PT, PB, A1(k), HW, c["ink"], stroke=c["punch"], sw=sw_seam))
+    if veins:
+        for k in range(12):
+            x0, y0 = polar(C, C, PB + 10, A1(k))
+            x1, y1 = polar(C, C, PB + (PT - PB) * vein_reach, A1(k))
+            els.append(path(f"M {F(x0)} {F(y0)} L {F(x1)} {F(y1)}", veins, vein_sw))
 
 
 # ------------------------------------------------------------- candidates
+def g_shila(c):
+    """His pick, corrected to twelve. Pure relief: ink is stone, ivory is
+    light; heavy rim pierced by twelve sun-windows; gold linga true scale."""
+    els = []
+    els.append(ring(C, C, 213.5, c["ink"], 33))     # heavy rim band 197..230
+    for k in range(12):
+        x, y = polar(C, C, MED, A2(k))
+        els.append(dot(x, y, MEDR, c["punch"]))     # pierced sun-windows
+    corolla(els, c, sw_seam=5)
+    els.append(dot(C, C, LINGA, c["gold"]))
+    return els, (VB, VB)
+
+
+def g_ratna(c):
+    """The synthesis: shila's relief + aditya's gold. The twelve Adityas
+    shine through the pierced windows; a ring of window-light stays
+    around each sun."""
+    els = []
+    els.append(ring(C, C, 213.5, c["ink"], 33))
+    for k in range(12):
+        x, y = polar(C, C, MED, A2(k))
+        els.append(dot(x, y, MEDR, c["punch"]))
+        els.append(dot(x, y, 7.4, c["gold"]))
+    corolla(els, c, sw_seam=5)
+    els.append(dot(C, C, LINGA, c["gold"]))
+    return els, (VB, VB)
+
+
+def g_mala(c):
+    """utkirna's aspects, innovated: the twin-line channel now carries the
+    twelve suns as set gold beads; the relief petals keep the carved vein;
+    the god-point circled at the centre."""
+    els = []
+    els.append(ring(C, C, 230, c["ink"], 5))
+    els.append(ring(C, C, 195, c["ink"], 2.5))
+    for k in range(12):
+        x, y = polar(C, C, MED, A2(k))
+        els.append(ring(x, y, 12.2, c["ink"], 2.2))  # carved seat
+        els.append(dot(x, y, 8.8, c["gold"]))        # set gold bead
+    corolla(els, c, sw_seam=4, veins=c["punch"], vein_sw=2.2, vein_reach=0.42)
+    els.append(ring(C, C, LINGA, c["ink"], 3))
+    els.append(dot(C, C, 40, c["gold"]))
+    return els, (VB, VB)
+
+
 def g_tanka(c):
-    """Struck coin: solid disc, the whole plan engraved as punched lines."""
+    """The struck coin, corrected to twelve: the plan chased into one solid
+    disc — waterline groove, sun-seats, veined petals — gold at the hub.
+    The emboss / foil / wax register, monochrome by nature."""
     els = [dot(C, C, R, c["ink"])]
     els.append(ring(C, C, WATER, c["punch"], 3))
     for k in range(12):
         x, y = polar(C, C, MED, A2(k))
         els.append(ring(x, y, MEDR, c["punch"], 3))
     els.append(ring(C, C, JAL, c["punch"], 3))
-    for k in range(12):
-        els.append(spetal(T2, T2B, A2(k), 12.0, c["punch"], 2.5))
-    for k in range(12):
-        els.append(fpetal(T1, JAL, A1(k), 11.5, c["ink"], stroke=c["punch"], sw=3.5))
+    corolla(els, c, sw_seam=3.5, veins=c["punch"], vein_sw=2.2)
     els.append(dot(C, C, 44, c["gold"]))
     return els, (VB, VB)
 
 
-def g_utkirna(c):
-    """Mason's twin-line: mala rim channel, heavy/light chisel tiers.
-    Midrib veins on the upper petals are the carving signature — without
-    them the outlined petals read daisy, not carved lotus."""
-    els = []
-    els.append(ring(C, C, 226, c["ink"], 4.5))
-    els.append(ring(C, C, 197, c["ink"], 2.5))
-    med_dots(els, c["ink"])
-    els.append(ring(C, C, JAL, c["ink"], 3))
-    for k in range(12):
-        els.append(spetal(T2, T2B, A2(k), 12.0, c["ink"], 2.5))
-    for k in range(12):
-        els.append(fpetal(T1, JAL, A1(k), 11.5, c["punch"], stroke=c["ink"], sw=5))
-    for k in range(12):
-        x0, y0 = polar(C, C, JAL + 6, A1(k))
-        x1, y1 = polar(C, C, JAL + (T1 - JAL) * 0.68, A1(k))
-        els.append(path(f"M {F(x0)} {F(y0)} L {F(x1)} {F(y1)}", c["ink"], 1.8))
-    els.append(ring(C, C, LINGA, c["ink"], 3))
-    els.append(dot(C, C, 33, c["gold"]))
-    return els, (VB, VB)
-
-
-def g_shila(c):
-    """Pure relief: solid shapes only; ivory gaps are the carving light."""
-    els = []
-    els.append(ring(C, C, 213.5, c["ink"], 33))     # heavy rim band 197..230
-    med_dots(els, c["punch"])                       # pierced sun-windows
-    for k in range(12):
-        els.append(fpetal(T2, 84, A2(k), 12.5, c["ink"]))
-    for k in range(12):
-        els.append(fpetal(T1, JAL, A1(k), 11.5, c["ink"], stroke=c["punch"], sw=5))
-    els.append(dot(C, C, LINGA, c["gold"]))         # gold at true linga scale
-    return els, (VB, VB)
-
-
-def g_dvitala(c):
-    """The faithful portrait: everything where the murti puts it."""
-    els = []
-    els.append(ring(C, C, R, c["ink"], 3.5))
-    els.append(ring(C, C, WATER, c["ink"], 2.5))
-    med_dots(els, c["ink"])
-    els.append(ring(C, C, JAL, c["ink"], 3))
-    for k in range(12):
-        els.append(spetal(T2, T2B, A2(k), 12.0, c["ink"], 3))
-    for k in range(12):
-        els.append(fpetal(T1, JAL, A1(k), 11.5, c["ink"], stroke=c["punch"], sw=4))
-    els.append(dot(C, C, 40, c["gold"]))
-    return els, (VB, VB)
-
-
-def g_jala(c):
-    """Water is space: the rim opens at the nali; the drop leaves the mark."""
-    R2 = 210.0
-    jl, t1 = 0.32 * R2, 0.48 * R2
-    med, mr = 0.92 * R2, 0.045 * R2
-    els = []
-    els.append(arc(C, C, R2, 95.2, 444.8, c["ink"], 5))     # gap at 6 o'clock
-    hw = 0.09 * R2                                           # nali half-width
-    y0 = C + math.sqrt(R2 * R2 - hw * hw)
-    y1 = C + R2 + 0.14 * R2
-    for s in (-1, 1):
-        x = C + s * hw
-        els.append(path(f"M {F(x)} {F(y0)} L {F(x)} {F(y1)}", c["ink"], 5, cap="butt"))
-    for k in range(12):
-        els.append(fpetal(t1, jl, A1(k), 13.0, c["ink"], stroke=c["punch"], sw=3))
-    els.append(ring(C, C, jl, c["ink"], 3))
-    for k in range(12):
-        x, y = polar(C, C, med, A2(k))
-        els.append(dot(x, y, mr, c["ink"]))
-    els.append(dot(C, C, 33, c["gold"]))
-    els.append(teardrop(C, y0 + 6, 24, c["gold"]))
-    return els, (VB, VB)
-
-
-def g_aditya(c):
-    """Ceremonial glory: the twelve Adityas as gold stones in carved seats."""
-    els = []
-    els.append(ring(C, C, R, c["ink"], 4))
-    els.append(ring(C, C, 189, c["ink"], 2.5))
-    for k in range(12):
-        x, y = polar(C, C, 208.2, A2(k))
-        els.append(ring(x, y, 13.0, c["ink"], 2.6))
-        els.append(dot(x, y, 9.4, c["gold"]))
-    els.append(ring(C, C, JAL, c["ink"], 3))
-    for k in range(12):
-        els.append(spetal(T2, T2B, A2(k), 12.0, c["ink"], 3))
-    for k in range(12):
-        els.append(fpetal(T1, JAL, A1(k), 11.5, c["ink"], stroke=c["punch"], sw=4))
-    els.append(ring(C, C, LINGA, c["ink"], 3))
-    els.append(dot(C, C, 40, c["gold"]))
-    return els, (VB, VB)
-
-
 CANDIDATES = [
-    ("tanka", "Struck like a coin — the whole sanctum plan engraved into one solid disc: waterline groove, twelve sun-seats cut around the rim, both petal tiers chased into the metal, the Lord solid gold at the hub. The emboss / foil / wax register.", g_tanka),
-    ("utkirna", "The mason's line — a twin-line rim channel holds the twelve suns like beads of a mala; the upper petals cut with the heavy chisel, the lower tier with the light one; the god-point circled at the centre.", g_utkirna),
-    ("shila", "Pure relief — ink is stone, ivory is light, no outlines anywhere. The heavy rim is pierced by twelve sun-windows; the lotus stands in two solid tiers; the linga is gold at its true measured scale.", g_shila),
-    ("dvitala", "The faithful portrait — everything exactly where the murti puts it: twelve upper petals solid, twelve lower in fine line behind them, the waterline, and the twelve medallions riding between water and rim.", g_dvitala),
-    ("jala", "Water is space, not a line — the emptiest one. The rim opens at the nali: the circle is deliberately broken toward the devotee, and the golden drop leaves the sanctum, carrying grace out of the mark.", g_jala),
-    ("aditya", "The ceremonial glory — the twelve Adityas set as gold stones in carved seats, gold at hub and rim both: the top of the sanctity ladder. For night grounds, invitations, the drum of the temple.", g_aditya),
+    ("shila", "Your pick, corrected — twelve petals only, exactly as the top view truly shows them (the twenty-four belong to the front elevation). Pure relief: ink is stone, ivory is light, the heavy rim pierced by twelve sun-windows, the Shivalinga gold at its true measured scale.", g_shila),
+    ("ratna", "The synthesis you described — shila's stone relief carrying aditya's gold: the twelve Adityas now shine <i>through</i> the rim's pierced windows, each sun keeping a ring of window-light around it, the Shivalinga gold at the hub. Thirteen god-points, nothing else gilded.", g_ratna),
+    ("mala", "Number two's craft, innovated — the twin-line channel now holds the twelve suns as gold beads set in carved seats; the petals stay solid relief but carry the mason's vein; the god-point circled at the centre. The most jewelled of the four.", g_mala),
+    ("tanka", "The coin, corrected to twelve — kept for the physical register the others can't do: blind emboss, gold foil, the wax of the seal. The whole plan chased into one disc, gold only where the Lord stands.", g_tanka),
 ]
 
 
 def emit_all():
     outdir = HERE / "candidates"
     outdir.mkdir(exist_ok=True)
+    for stale in outdir.glob("*.svg"):
+        stale.unlink()
     for name, _, fn in CANDIDATES:
         for way, cols in COLORWAYS.items():
             els, (w, h) = fn(cols)
@@ -282,7 +227,7 @@ def gallery():
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>exp/rta-chakra — one geometry, six crafts</title>
+<title>exp/rta-chakra v2 — twelve from above, the synthesis</title>
 <link rel="stylesheet" href="../../../palette/colors.css">
 <style>
   @font-face {{ font-family:'Cinzel'; font-weight:500; src:url('../../../fonts/cinzel/cinzel-500.ttf'); }}
@@ -307,15 +252,13 @@ def gallery():
 </style>
 </head>
 <body>
-  <h1>exp/rta-chakra — one geometry, six crafts</h1>
-  <p class="sub">Round five, and the lesson of the four before it: the <b>12-petal + 12-medallion geometry was
-  never the problem — the craft was</b>. Flat equal hairlines read <i>spa</i>; architectural drawing read
-  <i>literal</i>. So this round holds the geometry constant — every radius is the murti's own, from
-  <code>iconography/geometry/grid.json</code>: linga at .22, jaladhari at .32, petal tiers at .48/.62,
-  the water's calm to .84, the twelve medallions at .92 — and varies <b>only the craft register</b>:
-  struck, carved, relieved, drawn, broken, jewelled. Gold stays at god-points: the linga always,
-  the Adityas only in the ceremonial one. Each row: mark &middot; register &middot; live lockup with the
-  shipped R-dot wordmark &middot; 64/32/16&nbsp;px unassisted &middot; sacred night.</p>
+  <h1>exp/rta-chakra v2 — twelve from above, the synthesis</h1>
+  <p class="sub">Revision after your read of round one. Corrected everywhere: <b>the top view shows twelve petals
+  only</b> — a single closed corolla from the jaladhari (.32&nbsp;R) to the lower tier's reach (.62&nbsp;R); the
+  twenty-four stay in the front elevation, where they belong. Retired: jala (your call) and dvitala. Kept and
+  fused: <b>shila's relief</b> (your pick) now carries <b>aditya's gold suns</b> in candidate two; <b>utkirna's
+  carving</b> innovates into candidate three; <b>tanka</b> stays as the physical register. The Shivalinga is gold
+  at the hub of all four, and every row locks up with the R-dot wordmark — both now fixed points of the system.</p>
   {"".join(rows)}
 </body>
 </html>
