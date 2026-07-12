@@ -98,11 +98,12 @@
     {
       "id": "devanagari-ri-icon",
       "archetype": "plain-mark",
+      "$comment": "P0.3 recenter (2026-07): ink bbox sat +5.8u low in the 256 box -> baseline 196->190. Optical size parity with the Latin R (ink 53% vs 79% of canvas) is the Phase-2 exp/letterform study, not a nudge.",
       "viewBox": [256, 256],
       "fontImport": "tiro",
       "label": "ṚTAM Foundation Devanagari monogram",
       "runs": [
-        { "role": "glyph", "text": "ऋ", "font": "tiro", "fs": 210, "x": 128, "y": 196, "anchor": "middle" }
+        { "role": "glyph", "text": "ऋ", "font": "tiro", "fs": 210, "x": 128, "y": 190, "anchor": "middle" }
       ],
       "outputs": [
         { "path": "icons/rtam-devanagari-ri-icon-gold.svg", "title": "Devanagari ऋ monogram — gold", "desc": "Sanskrit ऋ (vocalic R) — the Devanagari counterpart to the Latin Ṛ monogram. Represents the same sacred sound the bindu signifies under R; therefore no separate dot is added. Tiro Devanagari Sanskrit. All gold #C8A15A.", "colors": { "glyph": "gold" } },
@@ -131,22 +132,23 @@
     {
       "id": "wordmark-latin",
       "archetype": "horizontal-wordmark",
-      "$comment": "F6 microtypography APPLIED (US-15): descriptor x = RTAM advance-end (471.3, fs120 ls12) + locked gap 56 = 527 (was 540). Same gap brand-wide — the 3 Foundation-bearing lockups use x=527 too. Eye-checked; wordmark inline preview copies synced in the same commit.",
+      "$comment": "F6 microtypography APPLIED (US-15): descriptor x = RTAM advance-end (471.3, fs120 ls12) + locked gap 56 = 527 (was 540). Same gap brand-wide — the 3 Foundation-bearing lockups use x=527 too. P0.3 recenter (2026-07): composite ink bbox sat +15.5u low in the 240 box -> baseline 160->144.5, bindu cy = baseline + fs*0.233 = 172.5 (spikes/center_audit.py before/after). Eye-checked.",
       "viewBox": [1080, 240],
       "fontImport": "cinzel",
       "label": "ṚTAM Foundation",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 }
+        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 144.5, "letterSpacing": 12 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 144.5, "letterSpacing": 8 }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 188, "r": 10 }
+        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 172.5, "r": 10 }
       ],
       "outputs": [
         { "path": "logos/rtam-wordmark-sacred-RTAM-dot.svg", "title": "ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)", "desc": "Primary wordmark. The under-dot beneath R is the brand signature (bindu), drawn as an SVG circle so it renders independently of font availability. Clear-space rule: minimum padding equal to the cap-height of R on every side.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "gold" } },
         { "path": "logos/rtam-wordmark-black.svg", "title": "ṚTAM Foundation — pure-black wordmark (single-color print, fax, stamp)", "desc": "Single-color charcoal variant for mono print, fax, embossing, or stamp. Letters and bindu both #1A1A1A so the mark survives where color separation is unavailable.", "colors": { "name": "ink", "descriptor": "ink", "bindu": "ink" } },
         { "path": "logos/rtam-wordmark-gold.svg", "title": "ṚTAM Foundation — gold wordmark (all antique-gold)", "desc": "All-gold variant for premium / ceremonial contexts on ivory or dark backgrounds. Letters and bindu both #C8A15A.", "colors": { "name": "gold", "descriptor": "gold", "bindu": "gold" } },
         { "path": "logos/rtam-wordmark-white.svg", "title": "ṚTAM Foundation — ivory wordmark for dark backgrounds", "desc": "Ivory variant on a transparent ground — a true overlay for charcoal / indigo / photographic backgrounds. Letters and bindu both #F7F3E9. Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "ivory" } },
+        { "path": "logos/rtam-wordmark-white-golddot.svg", "title": "ṚTAM Foundation — sacred wordmark on dark (ivory letters, gold bindu)", "desc": "The sacred two-tone form for dark surfaces: ivory letters with the gold bindu preserved — the brand signature does not disappear on charcoal / indigo grounds. Transparent ground; always preview on the intended dark surface. This is the dark-surface counterpart of the primary sacred wordmark.", "colors": { "name": "ivory", "descriptor": "ivory", "bindu": "gold" } },
         { "path": "logos/rtam-wordmark-public-RTAM.svg", "label": "RTAM Foundation", "title": "RTAM Foundation — public ASCII wordmark (no bindu)", "desc": "Public / English-only variant. No bindu — used in plain ASCII contexts (URLs, email signatures, legal documents) where the sacred mark is inappropriate or unreliable. Matches sacred variant geometry exactly so swaps remain visually consistent.", "colors": { "name": "ink", "descriptor": "ink" }, "drop": ["bindu"] }
       ]
     },
@@ -235,17 +237,18 @@
     {
       "id": "lockup-sanskritic-pratishthan",
       "archetype": "lockup",
+      "$comment": "P0.3 recenter (2026-07): composite ink bbox sat +22.8u low in the 380 box -> all content up 23u (baseline 160->137, bindu cy = 137 + 120*0.233 = 165, rule 245->222, devanagari 335->312). Proof: spikes/center_audit.py.",
       "viewBox": [1080, 380],
       "fontImport": ["cinzel", "tiro"],
       "label": "ṚTAM Foundation · ऋतम् प्रतिष्ठान",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
-        { "role": "devanagari", "text": "ऋतम् प्रतिष्ठान", "font": "tiro", "fs": 60, "x": 540, "y": 335, "anchor": "middle" }
+        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 137, "letterSpacing": 12 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 137, "letterSpacing": 8 },
+        { "role": "devanagari", "text": "ऋतम् प्रतिष्ठान", "font": "tiro", "fs": 60, "x": 540, "y": 312, "anchor": "middle" }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 188, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 245, "x2": 660, "y2": 245, "strokeWidth": 1.5 }
+        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 165, "r": 10 },
+        { "role": "rule", "type": "line", "x1": 420, "y1": 222, "x2": 660, "y2": 222, "strokeWidth": 1.5 }
       ],
       "outputs": [
         { "path": "lockups/rtam-sanskritic-pratishthan.svg", "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् प्रतिष्ठान (pure Sanskritic register)", "desc": "Stacked bilingual lockup using the pure Sanskritic Devanagari form प्रतिष्ठान (pratiṣṭhāna — \"established institution\"), rather than the borrowed फाउंडेशन. For scholarly, sacred, or trust-deed contexts where the higher register is preferred.", "colors": { "name": "ink", "descriptor": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
@@ -255,17 +258,18 @@
     {
       "id": "lockup-bilingual-foundation",
       "archetype": "lockup",
+      "$comment": "P0.3 recenter (2026-07): same 23u lift as lockup-sanskritic-pratishthan (the two Foundation lockups share geometry).",
       "viewBox": [1080, 380],
       "fontImport": ["cinzel", "tiro"],
       "label": "ṚTAM Foundation · ऋतम् फाउंडेशन",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
-        { "role": "devanagari", "text": "ऋतम् फाउंडेशन", "font": "tiro", "fs": 60, "x": 540, "y": 335, "anchor": "middle" }
+        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 137, "letterSpacing": 12 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 137, "letterSpacing": 8 },
+        { "role": "devanagari", "text": "ऋतम् फाउंडेशन", "font": "tiro", "fs": 60, "x": 540, "y": 312, "anchor": "middle" }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 188, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 245, "x2": 660, "y2": 245, "strokeWidth": 1.5 }
+        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 165, "r": 10 },
+        { "role": "rule", "type": "line", "x1": 420, "y1": 222, "x2": 660, "y2": 222, "strokeWidth": 1.5 }
       ],
       "outputs": [
         { "path": "lockups/rtam-bilingual-foundation.svg", "title": "Bilingual lockup — ṚTAM Foundation / ऋतम् फाउंडेशन", "desc": "Stacked bilingual lockup: Latin wordmark (sacred form with bindu) over a thin gold rule, with the common-register Devanagari name beneath. For use anywhere both audiences are addressed at once (website footer, certificate, letterhead).", "colors": { "name": "ink", "descriptor": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
@@ -295,17 +299,18 @@
     {
       "id": "lockup-donation",
       "archetype": "lockup",
+      "$comment": "P0.3 recenter (2026-07): composite ink bbox sat +9.2u low in the 360 box -> all content up 9u (baseline 160->151, bindu cy 188->179, rule 245->236, support 305->296). Proof: spikes/center_audit.py.",
       "viewBox": [1080, 360],
       "fontImport": ["cinzel", "inter"],
       "label": "ṚTAM Foundation — donation lockup",
       "runs": [
-        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 160, "letterSpacing": 12 },
-        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 160, "letterSpacing": 8 },
-        { "role": "support", "text": "CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR", "font": "inter", "weight": 300, "fs": 26, "x": 540, "y": 305, "anchor": "middle", "letterSpacing": 3 }
+        { "role": "name", "text": "RTAM", "font": "cinzel", "weight": 500, "fs": 120, "x": 80, "y": 151, "letterSpacing": 12 },
+        { "role": "descriptor", "text": "Foundation", "font": "cinzel", "weight": 400, "fs": 62, "x": 527, "y": 151, "letterSpacing": 8 },
+        { "role": "support", "text": "CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR", "font": "inter", "weight": 300, "fs": 26, "x": 540, "y": 296, "anchor": "middle", "letterSpacing": 3 }
       ],
       "shapes": [
-        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 188, "r": 10 },
-        { "role": "rule", "type": "line", "x1": 420, "y1": 245, "x2": 660, "y2": 245, "strokeWidth": 1.5 }
+        { "role": "bindu", "type": "circle", "cx": 126.5, "cy": 179, "r": 10 },
+        { "role": "rule", "type": "line", "x1": 420, "y1": 236, "x2": 660, "y2": 236, "strokeWidth": 1.5 }
       ],
       "outputs": [
         { "path": "lockups/donation-lockup.svg", "title": "Donation lockup — ṚTAM Foundation with supporting line", "desc": "Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy. No CTA chrome — the lockup is a header, not a button.", "colors": { "name": "ink", "descriptor": "ink", "support": "stone", "bindu": "gold", "rule": "gold" } }
