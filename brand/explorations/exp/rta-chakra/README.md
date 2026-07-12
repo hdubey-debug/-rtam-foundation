@@ -28,6 +28,12 @@ Versions are kept side by side so any of them can be returned to:
   E2 agni (flame tip), E3 mukta (pinched base), E4 hridaya (folded
   tip), E5 antara (carved inner echo), E6 purna (rounded crown).
   E leads the gallery unchanged, gold-framed.
+- **`sanctity-ladder/`** — the theological system made visible: one
+  geometry (petal E3, frame shila) at three zooms with the same gold
+  centre — bindu (the Lord alone / favicon), anahata (the Lord in the
+  heart / community corolla), rta-chakra (the Lord bearing the cosmic
+  order / Foundation icon). Front elevation (24 tattvas) reserved for
+  the ceremonial register in Phase 3.
 - *(git only, reverted)* commit `78bd12e` — a synthesis iteration
   (ratna/mala) that mixed candidate 6's gold into candidate 3; rejected:
   candidates stay pure.
