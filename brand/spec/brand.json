@@ -51,6 +51,12 @@
           "title": "Ṛ monogram in circle — charcoal ring on ivory",
           "desc": "Enclosed mono variant: charcoal R, charcoal bindu, charcoal ring. Single-color seal for stamps, embossing, and contexts that disallow gold.",
           "colors": { "glyph": "ink", "ring": "ink", "bindu": "ink" }
+        },
+        {
+          "path": "icons/rtam-rdot-icon-circle-allgold.svg",
+          "title": "Ṛ monogram in circle — all gold (dark surfaces)",
+          "desc": "Enclosed seal with R, ring, and bindu all antique gold on a transparent ground — the contained seal for charcoal / indigo / ceremonial dark surfaces (poster corners, certificates on dark stock). Intentionally low-contrast on white; always preview on the intended dark surface.",
+          "colors": { "glyph": "gold", "ring": "gold", "bindu": "gold" }
         }
       ]
     },
@@ -89,6 +95,7 @@
         { "role": "bindu", "type": "circle", "cx": 128, "cy": 213, "r": 16.67 }
       ],
       "outputs": [
+        { "path": "icons/rtam-rdot-icon-sacred.svg", "title": "Ṛ monogram — sacred (charcoal R, gold bindu)", "desc": "The canonical two-tone plain mark: charcoal R with the gold bindu — the monogram form of the sacred wordmark. Default plain mark on ivory/sandstone surfaces.", "colors": { "glyph": "ink", "bindu": "gold" } },
         { "path": "icons/rtam-rdot-icon-gold.svg", "title": "Ṛ monogram — gold", "desc": "Single-glyph icon mark in antique gold #C8A15A (R and bindu both gold). Use on ivory/sandstone for a warm, ceremonial mark.", "colors": { "glyph": "gold", "bindu": "gold" } },
         { "path": "icons/rtam-rdot-icon-black.svg", "title": "Ṛ monogram — charcoal", "desc": "Single-glyph icon mark in charcoal #1A1A1A. Use on ivory/sandstone surfaces and for mono print.", "colors": { "glyph": "ink", "bindu": "ink" } },
         { "path": "icons/rtam-rdot-icon-white.svg", "title": "Ṛ monogram — ivory", "desc": "Single-glyph icon mark in ivory #F7F3E9 on a transparent ground — a true overlay for charcoal / indigo / photographic dark surfaces. Place on a dark surface to see it; it is intentionally invisible on white.", "colors": { "glyph": "ivory", "bindu": "ivory" } }
@@ -125,7 +132,8 @@
         { "role": "bindu", "type": "circle", "cx": 16, "cy": 27.2, "r": 2.86 }
       ],
       "outputs": [
-        { "path": "icons/favicon.svg", "title": "ṚTAM Foundation favicon", "desc": "Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.", "colors": { "glyph": "ink", "bindu": "gold" } }
+        { "path": "icons/favicon.svg", "title": "ṚTAM Foundation favicon", "desc": "Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.", "colors": { "glyph": "ink", "bindu": "gold" } },
+        { "path": "icons/favicon-dark.svg", "title": "ṚTAM Foundation favicon — dark tabs", "desc": "Dark-tab counterpart of the favicon: ivory R with the gold bindu on a transparent ground, for dark browser chrome and dark manifests. Same 32x32 geometry as favicon.svg.", "colors": { "glyph": "ivory", "bindu": "gold" } }
       ]
     },
 
@@ -292,7 +300,8 @@
         { "role": "rule", "type": "line", "x1": 520, "y1": 198, "x2": 760, "y2": 198, "strokeWidth": 1.5 }
       ],
       "outputs": [
-        { "path": "lockups/rtambhareshvara-mandir-lockup.svg", "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर", "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. The leading R carries the gold bindu (the vocalic-ṛ crest); ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.", "colors": { "name": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } }
+        { "path": "lockups/rtambhareshvara-mandir-lockup.svg", "title": "Temple lockup — Rtambhareshvara Mandir / ऋतम्भरेश्वर मंदिर", "desc": "Lockup for the temple name in both scripts. Wider viewBox (1280 vs the 1080 of the wordmark/bilingual lockups) to accommodate the longest name in the system. The leading R carries the gold bindu (the vocalic-ṛ crest); ASCII Latin form for legibility on physical signage and donor materials; full Devanagari beneath. Gold rule centered on the lockup axis.", "colors": { "name": "ink", "devanagari": "ink", "bindu": "gold", "rule": "gold" } },
+        { "path": "lockups/rtambhareshvara-mandir-lockup-white-golddot.svg", "title": "Temple lockup on dark — ivory scripts, gold bindu and rule", "desc": "Dark-surface form of the temple lockup: both scripts in ivory with the gold bindu and rule preserved, on a transparent ground — for indigo / charcoal / photographic dark surfaces (event banners, night signage). Intentionally invisible on white; always preview on the intended dark surface.", "colors": { "name": "ivory", "devanagari": "ivory", "bindu": "gold", "rule": "gold" } }
       ]
     },
 
@@ -313,7 +322,7 @@
         { "role": "rule", "type": "line", "x1": 420, "y1": 236, "x2": 660, "y2": 236, "strokeWidth": 1.5 }
       ],
       "outputs": [
-        { "path": "lockups/donation-lockup.svg", "title": "Donation lockup — ṚTAM Foundation with supporting line", "desc": "Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy. No CTA chrome — the lockup is a header, not a button.", "colors": { "name": "ink", "descriptor": "ink", "support": "stone", "bindu": "gold", "rule": "gold" } }
+        { "path": "lockups/donation-lockup.svg", "title": "Donation lockup — ṚTAM Foundation with supporting line", "desc": "Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy — charcoal at light weight (stone failed the 4.5:1 body floor on ivory at this size; the weight keeps it quiet, the colour keeps it legible). No CTA chrome — the lockup is a header, not a button.", "colors": { "name": "ink", "descriptor": "ink", "support": "ink", "bindu": "gold", "rule": "gold" } }
       ]
     }
   ]

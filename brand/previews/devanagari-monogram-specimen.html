@@ -58,7 +58,7 @@
     }
     .cell.dark   { background: var(--rtam-charcoal); color: var(--rtam-stone); }
     .cell.indigo { background: var(--rtam-indigo);   color: var(--rtam-stone); }
-    .cell svg { width: 160px; height: 160px; display: block; }
+    .cell img { width: 160px; height: 160px; display: block; }
     .cell .name {
       font-size: 10px;
       letter-spacing: 0.12em;
@@ -85,12 +85,12 @@
       letter-spacing: 0.1em;
       color: var(--rtam-stone);
     }
-    .s24 svg  { width: 24px;  height: 24px; }
-    .s32 svg  { width: 32px;  height: 32px; }
-    .s48 svg  { width: 48px;  height: 48px; }
-    .s64 svg  { width: 64px;  height: 64px; }
-    .s128 svg { width: 128px; height: 128px; }
-    .s256 svg { width: 256px; height: 256px; }
+    .s24 img  { width: 24px;  height: 24px; }
+    .s32 img  { width: 32px;  height: 32px; }
+    .s48 img  { width: 48px;  height: 48px; }
+    .s64 img  { width: 64px;  height: 64px; }
+    .s128 img { width: 128px; height: 128px; }
+    .s256 img { width: 256px; height: 256px; }
     .pair {
       display: flex;
       gap: 48px;
@@ -99,7 +99,7 @@
       padding: 48px;
       background: var(--rtam-ivory);
     }
-    .pair svg { width: 200px; height: 200px; }
+    .pair img { width: 200px; height: 200px; }
     .pair .conjunction {
       font-family: Cinzel, serif;
       font-size: 36px;
@@ -116,28 +116,19 @@
     <div class="panel-head">Four variants — each at 160 px on its target background</div>
     <div class="grid">
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#C8A15A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-gold.svg" alt="Devanagari ऋ monogram — gold">
         <div class="name">Gold</div>
       </div>
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <div class="name">Charcoal</div>
       </div>
       <div class="cell dark">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#F7F3E9">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-white.svg" alt="Devanagari ऋ monogram — ivory">
         <div class="name">Ivory · on charcoal</div>
       </div>
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <circle cx="128" cy="128" r="118" fill="none" stroke="#C8A15A" stroke-width="5"/>
-          <text x="128" y="190" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="184" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-circle.svg" alt="Devanagari ऋ in circle — charcoal glyph, gold ring">
         <div class="name">Circle · gold ring</div>
       </div>
     </div>
@@ -148,9 +139,7 @@
     <div class="panel-head">Gold ऋ on deep indigo (sacred night)</div>
     <div class="grid">
       <div class="cell indigo" style="grid-column: 1 / -1;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#C8A15A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-gold.svg" alt="Devanagari ऋ monogram — gold">
       </div>
     </div>
   </div>
@@ -159,14 +148,9 @@
   <div class="panel">
     <div class="panel-head">Side-by-side: Latin Ṛ ↔ Devanagari ऋ (same sacred sound)</div>
     <div class="pair">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-        <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-        <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-      </svg>
+      <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
       <span class="conjunction">↔</span>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-        <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-      </svg>
+      <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
     </div>
   </div>
 
@@ -175,39 +159,27 @@
     <div class="panel-head">Scale ladder — charcoal ऋ at 24 / 32 / 48 / 64 / 128 / 256 px</div>
     <div class="scale-row">
       <div class="s24">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">24 px</span>
       </div>
       <div class="s32">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">32 px</span>
       </div>
       <div class="s48">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">48 px</span>
       </div>
       <div class="s64">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">64 px</span>
       </div>
       <div class="s128">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">128 px</span>
       </div>
       <div class="s256">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="128" y="196" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="210" text-anchor="middle" fill="#1A1A1A">ऋ</text>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-devanagari-ri-icon-black.svg" alt="Devanagari ऋ monogram — charcoal">
         <span class="sz">256 px</span>
       </div>
     </div>

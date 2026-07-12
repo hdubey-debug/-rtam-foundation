@@ -38,7 +38,7 @@
       pointer-events: none;
       opacity: 0.10;
     }
-    .watermark svg { width: 520px; height: 520px; }
+    .watermark img { width: 520px; height: 520px; }
     .content {
       position: relative;
       z-index: 2;
@@ -50,7 +50,7 @@
       justify-content: space-between;
       padding: 32px 24px 12px;
     }
-    .brand svg { width: 460px; height: auto; display: block; }
+    .brand img { width: 460px; height: auto; display: block; }
     .deck .kicker {
       font-family: Inter, sans-serif;
       font-size: 13px;
@@ -140,22 +140,12 @@
     <div class="watermark">
       <!-- Circle-enclosed Ṛ monogram as the certificate watermark (the system's
            contained mark; the 12-medallion seal was retired) -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-        <circle cx="128" cy="128" r="118" fill="none" stroke="#C8A15A" stroke-width="5"/>
-        <text x="127" y="161" font-family="Cinzel, serif" font-weight="600" font-size="152" text-anchor="middle" fill="#C8A15A">R</text>
-        <circle cx="128" cy="189" r="12" fill="#C8A15A"/>
-      </svg>
+      <img src="../../dist/outlined/icons/rtam-rdot-icon-circle-allgold.svg" alt="Ṛ monogram in circle — all gold (dark surfaces)">
     </div>
 
     <div class="content">
       <div class="brand">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240">
-          <g font-family="Cinzel, serif">
-            <text x="80" y="160" font-size="120" font-weight="500" letter-spacing="12" fill="#1A1A1A">RTAM</text>
-            <text x="527" y="160" font-size="62" font-weight="400" letter-spacing="8" fill="#1A1A1A">Foundation</text>
-          </g>
-          <circle cx="126.5" cy="188" r="10" fill="#C8A15A"/>
-        </svg>
+        <img src="../../dist/outlined/logos/rtam-wordmark-sacred-RTAM-dot.svg" alt="ṚTAM Foundation — sacred wordmark (charcoal letters, gold bindu)">
       </div>
 
       <div class="deck">

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-sacred-title rtam-rdot-icon-sacred-desc">
+  <title id="rtam-rdot-icon-sacred-title">Ṛ monogram — sacred (charcoal R, gold bindu)</title>
+  <desc id="rtam-rdot-icon-sacred-desc">The canonical two-tone plain mark: charcoal R with the gold bindu — the monogram form of the sacred wordmark. Default plain mark on ivory/sandstone surfaces.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="119.9" y="166.33" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
+  <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="rtam-rdot-icon-circle-allgold-title rtam-rdot-icon-circle-allgold-desc">
+  <title id="rtam-rdot-icon-circle-allgold-title">Ṛ monogram in circle — all gold (dark surfaces)</title>
+  <desc id="rtam-rdot-icon-circle-allgold-desc">Enclosed seal with R, ring, and bindu all antique gold on a transparent ground — the contained seal for charcoal / indigo / ceremonial dark surfaces (poster corners, certificates on dark stock). Intentionally low-contrast on white; always preview on the intended dark surface.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="127" y="161" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="600" font-size="152" text-anchor="middle" fill="#C8A15A">R</text>
+  <circle cx="128" cy="128" r="118" fill="none" stroke="#C8A15A" stroke-width="5"/>
+  <circle cx="128" cy="189" r="12" fill="#C8A15A"/>
+</svg>

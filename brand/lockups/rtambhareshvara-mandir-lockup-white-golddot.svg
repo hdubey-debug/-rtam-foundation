@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 380" role="img" aria-labelledby="rtambhareshvara-mandir-lockup-white-golddot-title rtambhareshvara-mandir-lockup-white-golddot-desc">
+  <title id="rtambhareshvara-mandir-lockup-white-golddot-title">Temple lockup on dark — ivory scripts, gold bindu and rule</title>
+  <desc id="rtambhareshvara-mandir-lockup-white-golddot-desc">Dark-surface form of the temple lockup: both scripts in ivory with the gold bindu and rule preserved, on a transparent ground — for indigo / charcoal / photographic dark surfaces (event banners, night signage). Intentionally invisible on white; always preview on the intended dark surface.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
+  </defs>
+  <text x="640" y="133" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="72" letter-spacing="6" text-anchor="middle" fill="#F7F3E9">RTAMBHARESHVARA MANDIR</text>
+  <text x="640" y="293" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="68" text-anchor="middle" fill="#F7F3E9">ऋतम्भरेश्वर मंदिर</text>
+  <circle cx="64" cy="150" r="6" fill="#C8A15A"/>
+  <line x1="520" y1="198" x2="760" y2="198" stroke="#C8A15A" stroke-width="1.5"/>
+</svg>

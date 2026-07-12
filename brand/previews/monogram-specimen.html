@@ -58,7 +58,7 @@
     }
     .cell.dark   { background: var(--rtam-charcoal); color: var(--rtam-stone); }
     .cell.indigo { background: var(--rtam-indigo);   color: var(--rtam-stone); }
-    .cell svg { width: 160px; height: 160px; display: block; }
+    .cell img { width: 160px; height: 160px; display: block; }
     .cell .name {
       font-size: 10px;
       letter-spacing: 0.12em;
@@ -85,13 +85,13 @@
       letter-spacing: 0.1em;
       color: var(--rtam-stone);
     }
-    .s16 svg  { width: 16px;  height: 16px; }
-    .s24 svg  { width: 24px;  height: 24px; }
-    .s32 svg  { width: 32px;  height: 32px; }
-    .s48 svg  { width: 48px;  height: 48px; }
-    .s64 svg  { width: 64px;  height: 64px; }
-    .s128 svg { width: 128px; height: 128px; }
-    .s256 svg { width: 256px; height: 256px; }
+    .s16 img  { width: 16px;  height: 16px; }
+    .s24 img  { width: 24px;  height: 24px; }
+    .s32 img  { width: 32px;  height: 32px; }
+    .s48 img  { width: 48px;  height: 48px; }
+    .s64 img  { width: 64px;  height: 64px; }
+    .s128 img { width: 128px; height: 128px; }
+    .s256 img { width: 256px; height: 256px; }
   </style>
 </head>
 <body>
@@ -103,40 +103,23 @@
     <div class="panel-head">Five variants — each at 160 px on its target background</div>
     <div class="grid">
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#C8A15A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-gold.svg" alt="Ṛ monogram — gold">
         <div class="name">Gold</div>
       </div>
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#1A1A1A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-black.svg" alt="Ṛ monogram — charcoal">
         <div class="name">Charcoal</div>
       </div>
       <div class="cell dark">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#F7F3E9">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#F7F3E9"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-white.svg" alt="Ṛ monogram — ivory">
         <div class="name">Ivory · on charcoal</div>
       </div>
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <circle cx="128" cy="128" r="118" fill="none" stroke="#C8A15A" stroke-width="5"/>
-          <text x="127" y="161" font-family="Cinzel, serif" font-weight="600" font-size="152" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="189" r="12" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-circle-gold.svg" alt="Ṛ monogram in circle — gold ring on ivory">
         <div class="name">Circle · gold ring</div>
       </div>
       <div class="cell">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <circle cx="128" cy="128" r="118" fill="none" stroke="#1A1A1A" stroke-width="5"/>
-          <text x="127" y="161" font-family="Cinzel, serif" font-weight="600" font-size="152" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="189" r="12" fill="#1A1A1A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-circle-charcoal.svg" alt="Ṛ monogram in circle — charcoal ring on ivory">
         <div class="name">Circle · charcoal</div>
       </div>
     </div>
@@ -147,10 +130,7 @@
     <div class="panel-head">Gold mark on deep indigo (sacred night)</div>
     <div class="grid">
       <div class="cell indigo" style="grid-column: 1 / -1;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#C8A15A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-gold.svg" alt="Ṛ monogram — gold">
       </div>
     </div>
   </div>
@@ -160,52 +140,31 @@
     <div class="panel-head">Full Ṛ monogram (256-viewBox) at 16 / 24 / 32 / 48 / 64 / 128 / 256 px</div>
     <div class="scale-row">
       <div class="s16">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">16 px</span>
       </div>
       <div class="s24">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">24 px</span>
       </div>
       <div class="s32">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">32 px</span>
       </div>
       <div class="s48">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">48 px</span>
       </div>
       <div class="s64">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">64 px</span>
       </div>
       <div class="s128">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">128 px</span>
       </div>
       <div class="s256">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-          <text x="119.9" y="166.33" font-family="Cinzel, serif" font-weight="600" font-size="200" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="128" cy="213" r="16.67" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/rtam-rdot-icon-sacred.svg" alt="Ṛ monogram — sacred (charcoal R, gold bindu)">
         <span class="sz">256 px</span>
       </div>
     </div>
@@ -216,38 +175,23 @@
     <div class="panel-head">Favicon (32-viewBox, optimized for small) — 16 / 24 / 32 / 48 / 64 px</div>
     <div class="scale-row">
       <div class="s16">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <text x="14.87" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/favicon.svg" alt="ṚTAM Foundation favicon">
         <span class="sz">16 px</span>
       </div>
       <div class="s24">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <text x="14.87" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/favicon.svg" alt="ṚTAM Foundation favicon">
         <span class="sz">24 px</span>
       </div>
       <div class="s32">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <text x="14.87" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/favicon.svg" alt="ṚTAM Foundation favicon">
         <span class="sz">32 px (native)</span>
       </div>
       <div class="s48">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <text x="14.87" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/favicon.svg" alt="ṚTAM Foundation favicon">
         <span class="sz">48 px</span>
       </div>
       <div class="s64">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-          <text x="14.87" y="22" font-family="Cinzel, serif" font-weight="700" font-size="26" text-anchor="middle" fill="#1A1A1A">R</text>
-          <circle cx="16" cy="27.2" r="2.86" fill="#C8A15A"/>
-        </svg>
+        <img src="../dist/outlined/icons/favicon.svg" alt="ṚTAM Foundation favicon">
         <span class="sz">64 px</span>
       </div>
     </div>

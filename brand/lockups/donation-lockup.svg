@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 360" role="img" aria-labelledby="donation-lockup-title donation-lockup-desc">
   <title id="donation-lockup-title">Donation lockup — ṚTAM Foundation with supporting line</title>
-  <desc id="donation-lockup-desc">Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy. No CTA chrome — the lockup is a header, not a button.</desc>
+  <desc id="donation-lockup-desc">Lockup for donation receipts, fundraising pages, and contribution forms. Sacred wordmark, thin gold rule, and a single quiet line of supporting copy — charcoal at light weight (stone failed the 4.5:1 body floor on ivory at this size; the weight keeps it quiet, the colour keeps it legible). No CTA chrome — the lockup is a header, not a button.</desc>
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap');</style>
   </defs>
   <text x="80" y="151" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="120" letter-spacing="12" fill="#1A1A1A">RTAM</text>
   <text x="527" y="151" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="62" letter-spacing="8" fill="#1A1A1A">Foundation</text>
-  <text x="540" y="296" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="26" letter-spacing="3" text-anchor="middle" fill="#B8B1A4">CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR</text>
+  <text x="540" y="296" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="26" letter-spacing="3" text-anchor="middle" fill="#1A1A1A">CONTRIBUTIONS SUPPORT THE RTAMBHARESHVARA MANDIR</text>
   <circle cx="126.5" cy="179" r="10" fill="#C8A15A"/>
   <line x1="420" y1="236" x2="660" y2="236" stroke="#C8A15A" stroke-width="1.5"/>
 </svg>
