@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>exp/letterform — Phase-2 battery</title>
+<link rel="stylesheet" href="../../../palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:300; src:url('../../../fonts/inter/inter-300.ttf'); }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:40px 56px 80px; background:var(--rtam-ivory); color:var(--rtam-charcoal);
+         font-family:Inter,sans-serif; }
+  h1 { font-family:Cinzel,serif; font-weight:500; font-size:26px; letter-spacing:.05em; margin:0; }
+  .claim { font-size:14px; color:#555; margin:6px 0 30px; max-width:900px; line-height:1.6; }
+  .grid { display:grid; grid-template-columns:repeat(12, 1fr); gap:18px; }
+  .cell { border:1px solid var(--rtam-sandstone); background:#fffdf8; grid-column:span 6; }
+  .cell.third { grid-column:span 4; }
+  .cell.full { grid-column:span 12; }
+  .cell .head { font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:#877;
+                padding:8px 12px; border-bottom:1px solid var(--rtam-sandstone); }
+  .cell .body { padding:22px; display:flex; align-items:center; justify-content:center; gap:26px;
+                min-height:150px; flex-wrap:wrap; }
+  .cell .body img { max-width:100%; }
+  .missing { color:#b66; font-size:12px; letter-spacing:.05em; }
+  .dark-i .body { background:var(--rtam-indigo); }
+  .dark-c .body { background:var(--rtam-charcoal); }
+  .fav { display:inline-flex; flex-direction:column; align-items:center; gap:6px; margin:0 14px; }
+  .fav i { font-style:normal; font-size:10px; color:#999; }
+  .hero-img { width:340px; }
+  figure { margin:0; text-align:center; }
+  figcaption { font-size:10.5px; color:#888; margin-top:8px; letter-spacing:.05em; }
+  .avatar { width:150px; height:150px; border-radius:50%; overflow:hidden; background:#fff;
+            border:1px solid var(--rtam-sandstone); display:flex; align-items:center; justify-content:center; }
+  .avatar img { width:78%; }
+  .poster-sim .body { background:var(--rtam-indigo); flex-direction:column; padding:36px; }
+  .poster-sim img.mark { width:120px; margin-bottom:18px; }
+  .poster-sim img.wm { width:380px; }
+  .receipt-sim img.mark { width:74px; }
+  .receipt-sim img.wm { width:360px; }
+  .mono-sim .body { filter:grayscale(1); }
+  .mono-sim img { width:227px; } /* 6 cm at 96 dpi */
+  .co img { vertical-align:middle; }
+</style>
+</head>
+<body>
+  <h1>exp/letterform</h1>
+  <p class="claim"><strong>Claim:</strong> The conservative hedge: the identity stays typographic, but the letters learn the murti's lesson. The R's leg is re-cut with a tail that reaches below the baseline toward the bindu (killing the "R." reading), the Devanagari ऋ is rescaled to measured ink parity with the Latin R, and vendored Marcellus gives the system a mixed-case whisper: Ṛtam.</p>
+  <div class="grid">
+    <div class="cell"><div class="head">Hero — flagship mark on ivory</div><div class="body"><img src="rdot-recut-sacred.svg" style="width:340px"></div></div>
+    <div class="cell"><div class="head">Reduction ladder</div><div class="body"><figure><img src="rdot-recut-sacred.svg"><figcaption>re-cut Ṛ monogram</figcaption></figure><figure><img src="rtam-mixedcase.svg"><figcaption>mixed-case Ṛtam — Marcellus</figcaption></figure><figure><img src="ri-parity-black.svg"><figcaption>ऋ at measured parity scale</figcaption></figure></div></div>
+    <div class="cell third"><div class="head">Favicon — light tabs 16/24/32/48</div><div class="body"><span class="fav"><img src="../../../dist/outlined/icons/favicon.svg" width="16" height="16"><i>16</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon.svg" width="24" height="24"><i>24</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon.svg" width="32" height="32"><i>32</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon.svg" width="48" height="48"><i>48</i></span></div></div>
+    <div class="cell third dark-c"><div class="head">Favicon — dark tabs 16/24/32/48</div><div class="body"><span class="fav"><img src="../../../dist/outlined/icons/favicon-dark.svg" width="16" height="16"><i>16</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon-dark.svg" width="24" height="24"><i>24</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon-dark.svg" width="32" height="32"><i>32</i></span><span class="fav"><img src="../../../dist/outlined/icons/favicon-dark.svg" width="48" height="48"><i>48</i></span></div></div>
+    <div class="cell third"><div class="head">Circle avatar crop</div><div class="body"><div class="avatar"><img src="rdot-recut-sacred.svg"></div></div></div>
+    <div class="cell dark-i"><div class="head">Sacred night — indigo ground</div><div class="body"><img src="rtam-mixedcase-dark.svg" style="width:300px"></div></div>
+    <div class="cell dark-c"><div class="head">Working dark — charcoal ground</div><div class="body"><img src="rdot-recut-dark.svg" style="width:300px"></div></div>
+    <div class="cell full"><div class="head">Bilingual co-brand — mark + shipped lockup</div><div class="body"><span class="co"><img src="rdot-recut-sacred.svg" style="width:120px"></span><span class="co"><img src="../../../dist/outlined/lockups/rtam-bilingual-foundation.svg" style="width:430px"></span></div></div>
+    <div class="cell poster-sim"><div class="head">Donation-poster header simulation</div><div class="body"><img class="mark" src="rdot-recut-dark.svg"><img class="wm" src="../../../dist/outlined/logos/rtam-wordmark-white-golddot.svg"></div></div>
+    <div class="cell receipt-sim"><div class="head">Receipt / letterhead header simulation</div><div class="body"><img class="mark" src="rdot-recut-sacred.svg"><img class="wm" src="../../../dist/outlined/lockups/donation-lockup.svg"></div></div>
+    <div class="cell mono-sim"><div class="head">6 cm mono print / embroidery simulation</div><div class="body"><img src="rdot-recut-mono.svg"></div></div>
+    <div class="cell full"><div class="head">Mini specimen — everything this direction ships</div><div class="body"><figure><img src="rdot-recut-sacred.svg"><figcaption>rdot-recut-sacred</figcaption></figure><figure><img src="rdot-recut-dark.svg"><figcaption>rdot-recut-dark</figcaption></figure><figure><img src="rdot-recut-mono.svg"><figcaption>rdot-recut-mono</figcaption></figure><figure><img src="parity-pair.svg"><figcaption>parity-pair</figcaption></figure><figure><img src="ri-parity-black.svg"><figcaption>ri-parity-black</figcaption></figure><figure><img src="rtam-mixedcase.svg"><figcaption>rtam-mixedcase</figcaption></figure><figure><img src="rtam-mixedcase-dark.svg"><figcaption>rtam-mixedcase-dark</figcaption></figure><figure><img src="bindu-gap-study.svg"><figcaption>bindu-gap-study</figcaption></figure></div></div>
+  </div>
+</body>
+</html>
