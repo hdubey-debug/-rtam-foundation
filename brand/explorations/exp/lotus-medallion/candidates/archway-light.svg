@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <path d="M 242.64 198.12 A 73.28 73.28 0 0 1 256 119.6 A 73.28 73.28 0 0 1 269.36 198.12" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 273.37 199.2 A 73.28 73.28 0 0 1 324.2 137.87 A 73.28 73.28 0 0 1 296.51 212.56" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 299.44 215.49 A 73.28 73.28 0 0 1 374.13 187.8 A 73.28 73.28 0 0 1 312.8 238.63" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 313.88 242.64 A 73.28 73.28 0 0 1 392.4 256 A 73.28 73.28 0 0 1 313.88 269.36" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 312.8 273.37 A 73.28 73.28 0 0 1 374.13 324.2 A 73.28 73.28 0 0 1 299.44 296.51" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 296.51 299.44 A 73.28 73.28 0 0 1 324.2 374.13 A 73.28 73.28 0 0 1 273.37 312.8" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 269.36 313.88 A 73.28 73.28 0 0 1 256 392.4 A 73.28 73.28 0 0 1 242.64 313.88" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 238.63 312.8 A 73.28 73.28 0 0 1 187.8 374.13 A 73.28 73.28 0 0 1 215.49 299.44" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 212.56 296.51 A 73.28 73.28 0 0 1 137.87 324.2 A 73.28 73.28 0 0 1 199.2 273.37" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 198.12 269.36 A 73.28 73.28 0 0 1 119.6 256 A 73.28 73.28 0 0 1 198.12 242.64" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 199.2 238.63 A 73.28 73.28 0 0 1 137.87 187.8 A 73.28 73.28 0 0 1 212.56 215.49" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 215.49 212.56 A 73.28 73.28 0 0 1 187.8 137.87 A 73.28 73.28 0 0 1 238.63 199.2" fill="none" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="308.38" cy="60.5" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="399.12" cy="112.88" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="451.5" cy="203.62" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="451.5" cy="308.38" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="399.12" cy="399.12" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="308.38" cy="451.5" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="203.62" cy="451.5" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="112.88" cy="399.12" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="60.5" cy="308.38" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="60.5" cy="203.62" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="112.88" cy="112.88" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="203.62" cy="60.5" r="9" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <circle cx="256" cy="256" r="14" fill="#C8A15A"/>
+</svg>
