@@ -34,6 +34,11 @@ Versions are kept side by side so any of them can be returned to:
   heart / community corolla), rta-chakra (the Lord bearing the cosmic
   order / Foundation icon). Front elevation (24 tattvas) reserved for
   the ceremonial register in Phase 3.
+- **`jaladhari-study/`** — the founder's two concerns on the locked
+  mark: medallions re-phased onto the petal angles (tip -> Aditya
+  window, spokes complete) and three hub treatments restoring the
+  jaladhari — bare / water-lip hairline / solid vessel annulus. Locked
+  offset mark leads dimmed as anchor. Recommendation: aligned + vessel.
 - *(git only, reverted)* commit `78bd12e` — a synthesis iteration
   (ratna/mala) that mixed candidate 6's gold into candidate 3; rejected:
   candidates stay pure.
