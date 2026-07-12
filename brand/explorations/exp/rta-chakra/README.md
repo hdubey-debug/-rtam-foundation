@@ -22,6 +22,12 @@ Versions are kept side by side so any of them can be returned to:
   bare corolla / in shila / 64+32, with the rejected petal dimmed at
   top for calibration. The winner gets applied across all five
   candidates.
+- **`petal-study-e/`** — founder picked E; this branch develops it
+  toward "more petal-ish, lotus-ish" while keeping E's DNA (fills its
+  twelfth, seam apart, bold at 32 px): E1 padma (broad marquise),
+  E2 agni (flame tip), E3 mukta (pinched base), E4 hridaya (folded
+  tip), E5 antara (carved inner echo), E6 purna (rounded crown).
+  E leads the gallery unchanged, gold-framed.
 - *(git only, reverted)* commit `78bd12e` — a synthesis iteration
   (ratna/mala) that mixed candidate 6's gold into candidate 3; rejected:
   candidates stay pure.
