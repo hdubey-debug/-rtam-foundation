@@ -12,11 +12,11 @@
   --rtam-indigo: #1C1A3D;  /* colors.json: deepIndigo · brand.json: indigo */
   --rtam-bronze: #9B6A2F;  /* colors.json: bronze */
   --rtam-stone: #B8B1A4;  /* colors.json: stoneGray · brand.json: stone */
-  --rtam-mahakala: #141414;  /* colors.json: mahakala */
-  --rtam-bhasma-light: #C9C2B6;  /* colors.json: bhasmaLight */
+  --rtam-mahakala: #141414;  /* colors.json: mahakala · brand.json: mahakala */
+  --rtam-bhasma-light: #C9C2B6;  /* colors.json: bhasmaLight · brand.json: bhasma */
   --rtam-bhasma-deep: #8F887C;  /* colors.json: bhasmaDeep */
   --rtam-tamra: #7A5423;  /* colors.json: tamraCopper */
-  --rtam-chandra: #EDEBE6;  /* colors.json: chandraMoon */
+  --rtam-chandra: #EDEBE6;  /* colors.json: chandraMoon · brand.json: chandra */
 
   /* Semantic aliases */
   --rtam-bg:       var(--rtam-ivory);

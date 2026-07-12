@@ -6,7 +6,10 @@
     "ivory": "#F7F3E9",
     "indigo": "#1C1A3D",
     "sandstone": "#E6DED1",
-    "stone": "#B8B1A4"
+    "stone": "#B8B1A4",
+    "mahakala": "#141414",
+    "bhasma": "#C9C2B6",
+    "chandra": "#EDEBE6"
   },
   "fonts": {
     "cinzel": {
@@ -1092,6 +1095,111 @@
             "ivory",
             "sandstone"
           ]
+        }
+      ]
+    },
+    {
+      "id": "rta-chakra",
+      "archetype": "constructed-mark",
+      "$comment": "The finalized icon (founder-locked 2026-07-12): E3 mukta corolla of twelve, tip-aligned Aditya windows, bare hub, shila rim. Geometry from iconography/geometry/grid.json at R=230 on a 512 canvas: linga .22R=50.6, petal base .32R=73.6, tips .70R=161 (optical), windows .92R=211.6 r=10.35, rim band r=213.5 sw=33. Petal authored at north; polarArray rotates by 30deg steps. Below 48px use the bindu-mark (ladder rule).",
+      "viewBox": [512, 512],
+      "label": "Rta-chakra — the Lord bearing the cosmic order",
+      "runs": [],
+      "shapes": [
+        { "role": "body", "type": "circle", "cx": 256, "cy": 256, "r": 213.5, "fillKind": "stroke", "strokeWidth": 33 },
+        { "role": "window", "type": "polarArray", "count": 12, "stepDeg": 30, "cx": 256, "cy": 256,
+          "shape": { "type": "circle", "cx": 256, "cy": 44.4, "r": 10.35 } },
+        { "role": "body", "type": "polarArray", "count": 12, "stepDeg": 30, "cx": 256, "cy": 256,
+          "strokeRole": "seam", "strokeWidth": 5,
+          "shape": { "type": "path", "d": "M 245.5 182.4 C 239 176 230.5 164 227.5 148 C 225.6 130 242 108 256 95 C 270 108 286.4 130 284.5 148 C 281.5 164 273 176 266.5 182.4 Z" } },
+        { "role": "hub", "type": "circle", "cx": 256, "cy": 256, "r": 50.6 }
+      ],
+      "outputs": [
+        {
+          "path": "icons/rtam-chakra-garbhagriha.svg",
+          "title": "Rta-chakra — vibhuti ash and gold on the sanctum dark",
+          "desc": "The Foundation icon in the lead Garbhagriha register: bhasma-ash body, mahakala windows and seams, the Shivalinga gold at the hub. For all dark surfaces, city print, video.",
+          "colors": { "body": "bhasma", "window": "mahakala", "seam": "mahakala", "hub": "gold" },
+          "grounds": ["mahakala"]
+        },
+        {
+          "path": "icons/rtam-chakra-day.svg",
+          "title": "Rta-chakra — ink and gold on moon paper",
+          "desc": "The Foundation icon in the Bhasma-day reading register: charcoal body, chandra windows and seams, gold hub. For website body and documents.",
+          "colors": { "body": "ink", "window": "chandra", "seam": "chandra", "hub": "gold" },
+          "grounds": ["chandra", "ivory"]
+        },
+        {
+          "path": "icons/rtam-chakra-kanaka.svg",
+          "title": "Rta-chakra — all gold on the sanctum dark (ceremonial)",
+          "desc": "The Kanaka festival dress: the whole mark in dipa gold on mahakala; in print, hot-stamp gold foil on matte soft-touch black. Invitations, festival posters, the temple drum.",
+          "colors": { "body": "gold", "window": "mahakala", "seam": "mahakala", "hub": "gold" },
+          "grounds": ["mahakala"]
+        },
+        {
+          "path": "icons/rtam-chakra-mono.svg",
+          "title": "Rta-chakra — single ink (embroidery, stamps)",
+          "desc": "Single-colour cut for embroidery, stamps, engraving and contexts that disallow gold; windows and seams read as the substrate.",
+          "colors": { "body": "ink", "window": "chandra", "seam": "chandra", "hub": "ink" },
+          "grounds": ["chandra", "ivory"]
+        }
+      ]
+    },
+    {
+      "id": "anahata-mark",
+      "archetype": "constructed-mark",
+      "$comment": "The middle sanctity rung: the bare E3 corolla with the gold Shivalinga — the Lord in the heart (inner reading). Community register: avatars, devotee-facing surfaces. Same geometry as rta-chakra without rim and windows.",
+      "viewBox": [512, 512],
+      "label": "Anahata — the Lord in the heart",
+      "runs": [],
+      "shapes": [
+        { "role": "body", "type": "polarArray", "count": 12, "stepDeg": 30, "cx": 256, "cy": 256,
+          "strokeRole": "seam", "strokeWidth": 4,
+          "shape": { "type": "path", "d": "M 245.5 182.4 C 239 176 230.5 164 227.5 148 C 225.6 130 242 108 256 95 C 270 108 286.4 130 284.5 148 C 281.5 164 273 176 266.5 182.4 Z" } },
+        { "role": "hub", "type": "circle", "cx": 256, "cy": 256, "r": 50.6 }
+      ],
+      "outputs": [
+        {
+          "path": "icons/rtam-anahata-garbhagriha.svg",
+          "title": "Anahata mark — ash corolla, gold heart, for the sanctum dark",
+          "desc": "The heart-lotus rung of the sanctity ladder in the Garbhagriha register.",
+          "colors": { "body": "bhasma", "seam": "mahakala", "hub": "gold" },
+          "grounds": ["mahakala"]
+        },
+        {
+          "path": "icons/rtam-anahata-day.svg",
+          "title": "Anahata mark — ink corolla, gold heart, on moon paper",
+          "desc": "The heart-lotus rung of the sanctity ladder in the Bhasma-day register.",
+          "colors": { "body": "ink", "seam": "chandra", "hub": "gold" },
+          "grounds": ["chandra", "ivory"]
+        }
+      ]
+    },
+    {
+      "id": "bindu-mark",
+      "archetype": "constructed-mark",
+      "$comment": "The smallest sanctity rung: the Lord alone — the circled gold point. THE favicon and seal-dot; the same point that sits under the R of RTAM. The chakra steps down to this mark below 48px (ladder rule).",
+      "viewBox": [512, 512],
+      "label": "Bindu — the Lord alone",
+      "runs": [],
+      "shapes": [
+        { "role": "ring", "type": "circle", "cx": 256, "cy": 256, "r": 118, "fillKind": "stroke", "strokeWidth": 9 },
+        { "role": "hub", "type": "circle", "cx": 256, "cy": 256, "r": 76 }
+      ],
+      "outputs": [
+        {
+          "path": "icons/rtam-bindu-garbhagriha.svg",
+          "title": "Bindu mark — ash ring, gold point, for the sanctum dark",
+          "desc": "Favicon/seal rung for dark surfaces: bhasma ring, gold point.",
+          "colors": { "ring": "bhasma", "hub": "gold" },
+          "grounds": ["mahakala"]
+        },
+        {
+          "path": "icons/rtam-bindu-day.svg",
+          "title": "Bindu mark — ink ring, gold point, on moon paper",
+          "desc": "Favicon/seal rung for light surfaces: charcoal ring, gold point.",
+          "colors": { "ring": "ink", "hub": "gold" },
+          "grounds": ["chandra", "ivory"]
         }
       ]
     }

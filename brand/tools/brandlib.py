@@ -175,25 +175,57 @@ def resolve(brand: dict, asset: dict, output: dict) -> dict:
             continue
         runs.append({**r, "fill": color(brand, cols[r["role"]])})
     shapes = []
-    for sh in asset.get("shapes", []):
+    for sh in _expand_shapes(asset.get("shapes", [])):
         if sh["role"] in drop:
             continue
-        c = color(brand, cols[sh["role"]])
-        shapes.append({**sh, "color": c})
+        resolved = {**sh, "color": color(brand, cols[sh["role"]])}
+        if sh.get("strokeRole"):
+            resolved["strokeColor"] = color(brand, cols[sh["strokeRole"]])
+        shapes.append(resolved)
     ground = color(brand, output["ground"]) if output.get("ground") else None
     return {"viewBox": asset["viewBox"], "ground": ground, "runs": runs, "shapes": shapes}
 
 
+def _expand_shapes(shapes: list) -> list:
+    """v2 constructed marks: expand polarArray entries into rotated copies of
+    their template (authored at the k=0 position; copy k gets an SVG rotate of
+    k*stepDeg about cx,cy — renderer-independent, no math baked into files)."""
+    out = []
+    for sh in shapes:
+        if sh.get("type") != "polarArray":
+            out.append(sh)
+            continue
+        for k in range(sh["count"]):
+            copy = {**sh["shape"], "role": sh["role"]}
+            for key in ("strokeRole", "strokeWidth"):
+                if key in sh:
+                    copy.setdefault(key, sh[key])
+            ang = k * sh["stepDeg"]
+            if ang:
+                copy["transform"] = f'rotate({ang} {sh["cx"]} {sh["cy"]})'
+            out.append(copy)
+    return out
+
+
 # ---- backends --------------------------------------------------------------
 def _shape_el_livetext(sh: dict) -> str:
+    tr = f' transform="{sh["transform"]}"' if sh.get("transform") else ""
     if sh["type"] == "circle":
         if sh.get("fillKind") == "stroke":
             return (f'<circle cx="{sh["cx"]}" cy="{sh["cy"]}" r="{sh["r"]}" fill="none" '
-                    f'stroke="{sh["color"]}" stroke-width="{sh["strokeWidth"]}"/>')
-        return f'<circle cx="{sh["cx"]}" cy="{sh["cy"]}" r="{sh["r"]}" fill="{sh["color"]}"/>'
+                    f'stroke="{sh["color"]}" stroke-width="{sh["strokeWidth"]}"{tr}/>')
+        return f'<circle cx="{sh["cx"]}" cy="{sh["cy"]}" r="{sh["r"]}" fill="{sh["color"]}"{tr}/>'
     if sh["type"] == "line":
         return (f'<line x1="{sh["x1"]}" y1="{sh["y1"]}" x2="{sh["x2"]}" y2="{sh["y2"]}" '
-                f'stroke="{sh["color"]}" stroke-width="{sh["strokeWidth"]}"/>')
+                f'stroke="{sh["color"]}" stroke-width="{sh["strokeWidth"]}"{tr}/>')
+    if sh["type"] == "path":
+        if sh.get("fillKind") == "stroke":
+            return (f'<path d="{sh["d"]}" fill="none" stroke="{sh["color"]}" '
+                    f'stroke-width="{sh["strokeWidth"]}" stroke-linecap="round" '
+                    f'stroke-linejoin="round"{tr}/>')
+        seam = (f' stroke="{sh["strokeColor"]}" stroke-width="{sh["strokeWidth"]}" '
+                f'stroke-linejoin="round"' if sh.get("strokeColor") else "")
+        return f'<path d="{sh["d"]}" fill="{sh["color"]}"{seam}{tr}/>'
     raise ValueError(sh["type"])
 
 
@@ -226,9 +258,10 @@ def _svg_open(brand: dict, asset: dict, output: dict) -> str:
 
 def emit_livetext(brand: dict, asset: dict, output: dict) -> str:
     m = resolve(brand, asset, output)
-    imp = import_url(brand, asset["fontImport"]).replace("&", "&amp;")
     parts = [_svg_open(brand, asset, output)]
-    parts.append(f'  <defs>\n    <style type="text/css">@import url(\'{imp}\');</style>\n  </defs>\n')
+    if asset.get("fontImport"):
+        imp = import_url(brand, asset["fontImport"]).replace("&", "&amp;")
+        parts.append(f'  <defs>\n    <style type="text/css">@import url(\'{imp}\');</style>\n  </defs>\n')
     if m["ground"]:
         w, h = m["viewBox"]
         parts.append(f'  <rect x="0" y="0" width="{w}" height="{h}" fill="{m["ground"]}"/>\n')

@@ -34,13 +34,13 @@ NAMES = [
     ("indigo",    "deepIndigo",    "indigo"),
     ("bronze",    "bronze",        None),
     ("stone",     "stoneGray",     "stone"),
-    # v0.2.0 substance palette (2026-07-12) — spec tokens land with the
-    # constructed-mark schema; None until then.
-    ("mahakala",     "mahakala",    None),
-    ("bhasma-light", "bhasmaLight", None),
+    # v0.2.0 substance palette (2026-07-12); spec tokens for the three the
+    # constructed marks consume, None for the rest until they ship in spec.
+    ("mahakala",     "mahakala",    "mahakala"),
+    ("bhasma-light", "bhasmaLight", "bhasma"),
     ("bhasma-deep",  "bhasmaDeep",  None),
     ("tamra",        "tamraCopper", None),
-    ("chandra",      "chandraMoon", None),
+    ("chandra",      "chandraMoon", "chandra"),
 ]
 
 
