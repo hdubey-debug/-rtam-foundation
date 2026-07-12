@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+<circle cx="128" cy="128" r="113.92" fill="none" stroke="#F7F3E9" stroke-width="2.3"/>
+<circle cx="128" cy="128" r="86.01" fill="none" stroke="#F7F3E9" stroke-width="1.27"/>
+<circle cx="227.91" cy="128" r="4.33" fill="#C8A15A"/>
+<circle cx="214.52" cy="177.95" r="4.33" fill="#C8A15A"/>
+<circle cx="177.95" cy="214.52" r="4.33" fill="#C8A15A"/>
+<circle cx="128" cy="227.91" r="4.33" fill="#C8A15A"/>
+<circle cx="78.05" cy="214.52" r="4.33" fill="#C8A15A"/>
+<circle cx="41.48" cy="177.95" r="4.33" fill="#C8A15A"/>
+<circle cx="28.09" cy="128" r="4.33" fill="#C8A15A"/>
+<circle cx="41.48" cy="78.05" r="4.33" fill="#C8A15A"/>
+<circle cx="78.05" cy="41.48" r="4.33" fill="#C8A15A"/>
+<circle cx="128" cy="28.09" r="4.33" fill="#C8A15A"/>
+<circle cx="177.95" cy="41.48" r="4.33" fill="#C8A15A"/>
+<circle cx="214.52" cy="78.05" r="4.33" fill="#C8A15A"/>
+<path d="M 162.15 129.43 C 185.95 125.97 201.86 141.81 202.83 148.05 C 198.87 152.97 177.17 158.74 158.29 143.83" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="167.61" y1="138.61" x2="189.62" y2="144.51" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 156.86 146.31 C 179.2 155.21 185.06 176.89 182.78 182.78 C 176.89 185.06 155.21 179.2 146.31 156.86" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="157" y1="157" x2="173.11" y2="173.11" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 143.83 158.29 C 158.74 177.17 152.97 198.87 148.05 202.83 C 141.81 201.86 125.97 185.95 129.43 162.15" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="138.61" y1="167.61" x2="144.51" y2="189.62" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 126.57 162.15 C 130.03 185.95 114.19 201.86 107.95 202.83 C 103.03 198.87 97.26 177.17 112.17 158.29" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="117.39" y1="167.61" x2="111.49" y2="189.62" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 109.69 156.86 C 100.79 179.2 79.11 185.06 73.22 182.78 C 70.94 176.89 76.8 155.21 99.14 146.31" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="99" y1="157" x2="82.89" y2="173.11" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 97.71 143.83 C 78.83 158.74 57.13 152.97 53.17 148.05 C 54.14 141.81 70.05 125.97 93.85 129.43" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="88.39" y1="138.61" x2="66.38" y2="144.51" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 93.85 126.57 C 70.05 130.03 54.14 114.19 53.17 107.95 C 57.13 103.03 78.83 97.26 97.71 112.17" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="88.39" y1="117.39" x2="66.38" y2="111.49" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 99.14 109.69 C 76.8 100.79 70.94 79.11 73.22 73.22 C 79.11 70.94 100.79 76.8 109.69 99.14" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="99" y1="99" x2="82.89" y2="82.89" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 112.17 97.71 C 97.26 78.83 103.03 57.13 107.95 53.17 C 114.19 54.14 130.03 70.05 126.57 93.85" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="117.39" y1="88.39" x2="111.49" y2="66.38" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 129.43 93.85 C 125.97 70.05 141.81 54.14 148.05 53.17 C 152.97 57.13 158.74 78.83 143.83 97.71" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="138.61" y1="88.39" x2="144.51" y2="66.38" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 146.31 99.14 C 155.21 76.8 176.89 70.94 182.78 73.22 C 185.06 79.11 179.2 100.79 156.86 109.69" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="157" y1="99" x2="173.11" y2="82.89" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<path d="M 158.29 112.17 C 177.17 97.26 198.87 103.03 202.83 107.95 C 201.86 114.19 185.95 130.03 162.15 126.57" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<line x1="167.61" y1="117.39" x2="189.62" y2="111.49" stroke="#F7F3E9" stroke-width="0.88" opacity="0.75"/>
+<circle cx="128" cy="128" r="34.18" fill="none" stroke="#F7F3E9" stroke-width="1.84"/>
+<circle cx="128" cy="128" r="17.09" fill="#C8A15A"/>
+</svg>
