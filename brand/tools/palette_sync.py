@@ -34,6 +34,13 @@ NAMES = [
     ("indigo",    "deepIndigo",    "indigo"),
     ("bronze",    "bronze",        None),
     ("stone",     "stoneGray",     "stone"),
+    # v0.2.0 substance palette (2026-07-12) — spec tokens land with the
+    # constructed-mark schema; None until then.
+    ("mahakala",     "mahakala",    None),
+    ("bhasma-light", "bhasmaLight", None),
+    ("bhasma-deep",  "bhasmaDeep",  None),
+    ("tamra",        "tamraCopper", None),
+    ("chandra",      "chandraMoon", None),
 ]
 
 
@@ -41,7 +48,7 @@ def load_canon() -> dict:
     """colors.json flattened to {name: hex}."""
     data = json.loads(PALETTE_JSON.read_text())
     hexes = {}
-    for group in ("primary", "secondary"):
+    for group in ("primary", "secondary", "substances"):
         for name, t in data.get(group, {}).items():
             hexes[name] = t["hex"]
     return hexes
@@ -84,14 +91,35 @@ def css_text() -> str:
   --rtam-muted:  var(--rtam-stone);
 }}
 
-/* Night scheme — sacred-night indigo (posters, ceremony, video end-cards).
- * Gold clears AA as TEXT on indigo (6.88:1) — on dark grounds the accent
- * may speak, not just ornament. */
+/* Night scheme — LEGACY (retired 2026-07-12: indigo is retired from brand
+ * surfaces; night now means mahakala). Kept only for committed legacy
+ * assets; new work uses .rtam-garbhagriha. */
 .rtam-night {{
   --rtam-bg:     var(--rtam-indigo);
   --rtam-fg:     var(--rtam-ivory);
   --rtam-accent: var(--rtam-gold);
   --rtam-muted:  var(--rtam-stone);
+}}
+
+/* Garbhagriha — the lead register (founder-locked 2026-07-12): the sanctum
+ * at aarti. Ground is the linga dark; display type is the dipa flame
+ * (gold, 7.63:1 AAA); reading text is vibhuti ash (10.42:1 AAA). All dark
+ * surfaces, city print, video. */
+.rtam-garbhagriha {{
+  --rtam-bg:     var(--rtam-mahakala);
+  --rtam-fg:     var(--rtam-bhasma-light);
+  --rtam-accent: var(--rtam-gold);
+  --rtam-muted:  var(--rtam-bhasma-deep);
+}}
+
+/* Bhasma-day — the reading register: chandra moon-paper (de-yellowed),
+ * charcoal ink, tamra copper as the functional accent (5.65:1 AA). Website
+ * body, documents. */
+.rtam-day {{
+  --rtam-bg:     var(--rtam-chandra);
+  --rtam-fg:     var(--rtam-charcoal);
+  --rtam-accent: var(--rtam-tamra);
+  --rtam-muted:  var(--rtam-bhasma-deep);
 }}
 """
 

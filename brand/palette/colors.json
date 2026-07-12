@@ -1,16 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "RTAM Foundation Color Tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "$comment": "v0.2.0 (2026-07-12): the substance palette — colours re-anchored to the ritual substances that touch the Lord (founder decision: Garbhagriha leads, Bhasma-day reads, Kanaka for festivals). deepIndigo and warmIvory-as-ground are RETIRED from brand surfaces; tokens kept for legacy assets until the v2 asset regeneration completes.",
   "primary": {
-    "antiqueGold":   { "hex": "#C8A15A", "rgb": [200, 161, 90],  "role": "Sacred accent — bindu, wordmark, highlights" },
-    "warmIvory":     { "hex": "#F7F3E9", "rgb": [247, 243, 233], "role": "Primary background — light surfaces" },
-    "charcoalBlack": { "hex": "#1A1A1A", "rgb": [26, 26, 26],    "role": "Primary text — wordmarks on light surfaces; dark mode surface" },
-    "sandstone":     { "hex": "#E6DED1", "rgb": [230, 222, 209], "role": "Secondary surface, paper texture, low-contrast separators" }
+    "antiqueGold":   { "hex": "#C8A15A", "rgb": [200, 161, 90],  "role": "DIPA — the lamp flame: god-points (bindu, suns), display type on mahakala, gold foil in print. Decorative only on light (2.03:1)" },
+    "warmIvory":     { "hex": "#F7F3E9", "rgb": [247, 243, 233], "role": "LEGACY (retired as brand ground 2026-07-12; read chrome-yellow) — existing assets only; new reading surfaces use chandraMoon" },
+    "charcoalBlack": { "hex": "#1A1A1A", "rgb": [26, 26, 26],    "role": "Ink — wordmarks and text on light surfaces; the icon body on chandra paper" },
+    "sandstone":     { "hex": "#E6DED1", "rgb": [230, 222, 209], "role": "LEGACY (retired as panel ground 2026-07-12) — hairline separators in documents only" }
   },
   "secondary": {
-    "deepIndigo": { "hex": "#1C1A3D", "rgb": [28, 26, 61],    "role": "Optional alternate dark surface — sacred night" },
-    "bronze":     { "hex": "#9B6A2F", "rgb": [155, 106, 47],  "role": "Optional accent — heavier weight than gold for print on ivory" },
-    "stoneGray":  { "hex": "#B8B1A4", "rgb": [184, 177, 164], "role": "Neutral metadata text, dividers, captions" }
+    "deepIndigo": { "hex": "#1C1A3D", "rgb": [28, 26, 61],    "role": "RETIRED from brand surfaces (2026-07-12, founder) — legacy assets only; night now means mahakala" },
+    "bronze":     { "hex": "#9B6A2F", "rgb": [155, 106, 47],  "role": "KANSYA — bell-metal (ghanta, panchaloha): large sizes and ornament on mahakala only (3.94:1)" },
+    "stoneGray":  { "hex": "#B8B1A4", "rgb": [184, 177, 164], "role": "BHASMA — vibhuti ash, mid tone: quiet marks, dividers; part of the bhasma triad" }
+  },
+  "substances": {
+    "mahakala":   { "hex": "#141414", "rgb": [20, 20, 20],    "role": "MAHAKALA — the linga stone, the garbhagriha dark: the brand ground (Garbhagriha register leads all dark surfaces, city print, video)" },
+    "bhasmaLight": { "hex": "#C9C2B6", "rgb": [201, 194, 182], "role": "BHASMA light — vibhuti ash: body text on mahakala (10.42:1 AAA)" },
+    "bhasmaDeep": { "hex": "#8F887C", "rgb": [143, 136, 124], "role": "BHASMA deep — vibhuti ash: captions and metadata on mahakala (5.25:1 AA)" },
+    "tamraCopper": { "hex": "#7A5423", "rgb": [122, 84, 35],  "role": "TAMRA — the abhisheka copper: functional accent on light (links, CTAs; 5.65:1 on chandra, 6.07:1 on warmIvory; Pantone 1405C)" },
+    "chandraMoon": { "hex": "#EDEBE6", "rgb": [237, 235, 230], "role": "CHANDRA — the moon on His crown: the de-yellowed reading ground (Bhasma-day register: website body, documents)" }
   }
 }

@@ -12,6 +12,11 @@
   --rtam-indigo: #1C1A3D;  /* colors.json: deepIndigo · brand.json: indigo */
   --rtam-bronze: #9B6A2F;  /* colors.json: bronze */
   --rtam-stone: #B8B1A4;  /* colors.json: stoneGray · brand.json: stone */
+  --rtam-mahakala: #141414;  /* colors.json: mahakala */
+  --rtam-bhasma-light: #C9C2B6;  /* colors.json: bhasmaLight */
+  --rtam-bhasma-deep: #8F887C;  /* colors.json: bhasmaDeep */
+  --rtam-tamra: #7A5423;  /* colors.json: tamraCopper */
+  --rtam-chandra: #EDEBE6;  /* colors.json: chandraMoon */
 
   /* Semantic aliases */
   --rtam-bg:       var(--rtam-ivory);
@@ -28,12 +33,33 @@
   --rtam-muted:  var(--rtam-stone);
 }
 
-/* Night scheme — sacred-night indigo (posters, ceremony, video end-cards).
- * Gold clears AA as TEXT on indigo (6.88:1) — on dark grounds the accent
- * may speak, not just ornament. */
+/* Night scheme — LEGACY (retired 2026-07-12: indigo is retired from brand
+ * surfaces; night now means mahakala). Kept only for committed legacy
+ * assets; new work uses .rtam-garbhagriha. */
 .rtam-night {
   --rtam-bg:     var(--rtam-indigo);
   --rtam-fg:     var(--rtam-ivory);
   --rtam-accent: var(--rtam-gold);
   --rtam-muted:  var(--rtam-stone);
+}
+
+/* Garbhagriha — the lead register (founder-locked 2026-07-12): the sanctum
+ * at aarti. Ground is the linga dark; display type is the dipa flame
+ * (gold, 7.63:1 AAA); reading text is vibhuti ash (10.42:1 AAA). All dark
+ * surfaces, city print, video. */
+.rtam-garbhagriha {
+  --rtam-bg:     var(--rtam-mahakala);
+  --rtam-fg:     var(--rtam-bhasma-light);
+  --rtam-accent: var(--rtam-gold);
+  --rtam-muted:  var(--rtam-bhasma-deep);
+}
+
+/* Bhasma-day — the reading register: chandra moon-paper (de-yellowed),
+ * charcoal ink, tamra copper as the functional accent (5.65:1 AA). Website
+ * body, documents. */
+.rtam-day {
+  --rtam-bg:     var(--rtam-chandra);
+  --rtam-fg:     var(--rtam-charcoal);
+  --rtam-accent: var(--rtam-tamra);
+  --rtam-muted:  var(--rtam-bhasma-deep);
 }
