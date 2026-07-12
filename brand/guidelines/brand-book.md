@@ -53,14 +53,15 @@ the typographic family.
 
 ### 3.1 Primary wordmark
 
-The wordmark is the foundation's voice in public. Five variants:
+The wordmark is the foundation's voice in public. Six variants:
 
 | File | Use |
 |---|---|
 | `rtam-wordmark-sacred-RTAM-dot.svg` | Canonical. Charcoal letters, gold bindu. |
-| `rtam-wordmark-gold.svg` | All-gold. For sacred contexts, embossed printing, dark backgrounds where gold + charcoal won't show. |
-| `rtam-wordmark-black.svg` | All-black. For pure-black reproduction (single-color printing, fax, microform). |
-| `rtam-wordmark-white.svg` | All-ivory on a **transparent** ground — a true overlay for charcoal, indigo, or photographs. Intentionally invisible on white; always preview on the intended dark surface. |
+| `rtam-wordmark-white-golddot.svg` | The sacred form **on dark**: ivory letters, gold bindu preserved. Default on charcoal / indigo / photographic dark surfaces. |
+| `rtam-wordmark-gold.svg` | All-gold. For sacred contexts, embossed printing, foil. |
+| `rtam-wordmark-black.svg` | All-charcoal. For single-color reproduction (mono printing, fax, microform). |
+| `rtam-wordmark-white.svg` | All-ivory on a **transparent** ground — for dark surfaces where a second colour (the gold bindu) cannot reproduce. Intentionally invisible on white; always preview on the intended dark surface. |
 | `rtam-wordmark-public-RTAM.svg` | ASCII-only, no bindu. **Use only** when the bindu cannot be reliably reproduced (low-resolution sign vinyl, embroidered shirts under 6 cm wide). |
 
 The Foundation name also exists as a **standalone Devanagari wordmark** in both
@@ -69,7 +70,7 @@ Sanskritic default) and `rtam-wordmark-devanagari-faundeshan.svg` (ऋतम् 
 the common register). Both set ऋतम् large with the descriptor smaller on a shared
 baseline, mirroring the Latin wordmark; neither carries a bindu.
 
-The bindu is **drawn as a separate `<circle>`** in every Latin SVG. It is not a Unicode combining mark. This is deliberate: the bindu must remain exact in size and position across every reproduction surface. Its geometry follows one rule everywhere — centred under the leading R, `cy = baseline + 0.233·fontsize`, `r = fontsize ÷ 12`.
+The bindu is **drawn as a separate `<circle>`** in every Latin SVG. It is not a Unicode combining mark. This is deliberate: the bindu must remain exact in size and position across every reproduction surface. Its geometry follows one rule — centred under the leading R's ink, `cy = baseline + 0.233·fontsize`, `r = fontsize ÷ 12` — with exactly **two sanctioned deviations**: the **circle-enclosed icon** centres the bindu on the canvas axis (cx 128) so the composition sits still inside its ring, and the **favicon** enlarges the bindu (r 2.86 at fs 26, ≈ fs ÷ 9) and tightens its gap so the dot survives a 16 px browser tab. No other asset may deviate.
 
 ### 3.1a Temple wordmarks
 
@@ -86,10 +87,10 @@ descriptor):
 
 A square mark of the bare R with the bindu beneath, in two families:
 
-- **Open form** — gold / black / ivory variants for plain-background contexts.
-- **Circle-enclosed** — gold ring or all-charcoal, for app icons, social avatars, and any context where the mark needs to claim its own visual territory.
+- **Open form** — sacred (charcoal R + gold bindu, the default), all-gold, all-charcoal, all-ivory, and sacred-on-dark (ivory R + gold bindu) for plain-background contexts.
+- **Circle-enclosed** — gold ring (charcoal R), all-charcoal, or all-gold (dark surfaces), for app icons, social avatars, and any context where the mark needs to claim its own visual territory.
 
-Plus `favicon.svg` (32 viewBox) for browser tabs. The favicon scales cleanly to **64 px**; above that, switch to the full R-monogram SVG, because the bindu spacing was tuned for the favicon's small size and visibly detaches at 8× scale.
+Plus `favicon.svg` (32 viewBox, charcoal R) and `favicon-dark.svg` (ivory R) for light and dark browser tabs. The favicon scales cleanly to **64 px**; above that, switch to the full R-monogram SVG, because the bindu spacing was tuned for the favicon's small size and visibly detaches at 8× scale.
 
 ### 3.3 Devanagari ऋ monogram
 
@@ -104,7 +105,8 @@ Four variants: gold / black / ivory / circle-enclosed.
 | `rtam-bilingual-foundation.svg` | Common-register: ṚTAM Foundation over ऋतम् फाउंडेशन. Default bilingual. |
 | `rtam-sanskritic-pratishthan.svg` | Pure-Sanskritic: ṚTAM Foundation over ऋतम् प्रतिष्ठान. Scholarly / sacred. |
 | `rtambhareshvara-mandir-lockup.svg` | Temple name, both scripts, leading R carries the bindu. Wider viewBox (1280) to fit the longest name. |
-| `donation-lockup.svg` | Wordmark + thin gold rule + a single quiet stone-gray line. Header, not CTA. |
+| `rtambhareshvara-mandir-lockup-white-golddot.svg` | The temple lockup on dark: ivory scripts, gold bindu + rule. Event banners, night signage. |
+| `donation-lockup.svg` | Wordmark + thin gold rule + a single quiet supporting line (charcoal at light weight — quiet by weight, legible by colour). Header, not CTA. |
 
 ---
 
@@ -122,7 +124,12 @@ Seven tokens. Use them by name, not by hex. The CSS variables live in `brand/pal
 | `--rtam-bronze` | `#9B6A2F` | Deeper gold. Use sparingly for emphasis on ivory. |
 | `--rtam-stone` | `#B8B1A4` | Quiet stone gray. Supporting copy that should not compete. |
 
-**The wordmark must work in pure black.** This is a non-negotiable reproduction test — every variant of the wordmark has been verified in pure `#1A1A1A` for fax, single-color print, and microform.
+**The wordmark must work in single-colour charcoal.** This is a non-negotiable reproduction test — every variant of the wordmark has been verified in flat `#1A1A1A` (one ink, no gold) for fax, single-color print, and microform. (`#1A1A1A` is charcoal, not `#000000`; the earlier "pure black" wording overstated the hex. If a vendor's process demands literal K-100 black, the charcoal files may be reproduced at 100% K — the geometry is the test, not the 10% luminance difference.)
+
+**File names vs. tokens (historical, kept until the v2 rename):** the `-white`
+suffix means **ivory** `#F7F3E9`; the `-black` suffix means **charcoal**
+`#1A1A1A`; `-golddot` marks two-tone variants that preserve the gold bindu on
+an otherwise single-colour mark.
 
 **Contrast (measured WCAG ratios).** Charcoal `#1A1A1A` on ivory is 15.7:1 —
 the body-text pairing, comfortably AAA. But two warm pairings fall **below** the
@@ -136,15 +143,22 @@ are large enough not to need to be read at a glance.
 
 ## 5 · Typography
 
-Three faces. Each does one job.
+Four vendored families (`brand/fonts/`); three do the talking, one stands reserve.
 
 | Face | Use |
 |---|---|
 | **Cinzel** (400 / 500 / 600 / 700) | Display Latin. The wordmark, headlines, certificate citations, the brand's voice in public. |
-| **Tiro Devanagari Sanskrit** (regular) | The sacred face. All Devanagari typesetting. |
+| **Tiro Devanagari Sanskrit** (regular) | The sacred face. All Devanagari typesetting. (Its built-in Latin glyphs are under evaluation as the brand's quote/body serif — not yet sanctioned.) |
 | **Inter** (300 / 400 / 500 / 600) | Working sans. Body copy, captions, metadata, anything functional. |
+| **Marcellus** (400) | Reserve display serif — second name in the Cinzel fallback stack only. Never set deliberately. |
 
-A printable font-installation note for vendors is in `brand/README.md`. SVG glyphs can be outlined in Inkscape (`Path → Object to Path`) or Illustrator (`Type → Create Outlines`) before being sent to a print shop that lacks the fonts.
+CDN-only fallbacks (never vendored, never load-bearing): Noto Serif / Sans
+Devanagari, after Tiro in the Devanagari stacks.
+
+A printable font-installation note for vendors is in `brand/README.md`. Print
+shops without the fonts should use the **outlined masters in `brand/dist/outlined/`**
+— every glyph is already a `<path>`, no fonts required. (Inkscape `Path → Object
+to Path` on the live-text sources achieves the same.)
 
 ---
 
@@ -201,24 +215,31 @@ The brand kit ships HTML mockups for the most common contexts. See `brand/previe
 ```
 brand/
 ├── spec/brand.json                     # the asset tree as data — SINGLE SOURCE OF TRUTH
-├── palette/colors.{json,css}           # design tokens
-├── logos/rtam-wordmark-*.svg           # 5 Latin Foundation wordmark variants
+├── palette/colors.json                 # colour canon (colors.css is GENERATED from it)
+├── logos/rtam-wordmark-*.svg           # 6 Latin Foundation wordmark variants
 ├── logos/rtam-wordmark-devanagari-*.svg# 2 Devanagari Foundation wordmarks (pratishthan, faundeshan)
 ├── logos/rtam-temple-wordmark-*.svg    # 3 temple wordmarks (latin, diacritic, devanagari)
-├── icons/rtam-rdot-icon-*.svg          # 5 R-monogram variants (open + circle)
+├── icons/rtam-rdot-icon-*.svg          # 8 R-monogram variants (5 open + 3 circle)
 ├── icons/rtam-devanagari-ri-icon-*.svg # 4 ऋ monogram variants
-├── icons/favicon.svg                   # 32 viewBox favicon
-├── lockups/*.svg                       # 4 lockup compositions
-├── previews/index.html                 # master gallery
+├── icons/favicon.svg + favicon-dark.svg# 32 viewBox favicons (light + dark tabs)
+├── lockups/*.svg                       # 5 lockup compositions
+├── iconography/reference/              # sanctum murti reference (design intent, not distribution)
+├── previews/index.html                 # master gallery (single-sourced from dist/ via <img>)
 ├── previews/{wordmark,monogram,devanagari-monogram,lockups}-specimen.html
 ├── previews/mockups/*.html             # application mockups
 ├── guidelines/{brand-book,usage-rules}.md
-├── tools/brandlib.py + generate.py + outline.py + parity.py + build.sh
-│                                       # generator: brand.json → source SVGs + outlined masters + gate
+├── tools/brandlib.py + generate.py + outline.py + parity.py + palette_sync.py + build.sh
+│                                       # generator: brand.json → source SVGs + outlined masters + gates
 ├── tools/render_*.py                   # SVG→PNG, HTML→PNG/PDF, MD→PDF
-├── dist/outlined/*.svg                 # built distribution masters (gitignored; `build.sh --write`)
-└── exports/{png,pdf,mockups}/          # rendered outputs
+├── dist/outlined/*.svg                 # COMMITTED distribution masters — the consumer path
+│                                       # (font-free <path> geometry; parity.py gates staleness)
+└── exports/{png,pdf,mockups,platform}/ # rendered outputs
 ```
+
+**Consuming the kit:** embed from `brand/dist/outlined/` — those masters carry no
+font dependency, so they render identically in `<img>` tags, Office documents,
+print RIPs, and design tools. The live-text SVGs under `logos/ icons/ lockups/`
+are the *editable sources*, faithful only where the brand fonts are installed.
 
 **Editing the kit:** change `brand/spec/brand.json`, then run `brand/tools/build.sh --write`.
 Hand-editing the SVGs is no longer the workflow — the generator regenerates every

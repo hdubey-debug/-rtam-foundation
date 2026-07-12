@@ -9,7 +9,7 @@ Google Fonts.
 |---|---|---|---|
 | Cinzel | `cinzel/cinzel-{400,500,600,700}.ttf` | Primary Latin display face (wordmarks, icons) | OFL 1.1 |
 | Marcellus | `marcellus/marcellus-400.ttf` | Alternate Latin display face (fallback stack) | OFL 1.1 |
-| Inter | `inter/inter-{400,500,600}.ttf` | UI / body sans (previews, mockups, documents) | OFL 1.1 |
+| Inter | `inter/inter-{300,400,500,600}.ttf` | UI / body sans (previews, mockups, documents; 300 = quiet support lines) | OFL 1.1 |
 | Tiro Devanagari Sanskrit | `tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf` | Devanagari sacred contexts (ऋतम्, lockups, motto) | OFL 1.1 |
 
 ## Provenance

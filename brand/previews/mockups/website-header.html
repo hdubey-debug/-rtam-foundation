@@ -45,7 +45,10 @@
       text-decoration: none;
     }
     nav a.cta {
-      color: var(--rtam-gold);
+      /* interim AA treatment: gold on ivory is 2.18:1 (fails at 14px). Charcoal
+         text + gold border keeps the accent decorative and the label legible;
+         the final functional accent lands with the Phase-1 colour study. */
+      color: var(--rtam-charcoal);
       font-weight: 600;
       border: 1px solid var(--rtam-gold);
       padding: 10px 22px;

@@ -11,40 +11,50 @@ This directory holds the complete RTAM Foundation visual identity as real, repro
 ```
 brand/
 ├── spec/         brand.json — the asset tree as data (SINGLE SOURCE OF TRUTH)
-├── palette/      colors.json + colors.css
-├── logos/        Foundation wordmarks: 5 Latin + 2 Devanagari + 3 temple
-├── icons/        Ṛ monogram (5) + ऋ monogram (4) + favicon
-├── lockups/      bilingual + sanskritic + temple + donation lockups (4)
+├── palette/      colors.json (colour canon) + colors.css (generated from it)
+├── logos/        Foundation wordmarks: 6 Latin + 2 Devanagari + 3 temple
+├── icons/        Ṛ monogram (8: 5 open + 3 circle) + ऋ monogram (4) + favicon (light + dark)
+├── lockups/      bilingual + sanskritic + temple (light + dark) + donation (5)
+├── iconography/  sanctum murti reference (design intent; not distribution)
 ├── previews/     HTML pages to view every asset in a browser
-│   ├── index.html                  master gallery
+│   ├── index.html                  master gallery (marks embedded from dist/)
 │   ├── typography-specimen.html    every test string × every font
 │   └── mockups/                    letterhead, poster, avatar, etc.
 ├── guidelines/   brand-book.md + usage-rules.md
-├── tools/        brandlib + generate/outline/parity + build.sh, rasterization helpers
-├── dist/         outlined distribution masters (built; gitignored)
-└── exports/      rendered PNGs (favicon sizes, mockups) and PDFs
+├── tools/        brandlib + generate/outline/parity/palette_sync + build.sh, render helpers
+├── dist/         outlined distribution masters (COMMITTED — the consumer path)
+└── exports/      rendered PNGs (favicon sizes, mockups, platform) and PDFs
 ```
 
-## How to view the brand kit
+## How to use the assets
 
-Open any `.svg` file directly in a modern browser. To see the full gallery with every variant across color modes and sizes, open `previews/index.html` after US-8 is complete.
+**Consumers: take files from `brand/dist/outlined/`.** Every glyph there is
+already outlined to `<path>`, so the SVGs render identically everywhere — as
+`<img>`, in Office/print pipelines, and in design tools — with no fonts
+installed. The SVGs under `logos/ icons/ lockups/` are the *editable sources*
+(live `<text>`); they are faithful only where the brand fonts are available.
+
+To browse everything, open the gallery:
 
 ```bash
-# Once previews exist:
 xdg-open brand/previews/index.html   # Linux
 open     brand/previews/index.html   # macOS
 ```
 
 ## Fonts
 
-All previews load fonts from Google Fonts via CDN — no install required to view in a browser:
+**Four families are vendored in `brand/fonts/`** (the canonical statement —
+`fonts/README.md` has files, provenance, licenses):
 
-- **Cinzel** (Latin display serif — primary wordmark face)
-- **Marcellus** (Latin display serif — alternate / fallback face with softer terminals)
-- **Inter** (Latin sans — UI and body)
-- **Tiro Devanagari Sanskrit** (Devanagari sacred — wordmarks and sacred contexts)
-- **Noto Serif Devanagari** (Devanagari serif fallback — long body text)
-- **Noto Sans Devanagari** (Devanagari sans — UI labels, captions)
+- **Cinzel** 400/500/600/700 (Latin display serif — primary wordmark face)
+- **Marcellus** 400 (reserve display serif — Cinzel's fallback stack only)
+- **Inter** 300/400/500/600 (Latin sans — UI and body)
+- **Tiro Devanagari Sanskrit** 400 (Devanagari sacred — wordmarks and sacred contexts)
+
+CDN-only fallbacks (never vendored): **Noto Serif Devanagari** and **Noto Sans
+Devanagari**, after Tiro in Devanagari stacks. Preview *pages* load fonts from
+Google Fonts for their own chrome, but the brand marks they display are `<img>`
+embeds of the outlined masters — correct with no fonts at all.
 
 SVG files reference these fonts by `font-family`. When opening an SVG in Inkscape / Illustrator / Figma without the fonts installed, install them locally first (or run **Path → Object to Path** in Inkscape / **Type → Create Outlines** in Illustrator) to convert text to outlined paths.
 
@@ -85,15 +95,23 @@ Source of truth: [`palette/colors.json`](palette/colors.json). CSS variables: [`
 
 ## Tooling
 
-Two helper scripts live under `tools/`:
-
-- `render_svg_to_png.py <in.svg> <out.png> [width]` — uses `cairosvg`.
-- `render_html_to_png.py <in.html> <out.png|.pdf> [viewport_width]` — uses Playwright Chromium.
-
-Install requirements:
+The pipeline lives under `tools/` — one command proves and (re)builds the tree:
 
 ```bash
-pip install --user cairosvg playwright
+brand/tools/build.sh          # verify: palette canon + parity gates + dry-runs
+brand/tools/build.sh --write  # regenerate sources + dist/outlined, re-verify
+```
+
+Pieces: `brandlib.py` (the engine), `generate.py` (live-text sources),
+`outline.py` (dist masters), `parity.py` (3-gate fidelity proof),
+`palette_sync.py` (colors.json → colors.css + token check), `contrast.py`
+(WCAG pairs), plus render helpers (`render_svg_to_png.py`,
+`render_html_to_png.py`, `render_md_to_pdf.py`).
+
+Install requirements (pinned):
+
+```bash
+pip install --user -r brand/tools/requirements.txt
 python3 -m playwright install chromium
 ```
 
