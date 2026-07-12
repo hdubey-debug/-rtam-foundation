@@ -39,6 +39,13 @@ Versions are kept side by side so any of them can be returned to:
   window, spokes complete) and three hub treatments restoring the
   jaladhari — bare / water-lip hairline / solid vessel annulus. Locked
   offset mark leads dimmed as anchor. Recommendation: aligned + vessel.
+- **`battery/`** — the FINALIZED icon (E3 corolla, tip-aligned suns,
+  bare hub — founder-locked) through nine real-world stations:
+  reduction ladder + ladder rule (<48 px → bindu), favicon in browser
+  chrome, avatars on YouTube/X/Instagram grounds, YouTube banner +
+  thumbnail, poster header, receipt header, 6 cm embroidery mono,
+  horizontal + stacked lockups. All stations PASS; colour evidence:
+  the quartet held everywhere.
 - *(git only, reverted)* commit `78bd12e` — a synthesis iteration
   (ratna/mala) that mixed candidate 6's gold into candidate 3; rejected:
   candidates stay pure.
