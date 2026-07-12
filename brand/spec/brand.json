@@ -330,58 +330,57 @@
     },
     {
       "id": "favicon",
-      "archetype": "plain-mark",
+      "archetype": "constructed-mark",
+      "$comment": "P3.4 (2026-07-12): favicon re-based from the R monogram to the bindu per the ladder rule — below 48px only the Lord remains (the typographic R was a measured 16px LIMIT since Phase 2). Favicon-tuned proportions: bolder ring than the display bindu-mark so the 16px render keeps a visible stroke.",
       "viewBox": [
         32,
         32
       ],
-      "fontImport": "cinzel",
       "label": "ṚTAM Foundation",
-      "runs": [
-        {
-          "role": "glyph",
-          "text": "R",
-          "font": "cinzel",
-          "weight": 700,
-          "fs": 26,
-          "x": 14.87,
-          "y": 22,
-          "anchor": "middle"
-        }
-      ],
+      "runs": [],
       "shapes": [
         {
-          "role": "bindu",
+          "role": "ring",
           "type": "circle",
           "cx": 16,
-          "cy": 27.2,
-          "r": 2.86
+          "cy": 16,
+          "r": 12.8,
+          "fillKind": "stroke",
+          "strokeWidth": 2.2
+        },
+        {
+          "role": "hub",
+          "type": "circle",
+          "cx": 16,
+          "cy": 16,
+          "r": 7.6
         }
       ],
       "outputs": [
         {
           "path": "icons/favicon.svg",
-          "title": "ṚTAM Foundation favicon",
-          "desc": "Favicon: simplified Ṛ monogram at native 32x32. Sized so the R + bindu remain legible at 16px. Use a charcoal R on the page tab background; for hi-contrast tabs/manifests, swap the dark color via CSS.",
+          "title": "ṚTAM favicon — the bindu (light tabs)",
+          "desc": "Favicon: the circled gold point — the smallest sanctity rung, the same point that sits under the R of RTAM. Charcoal ring with the gold point, for light browser chrome.",
           "colors": {
-            "glyph": "ink",
-            "bindu": "gold"
+            "ring": "ink",
+            "hub": "gold"
           },
           "grounds": [
-            "ivory"
+            "ivory",
+            "chandra"
           ]
         },
         {
           "path": "icons/favicon-dark.svg",
-          "title": "ṚTAM Foundation favicon — dark tabs",
-          "desc": "Dark-tab counterpart of the favicon: ivory R with the gold bindu on a transparent ground, for dark browser chrome and dark manifests. Same 32x32 geometry as favicon.svg.",
+          "title": "ṚTAM favicon — the bindu (dark tabs)",
+          "desc": "Dark-tab counterpart: bhasma-ash ring with the gold point, for dark browser chrome and dark manifests. Same 32x32 geometry as favicon.svg.",
           "colors": {
-            "glyph": "ivory",
-            "bindu": "gold"
+            "ring": "bhasma",
+            "hub": "gold"
           },
           "grounds": [
-            "ink",
-            "indigo"
+            "mahakala",
+            "ink"
           ]
         }
       ]
@@ -500,6 +499,19 @@
           ]
         },
         {
+          "path": "logos/rtam-wordmark-garbhagriha.svg",
+          "title": "ṚTAM Foundation — sacred wordmark for the sanctum dark (ash letters, gold bindu)",
+          "desc": "The Garbhagriha-register signature (P3.3): bhasma-ash letters with the gold bindu on a transparent ground, for mahakala surfaces — city print, video, dark web. Vibhuti and flame: the letters are ash, the point is the lamp.",
+          "colors": {
+            "name": "bhasma",
+            "descriptor": "bhasma",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "mahakala"
+          ]
+        },
+        {
           "path": "logos/rtam-wordmark-public-RTAM.svg",
           "label": "RTAM Foundation",
           "title": "RTAM Foundation — public ASCII wordmark (no bindu)",
@@ -557,6 +569,18 @@
           "grounds": [
             "ivory",
             "sandstone"
+          ]
+        },
+        {
+          "path": "logos/rtam-wordmark-devanagari-pratishthan-garbhagriha.svg",
+          "title": "ऋतम् प्रतिष्ठान — Devanagari Foundation wordmark for the sanctum dark",
+          "desc": "Garbhagriha-register Devanagari voice (P3.3, closing the named gap): bhasma-ash script on a transparent ground for mahakala surfaces.",
+          "colors": {
+            "name": "bhasma",
+            "descriptor": "bhasma"
+          },
+          "grounds": [
+            "mahakala"
           ]
         }
       ]
@@ -719,6 +743,19 @@
             "ivory",
             "sandstone"
           ]
+        },
+        {
+          "path": "logos/rtam-temple-wordmark-diacritic-garbhagriha.svg",
+          "title": "Ṛtambhareśvara Mandir — diacritic wordmark for the sanctum dark",
+          "desc": "Garbhagriha-register Mandir voice, Latin diacritic form (P3.3): bhasma-ash letters, gold bindu preserved, transparent ground for mahakala surfaces.",
+          "colors": {
+            "name": "bhasma",
+            "descriptor": "bhasma",
+            "bindu": "gold"
+          },
+          "grounds": [
+            "mahakala"
+          ]
         }
       ]
     },
@@ -763,6 +800,18 @@
           "grounds": [
             "ivory",
             "sandstone"
+          ]
+        },
+        {
+          "path": "logos/rtam-temple-wordmark-devanagari-garbhagriha.svg",
+          "title": "ऋतम्भरेश्वर मंदिर — Devanagari Mandir wordmark for the sanctum dark",
+          "desc": "Garbhagriha-register Mandir voice, Devanagari form (P3.3, closing the named gap): bhasma-ash script, stacked, transparent ground for mahakala surfaces — the city-poster and street-banner voice.",
+          "colors": {
+            "name": "bhasma",
+            "descriptor": "bhasma"
+          },
+          "grounds": [
+            "mahakala"
           ]
         }
       ]
@@ -1011,6 +1060,20 @@
           "grounds": [
             "ink",
             "indigo"
+          ]
+        },
+        {
+          "path": "lockups/rtambhareshvara-mandir-lockup-garbhagriha.svg",
+          "title": "Temple lockup for the sanctum dark — ash scripts, gold bindu and rule",
+          "desc": "Garbhagriha-register form of the temple lockup (P3.3): both scripts in bhasma ash with the gold bindu and rule, transparent ground, for mahakala surfaces — event banners, night signage, city print.",
+          "colors": {
+            "name": "bhasma",
+            "devanagari": "bhasma",
+            "bindu": "gold",
+            "rule": "gold"
+          },
+          "grounds": [
+            "mahakala"
           ]
         }
       ]

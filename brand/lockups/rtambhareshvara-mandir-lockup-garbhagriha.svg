@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 380" role="img" aria-labelledby="rtambhareshvara-mandir-lockup-garbhagriha-title rtambhareshvara-mandir-lockup-garbhagriha-desc">
+  <title id="rtambhareshvara-mandir-lockup-garbhagriha-title">Temple lockup for the sanctum dark — ash scripts, gold bindu and rule</title>
+  <desc id="rtambhareshvara-mandir-lockup-garbhagriha-desc">Garbhagriha-register form of the temple lockup (P3.3): both scripts in bhasma ash with the gold bindu and rule, transparent ground, for mahakala surfaces — event banners, night signage, city print.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap');</style>
+  </defs>
+  <text x="640" y="133" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="72" letter-spacing="6" text-anchor="middle" fill="#C9C2B6">RTAMBHARESHVARA MANDIR</text>
+  <text x="640" y="293" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="68" text-anchor="middle" fill="#C9C2B6">ऋतम्भरेश्वर मंदिर</text>
+  <circle cx="64" cy="150" r="6" fill="#C8A15A"/>
+  <line x1="520" y1="198" x2="760" y2="198" stroke="#C8A15A" stroke-width="1.5"/>
+</svg>

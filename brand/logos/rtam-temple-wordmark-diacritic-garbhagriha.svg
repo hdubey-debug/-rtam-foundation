@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 260" role="img" aria-labelledby="rtam-temple-wordmark-diacritic-garbhagriha-title rtam-temple-wordmark-diacritic-garbhagriha-desc">
+  <title id="rtam-temple-wordmark-diacritic-garbhagriha-title">Ṛtambhareśvara Mandir — diacritic wordmark for the sanctum dark</title>
+  <desc id="rtam-temple-wordmark-diacritic-garbhagriha-desc">Garbhagriha-register Mandir voice, Latin diacritic form (P3.3): bhasma-ash letters, gold bindu preserved, transparent ground for mahakala surfaces.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="540" y="120" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="66" letter-spacing="4" text-anchor="middle" fill="#C9C2B6">Rtambhareśvara</text>
+  <text x="540" y="186" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="30" letter-spacing="14" text-anchor="middle" fill="#C9C2B6">Mandir</text>
+  <circle cx="244.2" cy="135.4" r="5.5" fill="#C8A15A"/>
+</svg>

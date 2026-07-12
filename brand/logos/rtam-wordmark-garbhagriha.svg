@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 240" role="img" aria-labelledby="rtam-wordmark-garbhagriha-title rtam-wordmark-garbhagriha-desc">
+  <title id="rtam-wordmark-garbhagriha-title">ṚTAM Foundation — sacred wordmark for the sanctum dark (ash letters, gold bindu)</title>
+  <desc id="rtam-wordmark-garbhagriha-desc">The Garbhagriha-register signature (P3.3): bhasma-ash letters with the gold bindu on a transparent ground, for mahakala surfaces — city print, video, dark web. Vibhuti and flame: the letters are ash, the point is the lamp.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="80" y="144.5" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="120" letter-spacing="12" fill="#C9C2B6">RTAM</text>
+  <text x="527" y="144.5" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="400" font-size="62" letter-spacing="8" fill="#C9C2B6">Foundation</text>
+  <circle cx="126.5" cy="172.5" r="10" fill="#C8A15A"/>
+</svg>
