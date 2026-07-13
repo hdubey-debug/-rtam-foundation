@@ -2,13 +2,107 @@
 {% from "macros.html.j2" import door_garbha %}
 {% block body %}
 
-<section class="chamber">
+<section class="chamber" style="min-height:62vh">
   <h1 class="sutra" lang="sa">प्रदक्षिणा</h1>
-  <div class="bhashya">THE WALK — CLOCKWISE, AROUND THE RISING MANDIR</div>
-  <p class="plain">[The walk is being laid — S3: east, south, west, north, the threshold;
-     the nirmāṇa ledger; follow the rising.]</p>
+  <div class="bhashya">WALK AROUND HIM</div>
+  <p class="plain">You meet a mandir by walking around it, keeping it to your right. So the
+     page does the same: the passage below moves only clockwise — east, south, west, north —
+     and ends at the threshold.</p>
+</section>
+
+<div class="walkband layer-3">
+  <div class="walk" id="walk" tabindex="0" aria-label="the pradakshina — scroll clockwise">
+    <div class="stop">
+      <img src="{{ root }}assets/img/{{ hero.fallback }}"
+           srcset="{% for f, wd in hero.jpg %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+           sizes="100vw" loading="lazy" decoding="async"
+           alt="the mandir from the east — architectural render">
+      <div class="plate"><div class="dn" lang="sa">पूर्व</div>
+        <div class="cap">EAST — the mukha-dvāra faces the rising sun · render crop</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom" src="{{ root }}assets/img/{{ hero.fallback }}" loading="lazy" decoding="async"
+           alt="the śikhara — architectural render">
+      <div class="plate"><div class="dn" lang="sa">दक्षिण</div>
+        <div class="cap">SOUTH — the śikhara climbs in carved tiers · render crop</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom2" src="{{ root }}assets/img/{{ hero.fallback }}" loading="lazy" decoding="async"
+           alt="the stone courses — architectural render">
+      <div class="plate"><div class="dn" lang="sa">पश्चिम</div>
+        <div class="cap">WEST — the stone courses, hand-dressed · render crop</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom3" src="{{ root }}assets/img/{{ hero.fallback }}" loading="lazy" decoding="async"
+           alt="the north face — architectural render">
+      <div class="plate"><div class="dn" lang="sa">उत्तर</div>
+        <div class="cap">NORTH — where the nālī lets the abhiṣeka waters out · render crop</div></div>
+    </div>
+    <div class="stop garbha">
+      <img class="mark" src="{{ root }}assets/icons/rtam-anahata-garbhagriha.svg" alt="" loading="lazy">
+      <div class="dn" lang="sa">गर्भगृह</div>
+      <div class="cap">The walk ends where He sits. A photograph will stand here after
+        prāṇa-pratiṣṭhā — until then, the heart-lotus holds the place.</div>
+    </div>
+  </div>
+
+  <svg class="compass" viewBox="0 0 100 100" aria-hidden="true">
+    <circle class="cdisc" cx="50" cy="50" r="46"/>
+    <circle class="cring" cx="50" cy="50" r="33"/>
+    <g class="clbl" text-anchor="middle" dominant-baseline="middle">
+      <text x="89" y="51">E</text><text x="50" y="90">S</text>
+      <text x="11" y="51">W</text><text x="50" y="12">N</text>
+    </g>
+    <circle class="chub" cx="50" cy="50" r="2.6"/>
+    <circle class="cpos" id="pos" cx="83" cy="50" r="5.2"/>
+  </svg>
+
+  <button class="arrow l" id="back" type="button" aria-label="a step back">‹</button>
+  <button class="arrow r" id="fwd" type="button" aria-label="a step onward — clockwise">›</button>
+</div>
+<p class="k center" style="padding:20px 24px 0">RENDER CROPS FOR LAYOUT — SITE PHOTOGRAPHS REPLACE THESE AS NIRMĀṆA PROCEEDS · ON A PHONE, THE WALK IS A SWIPE</p>
+
+{# nirmāṇa — the ledger of the rising #}
+<section class="reading">
+  <hr class="thresh" style="max-width:520px; margin:0 auto 56px">
+  <div class="center">
+    <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="hi">निर्माण</div>
+    <div class="bhashya">STONE BY STONE</div>
+    <p class="plain center">The nirmāṇa continues — {{ site.nirmana.stones_set }} dressed
+       stones set. Each one can carry a name: śilā-dāna keeps the ledger.</p>
+    <p class="center" style="margin-top:26px"><a class="thread" href="{{ root }}seva/">शिलादान — offer a stone →</a></p>
+  </div>
+</section>
+
+{# follow the rising #}
+<section class="reading" style="padding-top:0">
+  <div class="k center">FOLLOW THE RISING</div>
+  <div class="cols3" style="margin-top:34px; max-width:880px; margin-left:auto; margin-right:auto">
+    {% for s in site.social[:3] %}
+    <div class="stone center">
+      <div class="bhashya" style="font-size:12px; margin-top:0">{{ s.name | upper }}</div>
+      <p class="plain" style="font-size:13px; margin-top:10px">{{ s.what }}</p>
+      <p style="margin-top:12px"><a class="thread" href="{{ s.url if s.url else '#' }}">{{ s.handle }}</a></p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# the murti primer — words only; the drawing waits in the sanctum #}
+<section class="chamber" style="min-height:52vh">
+  <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="sa">गर्भगृह में</div>
+  <div class="bhashya">WHAT THE SANCTUM WILL HOLD</div>
+  <p class="plain">The <strong>Shivling</strong> of Rtambhareshvara, standing on its
+     <strong>Jaladhari</strong> — the basin that gathers the abhiṣeka waters and lets them
+     out north through the nālī. The actual thing this whole site walks toward.
+     Its one mark carries three readings; they open past this door.</p>
 </section>
 
 {{ door_garbha(root + 'darshana/', 'गर्भगृह', 'GO BEFORE HIM', 'THE INNERMOST CHAMBER — DARK, SMALL, STILL') }}
 
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ root }}assets/walk.js"></script>
+<script>rtamWalk();</script>
 {% endblock %}

@@ -35,6 +35,8 @@
   --fx-gold-halo:     rgba(200,161,90,.55);  /* flame hover glow */
   --fx-gold-veil:     rgba(200,161,90,.33);  /* threshold trail-off */
   --fx-shadow:        rgba(0,0,0,.5);        /* mahakala at half — card lift on L3 */
+  --fx-plate:         rgba(20,20,20,.94);    /* caption plate over walk imagery */
+  --fx-scrim:         rgba(20,20,20,.85);    /* compass disc, walk arrows */
 }
 
 /* the layers: depth = sanctity = darkness = simplicity.
@@ -243,6 +245,45 @@ footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:ce
 .marks3 img { width:64px; height:64px; }
 .udate { font-family:Cinzel,serif; font-size:12px; letter-spacing:.18em; color:var(--accent); }
 
+/* ═══ the pradakshina walk (a mahakala band inside the layer-2 page) ═══ */
+.walkband { background:var(--ground); position:relative; }
+.walk { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+        scrollbar-width:none; }
+.walk::-webkit-scrollbar { display:none; }
+.stop { flex:0 0 100%; scroll-snap-align:center; height:76vh; position:relative; overflow:hidden; }
+.stop > img { width:100%; height:100%; object-fit:cover; display:block; }
+.stop .zoom  { transform:scale(1.55); transform-origin:50% 12%; }
+.stop .zoom2 { transform:scale(1.75); transform-origin:22% 62%; }
+.stop .zoom3 { transform:scale(1.75); transform-origin:80% 55%; }
+.plate { position:absolute; left:0; right:0; bottom:0; padding:70px 54px 26px;
+         background:linear-gradient(transparent, var(--fx-plate) 78%); }
+.plate .dn { font-family:Tiro,serif; font-size:24px; color:var(--gold); }
+.plate .cap { font-size:13px; letter-spacing:.06em; color:var(--ink); margin-top:6px; }
+.stop.garbha { display:flex; flex-direction:column; align-items:center; justify-content:center;
+               text-align:center; padding:24px; }
+.stop.garbha img.mark { width:170px; height:170px; object-fit:contain; }
+.stop.garbha .dn { font-family:Tiro,serif; font-size:28px; color:var(--gold); margin-top:28px; }
+.stop.garbha .cap { font-size:13px; line-height:1.8; color:var(--mut); margin-top:12px;
+                    max-width:40ch; }
+
+.compass { position:absolute; top:26px; right:34px; width:118px; height:118px;
+           pointer-events:none; }
+.compass .cdisc { fill:var(--fx-scrim); }
+.compass .cring { fill:none; stroke:var(--ink); stroke-width:1.6; }
+.compass .clbl { fill:var(--ink); font-family:Inter,sans-serif; font-weight:600;
+                 font-size:10.5px; }
+.compass .chub, .compass .cpos { fill:var(--gold); }
+
+.arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:52px;
+         height:52px; border-radius:50%; border:1px solid var(--hair);
+         background:var(--fx-scrim); color:var(--ink); font-size:20px; cursor:pointer; }
+.arrow:hover, .arrow:focus-visible { border-color:var(--gold); color:var(--gold); }
+.arrow.l { left:22px; } .arrow.r { right:22px; }
+@media (max-width:880px) {
+  .plate { padding:60px 24px 20px; }
+  .compass { width:92px; height:92px; top:18px; right:18px; }
+}
+
 /* the footer remembers the plan-view: the sitemap is the yantra */
 .planview { max-width:560px; margin:56px auto 0; text-align:center; }
 .planview .pv-mid { display:flex; align-items:center; justify-content:center;
@@ -278,6 +319,7 @@ footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:ce
 /* ═══ honesty with visitors who ask for stillness ═══ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior:auto; }
+  .walk { scroll-behavior:auto; }
   .gatemark.moving img { transition:none; }
   .veil::after { display:none; }
   .thresh, .thresh.lit { background-size:100% 100%; transition:none; }
