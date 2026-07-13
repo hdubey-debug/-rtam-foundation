@@ -1,0 +1,98 @@
+{% extends "base.html.j2" %}
+{% block body %}
+<style>
+  .strip { padding:64px 24px; text-align:center; background:var(--ground); color:var(--ink); }
+  .strip .row { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:30px; }
+  .chip { width:120px; padding:12px 0 10px; border:1px solid var(--hair); background:var(--panel);
+          font-size:10.5px; letter-spacing:.14em; color:var(--mut); }
+  .chip i { display:block; height:34px; margin:0 10px 8px; font-style:normal; }
+  .chip.c-ink i    { background:var(--ink); }
+  .chip.c-mut i    { background:var(--mut); }
+  .chip.c-accent i { background:var(--accent); }
+  .chip.c-gold i   { background:var(--gold); }
+  .chip.c-ground i { background:var(--ground); border:1px solid var(--hair); }
+  .demo { margin-top:34px; display:flex; gap:22px; justify-content:center; align-items:center;
+          flex-wrap:wrap; }
+  .lawlist { max-width:64ch; margin:26px auto 0; text-align:left; font-size:13.5px;
+             line-height:2; color:var(--mut); }
+  .lawlist b { color:var(--ink); font-weight:600; }
+</style>
+
+<section class="chamber" style="min-height:56vh">
+  <h1 class="sutra" lang="sa">व्यवस्था</h1>
+  <div class="bhashya">THE SYSTEM — A SPECIMEN OF THE CONSTITUTION</div>
+  <p class="plain">Depth = sanctity = darkness = simplicity. Every component derives from its
+     layer. This page renders the law so drift has nowhere to hide; the written law is
+     <code>CONSTITUTION.md</code>, the gates are <code>verify_site.py</code>.</p>
+</section>
+
+{% for L in [0, 1, 3] %}
+<section class="strip layer-{{ L }}">
+  <div class="k">LAYER {{ L }} · {{ ['क्षेत्र THE LAND — CHANDRA', 'सभा मंडप THE HALLS · प्रदक्षिणा THE WALK — BHASMA', '', 'गर्भगृह THE SANCTUM — MAHAKALA'][L] }}</div>
+  <div class="row">
+    <div class="chip c-ground"><i></i>ground</div>
+    <div class="chip c-ink"><i></i>ink</div>
+    <div class="chip c-mut"><i></i>muted</div>
+    <div class="chip c-accent"><i></i>accent</div>
+    <div class="chip c-gold"><i></i>gold</div>
+  </div>
+  <div class="demo">
+    <span class="sutra" style="font-size:30px" lang="sa">ऋतम्भरेश्वर</span>
+    <span class="bhashya" style="margin:0">THE COUPLET</span>
+  </div>
+  <div class="demo">
+    <a class="flame" href="#specimen-verbs">FLAME KINDLES</a>
+    <a class="thread" href="#specimen-verbs">thread draws →</a>
+    <a class="offerbtn" href="#specimen-verbs"><span class="dn" lang="hi">सेवा</span> · OFFER</a>
+  </div>
+  <div class="demo">
+    <span class="foil" style="font-family:Cinzel,serif; font-size:24px; letter-spacing:.2em">FOIL GOLD</span>
+    <span class="k">— decorative sheen over a readable base; plain under reduced-motion</span>
+  </div>
+</section>
+{% endfor %}
+
+<section class="reading" id="specimen-verbs">
+  <div class="k" style="text-align:center">THE FOUR VERBS — NOTHING ELSE MOVES</div>
+  <div class="cols3" style="margin-top:34px">
+    <div class="stone">
+      <div class="sutra" style="font-size:22px" lang="sa">दीप</div>
+      <div class="bhashya" style="font-size:11px">1 · FLAME KINDLES</div>
+      <p class="plain" style="font-size:13px; margin-top:12px">The one loud element per view.
+         A halo gathers on hover; nothing else glows.</p>
+    </div>
+    <div class="stone">
+      <div class="sutra" style="font-size:22px" lang="sa">शिला</div>
+      <div class="bhashya" style="font-size:11px">2 · STONE SETTLES</div>
+      <p class="plain" style="font-size:13px; margin-top:12px">Cards settle one pixel downward.
+         Stones never float, never lift.</p>
+    </div>
+    <div class="stone">
+      <div class="sutra" style="font-size:22px" lang="sa">सूत्र</div>
+      <div class="bhashya" style="font-size:11px">3 · THREAD DRAWS</div>
+      <p class="plain" style="font-size:13px; margin-top:12px">Links underline by drawing a thread,
+         left to right. <a class="thread" href="#specimen-verbs">Like this one.</a></p>
+    </div>
+  </div>
+  <figure class="veil" style="max-width:520px; margin:28px auto 0">
+    <div style="background:var(--panel); border:1px solid var(--hair); padding:40px; text-align:center">
+      <span class="k">4 · VEIL PARTS — an image is granted once, on arrival. Never the LCP hero.</span>
+    </div>
+  </figure>
+  <hr class="thresh" style="max-width:520px; margin:28px auto 0">
+  <p class="k" style="text-align:center; margin-top:14px">THE THRESHOLD — the flame passed along a hairline, once</p>
+</section>
+
+<section class="reading" style="padding-top:0">
+  <div class="k" style="text-align:center">THE LAW, SHORT FORM</div>
+  <div class="lawlist">
+    <b>Faces:</b> Tiro (Devanagari) · Cinzel (English display caps) · Inter (body). Nothing else.<br>
+    <b>Color:</b> literals live only on token lines in system.css — palette canon + effect registry. Everywhere else, var().<br>
+    <b>Accent law:</b> essential text — land: tamra · halls/walk: ink · sanctum: gold on mahakala. Gold is decorative-only outside mahakala.<br>
+    <b>Language:</b> lang="sa" on Sanskrit, lang="hi" on Hindi — by language, not script.<br>
+    <b>Motion:</b> one grammar, contraction toward Him; budget increases with depth; the land is stillest. One dominant action per view.<br>
+    <b>Depth:</b> the gauge morphs once per crossing — chakra → anāhata → bindu. The sanctum has no footer and no OFFER.
+  </div>
+</section>
+
+{% endblock %}

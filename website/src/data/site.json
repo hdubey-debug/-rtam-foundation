@@ -1,0 +1,36 @@
+{
+  "name_en": "ṚTAM FOUNDATION",
+  "name_dn": "ऋतम् प्रतिष्ठान",
+  "mandir_dn": "ऋतम्भरेश्वर मंदिर",
+  "mandir_en": "RTAMBHARESHVARA MANDIR",
+  "tagline_en": "A MANDIR TO THE LORD WHO BEARS THE COSMIC ORDER",
+  "domain": "rtamfoundation.org",
+  "email": "info@rtamfoundation.org",
+  "place": {
+    "city_en": "Jabalpur",
+    "city_dn": "जबलपुर",
+    "state_en": "Madhya Pradesh",
+    "lat": 23.1815,
+    "lon": 79.9864,
+    "tz": "Asia/Kolkata",
+    "address": "[site address —]",
+    "map_url": ""
+  },
+  "nav": [
+    { "dn": "मंदिर",  "en": "MANDIR",  "path": "mandir/" },
+    { "dn": "उत्सव",  "en": "UTSAVA",  "path": "utsava/" },
+    { "dn": "सेवा",   "en": "SEVA",    "path": "seva/" },
+    { "dn": "दर्शन",  "en": "DARSHAN", "path": "darshana/", "bindu": true }
+  ],
+  "offer": { "path": "seva/#offer" },
+  "donation": { "provider": "[donation provider —]", "url": "" },
+  "social": [
+    { "name": "YouTube",   "what": "construction diaries", "handle": "[handle —]", "url": "" },
+    { "name": "Instagram", "what": "the carvings",         "handle": "[handle —]", "url": "" },
+    { "name": "X",         "what": "announcements",        "handle": "[handle —]", "url": "" },
+    { "name": "Facebook",  "what": "the community",        "handle": "[handle —]", "url": "" }
+  ],
+  "legal": "[legal footer text —]",
+  "opening": "[expected opening —]",
+  "nirmana": { "stones_set": "[stone count —]" }
+}

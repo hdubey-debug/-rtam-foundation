@@ -1,0 +1,14 @@
+{% extends "base.html.j2" %}
+{% from "macros.html.j2" import door_garbha %}
+{% block body %}
+
+<section class="chamber">
+  <h1 class="sutra" lang="sa">प्रदक्षिणा</h1>
+  <div class="bhashya">THE WALK — CLOCKWISE, AROUND THE RISING MANDIR</div>
+  <p class="plain">[The walk is being laid — S3: east, south, west, north, the threshold;
+     the nirmāṇa ledger; follow the rising.]</p>
+</section>
+
+{{ door_garbha(root + 'darshana/', 'गर्भगृह', 'GO BEFORE HIM', 'THE INNERMOST CHAMBER — DARK, SMALL, STILL') }}
+
+{% endblock %}

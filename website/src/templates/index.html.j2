@@ -1,0 +1,39 @@
+{% extends "base.html.j2" %}
+{% from "macros.html.j2" import door_hall %}
+{% block body %}
+
+<section class="chamber">
+  <h1 class="sutra foil" lang="sa">ऋतम्भरेश्वर मंदिर</h1>
+  <div class="bhashya">{{ site.tagline_en }}</div>
+  <p class="plain">Rising in {{ site.place.city_en }}, {{ site.place.state_en }} — a temple whose
+     every measure keeps the order it is named for. This is the land it rises from: the field,
+     the festivals, the sevā, and the way in.</p>
+  <p style="margin-top:38px"><a class="flame" href="{{ root }}mandir/"><span class="dn" lang="hi">मंदिर में प्रवेश</span> · ENTER</a></p>
+</section>
+
+<section class="reading" style="padding-top:0">
+  <figure class="hero-fig">
+    <picture>
+      <source type="image/webp"
+              srcset="{% for f, wd in hero.webp %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+              sizes="(max-width:980px) 100vw, 980px">
+      <img src="{{ root }}assets/img/{{ hero.fallback }}"
+           srcset="{% for f, wd in hero.jpg %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+           sizes="(max-width:980px) 100vw, 980px"
+           width="{{ hero.w }}" height="{{ hero.h }}" fetchpriority="high"
+           alt="The Rtambhareshvara Mandir on its land at Jabalpur — architectural render">
+    </picture>
+    <figcaption class="k">THE MANDIR, RISING — JABALPUR · ARCHITECTURAL RENDER; PHOTOGRAPHS AS NIRMĀṆA PROCEEDS</figcaption>
+  </figure>
+</section>
+
+<section class="chamber" style="min-height:50vh">
+  <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="hi">निर्माणाधीन</div>
+  <div class="bhashya">UNDER CONSTRUCTION — NOT YET OPEN {{ site.opening }}</div>
+  <p class="plain">{{ site.name_en }} is the organization raising the mandir.
+     [The land page grows here — S2: this season, the three readings, sevā, reaching the kṣetra.]</p>
+</section>
+
+{{ door_hall(root + 'mandir/', 'मंदिर', 'THE WALK — THE MANDIR RISING', 'THE GROUND DARKENS AS YOU GO IN') }}
+
+{% endblock %}

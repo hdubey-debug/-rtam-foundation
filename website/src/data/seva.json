@@ -1,0 +1,21 @@
+{
+  "sankalpa_dn": "श्रद्धया देयम्",
+  "sankalpa_en": "GIVE WITH FAITH — TAITTIRĪYA UPANIṢAD",
+  "stones": [
+    {
+      "dn": "अन्नदान", "en": "ANNADĀNA",
+      "what": "A day's prasāda kitchen in your name.",
+      "amount": "[₹ —]", "cadence": "monthly or once"
+    },
+    {
+      "dn": "शिलादान", "en": "ŚILĀ-DĀNA",
+      "what": "One dressed stone of the rising mandir, carved and set.",
+      "amount": "[₹ —]", "cadence": "the ledger keeps your name"
+    },
+    {
+      "dn": "नित्य पूजा", "en": "NITYA-PŪJĀ",
+      "what": "The daily worship, endowed — a dīpa that does not go out.",
+      "amount": "[₹ —]", "cadence": "yearly"
+    }
+  ]
+}

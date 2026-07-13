@@ -1,0 +1,19 @@
+{
+  "mode": "draft",
+  "pages": [
+    "darshana/index.html",
+    "index.html",
+    "mandir/index.html",
+    "seva/index.html",
+    "system.html",
+    "utsava/index.html"
+  ],
+  "placeholders": 19,
+  "fonts": {
+    "tiro-400.woff2": 119768,
+    "cinzel-500.woff2": 10160,
+    "inter-400.woff2": 14276,
+    "inter-600.woff2": 14672
+  },
+  "image_bytes": 648816
+}

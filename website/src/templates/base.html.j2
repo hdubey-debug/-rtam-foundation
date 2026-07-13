@@ -1,0 +1,75 @@
+{% from "macros.html.j2" import way, offerbtn %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ desc }}">
+<meta name="theme-color" content="{{ theme }}">
+<link rel="icon" href="{{ root }}assets/icons/favicon.svg" type="image/svg+xml">
+{% for f in preload_fonts %}<link rel="preload" href="{{ root }}assets/fonts/{{ f }}" as="font" type="font/woff2" crossorigin>
+{% endfor %}<link rel="stylesheet" href="{{ root }}assets/system.css">
+</head>
+<body data-layer="{{ layer }}">
+<a class="skip" href="#main">skip to content</a>
+
+<header class="gate">
+  <span class="gatemark" id="gm" aria-hidden="true">
+    <img data-d="0" src="{{ root }}assets/icons/{{ icons[0] }}" alt="" width="38" height="38">
+    <img data-d="1" src="{{ root }}assets/icons/{{ icons[1] }}" alt="" width="38" height="38">
+    <img data-d="3" src="{{ root }}assets/icons/{{ icons[2] }}" alt="" width="38" height="38">
+  </span>
+  <a class="brand" href="{{ root if root else './' }}">ṚTAM FOUNDATION</a>
+  {% if layer == 3 %}
+  <span class="where keep"><span class="dn" lang="sa">गर्भगृह</span></span>
+  {% else %}
+  <nav class="ways" aria-label="the doors">
+    {% for w in site.nav %}{{ way(w, root, page_path) }}
+    {% endfor %}
+  </nav>
+  {{ offerbtn(site, root) }}
+  {% endif %}
+  <button class="menubtn" type="button" aria-expanded="false" aria-controls="menu">MENU</button>
+</header>
+
+<nav class="menu" id="menu" aria-label="the doors">
+  <button class="menubtn" type="button" aria-expanded="false" aria-controls="menu">CLOSE</button>
+  {% for w in site.nav %}{{ way(w, root, page_path) }}
+  {% endfor %}
+  {{ offerbtn(site, root) }}
+</nav>
+
+<main id="main">
+{% block body %}{% endblock %}
+</main>
+
+{% if layer == 0 %}
+<footer class="street">
+  <div class="cols3">
+    <div>
+      <div class="fb">ṚTAM FOUNDATION</div>
+      <p><span lang="hi">{{ site.name_dn }} · {{ site.mandir_dn }}</span><br>
+         {{ site.place.city_en }}, {{ site.place.state_en }} · {{ site.place.address }}</p>
+    </div>
+    <div>
+      <div class="fb" style="font-size:12px">WRITE</div>
+      <p><a class="thread" href="mailto:{{ site.email }}">{{ site.email }}</a><br>
+         {{ site.domain }}</p>
+    </div>
+    <div>
+      <div class="fb" style="font-size:12px">FOLLOW THE RISING</div>
+      <p>{% for s in site.social %}<a class="thread" href="{{ s.url if s.url else '#' }}">{{ s.name }}</a> {{ s.handle }}{% if not loop.last %}<br>{% endif %}{% endfor %}</p>
+    </div>
+  </div>
+  <p class="legalline"><span lang="hi">{{ site.name_dn }}</span> · {{ site.legal }}</p>
+</footer>
+{% elif layer != 3 %}
+<footer class="hall"><span lang="hi">{{ site.name_dn }}</span> ·
+  <a class="thread" href="mailto:{{ site.email }}">{{ site.email }}</a> ·
+  <a class="thread" href="{{ root }}"><span lang="hi">← क्षेत्र</span> · back to the land</a></footer>
+{% endif %}
+
+<script src="{{ root }}assets/rtam.js"></script>
+<script>rtamDepth({{ layer }});</script>
+</body>
+</html>

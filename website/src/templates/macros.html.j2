@@ -1,0 +1,26 @@
+{# the door: you can see the next chamber's ground through it #}
+{% macro door_hall(href, dn, en, hint) -%}
+<a class="door door-hall" href="{{ href }}">
+  <div class="dn" lang="hi">{{ dn }}</div>
+  <div class="en">{{ en }}</div>
+  <div class="hint">{{ hint }}</div>
+</a>
+{%- endmacro %}
+
+{% macro door_garbha(href, dn, en, hint) -%}
+<a class="door door-garbha" href="{{ href }}">
+  <div class="dot" aria-hidden="true"></div>
+  <div class="dn" lang="sa">{{ dn }}</div>
+  <div class="en">{{ en }}</div>
+  <div class="hint">{{ hint }}</div>
+</a>
+{%- endmacro %}
+
+{# a nav couplet — Devanagari-led; दर्शन carries the drawn bindu dot #}
+{% macro way(w, root, page_path) -%}
+<a class="way" {% if w.path == page_path %}aria-current="page" {% endif %}href="{{ root }}{{ w.path }}"><span class="dn" lang="hi">{{ w.dn }}</span><span class="en">{{ w.en }}</span>{% if w.bindu %}<span class="bdot" aria-hidden="true"></span>{% endif %}</a>
+{%- endmacro %}
+
+{% macro offerbtn(site, root) -%}
+<a class="offerbtn" href="{{ root }}{{ site.offer.path }}"><span class="dn" lang="hi">सेवा</span> · OFFER</a>
+{%- endmacro %}

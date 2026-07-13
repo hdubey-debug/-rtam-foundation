@@ -1,0 +1,262 @@
+/* ṚTAM · system.css — the structural constitution ------------------------------
+   One rule: every component's look derives from its LAYER (depth in the temple).
+   Layer 0 the land (chandra) · 1 the halls (bhasma) · 2 the walk (bhasma)
+   · 3 garbhagriha (mahakala).
+   Four verbs only: flame kindles · stone settles · thread draws · veil parts.
+   LAW: color literals may exist ONLY inside the TOKENS section below, one per
+   custom-property line. Everywhere else: var(). verify_site.py gates this. */
+
+@font-face { font-family:'Tiro';   font-weight:400; font-display:swap;
+             src:url('fonts/tiro-400.woff2') format('woff2'); }
+@font-face { font-family:'Cinzel'; font-weight:500; font-display:swap;
+             src:url('fonts/cinzel-500.woff2') format('woff2'); }
+@font-face { font-family:'Inter';  font-weight:400; font-display:swap;
+             src:url('fonts/inter-400.woff2') format('woff2'); }
+@font-face { font-family:'Inter';  font-weight:600; font-display:swap;
+             src:url('fonts/inter-600.woff2') format('woff2'); }
+
+/* ═══ TOKENS — the only lines in the shipped site allowed to carry a color ═══ */
+
+:root {
+  /* palette canon (brand/palette/colors.json) */
+  --mahakala:     #141414;   /* the linga dark */
+  --gold-dipa:    #C8A15A;   /* dīpa gold — display on mahakala only */
+  --bhasma:       #C9C2B6;   /* vibhuti ash, light */
+  --bhasma-deep:  #8F887C;   /* vibhuti ash, deep */
+  --tamra:        #7A5423;   /* copper — the accent that reads on light ground */
+  --chandra:      #EDEBE6;   /* moon-paper */
+  --ink-charcoal: #1A1A1A;   /* reading ink */
+
+  /* effect registry — derived states, named beside the canon, never free-floating.
+     foil = the print spec's hot-stamp gold: specular states of dīpa gold ± light */
+  --fx-foil-deep:     #8F6B33;   /* dīpa gold, shadowed  (= layer-1 gold) */
+  --fx-foil-hi:       #F0DFB0;   /* dīpa gold, catching  (dark ground only) */
+  --fx-foil-day-edge: #6A4A1F;   /* tamra, shadowed      (light-ground ramp) */
+  --fx-gold-halo:     rgba(200,161,90,.55);  /* flame hover glow */
+  --fx-gold-veil:     rgba(200,161,90,.33);  /* threshold trail-off */
+  --fx-shadow:        rgba(0,0,0,.5);        /* mahakala at half — card lift on L3 */
+}
+
+/* the layers: depth = sanctity = darkness = simplicity.
+   .layer-N mirrors body[data-layer=N] so the specimen can show every layer. */
+body[data-layer="0"], .layer-0 {
+  --ground:#EDEBE6; --panel:#F6F4F0; --ink:#1A1A1A; --mut:#6D675D;
+  --accent:#7A5423; --hair:#D8D3C8; --gold:#B08030;
+  --flame-bg:#7A5423; --flame-ink:#EDEBE6;
+}
+body[data-layer="1"], body[data-layer="2"], .layer-1, .layer-2 {
+  --ground:#C9C2B6; --panel:#D2CCC0; --ink:#1A1A1A; --mut:#555047;
+  --accent:#1A1A1A; --hair:#A9A296; --gold:#8F6B33;
+  --flame-bg:#1A1A1A; --flame-ink:#C9C2B6;
+}
+body[data-layer="3"], .layer-3 {
+  --ground:#141414; --panel:#181715; --ink:#C9C2B6; --mut:#8F887C;
+  --accent:#C8A15A; --hair:#2A2724; --gold:#C8A15A;
+  --flame-bg:#C8A15A; --flame-ink:#1A1A1A;
+}
+
+/* the foil ramp per ground: on light ground the catch never outshines the ground */
+body[data-layer="0"], body[data-layer="1"], body[data-layer="2"],
+.layer-0, .layer-1, .layer-2 {
+  --foil-ramp:linear-gradient(115deg, var(--fx-foil-day-edge) 0%, var(--tamra) 40%,
+              var(--gold-dipa) 50%, var(--tamra) 60%, var(--fx-foil-day-edge) 100%);
+  --foil-still:var(--accent);
+}
+body[data-layer="3"], .layer-3 {
+  --foil-ramp:linear-gradient(115deg, var(--fx-foil-deep) 0%, var(--gold-dipa) 40%,
+              var(--fx-foil-hi) 50%, var(--gold-dipa) 60%, var(--fx-foil-deep) 100%);
+  --foil-still:var(--gold);
+}
+
+/* ═══ ground rules ═══ */
+
+* { box-sizing:border-box; margin:0; }
+html { scroll-behavior:smooth; }
+body { font-family:Inter,sans-serif; background:var(--ground); color:var(--ink);
+       -webkit-text-size-adjust:100%; }
+img { max-width:100%; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+.skip { position:absolute; left:-9999px; top:0; z-index:99; background:var(--flame-bg);
+        color:var(--flame-ink); padding:12px 20px; font-size:13px; text-decoration:none; }
+.skip:focus-visible { left:0; }
+
+/* ═══ the gate (header): the mark is a depth gauge ═══ */
+
+.gate { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:24px;
+        padding:16px 48px; background:color-mix(in srgb, var(--ground) 92%, transparent);
+        backdrop-filter:blur(6px); border-bottom:1px solid var(--hair); }
+@supports not (background:color-mix(in srgb, red 50%, blue)) {
+  .gate { background:var(--ground); }
+}
+.gatemark { position:relative; width:38px; height:38px; flex:none;
+            view-transition-name:rtam-mark; }
+.gatemark img { position:absolute; inset:0; width:38px; height:38px; opacity:0; }
+.gatemark.moving img { transition:opacity .7s ease; }
+.gate .brand { font-family:Cinzel,serif; font-size:14.5px; letter-spacing:.16em;
+               color:var(--ink); text-decoration:none; white-space:nowrap; }
+.gate .where { margin-left:auto; font-size:11px; letter-spacing:.26em; color:var(--mut);
+               display:flex; align-items:center; gap:14px; }
+.gate .where .dn { font-family:Tiro,serif; font-size:15px; letter-spacing:0; color:var(--ink); }
+
+/* nav: Devanagari-led couplets. दर्शन carries a drawn bindu dot — never gilding. */
+.ways { display:flex; align-items:baseline; gap:30px; margin-left:auto; }
+.way { display:inline-flex; align-items:baseline; gap:8px; text-decoration:none; }
+.way .dn { font-family:Tiro,serif; font-size:15.5px; color:var(--ink); }
+.way .en { font-family:Cinzel,serif; font-size:10px; letter-spacing:.22em; color:var(--mut); }
+.way:hover .dn, .way[aria-current] .dn { color:var(--accent); }
+.way[aria-current] { border-bottom:1px solid var(--accent); padding-bottom:3px; }
+.bdot { width:6px; height:6px; border-radius:50%; background:var(--gold); align-self:center; }
+
+.offerbtn { border:1px solid var(--accent); color:var(--accent); font-family:Inter,sans-serif;
+            font-weight:600; font-size:11px; letter-spacing:.14em; padding:9px 16px;
+            text-decoration:none; white-space:nowrap; transition:background .3s, color .3s; }
+.offerbtn:hover, .offerbtn:focus-visible { background:var(--accent); color:var(--ground); }
+.offerbtn .dn { font-family:Tiro,serif; font-weight:400; }
+
+/* the menu: full-screen, layer-colored; the sanctum's only way to the halls */
+.menubtn { display:none; background:none; border:0; cursor:pointer; font-family:Inter,sans-serif;
+           font-weight:600; font-size:11px; letter-spacing:.3em; color:var(--mut); padding:10px 0 10px 10px; }
+.menubtn:hover { color:var(--ink); }
+.menu { position:fixed; inset:0; z-index:40; background:var(--ground); display:none;
+        flex-direction:column; align-items:center; justify-content:center; gap:38px;
+        text-align:center; }
+.menu.open { display:flex; }
+.menu .menubtn { display:block; position:absolute; top:24px; right:28px; padding:10px; }
+.menu .way { flex-direction:column; gap:6px; }
+.menu .way .dn { font-size:30px; }
+.menu .way .en { font-size:11px; }
+.menu .bdot { width:7px; height:7px; }
+.menu .offerbtn { margin-top:8px; padding:13px 26px; font-size:12px; }
+body.menu-open { overflow:hidden; }
+
+/* ═══ rhythm: chambers and readings ═══ */
+
+.chamber { min-height:88vh; display:flex; flex-direction:column; align-items:center;
+           justify-content:center; text-align:center; padding:80px 24px; }
+.reading { max-width:1160px; margin:0 auto; padding:90px 48px; }
+
+/* the couplet: sūtra first, bhāṣya beneath */
+.sutra   { font-family:Tiro,serif; font-weight:400; color:var(--ink);
+           font-size:clamp(34px,5vw,54px); line-height:1.3; }
+.sutra.gilt { color:var(--gold); }
+.bhashya { font-family:Cinzel,serif; font-weight:500; font-size:clamp(12px,1.5vw,15px);
+           letter-spacing:.32em; color:var(--mut); margin-top:16px; }
+.plain   { font-size:14px; line-height:1.9; color:var(--mut); max-width:54ch; margin:26px auto 0; }
+.k       { font-size:11px; letter-spacing:.3em; color:var(--mut); }
+
+/* ═══ verb 1 · flame kindles (one flame per screen) ═══ */
+.flame { position:relative; display:inline-block; background:var(--flame-bg); color:var(--flame-ink);
+         font-weight:600; font-size:13.5px; letter-spacing:.06em; padding:16px 36px;
+         text-decoration:none; cursor:pointer; border:0; }
+.flame .dn { font-family:Tiro,serif; font-weight:400; }
+.flame::after { content:""; position:absolute; inset:-16px; z-index:-1; border-radius:99px;
+                background:radial-gradient(closest-side, var(--fx-gold-halo), transparent 75%);
+                opacity:0; transform:scale(.55); transition:opacity .5s ease, transform .5s ease; }
+.flame:hover::after, .flame:focus-visible::after { opacity:1; transform:scale(1); }
+
+/* ═══ verb 2 · stone settles (never floats, never lifts) ═══ */
+.stone { background:var(--panel); border:1px solid var(--hair); padding:34px 30px;
+         transition:transform .3s ease, border-color .3s ease; }
+.stone:hover { transform:translateY(1px); border-color:var(--mut); }
+
+/* ═══ verb 3 · thread draws ═══ */
+.thread { color:var(--accent); text-decoration:none; padding-bottom:2px;
+          background:linear-gradient(currentColor,currentColor) no-repeat 0 100% / 0% 1px;
+          transition:background-size .4s ease; }
+.thread:hover, .thread:focus-visible { background-size:100% 1px; }
+
+/* ═══ verb 4 · veil parts (an image is granted, once) — NEVER on the LCP hero ═══ */
+.veil { position:relative; overflow:hidden; }
+.veil::after { content:""; position:absolute; inset:0; background:var(--ground);
+               transition:transform 1.2s cubic-bezier(.75,0,.25,1); }
+.veil.parted::after { transform:translateY(-101%); }
+.veil img { width:100%; display:block; }
+
+/* the threshold: a hairline the flame is passed along, once, on arrival */
+.thresh { height:1.5px; border:0; background-color:var(--hair);
+          background-image:linear-gradient(90deg, var(--gold) 78%, var(--fx-gold-veil) 92%, transparent);
+          background-repeat:no-repeat; background-size:0% 100%; }
+.thresh.lit { background-size:100% 100%;
+              transition:background-size 1.1s cubic-bezier(.25,.1,.25,1); }
+
+/* foil: gold that behaves like gold. Sheen over a readable base — the base
+   color paints first; the ramp is granted only where clip-to-text exists. */
+.foil { color:var(--foil-still); }
+@supports ((-webkit-background-clip:text) or (background-clip:text)) {
+  .foil { background-image:var(--foil-ramp); background-size:280% 100%;
+          background-position:calc(var(--foilp, 0) * 100%) 0;
+          -webkit-background-clip:text; background-clip:text; color:transparent; }
+}
+.foil-rule { height:1.5px; border:0; background-color:var(--foil-still);
+             background-image:var(--foil-ramp); background-size:280% 100%;
+             background-position:calc(var(--foilp, 0) * 100%) 0; }
+
+/* ═══ doors: you can see the next chamber's ground through them ═══ */
+.door { display:block; text-decoration:none; text-align:center; padding:74px 48px; }
+.door .dn { font-family:Tiro,serif; font-size:26px; }
+.door .en { font-family:Cinzel,serif; font-size:12px; letter-spacing:.3em; margin-top:10px; }
+.door .hint { font-size:11px; letter-spacing:.2em; margin-top:18px; opacity:.65; }
+.door-hall   { background:var(--bhasma); }
+.door-hall .dn, .door-hall .en, .door-hall .hint { color:var(--ink-charcoal); }
+.door-garbha { background:var(--mahakala); }
+.door-garbha .dn { color:var(--gold-dipa); }
+.door-garbha .en, .door-garbha .hint { color:var(--bhasma-deep); }
+.door-garbha .dot { width:9px; height:9px; border-radius:50%; background:var(--gold-dipa);
+                    margin:0 auto 20px; }
+
+/* ═══ grids on the 12 ═══ */
+.cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+
+/* ═══ footers thin with depth; the sanctum has none ═══ */
+footer.street { border-top:1px solid var(--hair); }
+footer.street .cols3 { max-width:1160px; margin:0 auto; padding:56px 48px 30px; }
+footer.street .fb { font-family:Cinzel,serif; letter-spacing:.14em; font-size:13px; }
+footer.street p { font-size:12.5px; line-height:2; color:var(--mut); margin-top:10px; }
+footer.street .legalline { text-align:center; font-size:11.5px; letter-spacing:.08em;
+                           color:var(--mut); padding:0 24px 34px; }
+footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:center;
+              font-size:12px; letter-spacing:.08em; color:var(--mut); line-height:2.2; }
+
+/* ═══ the point that contains everything (garbhagriha only) ═══ */
+.bindu-end { display:inline-block; width:22px; height:22px; border-radius:50%;
+             background:var(--gold-dipa); position:relative; }
+.bindu-end::after { content:""; position:absolute; inset:-26px; border-radius:50%;
+                    background:radial-gradient(circle, var(--fx-gold-halo), transparent 70%);
+                    animation:dipa 5.5s ease-in-out infinite; }
+@keyframes dipa { 0%,100% { opacity:.45; transform:scale(.94); } 50% { opacity:1; transform:scale(1.06); } }
+
+/* ═══ the hero image: painted immediately, never veiled ═══ */
+.hero-fig { max-width:980px; margin:0 auto; }
+.hero-fig img { width:100%; height:auto; display:block; }
+.hero-fig figcaption { text-align:center; margin-top:18px; }
+
+/* ═══ phones ═══ */
+@media (max-width:880px) {
+  .cols3 { grid-template-columns:1fr; }
+  .gate { padding:14px 20px; gap:16px; }
+  .reading { padding:70px 24px; }
+  .ways, .gate .offerbtn { display:none; }
+  .menubtn { display:block; margin-left:auto; }
+  .gate .where { display:none; }
+  .gate .where.keep { display:flex; margin-left:auto; }
+  .gate .where.keep + .menubtn { margin-left:0; }
+}
+@media (min-width:881px) {
+  body[data-layer="3"] .menubtn { display:block; }
+}
+
+/* ═══ honesty with visitors who ask for stillness ═══ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  .gatemark.moving img { transition:none; }
+  .veil::after { display:none; }
+  .thresh, .thresh.lit { background-size:100% 100%; transition:none; }
+  .bindu-end::after { animation:none; }
+  .flame::after, .stone, .thread, .offerbtn { transition:none; }
+  .foil { background-image:none; color:var(--foil-still); }
+  .foil-rule { background-image:none; }
+}
+
+/* progressive bonus: browsers with cross-document view transitions morph the gauge */
+@view-transition { navigation: auto; }
