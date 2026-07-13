@@ -1,0 +1,123 @@
+/* ṚTAM · the structural constitution (prototype) ------------------------------
+   One rule: every component's look derives from its LAYER (depth in the temple).
+   Layer 0 street (chandra) · 1 hall (bhasma) · 3 garbhagriha (mahakala).
+   Four verbs only: flame kindles · stone settles · thread draws · veil parts. */
+
+@font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+@font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+@font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+@font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+
+* { box-sizing:border-box; margin:0; }
+
+/* ---- the layers: depth = sanctity = darkness = simplicity ---- */
+body[data-layer="0"] { --ground:#EDEBE6; --panel:#f6f4f0; --ink:#1A1A1A; --mut:#6d675d;
+                       --accent:#7A5423; --hair:#d8d3c8; --gold:#B08030;
+                       --flame-bg:#7A5423; --flame-ink:#EDEBE6; }
+body[data-layer="1"] { --ground:#C9C2B6; --panel:#d2ccc0; --ink:#1A1A1A; --mut:#555047;
+                       --accent:#1A1A1A; --hair:#a9a296; --gold:#8F6B33;
+                       --flame-bg:#1A1A1A; --flame-ink:#C9C2B6; }
+body[data-layer="3"] { --ground:#141414; --panel:#181715; --ink:#C9C2B6; --mut:#8F887C;
+                       --accent:#C8A15A; --hair:#2a2724; --gold:#C8A15A;
+                       --flame-bg:#C8A15A; --flame-ink:#1A1A1A; }
+
+body { font-family:Inter,sans-serif; background:var(--ground); color:var(--ink); }
+
+/* ---- the gate (header): the mark is a depth gauge ---- */
+.gate { position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:26px;
+        padding:18px 48px; background:color-mix(in srgb, var(--ground) 92%, transparent);
+        backdrop-filter:blur(6px); border-bottom:1px solid var(--hair); }
+.gatemark { position:relative; width:40px; height:40px; flex:none;
+            view-transition-name:rtam-mark; }
+.gatemark img { position:absolute; inset:0; width:40px; height:40px; opacity:0; }
+.gatemark.moving img { transition:opacity .7s ease, transform .7s ease; }
+.gate .brand { font-family:Cinzel,serif; font-size:15px; letter-spacing:.16em; color:var(--ink);
+               text-decoration:none; }
+.gate .where { margin-left:auto; font-size:11px; letter-spacing:.26em; color:var(--mut);
+               display:flex; align-items:center; gap:14px; }
+.gate .where .dn { font-family:Tiro,serif; font-size:15px; letter-spacing:0; color:var(--ink); }
+
+/* ---- rhythm: chambers and readings ---- */
+.chamber { min-height:88vh; display:flex; flex-direction:column; align-items:center;
+           justify-content:center; text-align:center; padding:80px 24px; }
+.reading { max-width:1160px; margin:0 auto; padding:90px 48px; }
+
+/* ---- the couplet: sutra first, bhashya beneath ---- */
+.sutra   { font-family:Tiro,serif; font-weight:400; color:var(--ink);
+           font-size:clamp(34px,5vw,54px); line-height:1.25; }
+.sutra.gilt { color:var(--gold); }
+.bhashya { font-family:Cinzel,serif; font-weight:500; font-size:clamp(12px,1.5vw,15px);
+           letter-spacing:.32em; color:var(--mut); margin-top:16px; }
+.plain   { font-size:14px; line-height:1.9; color:var(--mut); max-width:54ch; margin:26px auto 0; }
+.k       { font-size:11px; letter-spacing:.3em; color:var(--mut); }
+
+/* ---- verb 1 · flame kindles (one flame per screen) ---- */
+.flame { position:relative; display:inline-block; background:var(--flame-bg); color:var(--flame-ink);
+         font-weight:600; font-size:13.5px; letter-spacing:.06em; padding:16px 36px;
+         text-decoration:none; cursor:pointer; border:0; }
+.flame::after { content:""; position:absolute; inset:-16px; z-index:-1; border-radius:99px;
+                background:radial-gradient(closest-side, rgba(200,161,90,.55), transparent 75%);
+                opacity:0; transform:scale(.55); transition:opacity .5s ease, transform .5s ease; }
+.flame:hover::after, .flame:focus-visible::after { opacity:1; transform:scale(1); }
+
+/* ---- verb 2 · stone settles (never floats, never lifts) ---- */
+.stone { background:var(--panel); border:1px solid var(--hair); padding:34px 30px;
+         transition:transform .3s ease, border-color .3s ease; }
+.stone:hover { transform:translateY(1px); border-color:var(--mut); }
+
+/* ---- verb 3 · thread draws ---- */
+.thread { color:var(--accent); text-decoration:none; padding-bottom:2px;
+          background:linear-gradient(currentColor,currentColor) no-repeat 0 100% / 0% 1px;
+          transition:background-size .4s ease; }
+.thread:hover, .thread:focus-visible { background-size:100% 1px; }
+
+/* ---- verb 4 · veil parts (an image is granted, once) ---- */
+.veil { position:relative; overflow:hidden; }
+.veil::after { content:""; position:absolute; inset:0; background:var(--ground);
+               transition:transform 1.2s cubic-bezier(.75,0,.25,1); }
+.veil.parted::after { transform:translateY(-101%); }
+.veil img { width:100%; display:block; }
+
+/* ---- doors: you can see the next chamber through them ---- */
+.door { display:block; text-decoration:none; text-align:center; padding:74px 48px; }
+.door .dn { font-family:Tiro,serif; font-size:26px; }
+.door .en { font-family:Cinzel,serif; font-size:12px; letter-spacing:.3em; margin-top:10px; }
+.door .hint { font-size:11px; letter-spacing:.2em; margin-top:18px; opacity:.65; }
+.door-hall   { background:#C9C2B6; }
+.door-hall .dn, .door-hall .en, .door-hall .hint { color:#1A1A1A; }
+.door-garbha { background:#141414; }
+.door-garbha .dn { color:#C8A15A; }
+.door-garbha .en, .door-garbha .hint { color:#8F887C; }
+.door-garbha .dot { width:9px; height:9px; border-radius:50%; background:#C8A15A; margin:0 auto 20px; }
+
+/* ---- grids on the 12 ---- */
+.cols3 { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+@media (max-width:880px) { .cols3 { grid-template-columns:1fr; } .gate { padding:16px 22px; }
+                           .reading { padding:70px 24px; } }
+
+/* ---- footers thin with depth; the sanctum has none ---- */
+footer.street { border-top:1px solid var(--hair); }
+footer.street .cols3 { max-width:1160px; margin:0 auto; padding:56px 48px; }
+footer.street .fb { font-family:Cinzel,serif; letter-spacing:.14em; font-size:14px; }
+footer.street p { font-size:12.5px; line-height:2; color:var(--mut); margin-top:10px; }
+footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:center;
+              font-size:12px; letter-spacing:.08em; color:var(--mut); }
+
+/* ---- the point that contains everything (garbhagriha only) ---- */
+.bindu-end { display:inline-block; width:22px; height:22px; border-radius:50%; background:#C8A15A;
+             position:relative; }
+.bindu-end::after { content:""; position:absolute; inset:-26px; border-radius:50%;
+                    background:radial-gradient(circle, rgba(200,161,90,.5), transparent 70%);
+                    animation:dipa 5.5s ease-in-out infinite; }
+@keyframes dipa { 0%,100% { opacity:.45; transform:scale(.94); } 50% { opacity:1; transform:scale(1.06); } }
+
+/* ---- honesty with visitors who ask for stillness ---- */
+@media (prefers-reduced-motion: reduce) {
+  .gatemark.moving img { transition:none; }
+  .veil::after { display:none; }
+  .bindu-end::after { animation:none; }
+  .flame::after, .stone, .thread { transition:none; }
+}
+
+/* progressive bonus: browsers with cross-document view transitions morph the gauge */
+@view-transition { navigation: auto; }

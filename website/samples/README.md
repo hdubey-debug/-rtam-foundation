@@ -8,7 +8,8 @@ nothing is deleted when a direction is retired.
 | `01-concepts/` | W1 — three homepage concepts (A aarti-opening editorial, B sanctity-ladder scenes, C sandhya split hero) | **B chosen**; A and C retired |
 | `02-derivation-film/` | W1.2 — animated murti→mark derivation hero | **Rejected** (kept as archive; lesson: ambient life, not narration) |
 | `03-motion/` | W1.3 — concept B + the approved four-motion language (dīpa breath, petal bloom, nav ladder-contraction, pinned scroll-zoom) | **Approved** motion baseline |
-| `04-behaviors/` | W1.4 — six site-behavior candidates (temple time, year-wheel, foil gold, pradakshina, unstruck sound, small life) | **In review** — founder picks keepers |
+| `04-behaviors/` | W1.4 — six site-behavior candidates (temple time, year-wheel, foil gold, pradakshina, unstruck sound, small life) | **Reviewed** — keepers: foil gold, pradakshina, year-wheel; rest parked |
+| `05-structure/` | W1.5 — the structural prototype: the temple's depth as the site's architecture (street → hall → garbhagṛha), the header mark as depth gauge, the four verbs, sūtra–bhāṣya couplets, `system.css` constitution | **In review** — the proposed W2 foundation |
 
 ## How to view
 
