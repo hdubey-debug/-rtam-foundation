@@ -1,13 +1,21 @@
 {
   "_comment": "sample:true = date NOT pañchāṅga-confirmed. Draft builds show these flagged; --production excludes them (the wheel degrades to its confirmation state). Set sample:false only when the founder confirms the tithi/date.",
   "festivals": [
-    { "dn": "गुरु पूर्णिमा",   "en": "GURU PŪRṆIMĀ",     "date": "2026-07-29", "tithi": "आषाढ़ पूर्णिमा",  "sample": true },
-    { "dn": "श्रावण सोमवार",  "en": "ŚRĀVAṆA SOMVĀR",   "date": "2026-08-03", "tithi": "श्रावण मास",      "sample": true, "note": "first of the series" },
-    { "dn": "नाग पंचमी",      "en": "NĀGA PAÑCAMĪ",     "date": "2026-08-17", "tithi": "श्रावण शुक्ल पंचमी", "sample": true },
-    { "dn": "शरद नवरात्रि",   "en": "ŚARAD NAVARĀTRI",  "date": "2026-10-11", "tithi": "आश्विन शुक्ल प्रतिपदा", "sample": true },
-    { "dn": "दीपावली",        "en": "DĪPĀVALĪ",         "date": "2026-11-08", "tithi": "कार्तिक अमावस्या", "sample": true },
-    { "dn": "कार्तिक पूर्णिमा", "en": "KĀRTIKA PŪRṆIMĀ",  "date": "2026-11-24", "tithi": "कार्तिक पूर्णिमा", "sample": true },
-    { "dn": "मकर संक्रांति",   "en": "MAKARA SAṄKRĀNTI", "date": "2027-01-14", "tithi": "सूर्य मकर प्रवेश",  "sample": true },
-    { "dn": "महाशिवरात्रि",    "en": "MAHĀŚIVARĀTRI",    "date": "2027-03-06", "tithi": "फाल्गुन कृष्ण चतुर्दशी", "sample": true, "featured": true }
+    { "dn": "गुरु पूर्णिमा",   "en": "GURU PŪRṆIMĀ",     "date": "2026-07-29", "tithi": "आषाढ़ पूर्णिमा",  "sample": true,
+      "line": "The full moon of the teachers — satsaṅga and sevā." },
+    { "dn": "श्रावण सोमवार",  "en": "ŚRĀVAṆA SOMVĀR",   "date": "2026-08-03", "tithi": "श्रावण मास",      "sample": true,
+      "line": "The Mondays of Śrāvaṇa — rudrābhiṣeka each week of the month." },
+    { "dn": "नाग पंचमी",      "en": "NĀGA PAÑCAMĪ",     "date": "2026-08-17", "tithi": "श्रावण शुक्ल पंचमी", "sample": true,
+      "line": "The serpents of the Lord honoured at the jaladhari." },
+    { "dn": "शरद नवरात्रि",   "en": "ŚARAD NAVARĀTRI",  "date": "2026-10-11", "tithi": "आश्विन शुक्ल प्रतिपदा", "sample": true,
+      "line": "Nine nights of the Devī — order restored, the tenth day victorious." },
+    { "dn": "दीपावली",        "en": "DĪPĀVALĪ",         "date": "2026-11-08", "tithi": "कार्तिक अमावस्या", "sample": true,
+      "line": "A thousand dīpas on the parikramā — the mandir kept in flame." },
+    { "dn": "कार्तिक पूर्णिमा", "en": "KĀRTIKA PŪRṆIMĀ",  "date": "2026-11-24", "tithi": "कार्तिक पूर्णिमा", "sample": true,
+      "line": "Dev Dīpāvalī — the gods' own festival of lamps closes the season." },
+    { "dn": "मकर संक्रांति",   "en": "MAKARA SAṄKRĀNTI", "date": "2027-01-14", "tithi": "सूर्य मकर प्रवेश",  "sample": true,
+      "line": "The sun turns north — uttarāyaṇa begins at the mandir." },
+    { "dn": "महाशिवरात्रि",    "en": "MAHĀŚIVARĀTRI",    "date": "2027-03-06", "tithi": "फाल्गुन कृष्ण चतुर्दशी", "sample": true, "featured": true,
+      "line": "The great night of Śiva — the mandir's highest utsava, jāgaraṇa till dawn." }
   ]
 }

@@ -1,11 +1,70 @@
 {% extends "base.html.j2" %}
 {% block body %}
 
-<section class="chamber">
+<section class="chamber" style="min-height:46vh">
   <h1 class="sutra" lang="hi">उत्सव</h1>
   <div class="bhashya">THE YEAR KEEPS THE SHAPE OF THE WHEEL</div>
-  <p class="plain">[The wheel is being raised — S5: twelve months around one,
-     utsava days in gold, आज as a flame.]</p>
+  <p class="plain">Twelve months around one — the same geometry as the mark. Gold points are
+     utsava days; the small flame is today. Touch a point, or read down the list.</p>
 </section>
 
+{% if festivals %}
+<div class="ywpage">
+  <div class="wheelbox">
+    <svg id="wheel" viewBox="0 0 760 760" role="img"
+         aria-label="the year as a wheel — twelve months around one center"></svg>
+  </div>
+  <div class="side">
+    {% set first = (festivals | selectattr("featured") | list + festivals) | first %}
+    <div class="ycard" id="ycard">
+      <div class="dn" lang="hi">{{ first.dn }}</div>
+      <div class="en">{{ first.en }}</div>
+      <div class="when"><span class="d">{{ first.display }} · </span><span class="dn" lang="hi">{{ first.tithi }}</span> · AT THE MANDIR</div>
+      <div class="line">{{ first.line }}</div>
+    </div>
+    <div class="ylist">
+      {% for f in festivals %}
+      <button class="yrow" type="button">
+        <span class="d">{{ f.display }}</span>
+        <span class="dn" lang="hi">{{ f.dn }}</span>
+        <span class="en">{{ f.en }}</span>
+      </button>
+      {% endfor %}
+    </div>
+    {% if festivals | selectattr("sample") | list %}
+    <p class="k" style="margin-top:26px">[SAMPLE DATES — PAÑCHĀṄGA CONFIRMATION PENDING]</p>
+    {% endif %}
+  </div>
+</div>
+<script type="application/json" id="festdata">{{ festivals | tojson }}</script>
+{% else %}
+<section class="reading" style="padding-top:0">
+  <div class="wheelbox" style="position:static; max-width:560px; margin:0 auto">
+    <svg id="wheel" viewBox="0 0 760 760" role="img"
+         aria-label="the year as a wheel — twelve months around one center"></svg>
+  </div>
+  <p class="plain center">The year's utsava days will take their places on the wheel upon
+     pañchāṅga confirmation.</p>
+</section>
+<script type="application/json" id="festdata">[]</script>
+{% endif %}
+
+{% set feat = festivals | selectattr("featured") | list | first %}
+<section class="chamber" style="min-height:46vh">
+  <div class="k">THE HIGH NIGHT OF THE YEAR</div>
+  <div class="sutra" style="font-size:clamp(28px,4vw,44px); margin-top:16px" lang="hi">महाशिवरात्रि महोत्सव</div>
+  {% if feat %}
+  <div class="bhashya">{{ feat.display }} · <span lang="hi" style="font-family:Tiro,serif; letter-spacing:0">{{ feat.tithi }}</span>{% if feat.sample %} · [SAMPLE]{% endif %}</div>
+  <p class="plain">{{ feat.line }}</p>
+  {% else %}
+  <div class="bhashya">TITHI UPON PAÑCHĀṄGA CONFIRMATION</div>
+  <p class="plain">The great night of Śiva — the mandir's highest utsava, jāgaraṇa till dawn.</p>
+  {% endif %}
+</section>
+
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ root }}assets/utsava.js"></script>
+<script>rtamUtsava();</script>
 {% endblock %}
