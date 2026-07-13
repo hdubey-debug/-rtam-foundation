@@ -284,6 +284,63 @@ footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:ce
   .compass { width:92px; height:92px; top:18px; right:18px; }
 }
 
+/* ═══ the approach (darshana only): the contraction performed at full size.
+   Default = the static stacked sequence (works with no JS, and IS the
+   reduced-motion experience: chakra, anāhata, bindu, all three captions).
+   JS + motion permitted upgrades it to the pinned scroll stage. ═══ */
+.acap .dn { font-family:Tiro,serif; font-size:24px; color:var(--gold); }
+.acap .en { font-family:Cinzel,serif; font-size:clamp(15px,2vw,22px); letter-spacing:.22em;
+            color:var(--ink); margin-top:10px; }
+.acap .sub { font-size:13px; line-height:1.7; color:var(--mut); margin-top:10px;
+             max-width:44ch; margin-left:auto; margin-right:auto; }
+.approach-static .fig { text-align:center; padding:10vh 24px; }
+.approach-static .fig img { width:min(46vw,280px); height:auto; }
+.approach-static .fig .acap { margin-top:30px; }
+.approach-stage { display:none; }
+.approach.live .approach-static { display:none; }
+.approach.live .approach-stage { display:block; height:300vh; position:relative; }
+.approach-stage .pin { position:sticky; top:0; height:100vh; display:flex; align-items:center;
+                       justify-content:center; overflow:hidden; }
+.approach-stage svg { width:min(72vh,600px); height:min(72vh,600px); }
+.approach-stage .caps { position:absolute; left:0; right:0; bottom:6vh; text-align:center;
+                        pointer-events:none; padding:0 24px; }
+.approach-stage .acap { position:absolute; left:0; right:0; bottom:0; opacity:0; }
+.approach-stage .hint { position:absolute; bottom:3vh; left:0; right:0; text-align:center;
+                        font-size:10.5px; letter-spacing:.34em; color:var(--mut); }
+.apet { fill:var(--ink); stroke:var(--ground); stroke-linejoin:round; }
+.arim { fill:none; stroke:var(--ink); }
+.awin { fill:var(--ground); }
+.aring { fill:none; stroke:var(--ink); }
+.ahub { fill:var(--gold); }
+.gs { stop-color:var(--gold-dipa); }
+
+/* ═══ the murti viewing: one stage, three positions. Default = all three
+   stacked (no JS); .live overlays them and the tabs crossfade. ═══ */
+.murti { max-width:880px; margin:0 auto; text-align:center; padding:0 24px; }
+.murti .frame { position:relative; background:var(--panel); border:1px solid var(--hair); }
+.murti .pos { display:flex; flex-direction:column; align-items:center; justify-content:center;
+              gap:24px; padding:44px 28px; }
+.murti.live .frame { min-height:min(76vh,640px); }
+.murti.live .pos { position:absolute; inset:0; opacity:0; transition:opacity .6s ease;
+                   pointer-events:none; }
+.murti.live .pos.on { opacity:1; pointer-events:auto; }
+.murti .pos img.sheet { height:min(52vh,440px); width:auto; max-width:100%;
+                        border:1px solid var(--hair); }
+.murti .pos img.mark { width:min(40vw,220px); height:auto; }
+.murti .pos .cap { font-size:12px; letter-spacing:.18em; color:var(--mut); max-width:52ch;
+                   line-height:1.9; }
+.postabs { display:flex; gap:12px; justify-content:center; margin-top:24px; flex-wrap:wrap; }
+.postab { background:none; border:1px solid var(--hair); color:var(--mut); cursor:pointer;
+          font-family:Inter,sans-serif; font-size:10.5px; letter-spacing:.2em;
+          padding:12px 18px; transition:border-color .3s; }
+.postab .dn { font-family:Tiro,serif; font-size:16px; letter-spacing:0; color:var(--ink);
+              display:block; margin-bottom:4px; }
+.postab[aria-selected="true"] { border-color:var(--gold); }
+.postab[aria-selected="true"] .dn { color:var(--gold); }
+.pread { max-width:56ch; margin:34px auto 0; }
+.murti.live ~ .preads .pread { display:none; }
+.murti.live ~ .preads .pread.on { display:block; }
+
 /* the footer remembers the plan-view: the sitemap is the yantra */
 .planview { max-width:560px; margin:56px auto 0; text-align:center; }
 .planview .pv-mid { display:flex; align-items:center; justify-content:center;
@@ -325,6 +382,7 @@ footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:ce
   .thresh, .thresh.lit { background-size:100% 100%; transition:none; }
   .bindu-end::after { animation:none; }
   .flame::after, .stone, .thread, .offerbtn { transition:none; }
+  .murti.live .pos, .postab { transition:none; }
   .foil { background-image:none; color:var(--foil-still); }
   .foil-rule { background-image:none; }
 }

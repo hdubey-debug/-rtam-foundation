@@ -8,12 +8,12 @@
     "system.html",
     "utsava/index.html"
   ],
-  "placeholders": 25,
+  "placeholders": 24,
   "fonts": {
-    "tiro-400.woff2": 126680,
+    "tiro-400.woff2": 136616,
     "cinzel-500.woff2": 10264,
-    "inter-400.woff2": 14492,
-    "inter-600.woff2": 14960
+    "inter-400.woff2": 14520,
+    "inter-600.woff2": 15024
   },
   "image_bytes": 648816
 }

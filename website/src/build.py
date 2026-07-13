@@ -192,6 +192,13 @@ def main():
     for name in {*DAY_ICONS, *GARBHA_ICONS, "favicon.svg", "favicon-dark.svg"}:
         shutil.copy2(BRAND / "dist" / "outlined" / "icons" / name, icons_out / name)
 
+    # the sanctum's construction drawing — rung-1 context extended to /darshana/
+    # for THIS file only (codex §7); the reference photograph never ships.
+    geo_out = DIST / "assets" / "geometry"
+    geo_out.mkdir()
+    shutil.copy2(BRAND / "iconography" / "geometry" / "front-elevation.svg",
+                 geo_out / "front-elevation.svg")
+
     img_bytes = write_images(im, DIST / "assets" / "img")
 
     # ---- font subsetting: every shipped string, plus shaping/runtime safety sets.

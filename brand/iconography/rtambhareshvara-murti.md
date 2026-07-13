@@ -138,6 +138,13 @@ of the sanctum, the more consecrated the permitted context**:
 Rule of thumb: **the linga's silhouette never appears where it cannot be
 treated with care.** Abstraction is not dilution — it is protection.
 
+> **Rung-1 extension (W2, founder-approved 2026-07):** the website's sanctum
+> page `/darshana/` is treated as a consecrated context **for the parametric
+> construction drawing only** (`geometry/front-elevation.svg`, presented as
+> "the sanctum, as designed"). The reference photograph remains design
+> intent, never distribution. A real photograph takes that position only
+> after prāṇa-pratiṣṭhā.
+
 ## 8 · What derives from this document
 
 - `geometry/grid.json` — the measured ring-radius table, the 12-column grid,
