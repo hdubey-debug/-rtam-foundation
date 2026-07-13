@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ṚTAM — the derivation (hero prototype)</title>
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { background:#141414; overflow:hidden; font-family:Inter,sans-serif; }
+  .stage { position:relative; width:1200px; height:800px; margin:0 auto; }
+  svg { position:absolute; inset:0; }
+  .icon-final { position:absolute; left:50%; top:352px; transform:translate(-50%,-50%) scale(.6);
+                width:430px; height:430px; opacity:0; }
+  .word-final { position:absolute; left:50%; top:600px; transform:translateX(-50%); height:52px; opacity:0; }
+  .motto-final { position:absolute; left:50%; top:662px; transform:translateX(-50%);
+                 font-family:Tiro,serif; font-size:22px; color:#C8A15A; opacity:0; }
+  .cap { position:absolute; left:0; right:0; top:702px; text-align:center; opacity:0; }
+  .cap .dn { font-family:Tiro,serif; font-size:22px; color:#C8A15A; }
+  .cap .en { font-family:Cinzel,serif; font-size:15px; letter-spacing:.28em; color:#C9C2B6; margin-top:8px; }
+  .cap .sub { font-size:12px; letter-spacing:.06em; color:#8F887C; margin-top:8px; }
+  .brandline { position:absolute; top:34px; left:0; right:0; text-align:center; font-family:Cinzel,serif;
+               font-size:13px; letter-spacing:.34em; color:#8F887C; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="brandline">Ṛ T A M &nbsp;·&nbsp; THE MURTI BECOMES THE MARK</div>
+
+  <svg id="elev" viewBox="0 0 1200 800" fill="none"></svg>
+  <svg id="plan" viewBox="0 0 1200 800" fill="none" style="opacity:0"></svg>
+
+  <img class="icon-final" id="iconF" src="../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg">
+  <img class="word-final" id="wordF" src="../../brand/dist/outlined/logos/rtam-wordmark-garbhagriha.svg">
+  <div class="motto-final" id="mottoF">ऋतस्य पन्थाम्</div>
+
+  <div class="cap" id="cap1"><div class="dn">२४ तत्त्व</div><div class="en">THE FRONT VIEW</div>
+    <div class="sub">two lotus tiers — the twenty-four tattvas of Prakṛti — bear the linga: Puruṣa at the centre</div></div>
+  <div class="cap" id="cap2"><div class="en">THE CAMERA RISES</div>
+    <div class="sub">seen from above, the same murti becomes a wheel</div></div>
+  <div class="cap" id="cap3"><div class="dn">ऋत चक्र</div><div class="en">THE TOP VIEW · OUTSIDE</div>
+    <div class="sub">twelve petals, twelve Ādityas — the order He bears</div></div>
+  <div class="cap" id="cap4"><div class="dn">अनाहत</div><div class="en">THE TOP VIEW · INSIDE</div>
+    <div class="sub">the heart-lotus — the Lord dwelling within you</div></div>
+  <div class="cap" id="cap5" style="top:716px;"><div class="en">ONE MURTI · ONE MARK</div>
+    <div class="sub">the icon is not designed — it is derived</div></div>
+</div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const ASH = "#C9C2B6", DIM = "#8F887C", GOLD = "#C8A15A";
+
+function el(svg, tag, attrs) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  svg.appendChild(e); return e;
+}
+
+/* ---------- FRONT ELEVATION (grid.json elevation ratios, R=300) ---------- */
+const E = document.getElementById("elev");
+const strokesE = [];   // [element, class] in draw order
+function SE(tag, attrs, cls) { const e = el(E, tag, {...attrs, stroke: cls==="guide"?DIM:ASH,
+  "stroke-width": cls==="guide"?1:1.7, "stroke-dasharray": cls==="guide"?"5 7":null}); strokesE.push([e, cls]); return e; }
+
+// construction axis + ground guide
+SE("line", {x1:600, y1:225, x2:600, y2:585}, "guide");
+SE("line", {x1:270, y1:585, x2:930, y2:585}, "guide");
+// podium (basin) — rim height .46R
+SE("path", {d:"M 310 560 L 330 447 L 870 447 L 890 560 Z"});
+// waterline at .88 of rim height
+SE("path", {d:"M 348 470 Q 420 462 480 470 Q 540 478 600 470 Q 660 462 720 470 Q 780 478 852 470"});
+// 12 sun medallions on the podium face
+for (let i=0;i<12;i++) SE("circle", {cx:368+i*42.2, cy:515, r:11});
+// lotus cup — tier 2 then tier 1 (petal-cup profiles above the rim)
+SE("path", {d:"M 462 447 C 470 415 520 398 600 396 C 680 398 730 415 738 447"});
+SE("path", {d:"M 492 447 C 498 424 540 412 600 410 C 660 412 702 424 708 447"});
+// petal tip ticks on the cup
+for (const x of [472,516,562,600,638,684,728]) SE("line", {x1:x, y1:404, x2:x, y2:394});
+// the linga
+SE("path", {d:"M 566 430 L 566 322 A 34 34 0 0 1 634 322 L 634 430"});
+// the falling drop (abhisheka) — gold moment lives here
+const dropLine = SE("line", {x1:600, y1:238, x2:600, y2:268}, "guide");
+const drop = el(E, "path", {d:"M 600 276 C 596 284 592 290 592 296 A 8 8 0 1 0 608 296 C 608 290 604 284 600 276 Z",
+  fill:GOLD, opacity:0});
+
+/* ---------- PLAN VIEW (grid.json plan radii, R=300 @ cx600 cy330) ---------- */
+const P = document.getElementById("plan");
+const cx=600, cy=352, R=285;
+const ringGuides = [], petals = [], meds = [];
+// canonical guide rings: linga .22, jaladhari .32, t1 .48, t2 .62, water .84
+for (const f of [.22,.32,.48,.62,.84]) ringGuides.push(el(P,"circle",{cx,cy,r:f*R,stroke:DIM,
+  "stroke-width":1,"stroke-dasharray":"5 7"}));
+const rim = el(P,"circle",{cx,cy,r:R,stroke:ASH,"stroke-width":1.7});
+// 12 petals — final icon proportions (base .32R, tip .70R)
+function petalD(deg){
+  const a=deg*Math.PI/180, ux=Math.cos(a), uy=Math.sin(a), nx=-uy, ny=ux;
+  const p=(r,w)=>`${(cx+ux*r+nx*w).toFixed(1)} ${(cy+uy*r+ny*w).toFixed(1)}`;
+  const B=.32*R, T=.70*R;
+  return `M ${p(B,-13)} C ${p(B+18,-30)} ${p(B+42,-38)} ${p((B+T)/2,-38)} C ${p(T-32,-30)} ${p(T-10,-10)} ${p(T,0)}`
+       + ` C ${p(T-10,10)} ${p(T-32,30)} ${p((B+T)/2,38)} C ${p(B+42,38)} ${p(B+18,30)} ${p(B,13)}`;
+}
+for (let k=0;k<12;k++) petals.push(el(P,"path",{d:petalD(-90+k*30),stroke:ASH,"stroke-width":1.7}));
+// 12 medallions at .92R + hub at .22R
+for (let k=0;k<12;k++){ const a=(-90+k*30)*Math.PI/180;
+  meds.push(el(P,"circle",{cx:cx+.92*R*Math.cos(a), cy:cy+.92*R*Math.sin(a), r:.045*R, stroke:ASH,"stroke-width":1.7})); }
+const hub = el(P,"circle",{cx,cy,r:.22*R,stroke:ASH,"stroke-width":1.7});
+
+/* ---------- timeline ---------- */
+const drawables = [];
+document.querySelectorAll("path,circle,line").forEach(e=>{
+  if (e.tagName==="circle" && !e.getAttribute("stroke")) return;
+  let len; try { len = e.getTotalLength ? e.getTotalLength() : 0; } catch(_) { len = 0; }
+  if (e.tagName==="circle") len = 2*Math.PI*parseFloat(e.getAttribute("r"));
+  if (e.tagName==="line") { const dx=e.getAttribute("x2")-e.getAttribute("x1"), dy=e.getAttribute("y2")-e.getAttribute("y1");
+    len = Math.hypot(dx,dy); }
+  e.dataset.len = len;
+});
+const ease = t => t<0? 0 : t>1? 1 : t*t*(3-2*t);
+function draw(e, p){ const L=+e.dataset.len||0;
+  e.setAttribute("stroke-dasharray", e.getAttribute("stroke-dasharray") && p>=1 && e.dataset.guide ? e.dataset.guide : L);
+  e.setAttribute("stroke-dashoffset", L*(1-ease(p))); }
+function seg(t,a,b){ return ease((t-a)/(b-a)); }
+const cap = (id,o)=>document.getElementById(id).style.opacity=o;
+
+function setT(t){
+  // scene 1 · 0–4.2 s: elevation draws on
+  strokesE.forEach(([e],i)=>draw(e, seg(t, 0.2+i*0.13, 1.4+i*0.13)));
+  drop.setAttribute("opacity", seg(t,3.0,3.5) * (1-seg(t,5.2,6.0)));
+  cap("cap1", Math.min(seg(t,0.8,1.6), 1-seg(t,4.6,5.2)));
+  // scene 2 · 4.9–6.6 s: the camera rises (elevation flattens, plan unfolds)
+  const rise = seg(t,4.9,6.6);
+  E.style.opacity = 1-rise; E.style.transform = `scale(1,${1-0.94*rise})`;
+  E.style.transformOrigin = "600px 447px";
+  P.style.opacity = rise; P.style.transform = `scale(1,${0.06+0.94*rise})`;
+  P.style.transformOrigin = "600px 352px";
+  cap("cap2", Math.min(seg(t,5.0,5.5), 1-seg(t,6.4,6.9)));
+  // plan strokes draw during/after the rise
+  ringGuides.forEach((e,i)=>draw(e, seg(t,5.4+i*0.12,6.3+i*0.12)));
+  draw(rim, seg(t,5.6,6.6));
+  petals.forEach((e,i)=>draw(e, seg(t,6.0+i*0.07,6.8+i*0.07)));
+  meds.forEach((e,i)=>draw(e, seg(t,6.4+i*0.05,7.0+i*0.05)));
+  draw(hub, seg(t,6.6,7.2));
+  // scene 3 · 7.4–9.4 s: OUTSIDE reading — rim + medallions go gold
+  const g1 = Math.min(seg(t,7.4,8.0), 1-seg(t,9.4,9.9));
+  rim.setAttribute("stroke", g1>0.5?GOLD:ASH); rim.setAttribute("stroke-width", 1.7+1.3*g1);
+  meds.forEach(e=>{ e.setAttribute("stroke", g1>0.5?GOLD:ASH); e.setAttribute("stroke-width", 1.7+1.3*g1); });
+  cap("cap3", g1);
+  // scene 4 · 9.6–11.4 s: INSIDE reading — corolla + hub go gold
+  const g2 = Math.min(seg(t,9.6,10.2), 1-seg(t,11.4,11.9));
+  petals.forEach(e=>{ e.setAttribute("stroke", g2>0.5?GOLD:ASH); e.setAttribute("stroke-width", 1.7+1.3*g2); });
+  hub.setAttribute("stroke", g2>0.5?GOLD:ASH); hub.setAttribute("stroke-width", 1.7+1.3*g2);
+  hub.setAttribute("fill", g2>0.5? "rgba(200,161,90,.35)" : "none");
+  cap("cap4", g2);
+  // scene 5 · 11.8–14 s: the drawing crystallises into the mark
+  const fin = seg(t,11.8,13.0);
+  P.style.opacity = String(Math.min(+P.style.opacity||rise, 1-fin));
+  const ic = document.getElementById("iconF");
+  ic.style.opacity = fin; ic.style.transform = `translate(-50%,-50%) scale(${0.6+0.4*ease(fin)})`;
+  document.getElementById("wordF").style.opacity = seg(t,12.6,13.4);
+  document.getElementById("mottoF").style.opacity = seg(t,13.0,13.8);
+  cap("cap5", seg(t,12.4,13.2));
+}
+
+const params = new URLSearchParams(location.search);
+window.setT = setT;
+if (params.has("t")) { setT(parseFloat(params.get("t"))); }
+else { const t0 = performance.now();
+  (function loop(){ setT(((performance.now()-t0)/1000) % 14.8); requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>
