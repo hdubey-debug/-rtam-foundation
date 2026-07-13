@@ -2,38 +2,120 @@
 {% from "macros.html.j2" import door_hall %}
 {% block body %}
 
-<section class="chamber">
+{# the land, seen first — the LCP image paints immediately; no veil, ever #}
+<figure class="hero-land">
+  <picture>
+    <source type="image/webp"
+            srcset="{% for f, wd in hero.webp %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+            sizes="100vw">
+    <img src="{{ root }}assets/img/{{ hero.fallback }}"
+         srcset="{% for f, wd in hero.jpg %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+         sizes="100vw" width="{{ hero.w }}" height="{{ hero.h }}"
+         fetchpriority="high"
+         alt="The Rtambhareshvara Mandir on its land at Jabalpur — architectural render">
+  </picture>
+  <figcaption class="k">ARCHITECTURAL RENDER — PHOTOGRAPHS AS NIRMĀṆA PROCEEDS</figcaption>
+</figure>
+
+<section class="chamber hero-head">
   <h1 class="sutra foil" lang="sa">ऋतम्भरेश्वर मंदिर</h1>
   <div class="bhashya">{{ site.tagline_en }}</div>
-  <p class="plain">Rising in {{ site.place.city_en }}, {{ site.place.state_en }} — a temple whose
-     every measure keeps the order it is named for. This is the land it rises from: the field,
-     the festivals, the sevā, and the way in.</p>
-  <p style="margin-top:38px"><a class="flame" href="{{ root }}mandir/"><span class="dn" lang="hi">मंदिर में प्रवेश</span> · ENTER</a></p>
+  <p class="k" style="margin-top:26px">RISING IN JABALPUR · MADHYA PRADESH</p>
+  <p style="margin-top:40px"><a class="flame" href="{{ root }}mandir/"><span class="dn" lang="hi">मंदिर में प्रवेश</span> · ENTER</a></p>
 </section>
 
+{# 1 · the kṣetra, and the honesty block #}
 <section class="reading" style="padding-top:0">
-  <figure class="hero-fig">
-    <picture>
-      <source type="image/webp"
-              srcset="{% for f, wd in hero.webp %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
-              sizes="(max-width:980px) 100vw, 980px">
-      <img src="{{ root }}assets/img/{{ hero.fallback }}"
-           srcset="{% for f, wd in hero.jpg %}{{ root }}assets/img/{{ f }} {{ wd }}w{% if not loop.last %}, {% endif %}{% endfor %}"
-           sizes="(max-width:980px) 100vw, 980px"
-           width="{{ hero.w }}" height="{{ hero.h }}" fetchpriority="high"
-           alt="The Rtambhareshvara Mandir on its land at Jabalpur — architectural render">
-    </picture>
-    <figcaption class="k">THE MANDIR, RISING — JABALPUR · ARCHITECTURAL RENDER; PHOTOGRAPHS AS NIRMĀṆA PROCEEDS</figcaption>
-  </figure>
+  <hr class="thresh" style="max-width:520px; margin:0 auto 64px">
+  <div class="center">
+    <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="sa">क्षेत्र</div>
+    <div class="bhashya">THE FIELD IT RISES FROM</div>
+  </div>
+  <p class="plain center">First there is the land — a field held sacred before a single stone
+     was dressed. On it the mandir rises, course by course. And at its heart will stand the
+     garbhagṛha, holding the Shivling and the Jaladhari: the actual thing every page of this
+     site walks toward.</p>
+  <div class="stone center" style="max-width:640px; margin:54px auto 0">
+    <div class="sutra" style="font-size:24px" lang="hi">निर्माणाधीन</div>
+    <div class="bhashya" style="font-size:11px; letter-spacing:.24em">UNDER CONSTRUCTION — NOT YET OPEN · {{ site.opening }}</div>
+    <p class="plain" style="font-size:13px; margin-top:14px">{{ site.name_en }} is the
+       organization raising the mandir. What is built here is shown honestly — renders as
+       renders, dates when confirmed.</p>
+    <p class="k" style="margin-top:18px"><span class="dn" lang="hi" id="dateline" style="font-family:Tiro,serif; font-size:15px; letter-spacing:0"></span></p>
+  </div>
 </section>
 
-<section class="chamber" style="min-height:50vh">
-  <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="hi">निर्माणाधीन</div>
-  <div class="bhashya">UNDER CONSTRUCTION — NOT YET OPEN {{ site.opening }}</div>
-  <p class="plain">{{ site.name_en }} is the organization raising the mandir.
-     [The land page grows here — S2: this season, the three readings, sevā, reaching the kṣetra.]</p>
+{# 2 · this season #}
+<section class="reading" style="padding-top:0">
+  <hr class="thresh" style="max-width:520px; margin:0 auto 56px">
+  <div class="k center">THIS SEASON AT THE KṢETRA</div>
+  {% if festivals %}
+  <ul class="cols3 season" style="margin-top:34px; list-style:none; padding:0">
+    {% for f in festivals %}
+    <li class="stone" data-date="{{ f.date }}">
+      <div class="udate">{{ f.display }}</div>
+      <div class="sutra" style="font-size:22px; margin-top:10px" lang="hi">{{ f.dn }}</div>
+      <div class="bhashya" style="font-size:11px; letter-spacing:.22em">{{ f.en }}</div>
+      <p class="plain" style="font-size:13px; margin-top:10px" lang="hi">{{ f.tithi }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if festivals | selectattr("sample") | list %}
+  <p class="k center" style="margin-top:26px">[SAMPLE DATES — PAÑCHĀṄGA CONFIRMATION PENDING]</p>
+  {% endif %}
+  {% else %}
+  <p class="plain center">The year's utsava dates will appear here upon pañchāṅga
+     confirmation.</p>
+  {% endif %}
+  <p class="center" style="margin-top:30px"><a class="thread" href="{{ root }}utsava/">the whole year keeps the shape of the wheel →</a></p>
+</section>
+
+{# 3 · the three readings, one teaser #}
+<section class="reading" style="padding-top:0">
+  <hr class="thresh" style="max-width:520px; margin:0 auto 56px">
+  <div class="k center">ONE MARK · THREE READINGS</div>
+  <div class="marks3" aria-hidden="true">
+    <img src="{{ root }}assets/icons/rtam-chakra-day.svg" alt="" width="64" height="64">
+    <img src="{{ root }}assets/icons/rtam-anahata-day.svg" alt="" width="64" height="64">
+    <img src="{{ root }}assets/icons/rtam-bindu-day.svg" alt="" width="64" height="64">
+  </div>
+  <p class="plain center" style="margin-top:34px" lang="hi">वह संसार चलाता है ·
+     वह तुम्हारे हृदय में रहता है · वह दोनों से परे है</p>
+  <p class="k center" style="margin-top:12px">HE RUNS THE WORLD · HE DWELLS IN YOUR HEART · HE IS BEYOND BOTH</p>
+  <p class="center" style="margin-top:28px"><a class="thread" href="{{ root }}darshana/">गर्भगृह — go before Him →</a></p>
+</section>
+
+{# 4 · the seva panel #}
+<section class="reading" style="padding-top:0">
+  <hr class="thresh" style="max-width:520px; margin:0 auto 56px">
+  <div class="center">
+    <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="hi">सेवा</div>
+    <div class="bhashya">THE MANDIR IS CARRIED, STONE BY STONE</div>
+    <p class="plain center">Annadāna, śilā-dāna, nitya-pūjā — offerings of every size carry
+       the nirmāṇa, quietly, in your name.</p>
+    <p style="margin-top:34px"><a class="flame" href="{{ root }}seva/"><span class="dn" lang="hi">सेवा अर्पित करें</span> · OFFER SEVA</a></p>
+  </div>
+</section>
+
+{# 5 · reach the kṣetra #}
+<section class="reading" style="padding-top:0; padding-bottom:110px">
+  <hr class="thresh" style="max-width:520px; margin:0 auto 56px">
+  <div class="center">
+    <div class="sutra" style="font-size:clamp(26px,3.4vw,38px)" lang="hi">क्षेत्र तक</div>
+    <div class="bhashya">REACH THE KṢETRA</div>
+    <p class="plain center">{{ site.place.city_en }}, {{ site.place.state_en }} ·
+       {{ site.place.address }}</p>
+    <p class="k center" style="margin-top:16px"><span lang="hi" id="sunline" style="font-family:Tiro,serif; font-size:15px; letter-spacing:.04em"></span></p>
+    <p class="k center" style="margin-top:10px">DARSHAN HOURS UPON OPENING · {{ site.opening }}</p>
+    <p class="center" style="margin-top:24px"><a class="thread" href="{{ site.place.map_url if site.place.map_url else '#' }}">[map link —]</a></p>
+  </div>
 </section>
 
 {{ door_hall(root + 'mandir/', 'मंदिर', 'THE WALK — THE MANDIR RISING', 'THE GROUND DARKENS AS YOU GO IN') }}
 
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ root }}assets/land.js"></script>
+<script>rtamLand({lat: {{ site.place.lat }}, lon: {{ site.place.lon }}});</script>
 {% endblock %}

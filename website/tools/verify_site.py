@@ -219,11 +219,23 @@ def gate_d():
                 got = page.evaluate("getComputedStyle(document.body).backgroundColor")
                 if got != rgb(want):
                     fail("D", f"{rel}: body ground {got} ≠ layer {lay} {want}")
-                shot = Image.open(io.BytesIO(page.screenshot())).convert("RGB")
-                px = shot.getpixel((1100, 520))
                 want_rgb = tuple(int(want[i:i + 2], 16) for i in (1, 3, 5))
+                if page.query_selector(".hero-land img"):
+                    shot = Image.open(io.BytesIO(page.screenshot())).convert("RGB")
+                    if shot.getpixel((600, 200)) == want_rgb:
+                        fail("D", f"{rel}: LCP hero pixel is bare ground — image not painted (veiled?)")
+                # ground probe: left padding of the first chamber, mid-viewport
+                pt = page.evaluate(
+                    "(() => { const el = document.querySelector('main .chamber, main .reading');"
+                    " el.scrollIntoView({block:'center', behavior:'instant'});"
+                    " const r = el.getBoundingClientRect();"
+                    " return [Math.round(r.x + 40),"
+                    "         Math.max(90, Math.min(780, Math.round(r.y + r.height / 2)))]; })()")
+                page.wait_for_timeout(120)
+                shot = Image.open(io.BytesIO(page.screenshot())).convert("RGB")
+                px = shot.getpixel(tuple(pt))
                 if px != want_rgb:
-                    fail("D", f"{rel}: rendered pixel at (1100,520) {px} ≠ ground {want_rgb}")
+                    fail("D", f"{rel}: chamber pixel at {pt} {px} ≠ ground {want_rgb}")
                 stage = 3 if lay == "3" else (1 if lay in ("1", "2") else 0)
                 vis = page.evaluate(
                     "[...document.querySelectorAll('#gm img')]"

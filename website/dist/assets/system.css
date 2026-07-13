@@ -231,6 +231,35 @@ footer.hall { border-top:1px solid var(--hair); padding:30px 48px; text-align:ce
 .hero-fig img { width:100%; height:auto; display:block; }
 .hero-fig figcaption { text-align:center; margin-top:18px; }
 
+/* ═══ the land (layer 0 only) ═══ */
+.hero-land { margin:0; }
+.hero-land img { width:100%; height:clamp(320px, 58vh, 640px); object-fit:cover; display:block; }
+.hero-land figcaption { text-align:right; padding:12px 48px 0; }
+.hero-head { min-height:auto; padding:96px 24px 110px; }
+.center { text-align:center; }
+
+.marks3 { display:flex; gap:clamp(28px,7vw,90px); justify-content:center; align-items:center;
+          margin-top:40px; }
+.marks3 img { width:64px; height:64px; }
+.udate { font-family:Cinzel,serif; font-size:12px; letter-spacing:.18em; color:var(--accent); }
+
+/* the footer remembers the plan-view: the sitemap is the yantra */
+.planview { max-width:560px; margin:56px auto 0; text-align:center; }
+.planview .pv-mid { display:flex; align-items:center; justify-content:center;
+                    gap:clamp(14px,4vw,34px); margin:18px 0; }
+.pv-core { position:relative; width:150px; height:150px; flex:none; }
+.pv-core svg { width:150px; height:150px; display:block; }
+.pv-core .ring { fill:none; stroke:var(--mut); stroke-width:1.4; opacity:.45; }
+.pv-core .win { fill:var(--mut); opacity:.5; }
+.pv-core .hub { fill:var(--gold); }
+.pv-core a.hublink { position:absolute; left:50%; top:50%; width:56px; height:56px;
+                     transform:translate(-50%,-50%); border-radius:50%; }
+.planview a.node { display:inline-block; font-size:11px; letter-spacing:.18em;
+                   color:var(--mut); text-decoration:none; text-align:center; }
+.planview a.node b { display:block; font-family:Tiro,serif; font-weight:400; font-size:17px;
+                     color:var(--ink); letter-spacing:0; margin-bottom:3px; }
+.planview a.node:hover b, .planview a.node:focus-visible b { color:var(--accent); }
+
 /* ═══ phones ═══ */
 @media (max-width:880px) {
   .cols3 { grid-template-columns:1fr; }

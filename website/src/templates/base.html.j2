@@ -45,6 +45,30 @@
 
 {% if layer == 0 %}
 <footer class="street">
+  <div class="planview">
+    <a class="node" href="{{ root if root else './' }}"><b lang="hi">क्षेत्र</b>THE LAND</a>
+    <div class="pv-mid">
+      <a class="node" href="{{ root }}seva/"><b lang="hi">सेवा</b>SEVA</a>
+      <div class="pv-core">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="ring" cx="80" cy="80" r="66"/>
+          <g class="win">
+            <circle cx="80" cy="14" r="3"/><circle cx="113" cy="22.8" r="3"/>
+            <circle cx="137.2" cy="47" r="3"/><circle cx="146" cy="80" r="3"/>
+            <circle cx="137.2" cy="113" r="3"/><circle cx="113" cy="137.2" r="3"/>
+            <circle cx="80" cy="146" r="3"/><circle cx="47" cy="137.2" r="3"/>
+            <circle cx="22.8" cy="113" r="3"/><circle cx="14" cy="80" r="3"/>
+            <circle cx="22.8" cy="47" r="3"/><circle cx="47" cy="22.8" r="3"/>
+          </g>
+          <circle class="hub" cx="80" cy="80" r="7.5"/>
+        </svg>
+        <a class="hublink" href="{{ root }}darshana/" aria-label="गर्भगृह — darshan"></a>
+      </div>
+      <a class="node" href="{{ root }}mandir/"><b lang="hi">मंदिर</b>MANDIR</a>
+    </div>
+    <a class="node" href="{{ root }}utsava/"><b lang="hi">उत्सव</b>UTSAVA</a>
+    <p class="k" style="margin-top:22px">THE PLAN-VIEW IS THE SITEMAP — THE CENTER IS HIM</p>
+  </div>
   <div class="cols3">
     <div>
       <div class="fb">ṚTAM FOUNDATION</div>
@@ -71,5 +95,6 @@
 
 <script src="{{ root }}assets/rtam.js"></script>
 <script>rtamDepth({{ layer }});</script>
+{% block page_js %}{% endblock %}
 </body>
 </html>

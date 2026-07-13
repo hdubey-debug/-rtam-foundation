@@ -131,6 +131,11 @@ def main():
     festivals = data["festivals"]["festivals"]
     if production:
         festivals = [f for f in festivals if not f.get("sample")]
+    months = ("JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+              "JUL", "AUG", "SEP", "OCT", "NOV", "DEC")
+    for f in festivals:
+        y, m, d = f["date"].split("-")
+        f["display"] = f"{int(d)} {months[int(m) - 1]} {y}"
 
     system_css = (SRC / "static" / "system.css").read_text()
     grounds = parse_layer_grounds(system_css)
@@ -177,9 +182,10 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(html)
 
-    rtam_js = (SRC / "static" / "rtam.js").read_text()
-    (DIST / "assets" / "system.css").write_text(system_css)
-    (DIST / "assets" / "rtam.js").write_text(rtam_js)
+    static_texts = {}
+    for f in sorted((SRC / "static").iterdir()):
+        static_texts[f.name] = f.read_text()
+        (DIST / "assets" / f.name).write_text(static_texts[f.name])
 
     icons_out = DIST / "assets" / "icons"
     icons_out.mkdir()
@@ -190,7 +196,8 @@ def main():
 
     # ---- font subsetting: every shipped string, plus shaping/runtime safety sets.
     # Full-face TTFs never ship; verify_site's byte gate enforces it. ----
-    corpus = "".join(rendered.values()) + rtam_js + json.dumps(data, ensure_ascii=False)
+    corpus = ("".join(rendered.values()) + "".join(static_texts.values())
+              + json.dumps(data, ensure_ascii=False))
     ascii_printable = "".join(chr(c) for c in range(0x20, 0x7F))
     deva_chars = {c for c in corpus if is_deva(c)}
     other_chars = {c for c in corpus if ord(c) > 0x7F and not is_deva(c)}
