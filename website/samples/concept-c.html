@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ṚTAM Foundation — concept C · Sandhyā</title>
+<link rel="stylesheet" href="../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Cinzel'; font-weight:600; src:url('../../brand/fonts/cinzel/cinzel-600.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-chandra); color:var(--rtam-charcoal); }
+  a { text-decoration:none; }
+
+  .hero { display:grid; grid-template-columns:1fr 1fr; min-height:880px; }
+  .night { background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); position:relative;
+           display:flex; flex-direction:column; }
+  .daylt { background:var(--rtam-chandra); position:relative; display:flex; flex-direction:column; }
+  .pane-inner { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+                text-align:center; padding:60px; }
+  .night nav { display:flex; gap:26px; padding:26px 40px; align-items:center; }
+  .night nav .brand { font-family:Cinzel,serif; letter-spacing:.16em; font-size:15px; }
+  .daylt nav { display:flex; gap:26px; padding:26px 40px; justify-content:flex-end; align-items:center; }
+  .daylt nav a { color:var(--rtam-charcoal); font-size:13px; letter-spacing:.06em; }
+  .daylt nav .cta { background:var(--rtam-tamra); color:var(--rtam-chandra); font-weight:600;
+                    padding:9px 20px; font-size:12.5px; border-radius:2px; }
+  .pane-inner img.mark { width:300px; height:300px; }
+  .pane-inner .cap { font-family:Cinzel,serif; font-size:14px; letter-spacing:.24em; margin-top:44px; }
+  .night .cap { color:var(--rtam-gold); }
+  .daylt .cap { color:var(--rtam-tamra); }
+  .pane-inner .sub { font-size:13.5px; line-height:1.8; max-width:330px; margin-top:14px; }
+  .night .sub { color:var(--rtam-bhasma-deep); }
+  .daylt .sub { color:#5c584f; }
+
+  .join { text-align:center; padding:84px 48px 90px; background:var(--rtam-chandra); }
+  .join .dn { font-family:Tiro,serif; font-size:40px; color:var(--rtam-charcoal); }
+  .join .rule { width:130px; height:2px; background:var(--rtam-gold); margin:30px auto; }
+  .join p { max-width:620px; margin:0 auto; font-size:16px; line-height:1.9; color:#3a3733; }
+  .join .motto { font-family:Tiro,serif; font-size:22px; color:var(--rtam-tamra); margin-top:26px; }
+
+  .band { background:var(--rtam-mahakala); padding:100px 48px; }
+  .band .inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:70px; }
+  .band img { height:170px; }
+  .band h2 { font-family:Cinzel,serif; font-weight:500; font-size:26px; letter-spacing:.08em;
+             color:var(--rtam-gold); }
+  .band p { margin-top:14px; font-size:14.5px; line-height:1.85; color:var(--rtam-bhasma-light);
+            max-width:540px; }
+  .band .times { display:flex; gap:44px; margin-top:26px; }
+  .band .t b { display:block; font-size:11px; letter-spacing:.2em; color:var(--rtam-gold); margin-bottom:6px; }
+  .band .t span { font-size:13px; color:var(--rtam-bhasma-deep); }
+
+  .grid { max-width:1200px; margin:0 auto; padding:104px 48px; }
+  .grid .kicker { font-size:11.5px; letter-spacing:.3em; color:#8a857c; }
+  .grid h2 { font-family:Cinzel,serif; font-weight:500; font-size:32px; letter-spacing:.05em; margin-top:14px; }
+  .rows { margin-top:56px; }
+  .row { display:grid; grid-template-columns:210px 1fr auto; gap:40px; align-items:center;
+         border-top:1px solid #ddd9d0; padding:34px 0; }
+  .row .dn { font-family:Tiro,serif; font-size:23px; }
+  .row h3 { font-family:Cinzel,serif; font-size:13px; letter-spacing:.18em; margin-top:6px; color:#6a655c; }
+  .row p { font-size:14px; line-height:1.8; color:#4c4944; max-width:640px; }
+  .row .more { font-size:13px; font-weight:600; color:var(--rtam-tamra); white-space:nowrap; }
+
+  .seva { background:var(--rtam-mahakala); text-align:center; padding:110px 48px; }
+  .seva img { width:130px; height:130px; }
+  .seva h2 { font-family:Cinzel,serif; font-weight:500; font-size:30px; letter-spacing:.07em;
+             color:var(--rtam-gold); margin-top:36px; }
+  .seva p { max-width:520px; margin:18px auto 0; font-size:14.5px; line-height:1.85;
+            color:var(--rtam-bhasma-light); }
+  .seva a { display:inline-block; margin-top:40px; background:var(--rtam-gold); color:var(--rtam-charcoal);
+            font-weight:600; font-size:14px; padding:16px 40px; letter-spacing:.05em; }
+
+  footer { background:var(--rtam-chandra); border-top:1px solid #ddd9d0; padding:60px 48px; }
+  footer .inner { max-width:1200px; margin:0 auto; display:flex; gap:60px; align-items:center; }
+  footer img { width:48px; height:48px; }
+  footer .fb { font-family:Cinzel,serif; letter-spacing:.14em; font-size:14px; color:var(--rtam-charcoal); }
+  footer .dn { font-family:Tiro,serif; font-size:14px; color:#6a655c; margin-top:4px; }
+  footer p, footer a { font-size:12.5px; line-height:1.9; color:#6a655c; }
+  footer a { color:var(--rtam-tamra); }
+  footer .right { margin-left:auto; text-align:right; }
+</style>
+</head>
+<body>
+
+<!-- Sandhya: the junction. Night pane = the cosmos He runs; day pane = the heart He
+     inhabits. One Lord, one line where they meet. -->
+<section class="hero">
+  <div class="night">
+    <nav><span class="brand">ṚTAM FOUNDATION</span></nav>
+    <div class="pane-inner">
+      <img class="mark" src="../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg">
+      <div class="cap">THE COSMOS HE BEARS</div>
+      <p class="sub">Twelve petals, twelve suns — the Ṛta-chakra, the wheel of order, His point of
+      gold at the hub.</p>
+    </div>
+  </div>
+  <div class="daylt">
+    <nav>
+      <a href="#">Philosophy</a><a href="#">Mandir</a><a href="#">Seva</a><a href="#">Events</a>
+      <a class="cta" href="#">Donate</a>
+    </nav>
+    <div class="pane-inner">
+      <img class="mark" src="../../brand/dist/outlined/icons/rtam-anahata-day.svg">
+      <div class="cap">THE HEART HE DWELLS IN</div>
+      <p class="sub">The same lotus within you — Anāhata, the heart chakra, the inner view of the
+      murti.</p>
+    </div>
+  </div>
+</section>
+
+<section class="join">
+  <div class="dn">ऋतम्भरेश्वर</div>
+  <div class="rule"></div>
+  <p>The Lord who sustains the order of the entire cosmos is the Lord who dwells in the human
+  heart — and He is transcendental to both. One murti says all of it: linga, lotus, water and
+  twelve suns, read from the front, from above, and from within.</p>
+  <div class="motto">ऋतस्य पन्थाम्</div>
+</section>
+
+<section class="band">
+  <div class="inner">
+    <img src="../../brand/dist/outlined/lockups/rtambhareshvara-mandir-lockup-garbhagriha.svg">
+    <div>
+      <h2>The Mandir</h2>
+      <p>Built around the murti itself — a sanctum designed to be read as it is worshipped.
+      Come for darshan; stay with the geometry.</p>
+      <div class="times">
+        <div class="t"><b>MORNING</b><span>[time – time]</span></div>
+        <div class="t"><b>SANDHYĀ ĀRATĪ</b><span>[time]</span></div>
+        <div class="t"><b>EVENING</b><span>[time – time]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="kicker">PHILOSOPHY</div>
+  <h2>Three readings of one form</h2>
+  <div class="rows">
+    <div class="row">
+      <div><div class="dn">प्रकृति · पुरुष</div><h3>FRONT VIEW</h3></div>
+      <p>Twenty-four petals in two tiers — the tattvas of Prakṛti — with consciousness seated at
+      the centre. The Sāṅkhya of the sanctum.</p>
+      <a class="more" href="#">READ →</a>
+    </div>
+    <div class="row">
+      <div><div class="dn">ऋत चक्र</div><h3>TOP VIEW</h3></div>
+      <p>Twelve petals and twelve Ādityas: the wheel of the year, of order itself, borne at the
+      hub by the Lord — Ṛtambhareśvara.</p>
+      <a class="more" href="#">READ →</a>
+    </div>
+    <div class="row">
+      <div><div class="dn">अनाहत</div><h3>INNER VIEW</h3></div>
+      <p>The heart chakra's twelve petals around the still point. What the cosmos is at large,
+      the heart is in small.</p>
+      <a class="more" href="#">READ →</a>
+    </div>
+  </div>
+</section>
+
+<section class="seva">
+  <img src="../../brand/dist/outlined/icons/rtam-chakra-kanaka.svg">
+  <h2>Bear the order with us</h2>
+  <p>Seva keeps the lamps lit and the water flowing — from a single dīpa to a year of
+  abhisheka. [Payment integration placeholder.]</p>
+  <a href="#">Offer Seva</a>
+</section>
+
+<footer>
+  <div class="inner">
+    <img src="../../brand/dist/outlined/icons/rtam-bindu-day.svg">
+    <div>
+      <div class="fb">ṚTAM FOUNDATION</div>
+      <div class="dn">ऋतम् प्रतिष्ठान · ऋतम्भरेश्वर मंदिर</div>
+    </div>
+    <div class="right">
+      <p><a href="mailto:info@rtamfoundation.org">info@rtamfoundation.org</a> · rtamfoundation.org<br>
+      [address · city]</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

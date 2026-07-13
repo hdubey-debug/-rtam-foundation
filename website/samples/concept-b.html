@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ṚTAM Foundation — concept B · The Ladder</title>
+<link rel="stylesheet" href="../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+  a { text-decoration:none; }
+
+  nav { position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:34px;
+        padding:26px 48px; z-index:5; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; color:var(--rtam-bhasma-light); }
+  nav a.link { color:var(--rtam-bhasma-deep); font-size:13px; letter-spacing:.06em; }
+  nav .cta { margin-left:auto; border:1px solid var(--rtam-gold); color:var(--rtam-gold);
+             font-weight:600; font-size:12.5px; padding:9px 22px; letter-spacing:.06em; }
+
+  .scene { min-height:860px; display:flex; flex-direction:column; align-items:center;
+           justify-content:center; text-align:center; position:relative; padding:80px 48px; }
+  .scene .step { position:absolute; left:52px; top:50%; font-size:11px; letter-spacing:.3em;
+                 color:var(--rtam-bhasma-deep); transform:rotate(-90deg); transform-origin:left; }
+  .scene .dn { font-family:Tiro,serif; font-size:26px; color:var(--rtam-gold); margin-top:56px; }
+  .scene h2 { font-family:Cinzel,serif; font-weight:500; font-size:30px; letter-spacing:.12em;
+              margin-top:14px; color:var(--rtam-bhasma-light); }
+  .scene p { max-width:480px; margin:20px auto 0; font-size:14.5px; line-height:1.85;
+             color:var(--rtam-bhasma-deep); }
+  .scene .down { margin-top:60px; color:var(--rtam-gold); font-size:20px; }
+  .s1 { border-bottom:1px solid #242220; }
+  .s2 { border-bottom:1px solid #242220; }
+
+  .s3 img.word { height:64px; display:block; margin:66px auto 0; }
+  .s3 .rule { width:110px; height:1.5px; background:var(--rtam-gold); margin:36px auto; }
+  .s3 .actions { display:flex; gap:22px; justify-content:center; margin-top:10px; }
+  .s3 .actions a { font-size:13.5px; font-weight:600; padding:14px 30px; letter-spacing:.05em; }
+  .s3 .primary { background:var(--rtam-gold); color:var(--rtam-charcoal); }
+  .s3 .ghost { border:1px solid #3a3733; color:var(--rtam-bhasma-light); }
+
+  .day { background:var(--rtam-chandra); color:var(--rtam-charcoal); padding:104px 48px 118px; }
+  .day .wrap { max-width:1200px; margin:0 auto; }
+  .day .kicker { font-size:11.5px; letter-spacing:.3em; color:#8a857c; text-align:center; }
+  .day h2 { font-family:Cinzel,serif; font-weight:500; font-size:32px; letter-spacing:.05em;
+            text-align:center; margin-top:16px; }
+  .cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:34px; margin-top:64px; }
+  .col { background:#f6f4f0; border:1px solid #e2dfd8; border-radius:4px; padding:36px 32px; text-align:center; }
+  .col img { width:88px; height:88px; }
+  .col h3 { font-family:Cinzel,serif; font-size:13.5px; letter-spacing:.18em; margin:22px 0 10px; }
+  .col p { font-size:13.5px; line-height:1.8; color:#4c4944; }
+  .col .more { display:inline-block; margin-top:14px; font-size:13px; font-weight:600; color:var(--rtam-tamra); }
+
+  .strip { display:flex; align-items:center; gap:50px; max-width:1200px; margin:0 auto;
+           padding:88px 48px; }
+  .strip .dn { font-family:Tiro,serif; font-size:32px; color:var(--rtam-gold); }
+  .strip .meta { font-size:13px; letter-spacing:.08em; color:var(--rtam-bhasma-deep); margin-top:10px; }
+  .strip .cta { margin-left:auto; background:var(--rtam-gold); color:var(--rtam-charcoal);
+                font-weight:600; font-size:13.5px; padding:15px 32px; }
+
+  footer { border-top:1px solid #242220; padding:56px 48px; display:flex; gap:26px; align-items:center;
+           max-width:1200px; margin:0 auto; }
+  footer img { width:44px; height:44px; }
+  footer .fb { font-family:Cinzel,serif; letter-spacing:.14em; font-size:14px; }
+  footer p, footer a { font-size:12.5px; line-height:1.9; color:var(--rtam-bhasma-deep); }
+  footer a { color:var(--rtam-gold); }
+  footer .right { margin-left:auto; text-align:right; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">ṚTAM</span>
+  <a class="link" href="#">Philosophy</a><a class="link" href="#">Mandir</a>
+  <a class="link" href="#">Seva</a><a class="link" href="#">Events</a>
+  <a class="cta" href="#">DONATE</a>
+</nav>
+
+<!-- In the live site these three scenes are one pinned scroll: the mark grows
+     from bindu to anahata to chakra as the visitor scrolls. -->
+<section class="scene s1">
+  <span class="step">RUNG I — THE POINT</span>
+  <img src="../../brand/dist/outlined/icons/rtam-bindu-garbhagriha.svg" width="150" height="150">
+  <div class="dn">केवलम्</div>
+  <h2>THE LORD ALONE</h2>
+  <p>Before form, before order, before the heart that seeks Him — the single gold point.
+  Transcendent. The same point that sits beneath the Ṛ of ṚTAM.</p>
+  <div class="down">↓</div>
+</section>
+
+<section class="scene s2">
+  <span class="step">RUNG II — THE HEART</span>
+  <img src="../../brand/dist/outlined/icons/rtam-anahata-garbhagriha.svg" width="300" height="300">
+  <div class="dn">अनाहत</div>
+  <h2>THE LORD IN YOUR HEART</h2>
+  <p>The twelve-petal lotus of the Anāhata opens around Him. The inner view of the murti:
+  consciousness dwelling where you already are.</p>
+  <div class="down">↓</div>
+</section>
+
+<section class="scene s3">
+  <span class="step">RUNG III — THE COSMOS</span>
+  <img src="../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" width="430" height="430">
+  <div class="dn">ऋतस्य पन्थाम्</div>
+  <h2>THE LORD BEARING THE COSMIC ORDER</h2>
+  <p>The same lotus, now seated in the stone rim among the twelve Ādityas — the Ṛta-chakra.
+  The Lord who runs the world is the Lord who dwells in your heart, beyond both.</p>
+  <img class="word" src="../../brand/dist/outlined/logos/rtam-wordmark-garbhagriha.svg">
+  <div class="rule"></div>
+  <div class="actions">
+    <a class="primary" href="#">Offer Seva</a>
+    <a class="ghost" href="#">Visit the Mandir</a>
+  </div>
+</section>
+
+<section class="day">
+  <div class="wrap">
+    <div class="kicker">THE THREE READINGS</div>
+    <h2>Stand before it · above it · within it</h2>
+    <div class="cols">
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-bindu-day.svg">
+        <h3>PRAKṚTI · PURUṢA</h3>
+        <p>The front view: twenty-four tattvas in two lotus tiers, consciousness at the centre.</p>
+        <a class="more" href="#">The Sāṅkhya reading →</a>
+      </div>
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-anahata-day.svg">
+        <h3>ANĀHATA</h3>
+        <p>The inner view: the heart-lotus of twelve, the Lord seated where you are.</p>
+        <a class="more" href="#">The heart reading →</a>
+      </div>
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-chakra-day.svg">
+        <h3>ṚTA-CHAKRA</h3>
+        <p>The top view: twelve petals, twelve suns — the wheel of order He bears.</p>
+        <a class="more" href="#">The Ṛta reading →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <div>
+    <div class="dn">महाशिवरात्रि महोत्सव</div>
+    <div class="meta">[TITHI · DATE] · [TIME] · [VENUE, CITY]</div>
+  </div>
+  <a class="cta" href="#">Join the utsava</a>
+</section>
+
+<footer>
+  <img src="../../brand/dist/outlined/icons/rtam-bindu-garbhagriha.svg">
+  <div>
+    <div class="fb">ṚTAM FOUNDATION</div>
+    <p><a href="mailto:info@rtamfoundation.org">info@rtamfoundation.org</a> · rtamfoundation.org</p>
+  </div>
+  <div class="right"><p>ऋतम् प्रतिष्ठान · ऋतम्भरेश्वर मंदिर<br>[address · city]</p></div>
+</footer>
+
+</body>
+</html>
