@@ -9,7 +9,8 @@ nothing is deleted when a direction is retired.
 | `02-derivation-film/` | W1.2 — animated murti→mark derivation hero | **Rejected** (kept as archive; lesson: ambient life, not narration) |
 | `03-motion/` | W1.3 — concept B + the approved four-motion language (dīpa breath, petal bloom, nav ladder-contraction, pinned scroll-zoom) | **Approved** motion baseline |
 | `04-behaviors/` | W1.4 — six site-behavior candidates (temple time, year-wheel, foil gold, pradakshina, unstruck sound, small life) | **Reviewed** — keepers: foil gold, pradakshina, year-wheel; rest parked |
-| `05-structure/` | W1.5 — the structural prototype: the temple's depth as the site's architecture (street → hall → garbhagṛha), the header mark as depth gauge, the four verbs, sūtra–bhāṣya couplets, `system.css` constitution | **In review** — the proposed W2 foundation |
+| `05-structure/` | W1.5 — the structural prototype: the temple's depth as the site's architecture (street → hall → garbhagṛha), the header mark as depth gauge, the four verbs, sūtra–bhāṣya couplets, `system.css` constitution | **Chosen** — W2 was built on it |
+| `06-w2-proofs/` | W2 — the real site's proof record: 24 cross-engine renders, MEASUREMENTS.md (255 KB landing of the 600 KB budget; LCP 788 ms throttled; WebKit honestly absent — see FOUNDER-CHECKLIST.md), the descent GIF re-cut on `website/dist/` | **The site itself lives in `website/src/` → `website/dist/`** |
 
 ## How to view
 
