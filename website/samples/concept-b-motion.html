@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ṚTAM Foundation — concept B · motion build</title>
+<link rel="stylesheet" href="../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+  a { text-decoration:none; }
+
+  /* ---- header: the ladder as live UI (chakra at rest -> bindu on scroll) ---- */
+  nav { position:fixed; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; gap:34px;
+        padding:20px 48px; background:linear-gradient(#141414f2,#141414d8 70%,transparent); }
+  .navmark { position:relative; width:40px; height:40px; }
+  .navmark img { position:absolute; inset:0; width:40px; height:40px; transition:none; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; color:var(--rtam-bhasma-light); }
+  nav a.link { color:var(--rtam-bhasma-deep); font-size:13px; letter-spacing:.06em; }
+  nav .cta { margin-left:auto; border:1px solid var(--rtam-gold); color:var(--rtam-gold); font-weight:600;
+             font-size:12.5px; padding:9px 22px; letter-spacing:.06em; }
+
+  /* ---- the pinned ladder ---- */
+  .ladder { height:340vh; position:relative; }
+  .pin { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center;
+         justify-content:center; overflow:hidden; }
+  .pin svg { width:min(72vh,600px); height:min(72vh,600px); }
+  .caps { position:absolute; left:0; right:0; bottom:6vh; text-align:center; pointer-events:none; }
+  .cap { position:absolute; left:0; right:0; bottom:0; opacity:0; }
+  .cap .dn { font-family:Tiro,serif; font-size:24px; color:var(--rtam-gold); }
+  .cap .en { font-family:Cinzel,serif; font-size:22px; letter-spacing:.22em; color:var(--rtam-bhasma-light);
+             margin-top:10px; }
+  .cap .sub { font-size:13px; line-height:1.7; color:var(--rtam-bhasma-deep); margin-top:10px; }
+  .final { position:absolute; left:0; right:0; bottom:6vh; text-align:center; opacity:0; }
+  .final img { height:52px; }
+  .final .rule { width:110px; height:1.5px; background:var(--rtam-gold); margin:22px auto; }
+  .final .actions { display:flex; gap:20px; justify-content:center; }
+  .final .actions a { font-size:13px; font-weight:600; padding:13px 28px; letter-spacing:.05em; }
+  .final .primary { background:var(--rtam-gold); color:var(--rtam-charcoal); }
+  .final .ghost { border:1px solid #3a3733; color:var(--rtam-bhasma-light); }
+  .hint { position:absolute; bottom:3.2vh; left:0; right:0; text-align:center; font-size:10.5px;
+          letter-spacing:.34em; color:var(--rtam-bhasma-deep); }
+
+  /* ---- day section / strip / footer (concept B unchanged) ---- */
+  .day { background:var(--rtam-chandra); color:var(--rtam-charcoal); padding:104px 48px 118px;
+         position:relative; z-index:2; }
+  .day .wrap { max-width:1200px; margin:0 auto; }
+  .day .kicker { font-size:11.5px; letter-spacing:.3em; color:#8a857c; text-align:center; }
+  .day h2 { font-family:Cinzel,serif; font-weight:500; font-size:32px; letter-spacing:.05em;
+            text-align:center; margin-top:16px; }
+  .cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:34px; margin-top:64px; }
+  .col { background:#f6f4f0; border:1px solid #e2dfd8; border-radius:4px; padding:36px 32px; text-align:center; }
+  .col img { width:88px; height:88px; }
+  .col h3 { font-family:Cinzel,serif; font-size:13.5px; letter-spacing:.18em; margin:22px 0 10px; }
+  .col p { font-size:13.5px; line-height:1.8; color:#4c4944; }
+  .col .more { display:inline-block; margin-top:14px; font-size:13px; font-weight:600; color:var(--rtam-tamra); }
+  .strip { display:flex; align-items:center; gap:50px; max-width:1200px; margin:0 auto; padding:88px 48px; }
+  .strip .dn { font-family:Tiro,serif; font-size:32px; color:var(--rtam-gold); }
+  .strip .meta { font-size:13px; letter-spacing:.08em; color:var(--rtam-bhasma-deep); margin-top:10px; }
+  .strip .cta { margin-left:auto; background:var(--rtam-gold); color:var(--rtam-charcoal); font-weight:600;
+                font-size:13.5px; padding:15px 32px; }
+  footer { border-top:1px solid #242220; padding:56px 48px; display:flex; gap:26px; align-items:center;
+           max-width:1200px; margin:0 auto; }
+  footer img { width:44px; height:44px; }
+  footer .fb { font-family:Cinzel,serif; letter-spacing:.14em; font-size:14px; }
+  footer p, footer a { font-size:12.5px; line-height:1.9; color:var(--rtam-bhasma-deep); }
+  footer a { color:var(--rtam-gold); }
+  footer .right { margin-left:auto; text-align:right; }
+
+  @media (prefers-reduced-motion: reduce) { .breathing { display:none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="navmark">
+    <img id="navChakra" src="../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg">
+    <img id="navBindu" src="../../brand/dist/outlined/icons/rtam-bindu-garbhagriha.svg" style="opacity:0">
+  </span>
+  <span class="brand">ṚTAM FOUNDATION</span>
+  <a class="link" href="#">Philosophy</a><a class="link" href="#">Mandir</a>
+  <a class="link" href="#">Seva</a><a class="link" href="#">Events</a>
+  <a class="cta" href="#">DONATE</a>
+</nav>
+
+<section class="ladder" id="ladder">
+  <div class="pin">
+    <svg id="mark" viewBox="0 0 600 600">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#C8A15A" stop-opacity=".55"/>
+          <stop offset="55%" stop-color="#C8A15A" stop-opacity=".14"/>
+          <stop offset="100%" stop-color="#C8A15A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle id="glowC" class="breathing" cx="300" cy="300" r="120" fill="url(#glow)"/>
+      <g id="rimG" opacity="0">
+        <circle cx="300" cy="300" r="234" fill="none" stroke="#C9C2B6" stroke-width="36.2"/>
+      </g>
+      <g id="winG"></g>
+      <circle id="binduRing" cx="300" cy="300" r="86" fill="none" stroke="#C9C2B6" stroke-width="7"/>
+      <g id="petG"></g>
+      <circle id="hub" cx="300" cy="300" r="55.4" fill="#C8A15A"/>
+    </svg>
+    <div class="caps">
+      <div class="cap" id="cA"><div class="dn">केवलम्</div><div class="en">THE LORD ALONE</div>
+        <div class="sub">the single gold point — the same point beneath the Ṛ of ṚTAM</div></div>
+      <div class="cap" id="cB"><div class="dn">अनाहत</div><div class="en">THE LORD IN YOUR HEART</div>
+        <div class="sub">the twelve-petal heart lotus opens around Him</div></div>
+      <div class="cap" id="cC"><div class="dn">ऋत चक्र</div><div class="en">THE LORD BEARING THE COSMIC ORDER</div>
+        <div class="sub">the same lotus, seated among the twelve Ādityas</div></div>
+    </div>
+    <div class="final" id="final">
+      <img src="../../brand/dist/outlined/logos/rtam-wordmark-garbhagriha.svg">
+      <div class="rule"></div>
+      <div class="actions"><a class="primary" href="#">Offer Seva</a><a class="ghost" href="#">Visit the Mandir</a></div>
+    </div>
+    <div class="hint" id="hint">SCROLL · THE MARK UNFOLDS</div>
+  </div>
+</section>
+
+<section class="day">
+  <div class="wrap">
+    <div class="kicker">THE THREE READINGS</div>
+    <h2>Stand before it · above it · within it</h2>
+    <div class="cols">
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-bindu-day.svg">
+        <h3>PRAKṚTI · PURUṢA</h3>
+        <p>The front view: twenty-four tattvas in two lotus tiers, consciousness at the centre.</p>
+        <a class="more" href="#">The Sāṅkhya reading →</a>
+      </div>
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-anahata-day.svg">
+        <h3>ANĀHATA</h3>
+        <p>The inner view: the heart-lotus of twelve, the Lord seated where you are.</p>
+        <a class="more" href="#">The heart reading →</a>
+      </div>
+      <div class="col">
+        <img src="../../brand/dist/outlined/icons/rtam-chakra-day.svg">
+        <h3>ṚTA-CHAKRA</h3>
+        <p>The top view: twelve petals, twelve suns — the wheel of order He bears.</p>
+        <a class="more" href="#">The Ṛta reading →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <div>
+    <div class="dn">महाशिवरात्रि महोत्सव</div>
+    <div class="meta">[TITHI · DATE] · [TIME] · [VENUE, CITY]</div>
+  </div>
+  <a class="cta" href="#">Join the utsava</a>
+</section>
+
+<footer>
+  <img src="../../brand/dist/outlined/icons/rtam-bindu-garbhagriha.svg">
+  <div>
+    <div class="fb">ṚTAM FOUNDATION</div>
+    <p><a href="mailto:info@rtamfoundation.org">info@rtamfoundation.org</a> · rtamfoundation.org</p>
+  </div>
+  <div class="right"><p>ऋतम् प्रतिष्ठान · ऋतम्भरेश्वर मंदिर<br>[address · city]</p></div>
+</footer>
+
+<script>
+const S = 252/230;                                     // icon scale (R=252 on 600 canvas)
+const CX=300, CY=300;
+/* E3 petal, exactly the shipped geometry, scaled */
+function petalD(deg){
+  const a=deg*Math.PI/180, ux=Math.cos(a), uy=Math.sin(a), nx=-uy, ny=ux;
+  const p=(r,w)=>`${(CX+ux*r*S+nx*w*S).toFixed(1)} ${(CY+uy*r*S+ny*w*S).toFixed(1)}`;
+  const G=[[73.6,10.5],[80,17],[92,25.5],[108,28.5],[126,30.4],[148,14],[161,0]];
+  return `M ${p(G[0][0],-G[0][1])} C ${p(G[1][0],-G[1][1])} ${p(G[2][0],-G[2][1])} ${p(G[3][0],-G[3][1])}`
+       + ` C ${p(G[4][0],-G[4][1])} ${p(G[5][0],-G[5][1])} ${p(G[6][0],0)}`
+       + ` C ${p(G[5][0],G[5][1])} ${p(G[4][0],G[4][1])} ${p(G[3][0],G[3][1])}`
+       + ` C ${p(G[2][0],G[2][1])} ${p(G[1][0],G[1][1])} ${p(G[0][0],G[0][1])} Z`;
+}
+const NSX="http://www.w3.org/2000/svg";
+const petG=document.getElementById("petG"), winG=document.getElementById("winG");
+const petals=[], wins=[];
+for (let k=0;k<12;k++){
+  const e=document.createElementNS(NSX,"path");
+  e.setAttribute("d",petalD(-90+k*30));
+  e.setAttribute("fill","#C9C2B6"); e.setAttribute("stroke","#141414");
+  e.setAttribute("stroke-width",(5*S).toFixed(1)); e.setAttribute("stroke-linejoin","round");
+  e.style.transformOrigin="300px 300px"; petG.appendChild(e); petals.push(e);
+  const a=(-90+k*30)*Math.PI/180, w=document.createElementNS(NSX,"circle");
+  w.setAttribute("cx",(300+211.6*S*Math.cos(a)).toFixed(1));
+  w.setAttribute("cy",(300+211.6*S*Math.sin(a)).toFixed(1));
+  w.setAttribute("r",(10.35*S).toFixed(1)); w.setAttribute("fill","#141414");
+  winG.appendChild(w); wins.push(w);
+}
+const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
+const seg=(p,a,b)=>ease((p-a)/(b-a));
+const $=id=>document.getElementById(id);
+
+function setState(p, t){
+  /* breath (1): the dipa — hub + glow, 5.5 s cycle, everywhere */
+  const br=Math.sin(2*Math.PI*t/5.5);
+  $("glowC").setAttribute("r",(120+14*br).toFixed(1));
+  $("glowC").setAttribute("opacity",(0.75+0.25*br).toFixed(2));
+  $("hub").setAttribute("transform",`scale(${(1+0.018*br).toFixed(3)})`);
+  $("hub").style.transformOrigin="300px 300px";
+  /* header contraction (5): chakra at rest -> bindu once scrolling */
+  const np=seg(p,0.02,0.14);
+  $("navChakra").style.opacity=1-np; $("navBindu").style.opacity=np;
+  /* stage B (2+6): petals bloom, staggered */
+  petals.forEach((e,k)=>{ const q=seg(p,0.26+k*0.014,0.40+k*0.014);
+    e.style.opacity=q; e.style.transform=`scale(${0.42+0.58*q})`; });
+  $("binduRing").setAttribute("opacity",(1-seg(p,0.24,0.34)).toFixed(2));
+  /* stage C (6): the rim and the twelve suns arrive */
+  const r=seg(p,0.58,0.80);
+  $("rimG").setAttribute("opacity",r.toFixed(2));
+  $("rimG").setAttribute("transform",`scale(${(0.88+0.12*r).toFixed(3)})`);
+  $("rimG").style.transformOrigin="300px 300px";
+  wins.forEach((w,k)=>{ w.setAttribute("opacity",seg(p,0.66+k*0.012,0.76+k*0.012).toFixed(2)); });
+  /* captions + final */
+  $("cA").style.opacity=Math.min(seg(p,0.0,0.06),1-seg(p,0.22,0.30));
+  $("cB").style.opacity=Math.min(seg(p,0.30,0.38),1-seg(p,0.54,0.62));
+  $("cC").style.opacity=Math.min(seg(p,0.64,0.74),1-seg(p,0.86,0.92));
+  const fin=seg(p,0.86,0.97);           // finale: the mark yields room to the wordmark
+  $("mark").style.transform=`translateY(${(-84*fin).toFixed(1)}px) scale(${(1-0.12*fin).toFixed(3)})`;
+  $("final").style.opacity=fin;
+  $("hint").style.opacity=1-seg(p,0.04,0.10);
+}
+window.setState=setState;
+const params=new URLSearchParams(location.search);
+if (!params.has("freeze")){
+  const t0=performance.now();
+  (function loop(){
+    const lad=$("ladder"), vh=innerHeight;
+    const p=Math.max(0,Math.min(1, scrollY/(lad.offsetHeight-vh)));
+    setState(p,(performance.now()-t0)/1000);
+    requestAnimationFrame(loop);
+  })();
+} else { setState(0,0); }
+</script>
+</body>
+</html>
