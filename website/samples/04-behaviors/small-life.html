@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · behavior 6 — small life</title>
+<link rel="stylesheet" href="../../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+  a { text-decoration:none; }
+
+  header.top { text-align:center; padding:54px 24px 10px; }
+  .top .k { font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep); }
+  .top h1 { font-family:Cinzel,serif; font-weight:500; font-size:26px; letter-spacing:.12em; margin-top:14px; }
+  .top p { font-size:13px; line-height:1.8; color:var(--rtam-bhasma-deep); max-width:52ch; margin:12px auto 0; }
+  .demo-k { font-size:10.5px; letter-spacing:.3em; color:#5d574d; margin-bottom:26px; }
+
+  /* 1 · the dateline — today, in the mandir's own script, computed each visit */
+  .dateline { margin:64px auto 0; max-width:760px; border:1px solid #242220; border-radius:4px;
+              padding:20px 28px; display:flex; align-items:baseline; gap:22px; }
+  .dateline .dn { font-family:Tiro,serif; font-size:21px; color:var(--rtam-bhasma-light); }
+  .dateline .en { margin-left:auto; font-size:11.5px; letter-spacing:.18em; color:var(--rtam-bhasma-deep); }
+
+  /* 2 · the threshold — a hairline the flame is passed along, once, on arrival */
+  section.piece { max-width:760px; margin:0 auto; padding:70px 28px 8px; }
+  .thresh { height:1.5px; border:0; margin:0 0 44px;
+            background-image:linear-gradient(90deg, var(--rtam-gold) 78%, #C8A15A55 92%, transparent);
+            background-repeat:no-repeat; background-size:0% 100%; background-color:#242220; }
+  .thresh.lit { background-size:100% 100%; transition:background-size 1.1s cubic-bezier(.25,.1,.25,1); }
+  @media (prefers-reduced-motion: reduce) { .thresh { background-size:100% 100%; transition:none; } }
+  .piece .dn { font-family:Tiro,serif; font-size:26px; color:var(--rtam-gold); }
+  .piece h2 { font-family:Cinzel,serif; font-weight:500; font-size:19px; letter-spacing:.2em; margin-top:10px; }
+  .piece p { font-size:13.5px; line-height:1.9; color:var(--rtam-bhasma-deep); margin-top:14px; max-width:60ch; }
+
+  .spacer { height:26vh; }
+
+  /* 3 · the footer as plan-view — the sitemap is the yantra */
+  footer { border-top:1px solid #242220; margin-top:90px; padding:74px 24px 60px; text-align:center; }
+  .plan { position:relative; width:340px; height:340px; margin:26px auto 0; }
+  .plan svg { position:absolute; inset:calc(50% - 80px); width:160px; height:160px; }
+  .plan a.node { position:absolute; width:120px; margin-left:-60px; margin-top:-9px; font-size:12px;
+                 letter-spacing:.14em; color:var(--rtam-bhasma-deep); }
+  .plan a.node b { display:block; font-family:Tiro,serif; font-weight:400; font-size:16px;
+                   color:var(--rtam-bhasma-light); letter-spacing:0; margin-bottom:3px; }
+  .plan a.node:hover b { color:var(--rtam-gold); }
+  footer .base { margin-top:34px; font-size:12px; color:var(--rtam-bhasma-deep); line-height:2; }
+  footer .base a { color:var(--rtam-gold); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="k">SMALL LIFE · THREE QUIET DETAILS</div>
+  <h1>NOTHING HERE ASKS FOR ATTENTION</h1>
+  <p>Garnish, not candidates — a dateline that keeps the mandir's script, thresholds the flame
+     is passed along, and a footer that remembers the plan-view. Scroll slowly.</p>
+</header>
+
+<div class="dateline">
+  <span class="demo-k" style="margin:0">१</span>
+  <span class="dn" id="dnDate">…</span>
+  <span class="en" id="enDate">COMPUTED EACH VISIT — NO ONE UPDATES THIS</span>
+</div>
+
+<div class="spacer"></div>
+
+<section class="piece">
+  <div class="demo-k">२ · THE THRESHOLD, LIT AS YOU ARRIVE</div>
+  <hr class="thresh">
+  <div class="dn">दर्शन</div>
+  <h2>THE THREE READINGS</h2>
+  <p>Each section of the site begins at a hairline. As you arrive, the flame is passed along it —
+     left to right, once, about a second — and then it is an ordinary rule again. The page
+     acknowledges your crossing and returns to stillness.</p>
+</section>
+
+<div class="spacer"></div>
+
+<section class="piece">
+  <hr class="thresh">
+  <div class="dn">सेवा</div>
+  <h2>OFFER, QUIETLY</h2>
+  <p>The same threshold again, so you can watch it twice. It never repeats for a section you have
+     already entered; reduced-motion visitors simply find the rule already lit.</p>
+</section>
+
+<div class="spacer"></div>
+
+<footer>
+  <div class="demo-k">३ · THE FOOTER REMEMBERS THE PLAN-VIEW</div>
+  <div class="plan" id="plan">
+    <svg viewBox="0 0 160 160" aria-hidden="true">
+      <circle cx="80" cy="80" r="66" fill="none" stroke="#C9C2B6" stroke-width="1.4" opacity=".35"/>
+      <g id="winDots"></g>
+      <circle cx="80" cy="80" r="7.5" fill="#C8A15A"/>
+    </svg>
+  </div>
+  <div class="base">
+    ऋतम् प्रतिष्ठान · ऋतम्भरेश्वर मंदिर — जबलपुर<br>
+    <a href="mailto:info@rtamfoundation.org">info@rtamfoundation.org</a> · rtamfoundation.org
+  </div>
+</footer>
+
+<script>
+/* 1 · dateline: Gregorian today, written in Devanagari */
+const DG="०१२३४५६७८९";
+const dg=n=>String(n).split("").map(c=>DG[+c]).join("");
+const WD=["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"];
+const MO=["जनवरी","फ़रवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितम्बर","अक्टूबर","नवम्बर","दिसम्बर"];
+const now=new Date();
+document.getElementById("dnDate").textContent=
+  `${WD[now.getDay()]} · ${dg(now.getDate())} ${MO[now.getMonth()]} ${dg(now.getFullYear())}`;
+
+/* 2 · thresholds: lit once on first arrival */
+const seen=new WeakSet();
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if (e.isIntersecting && !seen.has(e.target)){ seen.add(e.target); e.target.classList.add("lit"); }
+}),{threshold:.9});
+document.querySelectorAll(".thresh").forEach(h=>io.observe(h));
+
+/* 3 · footer plan-view: 12 quiet windows + the five doors of the site */
+const NS="http://www.w3.org/2000/svg", wd=document.getElementById("winDots");
+for (let k=0;k<12;k++){
+  const a=(-90+k*30)*Math.PI/180, c=document.createElementNS(NS,"circle");
+  c.setAttribute("cx",(80+66*Math.cos(a)).toFixed(1));
+  c.setAttribute("cy",(80+66*Math.sin(a)).toFixed(1));
+  c.setAttribute("r",3); c.setAttribute("fill","#C9C2B6"); c.setAttribute("opacity",".45");
+  wd.appendChild(c);
+}
+const DOORS=[["दर्शन","PHILOSOPHY"],["मंदिर","MANDIR"],["सेवा","SEVA"],["उत्सव","EVENTS"],["यात्रा","VISIT"]];
+const plan=document.getElementById("plan");
+DOORS.forEach(([dn,en],i)=>{
+  const a=(-90+i*72)*Math.PI/180, x=170+128*Math.cos(a), y=170+128*Math.sin(a);
+  const n=document.createElement("a"); n.className="node"; n.href="#";
+  n.style.left=x+"px"; n.style.top=y+"px";
+  n.innerHTML=`<b>${dn}</b>${en}`;
+  plan.appendChild(n);
+});
+
+/* freeze API: drive the first threshold sweep for capture */
+window.setLife=t=>{
+  const h=document.querySelector(".thresh");
+  h.classList.remove("lit"); h.style.transition="none";
+  h.style.backgroundSize=(t*100).toFixed(1)+"% 100%";
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · website samples — the atlas</title>
+<link rel="stylesheet" href="../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../brand/fonts/inter/inter-600.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light);
+         padding:56px 48px 90px; }
+  a { text-decoration:none; color:inherit; }
+  header { display:flex; align-items:center; gap:22px; max-width:1240px; margin:0 auto 14px; }
+  header img { width:44px; height:44px; }
+  header h1 { font-family:Cinzel,serif; font-weight:500; font-size:22px; letter-spacing:.14em; }
+  header p { font-size:12.5px; color:var(--rtam-bhasma-deep); margin-top:6px; }
+
+  section { max-width:1240px; margin:44px auto 0; }
+  .sk { font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep);
+        border-bottom:1px solid #242220; padding-bottom:12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:26px; margin-top:24px; }
+  .card { border:1px solid #242220; border-radius:5px; overflow:hidden; background:#181715;
+          transition:border-color .25s; }
+  .card:hover { border-color:var(--rtam-gold); }
+  .card .thumb { aspect-ratio:16/10; overflow:hidden; background:#101010; }
+  .card .thumb img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .card .meta { padding:16px 18px 18px; }
+  .card .name { font-family:Cinzel,serif; font-size:13.5px; letter-spacing:.14em; }
+  .card .what { font-size:12px; line-height:1.7; color:var(--rtam-bhasma-deep); margin-top:8px; }
+  .chip { display:inline-block; font-size:10px; letter-spacing:.22em; padding:4px 10px; border-radius:99px;
+          margin-bottom:12px; border:1px solid; }
+  .chip.chosen  { color:var(--rtam-gold); border-color:var(--rtam-gold); }
+  .chip.review  { color:var(--rtam-bhasma-light); border-color:#4a453d; }
+  .chip.retired { color:var(--rtam-bhasma-deep); border-color:#33302b; }
+  .gifnote { font-size:11px; color:var(--rtam-bhasma-deep); margin-top:10px; letter-spacing:.04em; }
+  footer { max-width:1240px; margin:70px auto 0; font-size:12px; color:var(--rtam-bhasma-deep);
+           line-height:2; border-top:1px solid #242220; padding-top:24px; }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+  <div>
+    <h1>WEBSITE SAMPLES — THE ATLAS</h1>
+    <p>every exploration, browsable · open any card in the browser and interact — GIFs are low-fps previews</p>
+  </div>
+</header>
+
+<section>
+  <div class="sk">01 · HOMEPAGE CONCEPTS — W1</div>
+  <div class="grid">
+    <a class="card" href="01-concepts/concept-b.html"><div class="thumb"><img src="01-concepts/concept-b.png"></div>
+      <div class="meta"><span class="chip chosen">CHOSEN</span><div class="name">CONCEPT B · THE LADDER</div>
+      <div class="what">The sanctity ladder as scenes — the founder's pick, base of everything below.</div></div></a>
+    <a class="card" href="01-concepts/concept-a.html"><div class="thumb"><img src="01-concepts/concept-a.png"></div>
+      <div class="meta"><span class="chip retired">RETIRED</span><div class="name">CONCEPT A · AARTI OPENING</div>
+      <div class="what">Garbhagriha editorial with an aarti-style opening.</div></div></a>
+    <a class="card" href="01-concepts/concept-c.html"><div class="thumb"><img src="01-concepts/concept-c.png"></div>
+      <div class="meta"><span class="chip retired">RETIRED</span><div class="name">CONCEPT C · SANDHYA SPLIT</div>
+      <div class="what">Split hero at the day–night junction.</div></div></a>
+  </div>
+</section>
+
+<section>
+  <div class="sk">02 · DERIVATION FILM — W1.2</div>
+  <div class="grid">
+    <a class="card" href="02-derivation-film/derivation-hero.html">
+      <div class="thumb"><img src="02-derivation-film/frame-08.6.png"></div>
+      <div class="meta"><span class="chip retired">REJECTED — ARCHIVE</span><div class="name">THE MURTI BECOMES THE MARK</div>
+      <div class="what">Animated derivation hero. Kept as record; lesson: ambient life, not narration.</div></div></a>
+  </div>
+</section>
+
+<section>
+  <div class="sk">03 · MOTION LANGUAGE — W1.3</div>
+  <div class="grid">
+    <a class="card" href="03-motion/concept-b-motion.html"><div class="thumb"><img src="03-motion/m-full.png"></div>
+      <div class="meta"><span class="chip chosen">APPROVED</span><div class="name">CONCEPT B · FOUR MOTIONS</div>
+      <div class="what">Dīpa breath · petal bloom · nav ladder-contraction · pinned scroll-zoom.</div>
+      <div class="gifnote">preview: 03-motion/concept-b-motion.gif</div></div></a>
+  </div>
+</section>
+
+<section>
+  <div class="sk">04 · SITE BEHAVIORS — W1.4 · SIX CANDIDATES, PURE</div>
+  <div class="grid">
+    <a class="card" href="04-behaviors/temple-time.html"><div class="thumb"><img src="04-behaviors/tt-sandhya.png"></div>
+      <div class="meta"><span class="chip review">IN REVIEW</span><div class="name">1 · TEMPLE TIME</div>
+      <div class="what">The site keeps the mandir's clock — chandra by day, garbhagriha by night, warmest at
+        sandhyā. Try ?at=19:05.</div>
+      <div class="gifnote">preview: temple-time.gif (a whole day in 6 s)</div></div></a>
+    <a class="card" href="04-behaviors/year-wheel.html"><div class="thumb"><img src="04-behaviors/year-wheel.png"></div>
+      <div class="meta"><span class="chip review">IN REVIEW</span><div class="name">2 · THE YEAR-WHEEL</div>
+      <div class="what">Events as the chakra: twelve months around one, utsava days in gold, आज as a flame.</div>
+      <div class="gifnote">preview: year-wheel.gif</div></div></a>
+    <a class="card" href="04-behaviors/foil-gold.html"><div class="thumb"><img src="04-behaviors/foil-gold.png"></div>
+      <div class="meta"><span class="chip review">IN REVIEW</span><div class="name">3 · FOIL GOLD</div>
+      <div class="what">Gold that behaves like the print spec's hot-stamp foil — it catches light as the page moves.</div>
+      <div class="gifnote">preview: foil-gold.gif</div></div></a>
+    <a class="card" href="04-behaviors/pradakshina.html"><div class="thumb"><img src="04-behaviors/pradakshina.png"></div>
+      <div class="meta"><span class="chip review">IN REVIEW</span><div class="name">4 · PRADAKSHINA</div>
+      <div class="what">The Mandir page as a clockwise walk — east, south, west, north, threshold — with a
+        parikramā compass.</div>
+      <div class="gifnote">preview: pradakshina.gif</div></div></a>
+    <a class="card" href="04-behaviors/anahata-sound.html"><div class="thumb"><img src="04-behaviors/sound-on.png"></div>
+      <div class="meta"><span class="chip review">IN REVIEW · FLAGGED</span><div class="name">5 · THE UNSTRUCK SOUND</div>
+      <div class="what">Silent by default, always. Opt-in ghaṇṭā + tānpurā — placeholder tones until the mandir's
+        own bell exists.</div></div></a>
+    <a class="card" href="04-behaviors/small-life.html"><div class="thumb"><img src="04-behaviors/small-life.png"></div>
+      <div class="meta"><span class="chip review">GARNISH</span><div class="name">6 · SMALL LIFE</div>
+      <div class="what">Devanagari dateline · thresholds the flame is passed along · the footer as plan-view.</div>
+      <div class="gifnote">preview: small-life-threshold.gif</div></div></a>
+  </div>
+</section>
+
+<footer>
+  candidates stay pure — no mixing components between them · retired work is kept and labeled<br>
+  ṚTAM Foundation · design record — see README.md for the rules
+</footer>
+
+</body>
+</html>

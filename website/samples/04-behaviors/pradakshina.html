@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · behavior 4 — pradakshina</title>
+<link rel="stylesheet" href="../../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+  a { text-decoration:none; }
+
+  nav { display:flex; align-items:center; gap:34px; padding:20px 48px; }
+  nav img { width:40px; height:40px; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; }
+  nav a.link { color:var(--rtam-bhasma-deep); font-size:13px; letter-spacing:.06em; }
+  nav a.on { color:var(--rtam-gold); }
+
+  header.intro { text-align:center; padding:52px 24px 40px; }
+  .intro .dn { font-family:Tiro,serif; font-size:clamp(30px,4.4vw,42px); color:var(--rtam-gold); }
+  .intro .en { font-family:Cinzel,serif; font-size:15px; letter-spacing:.3em; margin-top:12px; }
+  .intro p { font-size:13.5px; line-height:1.8; color:var(--rtam-bhasma-deep); max-width:52ch;
+             margin:16px auto 0; }
+
+  .walkwrap { position:relative; }
+  .walk { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+          scrollbar-width:none; }
+  .walk::-webkit-scrollbar { display:none; }
+  .stop { flex:0 0 100%; scroll-snap-align:center; height:76vh; position:relative; overflow:hidden; }
+  .stop img { width:100%; height:100%; object-fit:cover; display:block; }
+  .stop .zoom { transform:scale(1.55); transform-origin:50% 12%; }
+  .stop .zoom2 { transform:scale(1.75); transform-origin:22% 62%; }
+  .stop .zoom3 { transform:scale(1.75); transform-origin:80% 55%; }
+  .plate { position:absolute; left:0; right:0; bottom:0; padding:70px 54px 26px;
+           background:linear-gradient(transparent, #141414f0 78%); }
+  .plate .dn { font-family:Tiro,serif; font-size:24px; color:var(--rtam-gold); }
+  .plate .cap { font-size:13px; letter-spacing:.06em; color:var(--rtam-bhasma-light); margin-top:6px; }
+
+  .stop.garbha { display:flex; flex-direction:column; align-items:center; justify-content:center;
+                 text-align:center; background:#0f0e0d; }
+  .garbha img.mark { width:170px; height:170px; object-fit:contain; }
+  .garbha .dn { font-family:Tiro,serif; font-size:28px; color:var(--rtam-gold); margin-top:28px; }
+  .garbha .cap { font-size:13px; line-height:1.8; color:var(--rtam-bhasma-deep); margin-top:12px;
+                 max-width:40ch; }
+
+  /* the parikrama compass — your position on the walk */
+  .compass { position:absolute; top:26px; right:34px; width:118px; height:118px; pointer-events:none; }
+  .compass text { font-family:Inter,sans-serif; font-weight:600; }
+
+  .arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:5; width:52px; height:52px;
+           border-radius:50%; border:1px solid #3a3733; background:#141414cc; color:var(--rtam-bhasma-light);
+           font-size:20px; cursor:pointer; }
+  .arrow:hover { border-color:var(--rtam-gold); color:var(--rtam-gold); }
+  .arrow.l { left:22px; } .arrow.r { right:22px; }
+
+  .after { text-align:center; padding:56px 24px 70px; }
+  .after p { font-size:12px; letter-spacing:.08em; color:var(--rtam-bhasma-deep); line-height:2; }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="../../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+  <span class="brand">ṚTAM FOUNDATION</span>
+  <a class="link" href="#">Philosophy</a><a class="on" href="#">Mandir</a>
+  <a class="link" href="#">Seva</a><a class="link" href="#">Events</a>
+</nav>
+
+<header class="intro">
+  <div class="dn">प्रदक्षिणा</div>
+  <div class="en">WALK AROUND HIM</div>
+  <p>You meet a mandir by walking around it, keeping it to your right. So the page does the same:
+     the passage below moves only clockwise — east, south, west, north — and ends at the threshold.</p>
+</header>
+
+<div class="walkwrap">
+  <div class="walk" id="walk" tabindex="0">
+    <div class="stop">
+      <img src="../../temple.jpeg" alt="the mandir from the east">
+      <div class="plate"><div class="dn">पूर्व</div>
+        <div class="cap">EAST — the mukha-dvāra faces the rising sun</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom" src="../../temple.jpeg" alt="the shikhara">
+      <div class="plate"><div class="dn">दक्षिण</div>
+        <div class="cap">SOUTH — the śikhara climbs in carved tiers</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom2" src="../../temple.jpeg" alt="the stone">
+      <div class="plate"><div class="dn">पश्चिम</div>
+        <div class="cap">WEST — the stone courses, hand-dressed</div></div>
+    </div>
+    <div class="stop">
+      <img class="zoom3" src="../../temple.jpeg" alt="the north face">
+      <div class="plate"><div class="dn">उत्तर</div>
+        <div class="cap">NORTH — where the nālī lets the abhiṣeka waters out</div></div>
+    </div>
+    <div class="stop garbha">
+      <img class="mark" src="../../../brand/dist/outlined/icons/rtam-anahata-garbhagriha.svg" alt="">
+      <div class="dn">गर्भगृह</div>
+      <div class="cap">The walk ends where He sits. Photograph after prāṇa-pratiṣṭhā —
+        until then, the heart-lotus holds the place.</div>
+    </div>
+  </div>
+
+  <svg class="compass" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#141414d8"/>
+    <circle cx="50" cy="50" r="33" fill="none" stroke="#C9C2B6" stroke-width="1.6"/>
+    <g fill="#C9C2B6" font-size="10.5" text-anchor="middle" dominant-baseline="middle">
+      <text x="89" y="51">E</text><text x="50" y="90">S</text>
+      <text x="11" y="51">W</text><text x="50" y="12">N</text>
+    </g>
+    <circle cx="50" cy="50" r="2.6" fill="#C8A15A"/>
+    <circle id="pos" cx="83" cy="50" r="5.2" fill="#C8A15A"/>
+  </svg>
+
+  <button class="arrow l" id="back" aria-label="back">‹</button>
+  <button class="arrow r" id="fwd" aria-label="forward">›</button>
+</div>
+
+<div class="after">
+  <p>render crops for layout — site photographs replace these as nirmāṇa proceeds<br>
+     on a phone, the walk is a swipe; the direction rule holds</p>
+</div>
+
+<script>
+const walk=document.getElementById("walk"), pos=document.getElementById("pos");
+const span=()=>walk.scrollWidth-walk.clientWidth;
+
+function paint(){
+  const t=span()>0 ? walk.scrollLeft/span() : 0;
+  const a=t*300*Math.PI/180;                     // E -> S -> W -> N -> threshold, clockwise
+  pos.setAttribute("cx",(50+33*Math.cos(a)).toFixed(1));
+  pos.setAttribute("cy",(50+33*Math.sin(a)).toFixed(1));
+}
+walk.addEventListener("scroll",paint,{passive:true});
+
+/* the vertical wheel advances the walk — forward only ever means clockwise */
+walk.addEventListener("wheel",e=>{
+  if (Math.abs(e.deltaY)>Math.abs(e.deltaX)){ walk.scrollLeft+=e.deltaY*2.2; e.preventDefault(); }
+},{passive:false});
+document.getElementById("fwd").addEventListener("click",()=>walk.scrollBy({left:walk.clientWidth}));
+document.getElementById("back").addEventListener("click",()=>walk.scrollBy({left:-walk.clientWidth}));
+
+window.setWalk=t=>{ walk.style.scrollBehavior="auto"; walk.scrollLeft=t*span(); paint(); };
+paint();
+</script>
+</body>
+</html>

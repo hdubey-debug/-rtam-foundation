@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · behavior 3 — foil gold</title>
+<link rel="stylesheet" href="../../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  :root { --foilp:.5; }   /* 0..1 with scroll; still page = plain dīpa gold */
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+
+  /* the foil ramp: dīpa gold ±light — a specular state, not a palette addition */
+  .foil {
+    background-image:linear-gradient(115deg,
+      #8F6B33 0%, #C8A15A 40%, #F0DFB0 50%, #C8A15A 60%, #8F6B33 100%);
+    background-size:280% 100%;
+    background-position:calc(var(--foilp) * 100%) 0;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .foil-rule { height:1.5px; border:0; background-image:linear-gradient(90deg,
+      #8F6B33 0%, #C8A15A 40%, #F0DFB0 50%, #C8A15A 60%, #8F6B33 100%);
+    background-size:280% 100%; background-position:calc(var(--foilp) * 100%) 0; }
+  /* on light ground the catch must never outshine the ground: darker ramp, tamra->gold */
+  .day .foil, .day .foil-rule {
+    background-image:linear-gradient(115deg,
+      #6A4A1F 0%, #7A5423 40%, #C8A15A 50%, #7A5423 60%, #6A4A1F 100%);
+    background-size:280% 100%;
+    background-position:calc(var(--foilp) * 100%) 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .foil { background-image:none; color:var(--rtam-gold); }
+    .foil-rule { background-image:none; background-color:var(--rtam-gold); }
+    .day .foil { background-image:none; color:var(--rtam-tamra); }
+    .day .foil-rule { background-image:none; background-color:var(--rtam-tamra); }
+  }
+
+  nav { display:flex; align-items:center; gap:34px; padding:20px 48px; }
+  nav img { width:40px; height:40px; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; }
+  nav span.k { margin-left:auto; font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep); }
+
+  .hero { min-height:92vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+          text-align:center; padding:0 24px; }
+  .hero .big { font-family:Cinzel,serif; font-weight:500; font-size:clamp(90px,17vw,230px);
+               letter-spacing:.12em; line-height:1; }
+  .hero .sub { font-size:13px; letter-spacing:.28em; color:var(--rtam-bhasma-deep); margin-top:26px; }
+  .hero .hint { font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep); margin-top:8vh; }
+
+  section.verse { max-width:680px; margin:0 auto; padding:16vh 24px; text-align:center; }
+  .verse hr { width:120px; margin:0 auto; }
+  .verse .dn { font-family:Tiro,serif; font-size:clamp(34px,5vw,52px); margin:44px 0 20px; }
+  .verse .tr { font-size:14px; line-height:2; color:var(--rtam-bhasma-light); }
+  .verse .who { font-size:11.5px; letter-spacing:.24em; color:var(--rtam-bhasma-deep); margin:20px 0 44px; }
+
+  section.card-demo { padding:12vh 24px 16vh; text-align:center; }
+  .card-demo .k { font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep); }
+  .card { width:min(520px,88vw); aspect-ratio:1.75; margin:44px auto 0; border:1px solid #2a2724;
+          border-radius:6px; background:linear-gradient(160deg,#181715,#121110);
+          box-shadow:0 30px 60px #00000088; display:flex; flex-direction:column;
+          align-items:center; justify-content:center; gap:20px; }
+  .card svg { width:104px; height:104px; }
+  .card .wm { font-family:Cinzel,serif; font-size:19px; letter-spacing:.3em; }
+  .card-demo .cap { font-size:12.5px; line-height:1.8; color:var(--rtam-bhasma-deep); margin-top:30px; }
+
+  section.day { background:var(--rtam-chandra); color:var(--rtam-charcoal); text-align:center;
+                padding:14vh 24px; }
+  .day .k { font-size:11.5px; letter-spacing:.3em; color:#8a857c; }
+  .day h2 { font-family:Cinzel,serif; font-weight:500; font-size:30px; letter-spacing:.14em; margin-top:26px; }
+  .day hr { width:120px; margin:30px auto; }
+  .day p { font-size:13.5px; line-height:1.9; color:#4c4944; max-width:52ch; margin:0 auto; }
+
+  footer { padding:44px 48px; font-size:12px; color:var(--rtam-bhasma-deep); text-align:center;
+           letter-spacing:.06em; line-height:2; }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="../../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+  <span class="brand">ṚTAM FOUNDATION</span>
+  <span class="k">SUVARṆA · THE FOIL STUDY</span>
+</nav>
+
+<div class="hero">
+  <div class="big foil">ṚTAM</div>
+  <div class="sub">THE GOLD ON THIS PAGE BEHAVES LIKE GOLD</div>
+  <div class="hint">SCROLL — AND WATCH IT CATCH THE LIGHT</div>
+</div>
+
+<section class="verse">
+  <hr class="foil-rule">
+  <div class="dn foil">ऋतस्य पन्थाम् अन्वेति साधु</div>
+  <div class="tr">He who follows the path of Ṛta walks well.</div>
+  <div class="who">ṚGVEDA</div>
+  <hr class="foil-rule">
+</section>
+
+<section class="card-demo">
+  <div class="k">PRINT MEETS SCREEN</div>
+  <div class="card">
+    <svg id="cardmark" viewBox="0 0 240 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#8F6B33"/>
+          <stop offset="42%" stop-color="#C8A15A"/>
+          <stop offset="50%" stop-color="#F0DFB0"/>
+          <stop offset="58%" stop-color="#C8A15A"/>
+          <stop offset="100%" stop-color="#8F6B33"/>
+        </linearGradient>
+      </defs>
+      <circle cx="120" cy="120" r="90.9" fill="none" stroke="#C9C2B6" stroke-width="14.1"/>
+      <g id="cardwins"></g>
+      <g id="cardpetals"></g>
+      <circle cx="120" cy="120" r="21.6" fill="url(#fg)" id="cardhub"/>
+    </svg>
+    <div class="wm foil">ṚTAM FOUNDATION</div>
+  </div>
+  <p class="cap">On paper this card is hot-stamped foil — invisible until it tilts, then it catches.<br>
+     On screen: the same gold, catching light as the page moves. Still page, still gold.</p>
+</section>
+
+<section class="day">
+  <div class="k">ON THE MOON-PAPER GROUND</div>
+  <h2 class="foil">THE SAME FOIL, BY DAY</h2>
+  <hr class="foil-rule">
+  <p>The behavior survives the day register: on chandra ground the sweep stays decorative-only —
+     reading text remains charcoal and tamra, exactly as the usage rules demand.</p>
+</section>
+
+<footer>
+  foil ramp = dīpa gold ± light (specular states, not new palette colors)<br>
+  reduced-motion visitors see plain dīpa gold · a still page shows plain dīpa gold
+</footer>
+
+<script>
+/* E3 petal, the shipped chain, at card scale */
+const S=98/230, CX=120, CY=120;
+function petalD(deg){
+  const a=deg*Math.PI/180, ux=Math.cos(a), uy=Math.sin(a), nx=-uy, ny=ux;
+  const p=(r,w)=>`${(CX+ux*r*S+nx*w*S).toFixed(1)} ${(CY+uy*r*S+ny*w*S).toFixed(1)}`;
+  const G=[[73.6,10.5],[80,17],[92,25.5],[108,28.5],[126,30.4],[148,14],[161,0]];
+  return `M ${p(G[0][0],-G[0][1])} C ${p(G[1][0],-G[1][1])} ${p(G[2][0],-G[2][1])} ${p(G[3][0],-G[3][1])}`
+       + ` C ${p(G[4][0],-G[4][1])} ${p(G[5][0],-G[5][1])} ${p(G[6][0],0)}`
+       + ` C ${p(G[5][0],G[5][1])} ${p(G[4][0],G[4][1])} ${p(G[3][0],G[3][1])}`
+       + ` C ${p(G[2][0],G[2][1])} ${p(G[1][0],G[1][1])} ${p(G[0][0],G[0][1])} Z`;
+}
+const NS="http://www.w3.org/2000/svg", pg=document.getElementById("cardpetals"),
+      wg=document.getElementById("cardwins");
+for (let k=0;k<12;k++){
+  const e=document.createElementNS(NS,"path");
+  e.setAttribute("d",petalD(-90+k*30));
+  e.setAttribute("fill","#C9C2B6"); e.setAttribute("stroke","#141414");
+  e.setAttribute("stroke-width",(5*S).toFixed(1)); e.setAttribute("stroke-linejoin","round");
+  pg.appendChild(e);
+  const a=(-90+k*30)*Math.PI/180, w=document.createElementNS(NS,"circle");
+  w.setAttribute("cx",(CX+211.6*S*Math.cos(a)).toFixed(1));
+  w.setAttribute("cy",(CY+211.6*S*Math.sin(a)).toFixed(1));
+  w.setAttribute("r",(10.35*S).toFixed(1)); w.setAttribute("fill","#141414");
+  wg.appendChild(w);
+}
+
+const grad=document.getElementById("fg");
+function applyFoil(t){
+  document.documentElement.style.setProperty("--foilp", t.toFixed(4));
+  grad.setAttribute("gradientTransform", `rotate(${(18+54*t).toFixed(1)} 120 120)`);
+}
+window.setFoil = t => { window.scrollTo(0, t*(document.body.scrollHeight-innerHeight)); applyFoil(t); };
+
+if (!new URLSearchParams(location.search).has("freeze")){
+  const on=()=>applyFoil(Math.max(0,Math.min(1, scrollY/(document.body.scrollHeight-innerHeight))));
+  addEventListener("scroll",on,{passive:true}); on();
+} else applyFoil(0.5);
+</script>
+</body>
+</html>

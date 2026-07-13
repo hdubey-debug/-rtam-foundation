@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · behavior 2 — the year-wheel</title>
+<link rel="stylesheet" href="../../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter,sans-serif; background:var(--rtam-mahakala); color:var(--rtam-bhasma-light); }
+  a { text-decoration:none; }
+
+  nav { display:flex; align-items:center; gap:34px; padding:20px 48px; }
+  nav img { width:40px; height:40px; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; }
+  nav a.link { color:var(--rtam-bhasma-deep); font-size:13px; letter-spacing:.06em; }
+  nav a.on { color:var(--rtam-gold); }
+
+  .page { max-width:1240px; margin:0 auto; padding:30px 48px 90px; display:grid;
+          grid-template-columns: minmax(380px,52%) 1fr; gap:64px; align-items:start; }
+  .wheelbox { position:sticky; top:30px; }
+  svg { width:100%; height:auto; display:block; }
+  .fest { cursor:pointer; }
+  .fest circle { transition:r .25s ease; }
+
+  .side .kicker { font-size:11.5px; letter-spacing:.3em; color:var(--rtam-bhasma-deep); }
+  .side h1 { font-family:Cinzel,serif; font-weight:500; font-size:30px; letter-spacing:.06em; margin-top:14px; }
+  .side .intro { font-size:13.5px; line-height:1.8; color:var(--rtam-bhasma-deep); margin-top:14px; max-width:46ch; }
+
+  .card { border-left:2px solid var(--rtam-gold); padding:6px 0 6px 24px; margin-top:34px; min-height:118px; }
+  .card .dn { font-family:Tiro,serif; font-size:30px; color:var(--rtam-gold); }
+  .card .en { font-family:Cinzel,serif; font-size:14px; letter-spacing:.22em; margin-top:8px; }
+  .card .when { font-size:12.5px; letter-spacing:.12em; color:var(--rtam-bhasma-deep); margin-top:8px; }
+  .card .line { font-size:13.5px; line-height:1.75; color:var(--rtam-bhasma-light); margin-top:10px; max-width:44ch; }
+
+  .list { margin-top:38px; border-top:1px solid #242220; }
+  .row { display:flex; gap:22px; align-items:baseline; padding:13px 6px; border-bottom:1px solid #242220;
+         cursor:pointer; }
+  .row .d { font-size:12px; letter-spacing:.1em; color:var(--rtam-bhasma-deep); width:64px; flex:none; }
+  .row .dn { font-family:Tiro,serif; font-size:17px; color:var(--rtam-bhasma-light); }
+  .row .en { font-size:12px; letter-spacing:.14em; color:var(--rtam-bhasma-deep); margin-left:auto; text-align:right; }
+  .row.on { background:#1a1917; }
+  .row.on .dn { color:var(--rtam-gold); }
+  .samplenote { margin-top:26px; font-size:11.5px; letter-spacing:.06em; color:var(--rtam-bhasma-deep); }
+
+  @media (max-width:900px){ .page { grid-template-columns:1fr; } .wheelbox { position:static; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <img src="../../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+  <span class="brand">ṚTAM FOUNDATION</span>
+  <a class="link" href="#">Philosophy</a><a class="link" href="#">Mandir</a>
+  <a class="link" href="#">Seva</a><a class="on" href="#">Events</a>
+</nav>
+
+<div class="page">
+  <div class="wheelbox"><svg id="wheel" viewBox="0 0 760 760" aria-label="the year as the wheel"></svg></div>
+
+  <div class="side">
+    <div class="kicker">उत्सव · THE YEAR AT THE MANDIR</div>
+    <h1>Twelve months on the wheel</h1>
+    <p class="intro">The year keeps the same shape as the mark — twelve around one. Gold points are
+      utsava days; the small flame is today. Touch a point, or read down the list.</p>
+
+    <div class="card" id="card"></div>
+    <div class="list" id="list"></div>
+    <div class="samplenote">sample dates for layout — final tithis fixed by the pañchāṅga</div>
+  </div>
+</div>
+
+<script>
+const NS="http://www.w3.org/2000/svg", CX=380, CY=380, R=310;
+const MONTHS=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const MDAYS =[31,28,31,30,31,30,31,31,30,31,30,31];
+const doy=(m,d)=>MDAYS.slice(0,m-1).reduce((a,b)=>a+b,0)+d;
+const ang=doyv=>(-90+360*doyv/365)*Math.PI/180;            // Jan 1 at top, clockwise
+const P=(r,a)=>[CX+r*Math.cos(a), CY+r*Math.sin(a)];
+
+/* sample utsava data (dates illustrative) */
+const FESTS=[
+ {m:1,d:14,dn:"मकर संक्रान्ति",en:"MAKARA SANKRANTI",line:"The sun turns north — uttarāyaṇa begins at the mandir."},
+ {m:2,d:15,dn:"महाशिवरात्रि",en:"MAHASHIVARATRI",line:"The great night of Śiva — the mandir's highest utsava, jāgaraṇa till dawn."},
+ {m:3,d:3, dn:"होली",en:"HOLI",line:"Colours at the mandir courtyard after the morning āratī."},
+ {m:3,d:19,dn:"चैत्र नवरात्रि",en:"CHAITRA NAVARATRI",line:"The new saṁvatsara opens with nine nights of the Devī."},
+ {m:5,d:24,dn:"गंगा दशहरा",en:"GANGA DASHAHARA",line:"The river's descent honoured with jala-abhiṣeka."},
+ {m:7,d:29,dn:"गुरुपूर्णिमा",en:"GURU PURNIMA",line:"The full moon of the teachers — satsaṅga and sevā."},
+ {m:8,d:3, dn:"श्रावण सोमवार",en:"SHRAVANA SOMVAR",line:"The Mondays of Śrāvaṇa — rudrābhiṣeka each week of the month."},
+ {m:8,d:17,dn:"नाग पंचमी",en:"NAGA PANCHAMI",line:"The serpents of the Lord honoured at the jaladhārī."},
+ {m:10,d:20,dn:"विजयादशमी",en:"VIJAYADASHAMI",line:"Order prevails — the tenth day after the nine nights."},
+ {m:11,d:8, dn:"दीपावली",en:"DIPAVALI",line:"A thousand dīpas on the parikramā — the mandir kept in flame."},
+ {m:11,d:24,dn:"कार्तिक पूर्णिमा",en:"KARTIKA PURNIMA · DEV DIPAVALI",line:"The gods' own festival of lamps closes the season."},
+];
+
+const svg=document.getElementById("wheel");
+const el=(t,at)=>{ const e=document.createElementNS(NS,t);
+                   for (const k in at) e.setAttribute(k,at[k]); svg.appendChild(e); return e; };
+
+/* rim */
+el("circle",{cx:CX,cy:CY,r:R,fill:"none",stroke:"#C9C2B6","stroke-width":2,opacity:.4});
+/* month boundaries as quiet radial ticks, labels at mid-month */
+for (let m=1;m<=12;m++){
+  const a0=ang(doy(m,1));
+  const [x1,y1]=P(R-9,a0), [x2,y2]=P(R+9,a0);
+  el("line",{x1,y1,x2,y2,stroke:"#8F887C","stroke-width":1.4,opacity:.55});
+  const am=ang(doy(m,1)+MDAYS[m-1]/2), [lx,ly]=P(R+34,am);
+  const t=el("text",{x:lx,y:ly,"text-anchor":"middle","dominant-baseline":"middle",
+                     fill:"#8F887C","font-size":13,"letter-spacing":2});
+  t.textContent=MONTHS[m-1]; t.style.fontFamily="Inter,sans-serif";
+}
+/* centre: the bindu, bare — and the year beneath it */
+el("circle",{cx:CX,cy:CY,r:13,fill:"#C8A15A"});
+const yr=el("text",{x:CX,y:CY+44,"text-anchor":"middle",fill:"#8F887C","font-size":21});
+yr.textContent="२०२६"; yr.style.fontFamily="Tiro,serif";
+
+/* today: a small flame on the rim (demo: ?today=DOY overrides) */
+const q=new URLSearchParams(location.search);
+const now=new Date();
+const tdoy=q.has("today") ? +q.get("today")
+          : doy(now.getMonth()+1, now.getDate());
+const ta=ang(tdoy), [tx,ty]=P(R,ta);
+el("circle",{cx:tx,cy:ty,r:26,fill:"none",stroke:"#C8A15A","stroke-width":1,opacity:.5});
+const fl=el("path",{d:"M0,-9 C3.4,-4.6 4.2,-1.4 0,4.4 C-4.2,-1.4 -3.4,-4.6 0,-9 Z",fill:"#C8A15A",
+                    transform:`translate(${tx} ${ty})`});
+const [ax,ay]=P(R+52,ta);           // radially outward, clear of the month labels
+const tl=el("text",{x:ax,y:ay,"text-anchor":"middle","dominant-baseline":"middle",
+                    fill:"#C8A15A","font-size":15});
+tl.textContent="आज"; tl.style.fontFamily="Tiro,serif";
+
+/* festival points */
+const dots=[];
+FESTS.forEach((f,i)=>{
+  const a=ang(doy(f.m,f.d)), [x,y]=P(R,a);
+  const g=el("g",{class:"fest"});
+  const halo=document.createElementNS(NS,"circle");
+  halo.setAttribute("cx",x); halo.setAttribute("cy",y); halo.setAttribute("r",15);
+  halo.setAttribute("fill","none"); halo.setAttribute("stroke","#C8A15A");
+  halo.setAttribute("stroke-width",1); halo.setAttribute("opacity",0);
+  const c=document.createElementNS(NS,"circle");
+  c.setAttribute("cx",x); c.setAttribute("cy",y); c.setAttribute("r",7); c.setAttribute("fill","#C8A15A");
+  g.appendChild(halo); g.appendChild(c); svg.appendChild(g);
+  g.addEventListener("click",()=>setFocus(i));
+  g.addEventListener("mouseenter",()=>setFocus(i));
+  dots.push({halo,c});
+});
+
+/* card + list */
+const DATE=f=>`${String(f.d).padStart(2,"0")} ${MONTHS[f.m-1]}`;
+const card=document.getElementById("card"), list=document.getElementById("list");
+const rows=FESTS.map((f,i)=>{
+  const r=document.createElement("div"); r.className="row";
+  r.innerHTML=`<span class="d">${DATE(f)}</span><span class="dn">${f.dn}</span><span class="en">${f.en}</span>`;
+  r.addEventListener("click",()=>setFocus(i));
+  r.addEventListener("mouseenter",()=>setFocus(i));
+  list.appendChild(r); return r;
+});
+
+let cur=-1;
+function setFocus(i){
+  if (i===cur) return; cur=i;
+  dots.forEach((d,k)=>{ d.c.setAttribute("r", k===i?10:7); d.halo.setAttribute("opacity", k===i?.9:0); });
+  rows.forEach((r,k)=>r.classList.toggle("on",k===i));
+  const f=FESTS[i];
+  card.innerHTML=`<div class="dn">${f.dn}</div><div class="en">${f.en}</div>
+    <div class="when">${DATE(f)} · [TITHI] · at the mandir</div>
+    <div class="line">${f.line}</div>`;
+}
+window.setFocus=setFocus;
+
+/* open on the next upcoming utsava */
+const next=FESTS.findIndex(f=>doy(f.m,f.d)>=tdoy);
+setFocus(next<0?0:next);
+</script>
+</body>
+</html>

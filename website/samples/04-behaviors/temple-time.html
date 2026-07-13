@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-reg="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ṚTAM · behavior 1 — temple time</title>
+<link rel="stylesheet" href="../../../brand/palette/colors.css">
+<style>
+  @font-face { font-family:'Cinzel'; font-weight:500; src:url('../../../brand/fonts/cinzel/cinzel-500.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:400; src:url('../../../brand/fonts/inter/inter-400.ttf'); }
+  @font-face { font-family:'Inter'; font-weight:600; src:url('../../../brand/fonts/inter/inter-600.ttf'); }
+  @font-face { font-family:'Tiro'; src:url('../../../brand/fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+  * { box-sizing:border-box; margin:0; }
+
+  /* the three hours of the mandir — same substances, different light */
+  html                  { --bg:var(--rtam-mahakala); --fg:var(--rtam-bhasma-light); --mut:var(--rtam-bhasma-deep);
+                          --acc:var(--rtam-gold); --hair:#2a2724; --navg:#141414f2; --navh:#141414d8;
+                          --glow:.55; --warm:.10; --horizon:.30; }
+  html[data-reg="day"]  { --bg:var(--rtam-chandra); --fg:var(--rtam-charcoal); --mut:#6d675d;
+                          --acc:var(--rtam-tamra); --hair:#ddd8cd; --navg:#EDEBE6f2; --navh:#EDEBE6d8;
+                          --glow:.16; --warm:0; --horizon:0; }
+  html[data-reg="sandhya"] { --glow:1; --warm:.5; --horizon:1; }
+
+  body { font-family:Inter,sans-serif; background:var(--bg); color:var(--fg);
+         transition:background 1.4s ease, color 1.4s ease; min-height:100vh; }
+  a { text-decoration:none; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:20; display:flex; align-items:center; gap:34px;
+        padding:20px 48px; background:linear-gradient(var(--navg),var(--navh) 70%,transparent);
+        transition:background 1.4s ease; }
+  .navmark { position:relative; width:40px; height:40px; }
+  .navmark img { position:absolute; inset:0; width:40px; height:40px; transition:opacity 1.4s ease; }
+  html[data-reg="day"] .im-night { opacity:0; }
+  html:not([data-reg="day"]) .im-day { opacity:0; }
+  nav .brand { font-family:Cinzel,serif; font-size:16px; letter-spacing:.16em; color:var(--fg); }
+  nav a.link { color:var(--mut); font-size:13px; letter-spacing:.06em; }
+
+  /* the sun control: shows the mandir's hour; click to override, click through to return to auto */
+  .sunctl { margin-left:auto; display:flex; align-items:center; gap:12px; cursor:pointer;
+            border:1px solid var(--hair); padding:8px 16px; border-radius:99px; background:none; }
+  .sunctl .disc { width:16px; height:16px; border-radius:50%; position:relative; }
+  html[data-reg="day"]     .sunctl .disc { background:var(--rtam-tamra); box-shadow:0 0 0 3px #7a542322; }
+  html[data-reg="sandhya"] .sunctl .disc { background:linear-gradient(var(--rtam-gold) 50%, transparent 50%);
+                                           border:1px solid var(--rtam-gold); }
+  html[data-reg="night"]   .sunctl .disc { background:transparent; border:1.5px solid var(--rtam-bhasma-deep); }
+  .sunctl .lbl { font-size:11.5px; letter-spacing:.14em; color:var(--mut); }
+
+  main { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+         text-align:center; padding:120px 24px 60px; position:relative; overflow:hidden; }
+  /* dipa light pooling at the ground — strongest at sandhya, gone by day */
+  body::after { content:""; position:fixed; left:0; right:0; bottom:0; height:38vh; pointer-events:none;
+                background:linear-gradient(transparent, color-mix(in srgb, var(--rtam-gold) 14%, transparent));
+                opacity:var(--warm); transition:opacity 1.4s ease; }
+
+  .heromark { position:relative; width:190px; height:190px; margin-bottom:38px; }
+  .heromark img { position:absolute; inset:0; width:190px; height:190px; transition:opacity 1.4s ease; }
+  .heromark .halo { position:absolute; inset:-70px; border-radius:50%; pointer-events:none;
+                    background:radial-gradient(circle, #C8A15A66 0%, #C8A15A18 55%, transparent 72%);
+                    opacity:var(--glow); transition:opacity 1.4s ease;
+                    animation:breath 5.5s ease-in-out infinite; }
+  @keyframes breath { 0%,100% { transform:scale(.96); filter:brightness(.92); }
+                      50%     { transform:scale(1.04); filter:brightness(1.1); } }
+  @media (prefers-reduced-motion: reduce) { .halo { animation:none; } }
+
+  h1 { font-family:Tiro,serif; font-weight:400; font-size:clamp(30px,4.6vw,46px); letter-spacing:.02em; }
+  .en { font-family:Cinzel,serif; font-size:clamp(14px,1.6vw,17px); letter-spacing:.34em; color:var(--mut);
+        margin-top:14px; }
+  .horizon { width:min(420px,70vw); height:1.5px; margin:34px auto 0; transition:opacity 1.4s ease;
+             background:linear-gradient(90deg, transparent, var(--rtam-gold), transparent); opacity:var(--horizon); }
+
+  .panel { margin-top:34px; }
+  .panel .where { font-size:11.5px; letter-spacing:.3em; color:var(--mut); }
+  .panel .clock { font-family:Cinzel,serif; font-size:clamp(40px,6vw,58px); letter-spacing:.1em; margin-top:10px; }
+  .panel .phase { font-family:Tiro,serif; font-size:24px; color:var(--acc); margin-top:6px; }
+  .panel .sun   { font-size:13px; letter-spacing:.1em; color:var(--mut); margin-top:14px; }
+  .panel .note  { font-size:13px; line-height:1.8; color:var(--mut); max-width:420px; margin:22px auto 0; }
+  .panel .note b { color:var(--fg); font-weight:600; }
+
+  footer { border-top:1px solid var(--hair); padding:26px 48px; display:flex; align-items:center; gap:18px;
+           font-size:12px; color:var(--mut); transition:border-color 1.4s ease; }
+  footer .right { margin-left:auto; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="navmark">
+    <img class="im-night" src="../../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+    <img class="im-day"   src="../../../brand/dist/outlined/icons/rtam-chakra-day.svg" alt="">
+  </span>
+  <span class="brand">ṚTAM FOUNDATION</span>
+  <a class="link" href="#">Philosophy</a><a class="link" href="#">Mandir</a>
+  <a class="link" href="#">Seva</a><a class="link" href="#">Events</a>
+  <button class="sunctl" id="sunctl" title="The page keeps the mandir's clock. Click to override.">
+    <span class="disc"></span><span class="lbl" id="sunlbl">AUTO</span>
+  </button>
+</nav>
+
+<main>
+  <div class="heromark">
+    <div class="halo"></div>
+    <img class="im-night" src="../../../brand/dist/outlined/icons/rtam-chakra-garbhagriha.svg" alt="">
+    <img class="im-day"   src="../../../brand/dist/outlined/icons/rtam-chakra-day.svg" alt="">
+  </div>
+  <h1>ऋतम्भरेश्वर मंदिर</h1>
+  <div class="en">RTAMBHARESHVARA MANDIR · JABALPUR</div>
+  <div class="horizon"></div>
+
+  <div class="panel">
+    <div class="where">मंदिर समय · TEMPLE TIME</div>
+    <div class="clock" id="clock">--:--</div>
+    <div class="phase" id="phase">…</div>
+    <div class="sun" id="sunline">सूर्योदय --:-- · सूर्यास्त --:--</div>
+    <p class="note" id="note"></p>
+  </div>
+</main>
+
+<footer>
+  <span>ऋतम् प्रतिष्ठान · ऋतम्भरेश्वर मंदिर</span>
+  <span class="right">auto follows the sun at 23.18° N · 79.99° E — try <b>?at=19:05</b>, or the sun control above</span>
+</footer>
+
+<script>
+/* ---- the sun over Jabalpur (NOAA-lite; ±2 min — plenty for register bands) ---- */
+const LAT = 23.1815, LON = 79.9864, IST = 5.5;   // the mandir's ground
+const D2R = Math.PI/180;
+
+function sunAt(utcMs){
+  const d = new Date(utcMs);
+  const N = Math.floor((utcMs - Date.UTC(d.getUTCFullYear(),0,0)) / 86400000);
+  const B = 2*Math.PI*(N-81)/364;
+  const eot = 9.87*Math.sin(2*B) - 7.53*Math.cos(B) - 1.5*Math.sin(B);       // minutes
+  const decl = 23.45*Math.sin(2*Math.PI*(284+N)/365) * D2R;
+  const utcH = d.getUTCHours() + d.getUTCMinutes()/60 + d.getUTCSeconds()/3600;
+  const H = (utcH + LON/15 + eot/60 - 12) * 15 * D2R;                        // hour angle
+  const alt = Math.asin(Math.sin(LAT*D2R)*Math.sin(decl)
+            + Math.cos(LAT*D2R)*Math.cos(decl)*Math.cos(H)) / D2R;
+  const cosH0 = (Math.sin(-0.833*D2R) - Math.sin(LAT*D2R)*Math.sin(decl))
+              / (Math.cos(LAT*D2R)*Math.cos(decl));
+  const H0 = Math.acos(Math.max(-1,Math.min(1,cosH0))) / D2R / 15;           // half-day, hours
+  const noonUTC = 12 - LON/15 - eot/60;
+  return { alt, riseIST: noonUTC - H0 + IST, setIST: noonUTC + H0 + IST, H };
+}
+
+const fmt = h => { h=(h+24)%24; const m=Math.round(h*60);
+                   return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"); };
+
+/* register bands: day above +6°, sandhya through the junction, night below −6° */
+function regFor(sun){
+  if (sun.alt >= 6)  return "day";
+  if (sun.alt > -6)  return "sandhya";
+  return "night";
+}
+const PHASE = {
+  day:     ["दिवा",    "day at the mandir"],
+  sandhyaM:["उषा",     "dawn sandhyā — maṅgala āratī hour"],
+  sandhyaE:["सन्ध्या",  "evening sandhyā — āratī hour"],
+  night:   ["रात्रि",   "night at the mandir"],
+};
+
+let override = null;                       // null = auto; else "day"|"sandhya"|"night"
+let atParam = new URLSearchParams(location.search).get("at");   // "HH:MM" IST, demo
+
+function utcNow(){
+  if (!atParam) return Date.now();
+  const [h,m] = atParam.split(":").map(Number);
+  const now = new Date();
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m) - IST*3600000;
+}
+
+function apply(){
+  const utc = utcNow();
+  const sun = sunAt(utc);
+  const reg = override || regFor(sun);
+  document.documentElement.dataset.reg = reg;
+  const ist = new Date(utc + IST*3600000);
+  const hh = String(ist.getUTCHours()).padStart(2,"0"), mm = String(ist.getUTCMinutes()).padStart(2,"0");
+  document.getElementById("clock").textContent = hh+":"+mm;
+  const key = reg!=="sandhya" ? reg : (sun.H < 0 ? "sandhyaM" : "sandhyaE");
+  const [dn,en] = PHASE[key];
+  document.getElementById("phase").textContent = dn;
+  document.getElementById("sunline").textContent = "सूर्योदय "+fmt(sun.riseIST)+" · सूर्यास्त "+fmt(sun.setIST);
+  document.getElementById("note").innerHTML =
+    "This page keeps the mandir’s own clock. It is <b>"+en+"</b> now"
+    + (override ? " — shown by your choice; tap the sun to return to auto."
+                : " — the site observes it with you.");
+  document.getElementById("sunlbl").textContent = override ? override.toUpperCase() : "AUTO";
+}
+
+document.getElementById("sunctl").addEventListener("click", () => {
+  override = { null:"day", day:"sandhya", sandhya:"night", night:null }[override];
+  apply();
+});
+
+/* demo freeze API */
+window.setTime = t => { atParam = t; apply(); };
+apply();
+if (!new URLSearchParams(location.search).has("freeze")) setInterval(apply, 30000);
+</script>
+</body>
+</html>
