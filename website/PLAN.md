@@ -65,8 +65,14 @@ Kanaka festival), the ṛta-grid (12 columns, 6/12/24 spacing, 30°/15°).
 - **W3 — launch pack**: GitHub Pages/Netlify setup, domain checklist,
   meta/OG/sitemap/robots, Lighthouse pass, handover doc.
 
-## 4 · What I need from you (whenever ready — placeholders until then)
+## 4 · Founder inputs
 
-photos of the murti/site · address + darshan times · 2–3 real events
-with dates · donation provider choice · domain confirmation · legal
-footer text. None of these block W1 samples.
+**Confirmed (2026-07-12):** domain `rtamfoundation.org` is registered
+and owned; contact email `info@rtamfoundation.org` is live — both are
+real values in the site, not placeholders. Payments stay a placeholder
+by his decision; UI/UX is the stated priority.
+
+**Still open (whenever ready — placeholders until then):** photos of
+the murti/site · address + darshan times · 2–3 real events with dates ·
+donation provider choice (later) · legal footer text. None of these
+block W1 samples.
