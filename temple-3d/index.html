@@ -188,6 +188,17 @@ const loader = new GLTFLoader().setDRACOLoader(draco);
 loader.load(
   "temple.glb",
   (gltf) => {
+    // full anisotropic filtering — without it, 8K textures still blur at
+    // grazing angles (roofs, floors); this is most of "why does it look soft"
+    const maxAniso = renderer.capabilities.getMaxAnisotropy();
+    gltf.scene.traverse((o) => {
+      if (!o.isMesh) return;
+      for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+        for (const slot of ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap", "emissiveMap"]) {
+          if (m[slot]) { m[slot].anisotropy = maxAniso; m[slot].needsUpdate = true; }
+        }
+      }
+    });
     scene.add(gltf.scene);
     frame(gltf.scene);
     load.style.opacity = "0";
