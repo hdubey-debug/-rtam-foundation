@@ -97,7 +97,10 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 const canvas = document.getElementById("c");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
+// NO tone mapping: the model's colors are BAKED into its 8K texture —
+// filmic curves (ACES) mute them; this shows the basecolor as authored,
+// the way Tripo's own studio does.
+renderer.toneMapping = THREE.NoToneMapping;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.setClearColor(0x000000, 0);
 
@@ -114,12 +117,13 @@ controls.autoRotate = true;            // museum turntable…
 controls.autoRotateSpeed = 0.6;
 controls.addEventListener("start", () => (controls.autoRotate = false)); // …until touched
 
-// dark-stage lights over the neutral environment
-scene.add(new THREE.HemisphereLight(0x4c4e56, 0x2f2820, 0.9));
-const key = new THREE.DirectionalLight(0xffdfae, 1.5);
+// bright neutral studio light — the dark stage lives in the backdrop,
+// not on the model
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d2c8, 1.05));
+const key = new THREE.DirectionalLight(0xffffff, 1.0);
 key.position.set(-3, 4, 3);
 scene.add(key);
-const rim = new THREE.DirectionalLight(0xfff2dc, 0.6);
+const rim = new THREE.DirectionalLight(0xfff6e8, 0.45);
 rim.position.set(2.5, 3, -3.5);
 scene.add(rim);
 
