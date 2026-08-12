@@ -117,15 +117,11 @@ controls.autoRotate = true;            // museum turntable…
 controls.autoRotateSpeed = 0.6;
 controls.addEventListener("start", () => (controls.autoRotate = false)); // …until touched
 
-// bright neutral studio light — the dark stage lives in the backdrop,
-// not on the model
-scene.add(new THREE.HemisphereLight(0xffffff, 0xd8d2c8, 1.05));
-const key = new THREE.DirectionalLight(0xffffff, 1.0);
-key.position.set(-3, 4, 3);
-scene.add(key);
-const rim = new THREE.DirectionalLight(0xfff6e8, 0.45);
-rim.position.set(2.5, 3, -3.5);
-scene.add(rim);
+// EVEN studio light, the way Tripo's viewer works: the environment does
+// nearly everything and no directional light re-shades the model — its
+// texture already carries the baked light and occlusion. A directional
+// key on top reads as "clay".
+scene.add(new THREE.HemisphereLight(0xffffff, 0xcfccc6, 0.55));
 
 // the stage floor: dissolve disc + quiet reference rings (concentric
 // circles only — never a counted grid)
@@ -166,7 +162,7 @@ function frame(object) {
   object.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
   const sphere = new THREE.Box3().setFromObject(object).getBoundingSphere(new THREE.Sphere());
   const fov = (camera.fov * Math.PI) / 180;
-  const dist = (1.12 * sphere.radius) / Math.sin(Math.min(fov, fov * camera.aspect) / 2);
+  const dist = (1.02 * sphere.radius) / Math.sin(Math.min(fov, fov * camera.aspect) / 2);
   const az = (35 * Math.PI) / 180, el = (11 * Math.PI) / 180;
   camera.position.set(
     Math.sin(az) * Math.cos(el) * dist,
@@ -198,6 +194,7 @@ loader.load(
     gltf.scene.traverse((o) => {
       if (!o.isMesh) return;
       for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+        m.envMapIntensity = 1.35; // the environment IS the studio light
         for (const slot of ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap", "emissiveMap"]) {
           if (m[slot]) { m[slot].anisotropy = maxAniso; m[slot].needsUpdate = true; }
         }
