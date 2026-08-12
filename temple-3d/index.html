@@ -195,6 +195,10 @@ canvas.addEventListener("dblclick", () => {
 const bar = document.querySelector("#bar > div");
 const load = document.getElementById("load");
 const msg = document.getElementById("msg");
+// let the chakra breathe: the loading screen holds at least this long,
+// even when the model arrives instantly from cache (founder's call)
+const LOADER_MIN_MS = 3600;
+const loaderShownAt = performance.now();
 const draco = new DRACOLoader().setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
 const loader = new GLTFLoader().setDRACOLoader(draco);
 // ambient-occlusion post pass — the "every molding defined" depth.
@@ -237,10 +241,16 @@ loader.load(
     scene.add(gltf.scene);
     frame(gltf.scene);
     buildComposer();
-    startArrival();
-    load.style.opacity = "0";
-    setTimeout(() => load.remove(), 1050);
-    window.__templeReady = true;
+    // hold the curtain until the chakra has had its moment
+    const hold = Math.max(0, LOADER_MIN_MS - (performance.now() - loaderShownAt));
+    bar.style.width = "100%";
+    if (hold > 500) msg.textContent = "प्रवेश …";
+    setTimeout(() => {
+      startArrival();
+      load.style.opacity = "0";
+      setTimeout(() => load.remove(), 1050);
+      window.__templeReady = true;
+    }, hold);
   },
   (ev) => {
     if (ev.total) {
