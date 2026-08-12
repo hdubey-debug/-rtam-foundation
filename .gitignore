@@ -21,3 +21,9 @@ brand/tools/_scratch/
 
 # Build output: brand/dist/outlined/ IS committed (P0.2) — consumers use the
 # font-free masters without running the pipeline; parity.py gates staleness.
+
+# Heavy local-only assets (2026-08-11): the reference screen-capture and
+# the raw 63 MB Tripo source GLB — the optimized 3 MB copy ships in
+# temple-3d/temple.glb
+sample_video.mp4
+mandir-3d/*.glb

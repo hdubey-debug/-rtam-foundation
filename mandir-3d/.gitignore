@@ -1,0 +1,7 @@
+node_modules/
+dist/
+shots/
+# Track A AI-generated models stay local: free-tier Tripo output is
+# non-commercial — provenance JSON is committed, the binary is not.
+public/models/*.glb
+*.local

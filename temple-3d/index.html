@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#141414" />
+<meta name="description" content="Rtambhareshvara Mandir — interactive 3D. A design study by ṚTAM Foundation." />
+<link rel="icon" type="image/svg+xml" href="rtam-chakra.svg" />
+<title>ऋतम्भरेश्वर मंदिर — the temple in 3D · ṚTAM</title>
+<style>
+  /* ṚTAM garbhagriha register — brand/palette/colors.json */
+  @font-face { font-family: "Tiro Devanagari Sanskrit"; src: url("fonts/tiro-400.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Cinzel"; font-weight: 500; src: url("fonts/cinzel-500.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Cinzel"; font-weight: 600; src: url("fonts/cinzel-600.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Inter"; src: url("fonts/inter-400.woff2") format("woff2"); font-display: swap; }
+
+  :root { --mahakala:#141414; --bhasma:#C9C2B6; --bhasma-deep:#8F887C; --gold:#C8A15A; }
+  html, body { height: 100%; margin: 0; overflow: hidden; background: var(--mahakala); color: var(--bhasma); }
+  body { font-family: Inter, system-ui, sans-serif; }
+
+  #stage { position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 55% at 50% 88%, rgba(200,161,90,.16) 0%, rgba(200,161,90,.05) 38%, rgba(20,20,20,0) 70%),
+      radial-gradient(140% 100% at 50% 0%, rgba(28,26,24,.6) 0%, rgba(20,20,20,0) 55%),
+      var(--mahakala); }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+  header { position: absolute; inset: 0 0 auto 0; z-index: 5; display: flex; justify-content: space-between;
+    align-items: center; padding: 14px 22px; pointer-events: none;
+    background: linear-gradient(rgba(20,20,20,.85), rgba(20,20,20,0)); }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 34px; height: 34px; }
+  .brand .deva { font-family: "Tiro Devanagari Sanskrit", serif; font-size: 21px; line-height: 1; }
+  .brand .latin { font-family: Cinzel, serif; font-weight: 600; font-size: 10.5px; letter-spacing: .3em;
+    color: var(--gold); margin-top: 5px; }
+  .note { font-size: 11px; color: var(--bhasma-deep); text-align: right; line-height: 1.7; }
+  .note b { color: var(--bhasma); font-weight: 400; }
+
+  #hud { position: absolute; left: 0; right: 0; bottom: 14px; z-index: 5; text-align: center;
+    font-size: 11.5px; color: var(--bhasma-deep); pointer-events: none; letter-spacing: .02em; }
+  #hud span { color: var(--bhasma); }
+
+  #load { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; gap: 18px;
+    align-items: center; justify-content: center; background: var(--mahakala); transition: opacity .6s; }
+  #load img { width: 72px; height: 72px; animation: turn 24s linear infinite; }
+  @keyframes turn { to { transform: rotate(360deg); } }
+  #load .deva { font-family: "Tiro Devanagari Sanskrit", serif; font-size: 26px; }
+  #bar { width: 240px; height: 2px; background: #2a2723; }
+  #bar > div { height: 100%; width: 0%; background: var(--gold); transition: width .2s; }
+  .small { font-size: 12px; color: var(--bhasma-deep); }
+  #err { display: none; font-size: 12.5px; color: var(--bhasma-deep); max-width: 520px;
+    text-align: center; line-height: 1.8; padding: 0 20px; }
+  #err b { color: #c07a5a; font-weight: 400; }
+  code { color: var(--bhasma); background: #221f1b; padding: 1px 7px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="c"></canvas></div>
+
+<header>
+  <div class="brand">
+    <img src="rtam-chakra.svg" alt="ṚTAM" />
+    <div>
+      <div class="deva">ऋतम्भरेश्वर मंदिर</div>
+      <div class="latin">RTAMBHARESHVARA&nbsp;MANDIR</div>
+    </div>
+  </div>
+  <div class="note"><b>ṚTAM Foundation</b> · Jabalpur<br>design study — not for construction</div>
+</header>
+
+<div id="hud"><span>drag</span> rotate &nbsp;·&nbsp; <span>scroll</span> zoom &nbsp;·&nbsp;
+  <span>right-drag</span> pan &nbsp;·&nbsp; <span>double-click</span> reset</div>
+
+<div id="load">
+  <img src="rtam-chakra.svg" alt="" />
+  <div class="deva">ऋतम्भरेश्वर मंदिर</div>
+  <div id="bar"><div></div></div>
+  <div class="small" id="msg">loading the temple…</div>
+  <div id="err"><b>Could not load <code>temple.glb</code>.</b><br>
+    If this page was opened as a file, serve the folder instead — in a terminal here run<br><br>
+    <code>python3 -m http.server 8000</code><br><br>
+    then open <code>http://localhost:8000/</code></div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(0x000000, 0);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 100);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.maxPolarAngle = Math.PI * 0.52;
+controls.autoRotate = true;            // museum turntable…
+controls.autoRotateSpeed = 0.6;
+controls.addEventListener("start", () => (controls.autoRotate = false)); // …until touched
+
+// dark-stage lights over the neutral environment
+scene.add(new THREE.HemisphereLight(0x4c4e56, 0x2f2820, 0.9));
+const key = new THREE.DirectionalLight(0xffdfae, 1.5);
+key.position.set(-3, 4, 3);
+scene.add(key);
+const rim = new THREE.DirectionalLight(0xfff2dc, 0.6);
+rim.position.set(2.5, 3, -3.5);
+scene.add(rim);
+
+// the stage floor: dissolve disc + quiet reference rings (concentric
+// circles only — never a counted grid)
+function radialTexture() {
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = 256;
+  const g = cv.getContext("2d");
+  const grad = g.createRadialGradient(128, 128, 30, 128, 128, 128);
+  grad.addColorStop(0, "rgba(255,255,255,.9)");
+  grad.addColorStop(0.55, "rgba(255,255,255,.55)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(cv);
+}
+const disc = new THREE.Mesh(
+  new THREE.CircleGeometry(2.4, 96).rotateX(-Math.PI / 2),
+  new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
+);
+disc.position.y = -0.006;
+scene.add(disc);
+for (const r of [0.9, 1.55, 2.2]) {
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
+  );
+  ring.position.y = -0.004;
+  scene.add(ring);
+}
+
+let homePos = null, homeTarget = null;
+function frame(object) {
+  const box = new THREE.Box3().setFromObject(object);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const scale = 2 / Math.max(size.x, size.z); // footprint → 2 stage units
+  object.scale.setScalar(scale);
+  object.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
+  const sphere = new THREE.Box3().setFromObject(object).getBoundingSphere(new THREE.Sphere());
+  const fov = (camera.fov * Math.PI) / 180;
+  const dist = (1.12 * sphere.radius) / Math.sin(Math.min(fov, fov * camera.aspect) / 2);
+  const az = (35 * Math.PI) / 180, el = (11 * Math.PI) / 180;
+  camera.position.set(
+    Math.sin(az) * Math.cos(el) * dist,
+    Math.sin(el) * dist + sphere.center.y * 0.6,
+    Math.cos(az) * Math.cos(el) * dist
+  );
+  controls.target.copy(sphere.center);
+  controls.minDistance = sphere.radius * 0.3;
+  controls.maxDistance = sphere.radius * 6;
+  controls.update();
+  homePos = camera.position.clone();
+  homeTarget = controls.target.clone();
+}
+canvas.addEventListener("dblclick", () => {
+  if (homePos) { camera.position.copy(homePos); controls.target.copy(homeTarget); controls.update(); }
+});
+
+const bar = document.querySelector("#bar > div");
+const load = document.getElementById("load");
+const msg = document.getElementById("msg");
+const draco = new DRACOLoader().setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+const loader = new GLTFLoader().setDRACOLoader(draco);
+loader.load(
+  "temple.glb",
+  (gltf) => {
+    scene.add(gltf.scene);
+    frame(gltf.scene);
+    load.style.opacity = "0";
+    setTimeout(() => load.remove(), 650);
+    window.__templeReady = true;
+  },
+  (ev) => {
+    if (ev.total) {
+      bar.style.width = `${Math.round((100 * ev.loaded) / ev.total)}%`;
+      msg.textContent = `${(ev.loaded / 1048576).toFixed(1)} MB of ${(ev.total / 1048576).toFixed(1)} MB`;
+    }
+  },
+  () => {
+    msg.style.display = "none";
+    document.getElementById("bar").style.display = "none";
+    document.getElementById("err").style.display = "block";
+    window.__templeError = true;
+  }
+);
+
+function resize() {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+}
+addEventListener("resize", resize);
+resize();
+
+renderer.setAnimationLoop(() => {
+  controls.update();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
