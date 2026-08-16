@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#141414" />
+<meta name="description" content="The Darshan Scroll — approach, enter, and walk around the Rtambhareshvara Mandir. ṚTAM Foundation." />
+<link rel="icon" type="image/svg+xml" href="rtam-chakra.svg" />
+<title>दर्शन — the Darshan Scroll · ऋतम्भरेश्वर मंदिर</title>
+<style>
+  @font-face { font-family: "Tiro Devanagari Sanskrit"; src: url("fonts/tiro-400.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Cinzel"; font-weight: 500; src: url("fonts/cinzel-500.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Cinzel"; font-weight: 600; src: url("fonts/cinzel-600.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Inter"; src: url("fonts/inter-400.woff2") format("woff2"); font-display: swap; }
+
+  :root { --mahakala:#141414; --bhasma:#C9C2B6; --bhasma-deep:#8F887C; --gold:#C8A15A; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--mahakala); color: var(--bhasma);
+    font-family: Inter, system-ui, sans-serif; }
+
+  /* the scroll track gives the journey its length */
+  #track { height: 1150vh; }
+
+  /* the fixed stage everything plays on */
+  #stage { position: fixed; inset: 0; overflow: hidden; }
+  .sky { position: absolute; inset: 0; transition: none; }
+  #sky-dawn { background:
+      radial-gradient(120% 60% at 50% 90%, rgba(126,138,166,.20) 0%, rgba(126,138,166,.06) 40%, rgba(20,20,20,0) 72%),
+      var(--mahakala); }
+  #sky-noon { background:
+      radial-gradient(120% 55% at 50% 88%, rgba(200,161,90,.18) 0%, rgba(200,161,90,.06) 38%, rgba(20,20,20,0) 70%),
+      var(--mahakala); opacity: 0; }
+  #sky-dusk { background:
+      radial-gradient(130% 65% at 50% 92%, rgba(196,108,58,.22) 0%, rgba(160,84,46,.07) 42%, rgba(20,20,20,0) 74%),
+      radial-gradient(120% 90% at 50% 0%, rgba(24,20,28,.75) 0%, rgba(20,20,20,0) 60%),
+      var(--mahakala); opacity: 0; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    touch-action: none; pointer-events: none; } /* the page scrolls; the canvas watches */
+  body.exploring canvas { pointer-events: auto; touch-action: none; }
+
+  header { position: fixed; inset: 0 0 auto 0; z-index: 6; display: flex; justify-content: space-between;
+    align-items: center; padding: 14px 22px; pointer-events: none;
+    background: linear-gradient(rgba(20,20,20,.85), rgba(20,20,20,0)); }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 34px; height: 34px; }
+  .brand .deva { font-family: "Tiro Devanagari Sanskrit", serif; font-size: 21px; line-height: 1; }
+  .brand .latin { font-family: Cinzel, serif; font-weight: 600; font-size: 10.5px; letter-spacing: .3em;
+    color: var(--gold); margin-top: 5px; }
+  .note { font-size: 11px; color: var(--bhasma-deep); text-align: right; line-height: 1.7; }
+  .note a { color: var(--bhasma); text-decoration: none; border-bottom: 1px solid rgba(201,194,182,.35);
+    pointer-events: auto; }
+
+  /* story cards */
+  .card { position: fixed; z-index: 5; left: 6vw; bottom: 12vh; max-width: 430px;
+    opacity: 0; transform: translateY(14px); pointer-events: none;
+    padding: 24px 28px; border-left: 2px solid var(--gold); border-radius: 0 6px 6px 0;
+    background: linear-gradient(100deg, rgba(20,20,20,.88) 0%, rgba(20,20,20,.72) 60%, rgba(20,20,20,.35) 100%);
+    backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+  .card .kicker { font-family: Cinzel, serif; font-weight: 600; font-size: 11px; letter-spacing: .3em;
+    color: var(--gold); margin-bottom: 10px; }
+  .card .deva { font-family: "Tiro Devanagari Sanskrit", serif; font-size: 40px; line-height: 1.15;
+    margin-bottom: 6px; }
+  .card h2 { font-family: Cinzel, serif; font-weight: 500; font-size: 19px; letter-spacing: .04em;
+    margin: 0 0 12px; color: var(--bhasma); }
+  .card p { font-size: 14.5px; line-height: 1.75; color: var(--bhasma-deep); margin: 0; }
+  .card .act { margin-top: 18px; pointer-events: auto; display: none; }
+  body.end .card .act { display: block; }
+  .card .act a, .card .act button { display: inline-block; font: 600 11px/1 Cinzel, serif; letter-spacing: .22em;
+    color: var(--mahakala); background: var(--gold); border: 0; border-radius: 3px;
+    padding: 12px 18px; margin-right: 10px; cursor: pointer; text-decoration: none; }
+  .card .act .ghost { color: var(--bhasma); background: transparent;
+    border: 1px solid rgba(201,194,182,.4); }
+
+  /* progress rail: a quiet vertical thread with seven stations */
+  #rail { position: fixed; right: 26px; top: 50%; transform: translateY(-50%); z-index: 6;
+    display: flex; flex-direction: column; align-items: center; gap: 0; }
+  #rail .line { width: 1px; height: 44px; background: rgba(201,194,182,.22); }
+  #rail .dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid rgba(201,194,182,.5);
+    background: transparent; cursor: pointer; transition: background .3s, border-color .3s; padding: 0; }
+  #rail .dot.on { background: var(--gold); border-color: var(--gold); }
+
+  #hint { position: fixed; left: 0; right: 0; bottom: 16px; z-index: 5; text-align: center;
+    font-size: 11.5px; color: var(--bhasma-deep); letter-spacing: .06em; transition: opacity .5s; }
+  #hint span { color: var(--bhasma); }
+
+  /* the loading ceremony — same as the viewer */
+  #load { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; gap: 18px;
+    align-items: center; justify-content: center; background: var(--mahakala); transition: opacity 1s; }
+  #load img { width: 132px; height: 132px; animation: turn 36s linear infinite, breathe 3.2s ease-in-out infinite; }
+  @keyframes turn { to { transform: rotate(360deg); } }
+  @keyframes breathe {
+    0%, 100% { filter: drop-shadow(0 0 14px rgba(200,161,90,.25)); }
+    50% { filter: drop-shadow(0 0 34px rgba(200,161,90,.6)); } }
+  #load .deva { font-family: "Tiro Devanagari Sanskrit", serif; font-size: 34px; }
+  #load .sub { font-family: Cinzel, serif; font-weight: 500; font-size: 11px; letter-spacing: .34em; color: var(--gold); }
+  #bar { width: 280px; height: 2px; background: #2a2723; }
+  #bar > div { height: 100%; width: 0%; background: var(--gold); transition: width .2s; }
+  .small { font-size: 12px; color: var(--bhasma-deep); }
+  @media (max-width: 720px) {
+    .card { left: 6vw; right: 6vw; bottom: 9vh; max-width: none; }
+    .card .deva { font-size: 30px; }
+    #rail { right: 12px; }
+  }
+</style>
+</head>
+<body>
+<div id="track"></div>
+
+<div id="stage">
+  <div class="sky" id="sky-dawn"></div>
+  <div class="sky" id="sky-noon"></div>
+  <div class="sky" id="sky-dusk"></div>
+  <canvas id="c"></canvas>
+</div>
+
+<header>
+  <div class="brand">
+    <img src="rtam-chakra.svg" alt="ṚTAM" />
+    <div>
+      <div class="deva">ऋतम्भरेश्वर मंदिर</div>
+      <div class="latin">THE&nbsp;DARSHAN&nbsp;SCROLL</div>
+    </div>
+  </div>
+  <div class="note"><a href="index.html">open the free viewer →</a><br>design study — not for construction</div>
+</header>
+
+<div id="cards"></div>
+
+<div id="rail" aria-label="stations"></div>
+
+<div id="hint"><span>scroll</span> — the page walks you to the temple</div>
+
+<div id="load">
+  <img src="rtam-chakra.svg" alt="" />
+  <div class="deva">ऋतम्भरेश्वर मंदिर</div>
+  <div class="sub">THE DARSHAN SCROLL</div>
+  <div id="bar"><div></div></div>
+  <div class="small" id="msg">loading the temple…</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { GTAOPass } from "three/addons/postprocessing/GTAOPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+/* ============================ the scenes ============================
+   Each scene is one leg of the walk: a camera move (spherical, around a
+   target on the temple's axis) + one card. az continues scene to scene;
+   the प्रदक्षिणा leg sweeps a full circle — the scroll IS the walk. */
+const SCENES = [
+  {
+    deva: "आगमन", kicker: "०१ · THE APPROACH", title: "One long body, one tower.",
+    body: "From a distance it is lime-plastered brick on grey stone, a red roof, and a single rising tower. Everything the temple says, it says quietly.",
+    cam: { az0: 35, az1: 18, el0: 11, el1: 6, d0: 4.6, d1: 2.4, ty0: 0.52, ty1: 0.5 },
+  },
+  {
+    deva: "द्वार", kicker: "०२ · THE DOOR", title: "The ring breaks toward you.",
+    body: "Widening steps, a moonstone threshold, teak leaves under a stepped stone head. In the temple's steady rhythm of windows, the door is the one opening that turns to meet you.",
+    cam: { az0: 18, az1: 0, el0: 6, el1: 3, d0: 2.4, d1: 1.35, ty0: 0.5, ty1: 0.34 },
+  },
+  {
+    deva: "काय", kicker: "०३ · THE BODY", title: "Plainness, precisely.",
+    body: "Carved stone frames hold jali screens deep in their reveals; the walls between them stay plain. The richness is rhythm, not noise.",
+    cam: { az0: 0, az1: 52, el0: 3, el1: 6, d0: 1.35, d1: 1.12, ty0: 0.34, ty1: 0.42 },
+  },
+  {
+    deva: "प्रदक्षिणा", kicker: "०४ · THE WALK", title: "Keep it to your right hand.",
+    body: "The oldest way to see a temple is to circle it. The stone podium carries the whole body around with you — courses, windows, corners — until you return to where the light began.",
+    cam: { az0: 52, az1: 388, el0: 6, el1: 9, d0: 1.12, d1: 1.75, ty0: 0.42, ty1: 0.5 },
+  },
+  {
+    deva: "शिखर", kicker: "०५ · THE RISING", title: "Band over band.",
+    body: "Over the sanctum the tower climbs and tightens, drawing the eye up from the door in one unbroken line.",
+    cam: { az0: 388, az1: 415, el0: 9, el1: 19, d0: 1.75, d1: 1.15, ty0: 0.5, ty1: 0.78 },
+  },
+  {
+    deva: "कलश", kicker: "०६ · THE CROWN", title: "Against the open sky.",
+    body: "The ribbed amalaka, the golden kalasha, and the saffron dhvaja above it — the temple ends in a single point of light.",
+    cam: { az0: 415, az1: 437, el0: 19, el1: 26, d0: 1.15, d1: 0.92, ty0: 0.78, ty1: 1.02 },
+  },
+  {
+    deva: "दर्शन", kicker: "०७ · YOURS", title: "Stay as long as you like.",
+    body: "The walk ends; the temple remains. Turn it in your hands, come closer, look up again.",
+    cam: { az0: 437, az1: 470, el0: 26, el1: 11, d0: 0.92, d1: 2.5, ty0: 1.02, ty1: 0.5 },
+    last: true,
+  },
+];
+
+/* ---------------- cards + rail ---------------- */
+const cardsHost = document.getElementById("cards");
+const cardEls = SCENES.map((s) => {
+  const el = document.createElement("div");
+  el.className = "card";
+  el.innerHTML = `<div class="kicker">${s.kicker}</div><div class="deva">${s.deva}</div>
+    <h2>${s.title}</h2><p>${s.body}</p>` + (s.last
+      ? `<div class="act"><button id="explore">EXPLORE&nbsp;HERE</button>
+         <a class="ghost" href="index.html">OPEN&nbsp;THE&nbsp;VIEWER</a></div>` : "");
+  cardsHost.appendChild(el);
+  return el;
+});
+const rail = document.getElementById("rail");
+const dots = SCENES.map((s, i) => {
+  if (i > 0) { const l = document.createElement("div"); l.className = "line"; rail.appendChild(l); }
+  const d = document.createElement("button");
+  d.className = "dot"; d.title = s.deva;
+  d.addEventListener("click", () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    scrollTo({ top: ((i + 0.5) / SCENES.length) * max, behavior: "smooth" });
+  });
+  rail.appendChild(d);
+  return d;
+});
+
+/* ---------------- renderer (the viewer's calibrated pipeline) ---------------- */
+const canvas = document.getElementById("c");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.toneMapping = THREE.NeutralToneMapping; // Khronos PBR Neutral
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(0x000000, 0);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff, 0xcfccc6, 0.55));
+
+const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 100);
+
+function radialTexture() {
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = 256;
+  const g = cv.getContext("2d");
+  const grad = g.createRadialGradient(128, 128, 30, 128, 128, 128);
+  grad.addColorStop(0, "rgba(255,255,255,.9)");
+  grad.addColorStop(0.55, "rgba(255,255,255,.55)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad; g.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(cv);
+}
+const disc = new THREE.Mesh(
+  new THREE.CircleGeometry(2.4, 96).rotateX(-Math.PI / 2),
+  new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
+);
+disc.position.y = -0.006;
+scene.add(disc);
+for (const r of [0.9, 1.55, 2.2]) {
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
+  );
+  ring.position.y = -0.004;
+  scene.add(ring);
+}
+
+let composer = null, aoDisabled = false;
+function buildComposer() {
+  composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const gtao = new GTAOPass(scene, camera, innerWidth, innerHeight);
+  gtao.output = GTAOPass.OUTPUT.Default;
+  composer.addPass(gtao);
+  composer.addPass(new OutputPass());
+  composer.setSize(innerWidth, innerHeight);
+  composer.setPixelRatio(Math.min(devicePixelRatio, 2));
+}
+
+/* ---------------- load the same temple ---------------- */
+const bar = document.querySelector("#bar > div");
+const load = document.getElementById("load");
+const msg = document.getElementById("msg");
+const LOADER_MIN_MS = 3600;
+const loaderShownAt = performance.now();
+const draco = new DRACOLoader().setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+const loader = new GLTFLoader().setDRACOLoader(draco);
+let ready = false;
+
+loader.load("temple.glb?v=4", (gltf) => {
+  const maxAniso = renderer.capabilities.getMaxAnisotropy();
+  gltf.scene.traverse((o) => {
+    if (!o.isMesh) return;
+    for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+      m.envMapIntensity = 1.35;
+      for (const slot of ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap", "emissiveMap"]) {
+        if (m[slot]) { m[slot].anisotropy = maxAniso; m[slot].needsUpdate = true; }
+      }
+    }
+  });
+  const box = new THREE.Box3().setFromObject(gltf.scene);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const scale = 2 / Math.max(size.x, size.z);
+  gltf.scene.scale.setScalar(scale);
+  gltf.scene.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
+  scene.add(gltf.scene);
+  buildComposer();
+  const hold = Math.max(0, LOADER_MIN_MS - (performance.now() - loaderShownAt));
+  bar.style.width = "100%";
+  if (hold > 500) msg.textContent = "प्रवेश …";
+  setTimeout(() => {
+    ready = true;
+    load.style.opacity = "0";
+    setTimeout(() => load.remove(), 1050);
+    window.__templeReady = true;
+  }, hold);
+}, (ev) => {
+  if (ev.total) {
+    bar.style.width = `${Math.round((100 * ev.loaded) / ev.total)}%`;
+    msg.textContent = `${(ev.loaded / 1048576).toFixed(1)} MB of ${(ev.total / 1048576).toFixed(1)} MB`;
+  }
+}, () => {
+  msg.textContent = "could not load temple.glb — serve this folder over http";
+  window.__templeError = true;
+});
+
+/* ---------------- the scroll drive ---------------- */
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (t) => t * t * (3 - 2 * t);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// ?jump=1 — QA: no easing, scroll maps directly (headless verification)
+const INSTANT = new URLSearchParams(location.search).get("jump") === "1";
+
+let targetP = 0, currentP = 0;
+function readScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  targetP = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+}
+addEventListener("scroll", readScroll, { passive: true });
+
+const skyNoon = document.getElementById("sky-noon");
+const skyDusk = document.getElementById("sky-dusk");
+const hint = document.getElementById("hint");
+
+function camAt(p) {
+  const exact = Math.min(SCENES.length - 1e-6, p * SCENES.length);
+  const i = Math.floor(exact);
+  const t = smooth(exact - i);
+  const c = SCENES[i].cam;
+  const az = (lerp(c.az0, c.az1, t) * Math.PI) / 180;
+  const el = (lerp(c.el0, c.el1, t) * Math.PI) / 180;
+  const d = lerp(c.d0, c.d1, t);
+  const ty = lerp(c.ty0, c.ty1, t);
+  const target = new THREE.Vector3(0, ty, 0);
+  camera.position.set(
+    Math.sin(az) * Math.cos(el) * d,
+    Math.sin(el) * d + ty,
+    Math.cos(az) * Math.cos(el) * d
+  );
+  camera.lookAt(target);
+  return { exact, i };
+}
+
+function updateUI(exact) {
+  document.body.classList.toggle("end", exact > SCENES.length - 1);
+  cardEls.forEach((el, i) => {
+    // the last card holds at full strength through the very bottom
+    const eC = Math.min(exact, SCENES.length - 0.5);
+    const dist = Math.abs(eC - (i + 0.5));
+    const o = Math.max(0, 1 - dist * 1.9);
+    el.style.opacity = o.toFixed(3);
+    el.style.transform = `translateY(${(1 - o) * 14}px)`;
+  });
+  dots.forEach((d, i) => d.classList.toggle("on", Math.round(exact - 0.5) === i));
+  const p = exact / SCENES.length;
+  skyNoon.style.opacity = Math.max(0, 1 - Math.abs(p - 0.45) * 3).toFixed(3);
+  skyDusk.style.opacity = Math.max(0, (p - 0.6) * 2.6).toFixed(3);
+  hint.style.opacity = p < 0.03 ? "1" : "0";
+}
+
+/* the hand-off: free exploration at the end */
+let exploring = false, controls = null;
+document.addEventListener("click", (e) => {
+  if (e.target.id !== "explore") return;
+  exploring = true;
+  document.body.classList.add("exploring");
+  document.body.style.overflow = "hidden";
+  if (!controls) {
+    controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.maxPolarAngle = Math.PI * 0.52;
+    controls.target.set(0, 0.5, 0);
+  }
+  controls.enabled = true;
+  e.target.textContent = "BACK TO THE WALK";
+  e.target.id = "walkback";
+});
+document.addEventListener("click", (e) => {
+  if (e.target.id !== "walkback") return;
+  exploring = false;
+  document.body.classList.remove("exploring");
+  document.body.style.overflow = "";
+  if (controls) controls.enabled = false;
+  e.target.textContent = "EXPLORE HERE";
+  e.target.id = "explore";
+});
+
+/* ---------------- frame loop ---------------- */
+const frameTimes = [];
+let lastT = performance.now();
+renderer.setAnimationLoop(() => {
+  const now = performance.now();
+  frameTimes.push(now - lastT);
+  lastT = now;
+
+  if (ready) {
+    if (exploring && controls) {
+      controls.update();
+    } else {
+      currentP = reduceMotion || INSTANT ? targetP : lerp(currentP, targetP, 0.085);
+      const { exact } = camAt(currentP);
+      updateUI(exact);
+    }
+  } else {
+    camAt(0);
+  }
+
+  if (composer && !aoDisabled && frameTimes.length > 150) {
+    const sorted = [...frameTimes.slice(-120)].sort((a, b) => a - b);
+    if (sorted[Math.floor(sorted.length / 2)] > 40) { aoDisabled = true; composer = null; }
+    frameTimes.length = 0;
+  }
+  if (composer) composer.render();
+  else renderer.render(scene, camera);
+});
+
+function resize() {
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  if (composer) {
+    composer.setSize(innerWidth, innerHeight);
+    composer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  }
+  readScroll();
+}
+addEventListener("resize", resize);
+resize();
+</script>
+</body>
+</html>
