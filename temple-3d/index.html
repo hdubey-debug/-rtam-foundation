@@ -40,6 +40,12 @@
     font-size: 11.5px; color: var(--bhasma-deep); pointer-events: none; letter-spacing: .02em; }
   #hud span { color: var(--bhasma); }
 
+  #foci { position: absolute; right: 22px; bottom: 40px; z-index: 6; display: flex; gap: 8px; }
+  #foci button { font: 600 10.5px/1 Cinzel, serif; letter-spacing: .18em; cursor: pointer;
+    color: var(--bhasma); background: rgba(20,20,20,.55); border: 1px solid rgba(201,194,182,.35);
+    border-radius: 3px; padding: 10px 14px; backdrop-filter: blur(6px); }
+  #foci button.on { color: var(--mahakala); background: var(--gold); border-color: var(--gold); }
+
   #load { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; gap: 18px;
     align-items: center; justify-content: center; background: var(--mahakala); transition: opacity .6s; }
   #load img { width: 132px; height: 132px; animation: turn 36s linear infinite;
@@ -76,7 +82,13 @@
 </header>
 
 <div id="hud"><span>drag</span> rotate &nbsp;·&nbsp; <span>scroll</span> zoom &nbsp;·&nbsp;
-  <span>right-drag</span> pan &nbsp;·&nbsp; <span>double-click</span> reset</div>
+  <span>right-drag</span> pan &nbsp;·&nbsp; <span>double-click</span> focus a structure — the sky for all</div>
+
+<div id="foci">
+  <button data-f="overview" class="on">समग्र · ALL</button>
+  <button data-f="temple">मंदिर</button>
+  <button data-f="nandi">नन्दी</button>
+</div>
 
 <div id="load">
   <img class="halo" src="rtam-chakra.svg" alt="" />
@@ -150,12 +162,12 @@ function radialTexture() {
   return new THREE.CanvasTexture(cv);
 }
 const disc = new THREE.Mesh(
-  new THREE.CircleGeometry(3.3, 96).rotateX(-Math.PI / 2),
+  new THREE.CircleGeometry(3.7, 96).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
 );
 disc.position.y = -0.006;
 scene.add(disc);
-for (const r of [1.15, 2.05, 2.95]) {
+for (const r of [1.3, 2.35, 3.4]) {
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
@@ -165,10 +177,39 @@ for (const r of [1.15, 2.05, 2.95]) {
 }
 
 let homePos = null, homeTarget = null;
+let templeRef = null, bullRef = null;
+const foci = {};
+let flight = null; // {t0, dur, fromP, toP, fromT, toT}
+function flyTo(toP, toT, dur = 900) {
+  flight = { t0: performance.now(), dur,
+    fromP: camera.position.clone(), toP,
+    fromT: controls.target.clone(), toT };
+}
+function sphereOf(obj) {
+  return new THREE.Box3().setFromObject(obj).getBoundingSphere(new THREE.Sphere());
+}
+function fitDistFor(radius) {
+  const fov = (camera.fov * Math.PI) / 180;
+  return (1.02 * radius) / Math.sin(Math.min(fov, fov * camera.aspect) / 2);
+}
+function focus(name) {
+  const f = foci[name];
+  if (!f) return;
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  const dist = name === "overview" ? fitDistFor(f.radius) : f.radius * 2.3;
+  flyTo(f.center.clone().add(dir.multiplyScalar(dist)), f.center.clone());
+  controls.minDistance = f.radius * 0.3;
+  document.querySelectorAll("#foci button").forEach((b) =>
+    b.classList.toggle("on", b.dataset.f === name));
+}
+window.__focus = focus;
+document.querySelectorAll("#foci button").forEach((b) =>
+  b.addEventListener("click", () => focus(b.dataset.f)));
+
 /* measured 2026-08-21 (side-elevation pixels): Nandi ridge 53 px vs
    temple-porch ridge 45 px over the same ground → the temple grows
    ×1.18 so the two-pillar porch stands eye-to-eye with the chhatri. */
-const TEMPLE_K = 1.18;
+const TEMPLE_K = 1.45;
 function normalizeModel(object) {
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
@@ -194,9 +235,20 @@ function fitCamera(box) {
   homePos = camera.position.clone();
   homeTarget = controls.target.clone();
 }
-canvas.addEventListener("dblclick", () => {
-  if (homePos) { camera.position.copy(homePos); controls.target.copy(homeTarget); controls.update(); }
+const ray = new THREE.Raycaster();
+const ndc = new THREE.Vector2();
+canvas.addEventListener("dblclick", (e) => {
+  if (!templeRef || !bullRef) return;
+  ndc.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hits = ray.intersectObjects([bullRef, templeRef], true);
+  if (!hits.length) { focus("overview"); return; }
+  let o = hits[0].object;
+  while (o && o !== bullRef && o !== templeRef) o = o.parent;
+  focus(o === bullRef ? "nandi" : "temple");
 });
+// user grabbing the controls cancels any in-flight focus move
+controls.addEventListener("start", () => (flight = null));
 
 const bar = document.querySelector("#bar > div");
 const load = document.getElementById("load");
@@ -223,10 +275,9 @@ function buildComposer() {
 }
 
 // the arrival: ease in from afar while the turntable breathes
-let arrive = null; // {t0, from, to}
 function startArrival() {
-  arrive = { t0: performance.now(), from: homePos.clone().multiplyScalar(1.3), to: homePos.clone() };
-  camera.position.copy(arrive.from);
+  camera.position.copy(homePos.clone().multiplyScalar(1.3));
+  flyTo(homePos.clone(), homeTarget.clone(), 3000);
 }
 
 // full anisotropic filtering + the studio environment, for every model
@@ -285,10 +336,15 @@ Promise.all([
     scene.add(temple.scene);
     const bull = placeNandi(nandi.scene);
     scene.add(bull);
+    templeRef = temple.scene;
+    bullRef = bull;
+    foci.temple = sphereOf(temple.scene);
+    foci.nandi = sphereOf(bull);
     // the default view holds them BOTH
     const union = new THREE.Box3().setFromObject(temple.scene);
     union.union(new THREE.Box3().setFromObject(bull));
     fitCamera(union);
+    foci.overview = union.getBoundingSphere(new THREE.Sphere());
     buildComposer();
     // hold the curtain until the chakra has had its moment
     const hold = Math.max(0, LOADER_MIN_MS - (performance.now() - loaderShownAt));
@@ -310,7 +366,7 @@ Promise.all([
 );
 
 window.__jumpCam = (px, py, pz, tx, ty, tz) => {
-  arrive = null;
+  flight = null;
   camera.position.set(px, py, pz);
   controls.target.set(tx, ty, tz);
   controls.update();
@@ -335,10 +391,12 @@ renderer.setAnimationLoop(() => {
   const now = performance.now();
   frameTimes.push(now - lastT);
   lastT = now;
-  if (arrive) {
-    const t = Math.min(1, (now - arrive.t0) / 3000);
-    camera.position.lerpVectors(arrive.from, arrive.to, easeOut(t));
-    if (t >= 1) arrive = null;
+  if (flight) {
+    const t = Math.min(1, (now - flight.t0) / flight.dur);
+    const e = easeOut(t);
+    camera.position.lerpVectors(flight.fromP, flight.toP, e);
+    controls.target.lerpVectors(flight.fromT, flight.toT, e);
+    if (t >= 1) flight = null;
   }
   controls.update();
   // auto-disable AO on machines that can't hold it

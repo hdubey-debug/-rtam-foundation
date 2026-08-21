@@ -249,12 +249,12 @@ function radialTexture() {
   return new THREE.CanvasTexture(cv);
 }
 const disc = new THREE.Mesh(
-  new THREE.CircleGeometry(3.3, 96).rotateX(-Math.PI / 2),
+  new THREE.CircleGeometry(3.7, 96).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
 );
 disc.position.y = -0.006;
 scene.add(disc);
-for (const r of [1.15, 2.05, 2.95]) {
+for (const r of [1.3, 2.35, 3.4]) {
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
@@ -297,7 +297,7 @@ function setupMaterials(root) {
     }
   });
 }
-const TEMPLE_K = 1.18; // measured: porch roofline meets the chhatri (see index.html)
+const TEMPLE_K = 1.45; // measured: porch roofline meets the chhatri (see index.html)
 const NANDI = { height: 0.42, z: 2.0 * TEMPLE_K, headingY: Math.PI }; // as in the viewer
 const loadGlb = (url, onProgress) =>
   new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
