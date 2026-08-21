@@ -167,7 +167,7 @@ const SCENES = [
   },
   {
     deva: "द्वार", kicker: "०२ · THE DOOR", title: "The ring breaks toward you.",
-    body: "Widening steps, a moonstone threshold, teak leaves under a stepped stone head. In the temple's steady rhythm of windows, the door is the one opening that turns to meet you.",
+    body: "Nandi waits before the threshold, facing his lord. Beyond him: widening steps, a moonstone, teak leaves under a stepped stone head — the one opening that turns to meet you.",
     cam: { az0: 18, az1: 0, el0: 6, el1: 3, d0: 2.4, d1: 1.35, ty0: 0.5, ty1: 0.34 },
   },
   {
@@ -285,9 +285,9 @@ const draco = new DRACOLoader().setDecoderPath("https://www.gstatic.com/draco/ve
 const loader = new GLTFLoader().setDRACOLoader(draco);
 let ready = false;
 
-loader.load("temple.glb?v=4", (gltf) => {
+function setupMaterials(root) {
   const maxAniso = renderer.capabilities.getMaxAnisotropy();
-  gltf.scene.traverse((o) => {
+  root.traverse((o) => {
     if (!o.isMesh) return;
     for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
       m.envMapIntensity = 1.35;
@@ -296,6 +296,24 @@ loader.load("temple.glb?v=4", (gltf) => {
       }
     }
   });
+}
+const NANDI = { height: 0.42, z: 2.0, headingY: Math.PI }; // as in the viewer
+const loadGlb = (url, onProgress) =>
+  new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
+const prog = { l: [0, 0], t: [0, 0] };
+function report() {
+  const L = prog.l[0] + prog.l[1];
+  const T = prog.t[0] + prog.t[1];
+  if (!T) return;
+  bar.style.width = `${Math.round((100 * L) / T)}%`;
+  msg.textContent = `${(L / 1048576).toFixed(1)} MB of ${(T / 1048576).toFixed(1)} MB`;
+}
+Promise.all([
+  loadGlb("temple.glb?v=4", (ev) => { prog.l[0] = ev.loaded; prog.t[0] = ev.total || 0; report(); }),
+  loadGlb("nandi.glb?v=1", (ev) => { prog.l[1] = ev.loaded; prog.t[1] = ev.total || 0; report(); }),
+]).then(([gltf, nandi]) => {
+  setupMaterials(gltf.scene);
+  setupMaterials(nandi.scene);
   const box = new THREE.Box3().setFromObject(gltf.scene);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
@@ -303,6 +321,19 @@ loader.load("temple.glb?v=4", (gltf) => {
   gltf.scene.scale.setScalar(scale);
   gltf.scene.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
   scene.add(gltf.scene);
+  {
+    const nb = new THREE.Box3().setFromObject(nandi.scene);
+    const nsize = nb.getSize(new THREE.Vector3());
+    const nc = nb.getCenter(new THREE.Vector3());
+    const ns = NANDI.height / nsize.y;
+    const bull = new THREE.Group();
+    bull.add(nandi.scene);
+    nandi.scene.scale.setScalar(ns);
+    nandi.scene.position.set(-nc.x * ns, -nb.min.y * ns, -nc.z * ns);
+    bull.rotation.y = NANDI.headingY;
+    bull.position.set(0, 0, NANDI.z);
+    scene.add(bull);
+  }
   buildComposer();
   const hold = Math.max(0, LOADER_MIN_MS - (performance.now() - loaderShownAt));
   bar.style.width = "100%";
@@ -313,13 +344,8 @@ loader.load("temple.glb?v=4", (gltf) => {
     setTimeout(() => load.remove(), 1050);
     window.__templeReady = true;
   }, hold);
-}, (ev) => {
-  if (ev.total) {
-    bar.style.width = `${Math.round((100 * ev.loaded) / ev.total)}%`;
-    msg.textContent = `${(ev.loaded / 1048576).toFixed(1)} MB of ${(ev.total / 1048576).toFixed(1)} MB`;
-  }
-}, () => {
-  msg.textContent = "could not load temple.glb — serve this folder over http";
+}).catch(() => {
+  msg.textContent = "could not load the models — serve this folder over http";
   window.__templeError = true;
 });
 

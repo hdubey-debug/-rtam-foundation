@@ -150,12 +150,12 @@ function radialTexture() {
   return new THREE.CanvasTexture(cv);
 }
 const disc = new THREE.Mesh(
-  new THREE.CircleGeometry(2.4, 96).rotateX(-Math.PI / 2),
+  new THREE.CircleGeometry(2.9, 96).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
 );
 disc.position.y = -0.006;
 scene.add(disc);
-for (const r of [0.9, 1.55, 2.2]) {
+for (const r of [1.0, 1.8, 2.6]) {
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
@@ -165,14 +165,16 @@ for (const r of [0.9, 1.55, 2.2]) {
 }
 
 let homePos = null, homeTarget = null;
-function frame(object) {
+function normalizeModel(object) {
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
   const scale = 2 / Math.max(size.x, size.z); // footprint → 2 stage units
   object.scale.setScalar(scale);
   object.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
-  const sphere = new THREE.Box3().setFromObject(object).getBoundingSphere(new THREE.Sphere());
+}
+function fitCamera(box) {
+  const sphere = box.getBoundingSphere(new THREE.Sphere());
   const fov = (camera.fov * Math.PI) / 180;
   const dist = (1.02 * sphere.radius) / Math.sin(Math.min(fov, fov * camera.aspect) / 2);
   const az = (35 * Math.PI) / 180, el = (11 * Math.PI) / 180;
@@ -223,23 +225,66 @@ function startArrival() {
   camera.position.copy(arrive.from);
 }
 
-loader.load(
-  "temple.glb?v=4",
-  (gltf) => {
-    // full anisotropic filtering — without it, 8K textures still blur at
-    // grazing angles (roofs, floors); this is most of "why does it look soft"
-    const maxAniso = renderer.capabilities.getMaxAnisotropy();
-    gltf.scene.traverse((o) => {
-      if (!o.isMesh) return;
-      for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
-        m.envMapIntensity = 1.35; // the environment IS the studio light
-        for (const slot of ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap", "emissiveMap"]) {
-          if (m[slot]) { m[slot].anisotropy = maxAniso; m[slot].needsUpdate = true; }
-        }
+// full anisotropic filtering + the studio environment, for every model
+function setupMaterials(root) {
+  const maxAniso = renderer.capabilities.getMaxAnisotropy();
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    for (const m of Array.isArray(o.material) ? o.material : [o.material]) {
+      m.envMapIntensity = 1.35; // the environment IS the studio light
+      for (const slot of ["map", "normalMap", "roughnessMap", "metalnessMap", "aoMap", "emissiveMap"]) {
+        if (m[slot]) { m[slot].anisotropy = maxAniso; m[slot].needsUpdate = true; }
       }
-    });
-    scene.add(gltf.scene);
-    frame(gltf.scene);
+    }
+  });
+}
+
+/* Nandi — the stone bull before the dvāra, facing his lord.
+   Tunables in STAGE units (the temple's 52 ft width = 2.0 units,
+   so 1 ft ≈ 0.03846): height ≈ 11 ft pavilion, ≈ 22 ft before the
+   porch line, centered on the door axis. */
+const NANDI = { height: 0.42, z: 2.0, headingY: Math.PI };
+
+function placeNandi(root) {
+  const box = new THREE.Box3().setFromObject(root);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const ns = NANDI.height / size.y;
+  const inner = new THREE.Group();
+  inner.add(root);
+  root.scale.setScalar(ns);
+  root.position.set(-center.x * ns, -box.min.y * ns, -center.z * ns);
+  inner.rotation.y = NANDI.headingY; // face the temple door
+  inner.position.set(0, 0, NANDI.z); // on the door axis
+  return inner;
+}
+
+const loadGlb = (url, onProgress) =>
+  new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
+
+const prog = { l: [0, 0], t: [0, 0] };
+function report() {
+  const L = prog.l[0] + prog.l[1];
+  const T = prog.t[0] + prog.t[1];
+  if (!T) return;
+  bar.style.width = `${Math.round((100 * L) / T)}%`;
+  msg.textContent = `${(L / 1048576).toFixed(1)} MB of ${(T / 1048576).toFixed(1)} MB`;
+}
+
+Promise.all([
+  loadGlb("temple.glb?v=4", (ev) => { prog.l[0] = ev.loaded; prog.t[0] = ev.total || 0; report(); }),
+  loadGlb("nandi.glb?v=1", (ev) => { prog.l[1] = ev.loaded; prog.t[1] = ev.total || 0; report(); }),
+]).then(([temple, nandi]) => {
+    setupMaterials(temple.scene);
+    setupMaterials(nandi.scene);
+    normalizeModel(temple.scene);
+    scene.add(temple.scene);
+    const bull = placeNandi(nandi.scene);
+    scene.add(bull);
+    // the default view holds them BOTH
+    const union = new THREE.Box3().setFromObject(temple.scene);
+    union.union(new THREE.Box3().setFromObject(bull));
+    fitCamera(union);
     buildComposer();
     // hold the curtain until the chakra has had its moment
     const hold = Math.max(0, LOADER_MIN_MS - (performance.now() - loaderShownAt));
@@ -251,14 +296,8 @@ loader.load(
       setTimeout(() => load.remove(), 1050);
       window.__templeReady = true;
     }, hold);
-  },
-  (ev) => {
-    if (ev.total) {
-      bar.style.width = `${Math.round((100 * ev.loaded) / ev.total)}%`;
-      msg.textContent = `${(ev.loaded / 1048576).toFixed(1)} MB of ${(ev.total / 1048576).toFixed(1)} MB`;
-    }
-  },
-  () => {
+  })
+  .catch(() => {
     msg.style.display = "none";
     document.getElementById("bar").style.display = "none";
     document.getElementById("err").style.display = "block";
@@ -266,6 +305,12 @@ loader.load(
   }
 );
 
+window.__jumpCam = (px, py, pz, tx, ty, tz) => {
+  arrive = null;
+  camera.position.set(px, py, pz);
+  controls.target.set(tx, ty, tz);
+  controls.update();
+};
 function resize() {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight, false);
