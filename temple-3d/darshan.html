@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#141414" />
 <meta name="description" content="The Darshan Scroll — approach, enter, and walk around the Rtambhareshvara Mandir. ṚTAM Foundation." />
 <link rel="icon" type="image/svg+xml" href="rtam-chakra.svg" />
@@ -96,10 +96,28 @@
   #bar { width: 280px; height: 2px; background: #2a2723; }
   #bar > div { height: 100%; width: 0%; background: var(--gold); transition: width .2s; }
   .small { font-size: 12px; color: var(--bhasma-deep); }
+  header { padding-top: calc(14px + env(safe-area-inset-top)); }
+  #hint { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  @media (pointer: coarse) {
+    #rail .dot { width: 11px; height: 11px; }
+    #rail .line { height: 34px; }
+  }
   @media (max-width: 720px) {
-    .card { left: 6vw; right: 6vw; bottom: 9vh; max-width: none; }
-    .card .deva { font-size: 30px; }
-    #rail { right: 12px; }
+    .brand .deva { font-size: 17px; }
+    .brand .latin { font-size: 9px; letter-spacing: .22em; }
+    .brand img { width: 28px; height: 28px; }
+    .note { font-size: 10px; }
+    .note a { display: inline-block; margin-bottom: 2px; }
+    #load .deva { font-size: 26px; }
+    #load img { width: 104px; height: 104px; }
+    #bar { width: 220px; }
+    .card { left: 5vw; right: 5vw; bottom: calc(8vh + env(safe-area-inset-bottom)); max-width: none;
+      padding: 18px 20px; }
+    .card .deva { font-size: 28px; }
+    .card h2 { font-size: 16px; }
+    .card p { font-size: 13.5px; }
+    #rail { right: 8px; }
+    #hint { font-size: 10.5px; }
   }
 </style>
 </head>
@@ -297,8 +315,8 @@ function setupMaterials(root) {
     }
   });
 }
-const TEMPLE_K = 1.416; // measured: porch roofline meets the chhatri (see index.html)
-const NANDI = { height: 0.42, z: 2.0 * TEMPLE_K, headingY: Math.PI }; // as in the viewer
+const TEMPLE_K = 1.392; // measured: porch roofline meets the chhatri (see index.html)
+const NANDI = { height: 0.42, x: 0.05, z: 2.0 * TEMPLE_K, headingY: Math.PI }; // as in the viewer
 const loadGlb = (url, onProgress) =>
   new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
 const prog = { l: [0, 0], t: [0, 0] };
@@ -332,7 +350,7 @@ Promise.all([
     nandi.scene.scale.setScalar(ns);
     nandi.scene.position.set(-nc.x * ns, -nb.min.y * ns, -nc.z * ns);
     bull.rotation.y = NANDI.headingY;
-    bull.position.set(0, 0, NANDI.z);
+    bull.position.set(NANDI.x, 0, NANDI.z);
     scene.add(bull);
   }
   buildComposer();
@@ -434,6 +452,7 @@ document.addEventListener("click", (e) => {
 
 /* ---------------- frame loop ---------------- */
 const frameTimes = [];
+let slowRun = 0, lastFrameForSlow = performance.now();
 let lastT = performance.now();
 renderer.setAnimationLoop(() => {
   const now = performance.now();
@@ -452,11 +471,19 @@ renderer.setAnimationLoop(() => {
     camAt(0);
   }
 
-  if (composer && !aoDisabled && frameTimes.length > 150) {
-    const sorted = [...frameTimes.slice(-120)].sort((a, b) => a - b);
-    if (sorted[Math.floor(sorted.length / 2)] > 40) { aoDisabled = true; composer = null; }
-    frameTimes.length = 0;
+  if (composer && !aoDisabled) {
+    // a device that CRAWLS gets rescued fast: 4 consecutive >150 ms
+    // frames drop the AO pass immediately (median check still covers
+    // mid-grade devices over a longer window)
+    slowRun = now - lastFrameForSlow > 150 ? slowRun + 1 : 0;
+    if (slowRun >= 4) { aoDisabled = true; composer = null; }
+    if (frameTimes.length > 150) {
+      const sorted = [...frameTimes.slice(-120)].sort((a, b) => a - b);
+      if (sorted[Math.floor(sorted.length / 2)] > 40) { aoDisabled = true; composer = null; }
+      frameTimes.length = 0;
+    }
   }
+  lastFrameForSlow = now;
   if (composer) composer.render();
   else renderer.render(scene, camera);
 });
