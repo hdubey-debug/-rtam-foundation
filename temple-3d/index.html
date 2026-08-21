@@ -150,12 +150,12 @@ function radialTexture() {
   return new THREE.CanvasTexture(cv);
 }
 const disc = new THREE.Mesh(
-  new THREE.CircleGeometry(2.9, 96).rotateX(-Math.PI / 2),
+  new THREE.CircleGeometry(3.3, 96).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
 );
 disc.position.y = -0.006;
 scene.add(disc);
-for (const r of [1.0, 1.8, 2.6]) {
+for (const r of [1.15, 2.05, 2.95]) {
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
@@ -165,11 +165,15 @@ for (const r of [1.0, 1.8, 2.6]) {
 }
 
 let homePos = null, homeTarget = null;
+/* measured 2026-08-21 (side-elevation pixels): Nandi ridge 53 px vs
+   temple-porch ridge 45 px over the same ground → the temple grows
+   ×1.18 so the two-pillar porch stands eye-to-eye with the chhatri. */
+const TEMPLE_K = 1.18;
 function normalizeModel(object) {
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
-  const scale = 2 / Math.max(size.x, size.z); // footprint → 2 stage units
+  const scale = (2 / Math.max(size.x, size.z)) * TEMPLE_K;
   object.scale.setScalar(scale);
   object.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
 }
@@ -243,7 +247,7 @@ function setupMaterials(root) {
    Tunables in STAGE units (the temple's 52 ft width = 2.0 units,
    so 1 ft ≈ 0.03846): height ≈ 11 ft pavilion, ≈ 22 ft before the
    porch line, centered on the door axis. */
-const NANDI = { height: 0.42, z: 2.0, headingY: Math.PI };
+const NANDI = { height: 0.42, z: 2.0 * TEMPLE_K, headingY: Math.PI };
 
 function placeNandi(root) {
   const box = new THREE.Box3().setFromObject(root);

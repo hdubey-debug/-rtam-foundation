@@ -249,12 +249,12 @@ function radialTexture() {
   return new THREE.CanvasTexture(cv);
 }
 const disc = new THREE.Mesh(
-  new THREE.CircleGeometry(2.4, 96).rotateX(-Math.PI / 2),
+  new THREE.CircleGeometry(3.3, 96).rotateX(-Math.PI / 2),
   new THREE.MeshBasicMaterial({ color: 0x1e1c19, transparent: true, alphaMap: radialTexture(), opacity: 0.9 })
 );
 disc.position.y = -0.006;
 scene.add(disc);
-for (const r of [0.9, 1.55, 2.2]) {
+for (const r of [1.15, 2.05, 2.95]) {
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(r - 0.0035, r + 0.0035, 128).rotateX(-Math.PI / 2),
     new THREE.MeshBasicMaterial({ color: 0x8f887c, transparent: true, opacity: 0.16 })
@@ -297,7 +297,8 @@ function setupMaterials(root) {
     }
   });
 }
-const NANDI = { height: 0.42, z: 2.0, headingY: Math.PI }; // as in the viewer
+const TEMPLE_K = 1.18; // measured: porch roofline meets the chhatri (see index.html)
+const NANDI = { height: 0.42, z: 2.0 * TEMPLE_K, headingY: Math.PI }; // as in the viewer
 const loadGlb = (url, onProgress) =>
   new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
 const prog = { l: [0, 0], t: [0, 0] };
@@ -317,7 +318,7 @@ Promise.all([
   const box = new THREE.Box3().setFromObject(gltf.scene);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
-  const scale = 2 / Math.max(size.x, size.z);
+  const scale = (2 / Math.max(size.x, size.z)) * TEMPLE_K;
   gltf.scene.scale.setScalar(scale);
   gltf.scene.position.set(-center.x * scale, -box.min.y * scale, -center.z * scale);
   scene.add(gltf.scene);
@@ -374,8 +375,8 @@ function camAt(p) {
   const c = SCENES[i].cam;
   const az = (lerp(c.az0, c.az1, t) * Math.PI) / 180;
   const el = (lerp(c.el0, c.el1, t) * Math.PI) / 180;
-  const d = lerp(c.d0, c.d1, t);
-  const ty = lerp(c.ty0, c.ty1, t);
+  const d = lerp(c.d0, c.d1, t) * TEMPLE_K;
+  const ty = lerp(c.ty0, c.ty1, t) * TEMPLE_K;
   const target = new THREE.Vector3(0, ty, 0);
   camera.position.set(
     Math.sin(az) * Math.cos(el) * d,
@@ -415,7 +416,7 @@ document.addEventListener("click", (e) => {
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.maxPolarAngle = Math.PI * 0.52;
-    controls.target.set(0, 0.5, 0);
+    controls.target.set(0, 0.5 * TEMPLE_K, 0);
   }
   controls.enabled = true;
   e.target.textContent = "BACK TO THE WALK";
