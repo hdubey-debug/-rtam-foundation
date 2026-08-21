@@ -86,8 +86,8 @@
 
 <div id="foci">
   <button data-f="overview" class="on">समग्र · ALL</button>
-  <button data-f="temple">मंदिर</button>
-  <button data-f="nandi">नन्दी</button>
+  <button data-f="temple">मंदिर · TEMPLE</button>
+  <button data-f="nandi">नन्दी · NANDI</button>
 </div>
 
 <div id="load">
@@ -209,7 +209,7 @@ document.querySelectorAll("#foci button").forEach((b) =>
 /* measured 2026-08-21 (side-elevation pixels): Nandi ridge 53 px vs
    temple-porch ridge 45 px over the same ground → the temple grows
    ×1.18 so the two-pillar porch stands eye-to-eye with the chhatri. */
-const TEMPLE_K = 1.45;
+const TEMPLE_K = 1.416;
 function normalizeModel(object) {
   const box = new THREE.Box3().setFromObject(object);
   const size = box.getSize(new THREE.Vector3());

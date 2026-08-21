@@ -297,7 +297,7 @@ function setupMaterials(root) {
     }
   });
 }
-const TEMPLE_K = 1.45; // measured: porch roofline meets the chhatri (see index.html)
+const TEMPLE_K = 1.416; // measured: porch roofline meets the chhatri (see index.html)
 const NANDI = { height: 0.42, z: 2.0 * TEMPLE_K, headingY: Math.PI }; // as in the viewer
 const loadGlb = (url, onProgress) =>
   new Promise((resolve, reject) => loader.load(url, resolve, onProgress, reject));
