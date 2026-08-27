@@ -74,8 +74,9 @@ def main() -> int:
               ("BARELA", 1), ("ऋतस्यपन्थाम्", 1)])
     pdf_page(DIST / "receipt-cover-a5.pdf", 210, 148,
              [("दान-रसीदबही", 1), ("BOOKNO.", 1)])
-    pdf_page(DIST / "receipt-a5-color.pdf", 210, 148,
+    pdf_page(DIST / "receipt-a5-book.pdf", 210, 148,
              [("आयकर-कटौतीकादावानहींबनता", 1), ("VILL.PAHADIKHEDA", 1)])
+    pdf_page(DIST / "receipt-cover-a5-book.pdf", 210, 148, [("दान-रसीदबही", 1)])
     pdf_page(DIST / "labels-st8.pdf", 210, 297,
              [("BARELA", 8), ("483001", 8), ("ऋतम्भरेश्वरमंदिर", 8),
               ("RTAMBHARESHVARAMANDIR", 8), ("VILL.PAHADIKHEDA", 8)])

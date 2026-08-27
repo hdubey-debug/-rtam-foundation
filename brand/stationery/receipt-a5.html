@@ -2,29 +2,29 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>दान-रसीद — A5 landscape leaf (garbhagriha head, NCR duplicate book)</title>
+  <title>दान-रसीद — A5 landscape leaf (garbhagriha, colour primary)</title>
   <link rel="stylesheet" href="stationery.css">
   <style>
     /* दान-रसीद leaf, redesigned to the locked garbhagriha letterhead language
-       (founder, 2026-08-27): inset mahakala head band with the ivory-knockout
-       marks (single press ink — the marks are paper out of the band), body
+       (founder, 2026-08-27): inset mahakala head band with the garbhagriha marks (ash + gold hub —
+       the letterhead's own colours; COLOUR PRIMARY per founder 2026-08-28), body
        and foot on paper for handwriting and legal legibility. Fields
-       unchanged. build_receipt_color() generates the colour edition (ash
-       marks, gold hub). Press: see receipt-press-spec.md — heavy band
+       unchanged. build_receipt_book() generates the single-ink NCR edition (ivory
+       knockouts) that the press actually prints. Press: see receipt-press-spec.md — heavy band
        coverage is deliberate. NO registration/PAN/80G lines (D8). */
     @page { size: 210mm 148mm; margin: 0; }
     .sheet.a5-land { font-family: var(--ui); }
 
-    .band { position: absolute; background: #141414; color: #F7F3E9;
+    .band { position: absolute; background: #141414; color: #C9C2B6;
             top: 6mm; left: 6mm; right: 6mm; height: 24mm;
             display: flex; align-items: center; justify-content: space-between; }
     .band .brandrow { display: flex; align-items: center; gap: 7mm; padding-left: 7mm; }
     .band img.chakra { width: 17mm; height: 17mm; display: block; }
     .band img.lockup { height: 15mm; width: auto; display: block; }
     .band .r-title { text-align: right; padding-right: 8mm; }
-    .band .r-title .deva { font-family: var(--deva); font-size: 13.5pt; color: #F7F3E9; }
+    .band .r-title .deva { font-family: var(--deva); font-size: 13.5pt; color: #C9C2B6; }
     .band .r-title .en { font-family: var(--ui); font-size: 6pt; letter-spacing: .26em;
-                         text-transform: uppercase; color: #F7F3E9; margin-top: .5mm; }
+                         text-transform: uppercase; color: #C9C2B6; margin-top: .5mm; }
 
     .serial { position: absolute; top: 32mm; left: 12mm; right: 12mm;
               display: flex; gap: 6mm; justify-content: flex-end; align-items: baseline;
@@ -99,10 +99,10 @@
   <div class="sheet a5-land dark">
     <div class="band">
       <div class="brandrow">
-        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-night-ivory.svg"
-             alt="Ṛta-chakra — ivory knockout cut">
-        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg"
-             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ivory knockout">
+        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-garbhagriha.svg"
+             alt="Ṛta-chakra — garbhagriha cut, gold hub">
+        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-garbhagriha.svg"
+             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ash on mahakala">
       </div>
       <div class="r-title">
         <div class="deva">दान-रसीद</div>

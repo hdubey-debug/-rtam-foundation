@@ -31,8 +31,9 @@ SET = {
     ],
     "receipt": [
         (DIST / "receipt-a5.pdf", "receipt-a5.pdf"),
-        (DIST / "receipt-a5-color.pdf", "receipt-a5-color.pdf"),
         (DIST / "receipt-cover-a5.pdf", "receipt-cover-a5.pdf"),
+        (DIST / "receipt-a5-book.pdf", "receipt-a5-book.pdf"),
+        (DIST / "receipt-cover-a5-book.pdf", "receipt-cover-a5-book.pdf"),
         (HERE / "receipt-press-spec.md", "receipt-press-spec.md"),
     ],
     "seal": [

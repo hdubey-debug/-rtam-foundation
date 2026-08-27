@@ -76,24 +76,24 @@ def build_us_editions() -> None:
         print(f"  pdf   dist/{out_stem}.pdf")
 
 
-def build_receipt_color() -> None:
-    """The colored donor-facing edition of the receipt: generated from
-    receipt-a5.html by swapping the two single-ink cuts for the gold-hub cuts
-    (one source, two inks — the letterhead press/mono pattern, mechanized so
-    the editions can never drift apart)."""
-    src = (HERE / "receipt-a5.html").read_text()
-    color = (src
-             .replace("rtam-chakra-night-ivory.svg", "rtam-chakra-garbhagriha.svg")
-             .replace("rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg",
-                      "rtambhareshvara-mandir-lockup-devanagari-led-garbhagriha.svg")
-             .replace("दान-रसीद — A5 landscape leaf (garbhagriha head, NCR duplicate book)",
-                      "दान-रसीद — A5 landscape leaf (colour edition)"))
-    tmp = HERE / "receipt-a5-color.html"
-    tmp.write_text(color)
-    render_html(tmp, DIST / "receipt-a5-color.pdf", 840, 2, "css")
-    print("  pdf   dist/receipt-a5-color.pdf")
-    render_html(tmp, PREVIEWS / "receipt-a5-color-preview.png", 840, 2)
-    print("  png   exports/stationery/receipt-a5-color-preview.png")
+def build_receipt_book() -> None:
+    """The single-ink NCR editions the press actually prints: generated from
+    the colour-primary sources by swapping the garbhagriha cuts for the
+    ivory knockouts (one source per piece — editions can never drift)."""
+    for src_name, out_stem in [("receipt-a5.html", "receipt-a5-book"),
+                               ("receipt-cover-a5.html", "receipt-cover-a5-book")]:
+        src = (HERE / src_name).read_text()
+        book = (src
+                .replace("rtam-chakra-garbhagriha.svg", "rtam-chakra-night-ivory.svg")
+                .replace("rtambhareshvara-mandir-lockup-devanagari-led-garbhagriha.svg",
+                         "rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg")
+                .replace("#C9C2B6", "#F7F3E9")
+                .replace("colour primary", "single-ink NCR book edition"))
+        tmp = HERE / f"{out_stem}.html"
+        tmp.write_text(book)
+        render_html(tmp, DIST / f"{out_stem}.pdf", 840, 2, "css")
+        tmp.unlink()
+        print(f"  pdf   dist/{out_stem}.pdf")
 
 
 def build_docx() -> None:
@@ -172,8 +172,8 @@ def main(argv: list[str]) -> int:
         if only and only != name:
             continue
         build_piece(name)
-    if only in (None, "receipt", "receipt-color"):
-        build_receipt_color()
+    if only in (None, "receipt", "receipt-cover", "receipt-book"):
+        build_receipt_book()
     if only in (None, "letterhead", "letterhead-us"):
         build_us_editions()
     if only in (None, "docx", "letterhead"):
