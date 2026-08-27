@@ -5,9 +5,9 @@
 
 | Item | Specification |
 |---|---|
-| Leaf | A5 landscape (210 × 148 mm), artwork `receipt-a5.pdf`, single colour (charcoal; any one dark ink) |
+| Leaf | A5 landscape (210 × 148 mm), artwork `receipt-a5.pdf`, **single colour black** — the head band is a deliberate heavy solid; the marks inside it are knockouts (unprinted paper) |
 | Sets | **2-part carbonless (NCR): white original + yellow duplicate** |
-| Book | **50 sets per book**, edge-glued pad, wraparound cover (`receipt-cover-a5.pdf` on card), backing board |
+| Book | **50 sets per book**, edge-glued pad, wraparound cover (`receipt-cover-a5.pdf` on card — **full dark, print with 3 mm bleed**; the book-number panel is a paper knockout), backing board |
 | Numbering | Machine numbering in the क्रमांक box on BOTH parts. **Book 01 starts at 0001**; each later book continues the series (Book 02 → 0051…). Confirm the running start with the mandir before each reprint |
 | Perforation | Vertical perforation on the WHITE leaf near the binding edge; yellow stays bound |
 | Cover slot | बही क्रमांक hand-filled at the desk; printer may also number covers sequentially |
