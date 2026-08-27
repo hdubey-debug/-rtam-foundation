@@ -1,28 +1,33 @@
 # छपाई के लिए · To Print
 
-*हर PDF यहाँ छपाई-तैयार है — डाउनलोड करें, 100% आकार ("Actual size") पर छापें।*
-*Every PDF here is print-ready — download, print at 100% scale ("Actual size").*
+*हर PDF छपाई-तैयार है — डाउनलोड करें, **100% आकार ("Actual size")** पर छापें।*
+*Every PDF is print-ready — download, print at **100% scale ("Actual size")**.*
 
-**काग़ज़ का आकार पहले देखें · Match the paper size first.** भारत में A4 काग़ज़ —
-सभी मुख्य PDF A4 हैं · In India, use the A4 files (India's standard). **In the
-USA** printer trays hold **US Letter** (shorter than A4 — printing an A4 file at
-100% cuts off the bottom): use the **`-us` letterhead files**, or set the print
-dialog to "Fit to printable area" for any other piece.
+**पहला नियम — अपना काग़ज़ चुनें · First rule — pick your paper:** भारत में
+**india-a4-paper** फ़ोल्डर, अमेरिका में **usa-letter-paper** फ़ोल्डर · In India
+use the `india-a4-paper` folders; in the USA use `usa-letter-paper` (US Letter
+is shorter than A4 — the wrong file loses its bottom edge).
 
-| फ़ोल्डर · Folder | क्या है · What | कागज़ / निर्देश · Paper / Instructions |
-|---|---|---|
-| **letterhead/** | पत्र-शीर्ष · Letterhead (काला/garbhagriha — मुख्य) | क्रीम बॉन्ड 100 gsm — BILT "Corona Cream" · भारत में A4: `letterhead.pdf` (मुख्य, रंगीन लेज़र/प्रेस) / `letterhead-mono.pdf` (एक-रंग) · **USA: `letterhead-us.pdf` / `-us-mono.pdf`** · क्रीम संस्करण: `letterhead-chandra*.pdf` · `letterhead.docx` में पत्र टाइप करें · The dark garbhagriha edition is THE letterhead; chandra cream editions remain the day alternative; DOCX to type letters |
-| **receipt/** | दान-रसीद · Donation receipt (A5) | मुख्य रंगीन (सुनहरा केंद्र): `receipt-a5.pdf` + `receipt-cover-a5.pdf` — डिजिटल/प्रीमियम के लिए · छापेखाने को NCR किताबों के लिए `-book` फ़ाइलें + `receipt-press-spec.md` दें · Colour primaries (gold hub) for digital/premium; give the printer the `-book` single-ink files + the press spec for NCR duplicate books (50 sets) |
-| **seal/** | मुहर · Rubber stamps | मुहर-वाले को `seal-chakra-round.pdf` (गोल Ø50, Trodat 46050/Colop R50) + `address-stamp.pdf` (75×38, Trodat 4926) + `stamp-vendor-spec.md` दें — **बैंगनी (violet) स्याही** · Give all three to the stamp shop — violet ink pad |
-| **labels/** | पता-स्टिकर · Address labels (A4) | Oddy ST-8 शीट (99×68, 8 प्रति पृष्ठ) — पहले `labels-alignment-test.pdf` सादे कागज़ पर छाप कर मिलाएँ · Oddy ST-8 sheets; print the alignment test on plain paper first |
-| **plates/** | मूर्ति-माप पट्ट · Murti dimension plates (A4 landscape) | `vertical-grammar-hi.pdf` कारीगरों के लिए हिंदी में, `vertical-grammar.pdf` English — दोनों A4 · Hindi edition for the craftsmen, English edition, both A4 landscape |
+## फ़ोल्डर गाइड · Folder guide
 
-**नियम · Rules:** काग़ज़ ही पृष्ठभूमि है — कोई रंग की पृष्ठभूमि नहीं छपती · The
-paper itself is the ground — no background is ever printed. रसीद पर कोई
-कर-छूट/पंजीयन पंक्ति तब तक नहीं जब तक असली न हो · No tax/registration line on
-receipts until it is real.
+| फ़ोल्डर · Folder | किसके लिए · Who it's for |
+|---|---|
+| **letterhead/india-a4-paper/** | भारत में पत्र छापने के लिए — `letterhead-color.pdf` (रंगीन लेज़र/प्रेस) या `letterhead-black-only.pdf` (एक-रंग/फोटोकॉपी) · Printing letters in India — color, or black-only for mono printers and photocopies |
+| **letterhead/usa-letter-paper/** | अमेरिका में — वही दो, US Letter काग़ज़ पर · The same two, sized for US Letter trays |
+| **letterhead/cream-day-edition-a4/** | क्रीम (दिन) संस्करण — हल्का विकल्प · The cream day alternative |
+| **letterhead/letterhead-typing-template.docx** | Word/Google Docs में पत्र टाइप करने के लिए — शीर्ष/तल स्थिर हैं · Type letters; head and foot are locked images |
+| **receipt-book/give-to-printer/** | **यह पूरा फ़ोल्डर छापेखाने को दें** — रसीद-पृष्ठ, कवर, और छपाई-निर्देश (NCR किताबें, 50 सेट) · Hand this whole folder to the printer: page, cover, and instructions for NCR duplicate books |
+| **receipt-book/color-edition/** | रंगीन रसीद (सुनहरा केंद्र) — डिजिटल/व्हाट्सऐप रसीदों और प्रीमियम छपाई के लिए · The colour receipt for digital use and premium runs |
+| **stamps/** | **यह पूरा फ़ोल्डर मुहर-वाले को दें** — गोल मुहर Ø50 (Trodat 46050/Colop R50), पता-मुहर 75×38 (Trodat 4926), निर्देश — **बैंगनी स्याही** · Hand this whole folder to the stamp shop — violet ink pad |
+| **address-labels/** | घर के प्रिंटर से Oddy ST-8 शीट (8 प्रति पृष्ठ) पर — **पहले** `alignment-test-print-first.pdf` सादे कागज़ पर छापें · Home-laser labels on Oddy ST-8 sheets; print the alignment test on plain paper first |
+| **murti-plates/** | मूर्ति के माप-पट्ट — `murti-dimensions-hindi.pdf` कारीगरों के लिए, English भी (A4 landscape) · The murti dimension plates — Hindi for the craftsmen, English alongside |
+
+**काग़ज़ · Paper:** पत्र-शीर्ष क्रीम बॉन्ड 100 gsm पर — BILT Royal Executive Bond
+"Corona Cream" (औपचारिक: Conqueror Cream Wove) · Letterhead on cream bond
+100 gsm. **नियम · Rule:** रसीद पर कोई कर-छूट/पंजीयन पंक्ति तब तक नहीं जब तक
+असली न हो · No tax/registration line on receipts until it is real.
 
 *नया संस्करण बनाने के लिए · To regenerate:* `python3 brand/stationery/build.py`
-→ `python3 brand/stationery/checks.py` → `python3 brand/stationery/publish_print.py`
+→ `checks.py` → `publish_print.py`
 
 ऋतस्य पन्थाम्

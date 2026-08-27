@@ -20,34 +20,43 @@ PLATES = REPO / "murti-3d" / "plates"
 PRINT = REPO / "print"
 
 SET = {
+    # who is this for · what paper · what ink — every folder is one answer
+    "letterhead/india-a4-paper": [
+        (DIST / "letterhead.pdf", "letterhead-color.pdf"),
+        (DIST / "letterhead-mono.pdf", "letterhead-black-only.pdf"),
+    ],
+    "letterhead/usa-letter-paper": [
+        (DIST / "letterhead-us.pdf", "letterhead-color.pdf"),
+        (DIST / "letterhead-us-mono.pdf", "letterhead-black-only.pdf"),
+    ],
+    "letterhead/cream-day-edition-a4": [
+        (DIST / "letterhead-chandra.pdf", "letterhead-cream-color.pdf"),
+        (DIST / "letterhead-chandra-mono.pdf", "letterhead-cream-black-only.pdf"),
+    ],
     "letterhead": [
-        (DIST / "letterhead.pdf", "letterhead.pdf"),
-        (DIST / "letterhead-mono.pdf", "letterhead-mono.pdf"),
-        (DIST / "letterhead-us.pdf", "letterhead-us.pdf"),
-        (DIST / "letterhead-us-mono.pdf", "letterhead-us-mono.pdf"),
-        (DIST / "letterhead-chandra.pdf", "letterhead-chandra.pdf"),
-        (DIST / "letterhead-chandra-mono.pdf", "letterhead-chandra-mono.pdf"),
-        (DIST / "letterhead.docx", "letterhead.docx"),
+        (DIST / "letterhead.docx", "letterhead-typing-template.docx"),
     ],
-    "receipt": [
-        (DIST / "receipt-a5.pdf", "receipt-a5.pdf"),
-        (DIST / "receipt-cover-a5.pdf", "receipt-cover-a5.pdf"),
-        (DIST / "receipt-a5-book.pdf", "receipt-a5-book.pdf"),
-        (DIST / "receipt-cover-a5-book.pdf", "receipt-cover-a5-book.pdf"),
-        (HERE / "receipt-press-spec.md", "receipt-press-spec.md"),
+    "receipt-book/give-to-printer": [
+        (DIST / "receipt-a5-book.pdf", "receipt-page-black-only.pdf"),
+        (DIST / "receipt-cover-a5-book.pdf", "receipt-cover-black-only.pdf"),
+        (HERE / "receipt-press-spec.md", "printing-instructions.md"),
     ],
-    "seal": [
-        (DIST / "seal-chakra-round.pdf", "seal-chakra-round.pdf"),
-        (DIST / "address-stamp.pdf", "address-stamp.pdf"),
-        (HERE / "stamp-vendor-spec.md", "stamp-vendor-spec.md"),
+    "receipt-book/color-edition": [
+        (DIST / "receipt-a5.pdf", "receipt-page-color.pdf"),
+        (DIST / "receipt-cover-a5.pdf", "receipt-cover-color.pdf"),
     ],
-    "labels": [
-        (DIST / "labels-st8.pdf", "labels-st8.pdf"),
-        (DIST / "labels-alignment-test.pdf", "labels-alignment-test.pdf"),
+    "stamps": [
+        (DIST / "seal-chakra-round.pdf", "round-seal-50mm.pdf"),
+        (DIST / "address-stamp.pdf", "address-stamp-75x38mm.pdf"),
+        (HERE / "stamp-vendor-spec.md", "stamp-maker-instructions.md"),
     ],
-    "plates": [
-        (PLATES / "vertical-grammar.pdf", "vertical-grammar.pdf"),
-        (PLATES / "vertical-grammar-hi.pdf", "vertical-grammar-hi.pdf"),
+    "address-labels": [
+        (DIST / "labels-st8.pdf", "labels-8-per-sheet.pdf"),
+        (DIST / "labels-alignment-test.pdf", "alignment-test-print-first.pdf"),
+    ],
+    "murti-plates": [
+        (PLATES / "vertical-grammar-hi.pdf", "murti-dimensions-hindi.pdf"),
+        (PLATES / "vertical-grammar.pdf", "murti-dimensions-english.pdf"),
     ],
 }
 
