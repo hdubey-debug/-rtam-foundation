@@ -61,6 +61,11 @@ def main() -> int:
               ("FOUNDERS—SHRIRAJESHDUBEY", 1), ("SMT.KIRANBALADUBEY", 1)])
     pdf_page(DIST / "letterhead-mono.pdf", 210, 297,
              [("483001", 2), ("FOUNDERS—SHRIRAJESHDUBEY", 1)])
+    # US Letter editions — all four footer lines must survive the shorter sheet
+    pdf_page(DIST / "letterhead-us.pdf", 215.9, 279.4,
+             [("483001", 2), ("FOUNDERS—SHRIRAJESHDUBEY", 1), ("संस्थापक", 1)])
+    pdf_page(DIST / "letterhead-us-mono.pdf", 215.9, 279.4,
+             [("483001", 2), ("FOUNDERS—SHRIRAJESHDUBEY", 1)])
     pdf_page(DIST / "receipt-a5.pdf", 210, 148,
              [("आयकर-कटौतीकादावानहींबनता", 1), ("483001", 2), ("मंदिरनिर्माणनिधि", 1),
               # bilingual doctrine: labels echo, scripture doesn't; compact address pair

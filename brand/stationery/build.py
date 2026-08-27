@@ -53,6 +53,27 @@ def build_piece(name: str) -> None:
         print(f"  png   exports/stationery/{png}")
 
 
+def build_us_editions() -> None:
+    """US Letter editions of the letterhead (215.9×279.4mm) for printing in
+    the US — the founder's HP tray holds Letter, and A4 masters printed on
+    Letter at 100% lose the bottom 17.6mm (the fourth footer line). Generated
+    from the A4 sources by page-size substitution; the footer is
+    bottom-anchored so the design re-flows correctly."""
+    for src_name, out_stem in [("letterhead.html", "letterhead-us"),
+                               ("letterhead-mono.html", "letterhead-us-mono")]:
+        src = (HERE / src_name).read_text()
+        us = (src
+              .replace("@page { size: A4; margin: 0; }",
+                       "@page { size: 215.9mm 279.4mm; margin: 0; }")
+              .replace("</head>",
+                       "<style>.sheet { width: 215.9mm; height: 278.9mm; }</style></head>"))
+        tmp = HERE / f"{out_stem}.html"
+        tmp.write_text(us)
+        render_html(tmp, DIST / f"{out_stem}.pdf", 860, 2, "css")
+        tmp.unlink()
+        print(f"  pdf   dist/{out_stem}.pdf")
+
+
 def build_receipt_color() -> None:
     """The colored donor-facing edition of the receipt: generated from
     receipt-a5.html by swapping the two single-ink cuts for the gold-hub cuts
@@ -149,6 +170,8 @@ def main(argv: list[str]) -> int:
         build_piece(name)
     if only in (None, "receipt", "receipt-color"):
         build_receipt_color()
+    if only in (None, "letterhead", "letterhead-us"):
+        build_us_editions()
     if only in (None, "docx", "letterhead"):
         build_docx()
     print("stationery build: done")

@@ -23,6 +23,8 @@ SET = {
     "letterhead": [
         (DIST / "letterhead.pdf", "letterhead.pdf"),
         (DIST / "letterhead-mono.pdf", "letterhead-mono.pdf"),
+        (DIST / "letterhead-us.pdf", "letterhead-us.pdf"),
+        (DIST / "letterhead-us-mono.pdf", "letterhead-us-mono.pdf"),
         (DIST / "letterhead.docx", "letterhead.docx"),
     ],
     "receipt": [
