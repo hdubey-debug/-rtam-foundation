@@ -87,11 +87,16 @@ def main() -> int:
     for f in sorted(HERE.glob("*.html")) + [HERE / "stationery.css"]:
         check(f"{f.name}: CDN-free", "fonts.googleapis" not in f.read_text())
 
-    # mono edition is achromatic
+    # mono edition is achromatic — threshold 16 admits the ivory knockout
+    # (#F7F3E9, spread 14), which prints as NO ink, not as a colour
     mono = BRAND / "exports" / "stationery" / "letterhead-mono-preview.png"
     a = np.asarray(Image.open(mono).convert("RGB"), dtype=np.int16)
     spread = int((a.max(axis=2) - a.min(axis=2)).max())
-    check("letterhead-mono: grayscale", spread <= 12, f"max channel spread {spread}")
+    check("letterhead-mono: grayscale", spread <= 16, f"max channel spread {spread}")
+
+    # the chandra (day) editions remain in the family
+    pdf_page(DIST / "letterhead-chandra.pdf", 210, 297, [("483001", 2)])
+    pdf_page(DIST / "letterhead-chandra-mono.pdf", 210, 297, [("483001", 2)])
 
     # seal floors recomputed from the spec (viewBox u per mm from widthMM)
     spec = json.loads((BRAND / "spec" / "brand.json").read_text())

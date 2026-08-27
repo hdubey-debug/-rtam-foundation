@@ -2,43 +2,56 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>दान-रसीद बही — book cover A5</title>
+  <title>दान-रसीद बही — book cover A5 (garbhagriha, full dark)</title>
   <link rel="stylesheet" href="stationery.css">
   <style>
-    /* Wraparound book cover, single ink on the press's card stock. */
+    /* Wraparound book cover, redesigned to the locked garbhagriha language
+       (founder, 2026-08-27): full mahakala card, stacked centred identity
+       (the brand book's temple rule), ivory-knockout marks — single press
+       ink; the marks and the book-number panel are paper out of the black.
+       Press prints with 3mm bleed on card stock (see receipt-press-spec.md). */
     @page { size: 210mm 148mm; margin: 0; }
-    .cover { display: flex; flex-direction: column; align-items: center;
-             justify-content: center; text-align: center; height: 100%;
-             gap: 5mm; }
-    .cover img.chakra { width: 26mm; height: 26mm; }
-    .cover img.lockup { height: 24mm; width: auto; }
-    .cover .book { font-family: var(--deva); font-size: 19pt; margin-top: 2mm; }
-    .cover .booken { font-family: var(--ui); font-size: 7pt; letter-spacing: .3em;
-                     text-transform: uppercase; margin-top: 1mm; }
-    .cover .slot { font-family: var(--deva); font-size: 11pt; margin-top: 6mm; }
-    .cover .slot .en { font-family: var(--ui); font-size: 6pt; letter-spacing: .18em;
-                       text-transform: uppercase; }
-    .cover .slot .no { display: inline-block; min-width: 22mm;
-                       border-bottom: 0.35mm solid var(--ink); }
-    .cover .addr { position: absolute; left: 12mm; right: 12mm; bottom: 7mm;
-                   font-family: var(--deva); font-size: 8pt;
-                   border-top: 0.3mm solid var(--stone); padding-top: 2mm; }
+    .cover { position: relative; width: 210mm; height: 147.5mm;
+             background: #141414; color: #F7F3E9;
+             display: flex; flex-direction: column; align-items: center;
+             justify-content: center; text-align: center; gap: 3.5mm;
+             font-family: var(--ui); }
+    .cover img.chakra { width: 25mm; height: 25mm; }
+    .cover img.lockup { height: 21mm; width: auto; }
+    .cover .book { font-family: var(--deva); font-size: 17pt; margin-top: 1mm; }
+    .cover .booken { font-family: var(--ui); font-size: 6.5pt; letter-spacing: .3em;
+                     text-transform: uppercase; margin-top: .8mm; }
+    .cover .slotpanel { background: #FFFFFF; color: var(--ink);
+                        margin-top: 4mm; padding: 2mm 6mm;
+                        display: flex; align-items: baseline; gap: 3mm; }
+    .cover .slotpanel .deva { font-family: var(--deva); font-size: 10pt; }
+    .cover .slotpanel .en { font-family: var(--ui); font-size: 5.6pt;
+                            letter-spacing: .16em; text-transform: uppercase; }
+    .cover .slotpanel .no { display: inline-block; min-width: 20mm;
+                            border-bottom: 0.35mm solid var(--ink); }
+    .cover .addr { position: absolute; left: 12mm; right: 12mm; bottom: 6mm;
+                   font-family: var(--deva); font-size: 8pt; line-height: 1.55;
+                   border-top: 0.3mm solid #8F887C; padding-top: 2mm; }
+    .cover .addr .caps { font-family: var(--caps); font-weight: 500; font-size: 6pt;
+                         letter-spacing: .2em; display: block; margin-top: .6mm; }
   </style>
 </head>
 <body>
-  <div class="sheet a5-land">
-    <div class="cover">
-      <img class="chakra" src="../dist/outlined/icons/rtam-chakra-mono.svg"
-           alt="Ṛta-chakra — single-ink cut">
-      <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-charcoal.svg"
-           alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
-      <div>
-        <div class="book">दान-रसीद बही</div>
-        <div class="booken">Donation Receipt Book</div>
-      </div>
-      <div class="slot">बही क्रमांक <span class="en">/ Book no.</span> <span class="no">&nbsp;</span></div>
-      <div class="addr">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.) &middot; मो. 9098225177 &middot; 9407381069
-      <div style="font-family:var(--caps);font-weight:500;font-size:6.4pt;letter-spacing:.2em;margin-top:1mm">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001 &middot; MOB. 9098225177 &middot; 9407381069</div></div>
+  <div class="cover">
+    <img class="chakra" src="../dist/outlined/icons/rtam-chakra-night-ivory.svg"
+         alt="Ṛta-chakra — ivory knockout cut">
+    <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg"
+         alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ivory knockout">
+    <div>
+      <div class="book">दान-रसीद बही</div>
+      <div class="booken">Donation Receipt Book</div>
+    </div>
+    <div class="slotpanel">
+      <span class="deva">बही क्रमांक</span><span class="en">/ Book no.</span>
+      <span class="no">&nbsp;</span>
+    </div>
+    <div class="addr">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.) &middot; मो. 9098225177 &middot; 9407381069
+      <span class="caps">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001 &middot; MOB. 9098225177 &middot; 9407381069</span>
     </div>
   </div>
 </body>

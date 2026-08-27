@@ -31,6 +31,8 @@ MM = 72 / 25.4
 PIECES = {
     "letterhead":      ("letterhead.html",      "letterhead.pdf",      "letterhead-preview.png"),
     "letterhead-mono": ("letterhead-mono.html", "letterhead-mono.pdf", "letterhead-mono-preview.png"),
+    "letterhead-chandra":      ("letterhead-chandra.html",      "letterhead-chandra.pdf",      None),
+    "letterhead-chandra-mono": ("letterhead-chandra-mono.html", "letterhead-chandra-mono.pdf", None),
     "seal-round":      ("seal-chakra-round.html", "seal-chakra-round.pdf", None),
     "address-stamp":   ("address-stamp.html",     "address-stamp.pdf",     None),
     "receipt":         ("receipt-a5.html",      "receipt-a5.pdf",      "receipt-a5-preview.png"),
@@ -81,10 +83,10 @@ def build_receipt_color() -> None:
     the editions can never drift apart)."""
     src = (HERE / "receipt-a5.html").read_text()
     color = (src
-             .replace("rtam-chakra-mono.svg", "rtam-chakra-day.svg")
-             .replace("rtambhareshvara-mandir-lockup-devanagari-led-charcoal.svg",
-                      "rtambhareshvara-mandir-lockup-devanagari-led.svg")
-             .replace("दान-रसीद — A5 landscape leaf (NCR duplicate book)",
+             .replace("rtam-chakra-night-ivory.svg", "rtam-chakra-garbhagriha.svg")
+             .replace("rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg",
+                      "rtambhareshvara-mandir-lockup-devanagari-led-garbhagriha.svg")
+             .replace("दान-रसीद — A5 landscape leaf (garbhagriha head, NCR duplicate book)",
                       "दान-रसीद — A5 landscape leaf (colour edition)"))
     tmp = HERE / "receipt-a5-color.html"
     tmp.write_text(color)
@@ -95,7 +97,7 @@ def build_receipt_color() -> None:
 
 
 def build_docx() -> None:
-    """letterhead.docx — A4, margins matched to the sheet (25/20/58/28mm), the
+    """letterhead.docx — A4, margins matched to the dark sheet (25/20/80/45mm), the
     head and footer as strip images from a 576-dpi render of the master."""
     try:
         import docx
@@ -127,25 +129,27 @@ def build_docx() -> None:
 
     head_png = DIST / "_docx-head.png"
     foot_png = DIST / "_docx-foot.png"
-    crop(25, 18, 165, 37, head_png)         # chakra + lockup + refline
-    crop(25, 264, 165, 26, foot_png)        # footer block incl. its rule
+    crop(10, 8, 190, 66, head_png)          # dark head band + refline
+    crop(10, 255, 190, 34, foot_png)        # dark footer band
 
     doc = docx.Document()
     sec = doc.sections[0]
     sec.page_width, sec.page_height = Mm(210), Mm(297)
     sec.left_margin, sec.right_margin = Mm(25), Mm(20)
-    sec.top_margin, sec.bottom_margin = Mm(58), Mm(28)
+    sec.top_margin, sec.bottom_margin = Mm(80), Mm(45)  # dark band 58 + refline ~74; foot band reaches 40 up
     sec.header_distance, sec.footer_distance = Mm(18), Mm(7)
 
     hp = sec.header.paragraphs[0]
     hp.alignment = WD_ALIGN_PARAGRAPH.LEFT
     hp.paragraph_format.space_after = Pt(0)
-    hp.add_run().add_picture(str(head_png), width=Mm(165))
+    hp.paragraph_format.left_indent = Mm(-15)   # band starts 10mm from sheet edge
+    hp.add_run().add_picture(str(head_png), width=Mm(190))
 
     fp = sec.footer.paragraphs[0]
-    fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    fp.alignment = WD_ALIGN_PARAGRAPH.LEFT
     fp.paragraph_format.space_after = Pt(0)
-    fp.add_run().add_picture(str(foot_png), width=Mm(165))
+    fp.paragraph_format.left_indent = Mm(-15)
+    fp.add_run().add_picture(str(foot_png), width=Mm(190))
 
     normal = doc.styles["Normal"]
     normal.font.name = "Georgia"            # graceful fallback body face

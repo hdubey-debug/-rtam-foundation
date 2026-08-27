@@ -4,8 +4,8 @@
   <defs>
     <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
   </defs>
-  <text x="320" y="160" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="96" text-anchor="middle" fill="#1A1A1A">ऋतम्भरेश्वर मंदिर</text>
-  <text x="320" y="312" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="32" letter-spacing="4" text-anchor="middle" fill="#1A1A1A">RTAMBHARESHVARA MANDIR</text>
-  <line x1="200" y1="232" x2="440" y2="232" stroke="#B8B1A4" stroke-width="1.5"/>
-  <circle cx="49.5" cy="319.5" r="4" fill="#C8A15A"/>
+  <text x="320" y="144" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="96" text-anchor="middle" fill="#1A1A1A">ऋतम्भरेश्वर मंदिर</text>
+  <text x="320" y="296" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="32" letter-spacing="4" text-anchor="middle" fill="#1A1A1A">RTAMBHARESHVARA MANDIR</text>
+  <line x1="200" y1="216" x2="440" y2="216" stroke="#B8B1A4" stroke-width="1.5"/>
+  <circle cx="49.5" cy="303.5" r="4" fill="#C8A15A"/>
 </svg>

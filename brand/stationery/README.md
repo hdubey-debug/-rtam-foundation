@@ -9,8 +9,9 @@ gate: `python3 checks.py` (PyMuPDF, read-only, undeclared-on-purpose).
 
 | Piece | Master | Order/use |
 |---|---|---|
-| Letterhead (press) | `dist/letterhead.pdf` | Offset/digital press run. **Paper IS the chandra ground: BILT Royal Executive Bond "Corona Cream" 100 gsm** (everyday) or **Conqueror Cream Wove 100 gsm** (formal). Ground is never printed. Tell an offset shop: wax-free inks (sheets go through home lasers later) |
-| Letterhead (mono) | `dist/letterhead-mono.pdf` | Home-laser edition — single ink, neutral hairlines, mono chakra. Print on the same cream bond |
+| Letterhead — **THE letterhead (garbhagriha)** | `dist/letterhead.pdf` | Founder-locked 2026-08-27: inset mahakala bands, śulba 13:12:5 head, ash marks, gold hub (the page's one gold). Prints on **BILT Royal Executive Bond "Corona Cream" 100 gsm** (Conqueror Cream formal) — the paper is the ground between the bands. Home color laser or press |
+| Letterhead (single ink) | `dist/letterhead-mono.pdf` | Reproduction floor: one black; every mark is the ivory knockout (night-ivory cuts) — paper out of the band |
+| Letterhead (chandra day editions) | `dist/letterhead-chandra.pdf` · `-chandra-mono.pdf` | The cream editions remain the day alternative |
 | Typing template | `dist/letterhead.docx` | Word/Docs — head+footer are locked images; body Georgia 11/1.4 (graceful fallback). **Digital letters only; print correspondence uses the printed sheets** (the Yale boundary) |
 | Second sheet | — | Plain matching cream stock, no artwork. Continuation header is typed |
 | दान-रसीद book | `dist/receipt-a5.pdf` + `dist/receipt-cover-a5.pdf` | NCR duplicate books (single ink) — hand `receipt-press-spec.md` to the printer |

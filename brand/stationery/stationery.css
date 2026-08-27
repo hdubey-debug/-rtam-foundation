@@ -42,6 +42,8 @@
   height: 147.5mm;
   padding: 10mm 12mm 9mm 12mm;
 }
+/* Dark (garbhagriha) pieces lay out with absolute bands — no sheet padding. */
+.sheet.dark { padding: 0; }
 
 /* ---- letterhead head --------------------------------------------------- */
 .head {

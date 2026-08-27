@@ -2,26 +2,33 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>दान-रसीद — A5 landscape leaf (NCR duplicate book)</title>
+  <title>दान-रसीद — A5 landscape leaf (garbhagriha head, NCR duplicate book)</title>
   <link rel="stylesheet" href="stationery.css">
   <style>
-    /* Hand-fill-first दान-रसीद leaf, single ink. Press prints this 2-part NCR
-       (white/yellow), machine-numbers the क्रमांक slot, perforates the top
-       leaf — see receipt-press-spec.md. NO registration/PAN/80G lines by
-       ratified decision D8; the honest line stands instead. */
+    /* दान-रसीद leaf, redesigned to the locked garbhagriha letterhead language
+       (founder, 2026-08-27): inset mahakala head band with the ivory-knockout
+       marks (single press ink — the marks are paper out of the band), body
+       and foot on paper for handwriting and legal legibility. Fields
+       unchanged. build_receipt_color() generates the colour edition (ash
+       marks, gold hub). Press: see receipt-press-spec.md — heavy band
+       coverage is deliberate. NO registration/PAN/80G lines (D8). */
     @page { size: 210mm 148mm; margin: 0; }
-
     .sheet.a5-land { font-family: var(--ui); }
-    .r-head { display: flex; align-items: center; justify-content: space-between; }
-    .r-head .brandrow { display: flex; align-items: center; gap: 4.5mm; }
-    .r-head .chakra { width: 13mm; height: 13mm; display: block; }
-    .r-head .lockup { height: 15mm; width: auto; display: block; }
-    .r-title { text-align: right; }
-    .r-title .deva { font-family: var(--deva); font-size: 15pt; }
-    .r-title .en { font-family: var(--ui); font-size: 6.5pt; letter-spacing: .24em;
-                   text-transform: uppercase; margin-top: .5mm; }
-    .serial { display: flex; gap: 6mm; justify-content: flex-end; align-items: baseline;
-              margin-top: 1.6mm; font-family: var(--deva); font-size: 9.5pt; }
+
+    .band { position: absolute; background: #141414; color: #F7F3E9;
+            top: 6mm; left: 6mm; right: 6mm; height: 24mm;
+            display: flex; align-items: center; justify-content: space-between; }
+    .band .brandrow { display: flex; align-items: center; gap: 7mm; padding-left: 7mm; }
+    .band img.chakra { width: 17mm; height: 17mm; display: block; }
+    .band img.lockup { height: 15mm; width: auto; display: block; }
+    .band .r-title { text-align: right; padding-right: 8mm; }
+    .band .r-title .deva { font-family: var(--deva); font-size: 13.5pt; color: #F7F3E9; }
+    .band .r-title .en { font-family: var(--ui); font-size: 6pt; letter-spacing: .26em;
+                         text-transform: uppercase; color: #F7F3E9; margin-top: .5mm; }
+
+    .serial { position: absolute; top: 32mm; left: 12mm; right: 12mm;
+              display: flex; gap: 6mm; justify-content: flex-end; align-items: baseline;
+              font-family: var(--deva); font-size: 9.5pt; }
     .serial .en { font-family: var(--ui); font-size: 5.6pt; letter-spacing: .14em;
                   text-transform: uppercase; }
     .serial .no { font-family: var(--ui); font-weight: 500; letter-spacing: .08em;
@@ -30,8 +37,9 @@
     .serial .dt { border-bottom: 0.3mm dotted var(--stone); min-width: 30mm;
                   display: inline-block; }
 
-    .fields { margin-top: 2.8mm; }
-    .row { display: flex; gap: 5mm; align-items: baseline; margin-top: 4mm; }
+    .fields { position: absolute; top: 40mm; left: 12mm; right: 12mm; }
+    .row { display: flex; gap: 5mm; align-items: baseline; margin-top: 3.4mm; }
+    .row:first-child { margin-top: 0; }
     .f { display: flex; align-items: baseline; gap: 2.5mm; flex: 1; }
     .f .lab { white-space: nowrap; }
     .f .lab .deva { font-family: var(--deva); font-size: 10.5pt; }
@@ -42,8 +50,7 @@
     .amtbox { border: 0.4mm solid var(--ink); min-width: 34mm; min-height: 8mm;
               display: flex; align-items: center; padding: 0 2mm;
               font-family: var(--ui); font-size: 11pt; }
-
-    .heads { margin-top: 4mm; display: flex; align-items: baseline; gap: 4mm; }
+    .heads { margin-top: 3.4mm; display: flex; align-items: baseline; gap: 4mm; }
     .heads .opts { display: flex; flex-wrap: wrap; gap: 3mm 6mm; }
     .opt { display: flex; align-items: flex-start; gap: 1.6mm; white-space: nowrap; }
     .opt .ol { display: flex; flex-direction: column; }
@@ -53,16 +60,16 @@
     .box { width: 3.4mm; height: 3.4mm; border: 0.35mm solid var(--ink);
            display: inline-block; flex: 0 0 auto; margin-top: .7mm; }
 
-    .closing { display: flex; justify-content: space-between; align-items: flex-end;
-               margin-top: 2.5mm; }
-    .rev { width: 24mm; height: 17mm; border: 0.3mm dashed var(--stone);
+    .closing { position: absolute; left: 12mm; right: 12mm; bottom: 25mm;
+               display: flex; justify-content: space-between; align-items: flex-end; }
+    .rev { width: 24mm; height: 15mm; border: 0.3mm dashed var(--stone);
            text-align: center; display: flex; flex-direction: column;
            align-items: center; justify-content: center;
            padding: 1mm; line-height: 1.5; color: var(--ink); }
     .rev .deva { font-family: var(--deva); font-size: 6.4pt; }
     .rev .en { font-family: var(--ui); font-size: 4.4pt; letter-spacing: .1em;
                text-transform: uppercase; margin-top: .5mm; line-height: 1.4; }
-    .muhar { width: 20mm; height: 20mm; border: 0.3mm dashed var(--stone);
+    .muhar { width: 17mm; height: 17mm; border: 0.3mm dashed var(--stone);
              border-radius: 50%; display: flex; flex-direction: column;
              align-items: center; justify-content: center; color: var(--ink); }
     .muhar .deva { font-family: var(--deva); font-size: 7pt; }
@@ -89,22 +96,23 @@
   </style>
 </head>
 <body>
-  <div class="sheet a5-land">
-    <div class="r-head">
+  <div class="sheet a5-land dark">
+    <div class="band">
       <div class="brandrow">
-        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-mono.svg"
-             alt="Ṛta-chakra — single-ink cut">
-        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-charcoal.svg"
-             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
+        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-night-ivory.svg"
+             alt="Ṛta-chakra — ivory knockout cut">
+        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg"
+             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ivory knockout">
       </div>
       <div class="r-title">
         <div class="deva">दान-रसीद</div>
         <div class="en">Donation Receipt</div>
-        <div class="serial">
-          <span>क्रमांक <span class="en">/ No.</span> <span class="no">&nbsp;</span></span>
-          <span>दिनांक <span class="en">/ Date</span> <span class="dt">&nbsp;</span></span>
-        </div>
       </div>
+    </div>
+
+    <div class="serial">
+      <span>क्रमांक <span class="en">/ No.</span> <span class="no">&nbsp;</span></span>
+      <span>दिनांक <span class="en">/ Date</span> <span class="dt">&nbsp;</span></span>
     </div>
 
     <div class="fields">

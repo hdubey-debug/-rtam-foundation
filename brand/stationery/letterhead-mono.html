@@ -2,39 +2,62 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>ऋतम्भरेश्वर मंदिर — letterhead A4 (mono edition)</title>
+  <title>ऋतम्भरेश्वर मंदिर — letterhead A4 (garbhagriha edition, single ink)</title>
   <link rel="stylesheet" href="stationery.css">
   <style>
-    /* Mono edition — the reproduction floor: single-colour charcoal for
-       home-laser printing and photocopy. Identical geometry to the press
-       edition; the chakra swaps to the mono cut and the warm stone hairlines
-       become NEUTRAL gray (a halftone of the one ink, not a second hue). */
+    /* Single-ink edition of THE letterhead — the reproduction floor: the
+       band prints in one black; every mark is the ivory KNOCKOUT (night-ivory
+       cuts — reads as paper out of the band, no second colour anywhere).
+       Identical geometry to letterhead.html. */
     @page { size: A4; margin: 0; }
     :root { --stone: #B3B3B3; }
+
+    .band { position: absolute; background: #141414; color: #F7F3E9;
+            display: flex; align-items: center; }
+    .bhead { top: 10mm; left: 10mm; right: 10mm; height: 48mm; }
+    .band .brandrow { display: flex; align-items: center; gap: 13mm; padding: 0 10mm; }
+    .band img.chakra { width: 33.8mm; height: 33.8mm; display: block; }
+    .band img.lockup { height: 31.2mm; width: auto; display: block; }
+
+    .bfoot { bottom: 10mm; left: 10mm; right: 10mm; height: 30mm;
+             flex-direction: column; justify-content: center; text-align: center;
+             line-height: 1.55; }
+    .bfoot .deva { font-family: var(--deva); font-size: 9.5pt; color: #F7F3E9; }
+    .bfoot .caps { font-family: var(--caps); font-weight: 500; font-size: 6.4pt;
+                   letter-spacing: .22em; color: #F7F3E9; margin-top: .6mm; }
+
+    .refline-dark { position: absolute; top: 66mm; left: 25mm; right: 20mm;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-top: 2.6mm; border-top: 0.35mm solid var(--stone);
+      font-size: 8.5pt; letter-spacing: .06em; color: var(--ink); }
+    .refline-dark .deva { font-family: var(--deva); font-size: 10pt; }
+    .refline-dark .en { font-family: var(--ui); font-size: 7pt;
+                        letter-spacing: .18em; text-transform: uppercase; }
+    .refline-dark .slot { display: inline-block; min-width: 34mm;
+                          border-bottom: 0.3mm dotted var(--stone); }
   </style>
 </head>
 <body>
-  <div class="sheet">
-    <div class="head">
-      <img class="chakra" src="../dist/outlined/icons/rtam-chakra-mono.svg"
-           alt="Ṛta-chakra — single-ink cut">
-      <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-charcoal.svg"
-           alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
+  <div class="sheet dark">
+    <div class="band bhead">
+      <div class="brandrow">
+        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-night-ivory.svg"
+             alt="Ṛta-chakra — ivory knockout cut">
+        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg"
+             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ivory knockout">
+      </div>
+    </div>
+    <div class="refline-dark">
+      <span><span class="deva">क्रमांक</span> <span class="en">/ Ref.</span> <span class="slot">&nbsp;</span></span>
+      <span><span class="deva">दिनांक</span> <span class="en">/ Date</span> <span class="slot">&nbsp;</span></span>
     </div>
 
-    <div class="refline">
-      <span><span class="deva">क्रमांक</span> <span class="en">/ Ref.</span>
-        <span class="slot">&nbsp;</span></span>
-      <span><span class="deva">दिनांक</span> <span class="en">/ Date</span>
-        <span class="slot">&nbsp;</span></span>
-    </div>
-
-    <footer class="foot">
+    <div class="band bfoot">
       <div class="deva">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.)</div>
       <div class="caps">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001</div>
-      <div class="meta">संस्थापक &mdash; श्री राजेश दुबे &middot; श्रीमती किरण बाला दुबे &nbsp;&nbsp;&middot;&nbsp;&nbsp; मो. 9098225177 &middot; 9407381069</div>
+      <div class="deva" style="font-size:8.5pt; margin-top:1mm">संस्थापक &mdash; श्री राजेश दुबे &middot; श्रीमती किरण बाला दुबे &nbsp;&middot;&nbsp; मो. 9098225177 &middot; 9407381069</div>
       <div class="caps">FOUNDERS &mdash; SHRI RAJESH DUBEY &middot; SMT. KIRAN BALA DUBEY &nbsp;&middot;&nbsp; MOB. 9098225177 &middot; 9407381069</div>
-    </footer>
+    </div>
   </div>
 </body>
 </html>

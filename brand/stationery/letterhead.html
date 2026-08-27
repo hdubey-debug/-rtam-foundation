@@ -2,39 +2,67 @@
 <html lang="hi">
 <head>
   <meta charset="utf-8">
-  <title>ऋतम्भरेश्वर मंदिर — letterhead A4 (press edition)</title>
+  <title>ऋतम्भरेश्वर मंदिर — letterhead A4 (garbhagriha edition, THE letterhead)</title>
   <link rel="stylesheet" href="stationery.css">
   <style>
-    /* Press edition: charcoal + the page's single gold (the chakra's hub —
-       decision D1a). Render: render_html_to_png.py letterhead.html out.pdf 840 2 css */
+    /* THE letterhead — the garbhagriha edition, founder-locked 2026-08-27
+       after four printed rounds: inset mahakala bands (full-bleed rejected —
+       printer rims cheapen the black), the V3-L śulba head (icon : name :
+       gap = 13 : 12 : 5 — d 33.8 · L 31.2 · g 13, left lane), ash marks,
+       ONE gold: the chakra's hub (= the bindu, D1a; kansya was print-tested
+       and rejected — it dries brown). The chandra (cream) edition lives on
+       as letterhead-chandra.html, the day alternative.
+       Render: render_html_to_png.py letterhead.html out.pdf 860 2 css */
     @page { size: A4; margin: 0; }
+
+    .band { position: absolute; background: #141414; color: #C9C2B6;
+            display: flex; align-items: center; }
+    .bhead { top: 10mm; left: 10mm; right: 10mm; height: 48mm; }
+    .band .brandrow { display: flex; align-items: center; gap: 13mm; padding: 0 10mm; }
+    .band img.chakra { width: 33.8mm; height: 33.8mm; display: block; }
+    .band img.lockup { height: 31.2mm; width: auto; display: block; }
+
+    .bfoot { bottom: 10mm; left: 10mm; right: 10mm; height: 30mm;
+             flex-direction: column; justify-content: center; text-align: center;
+             line-height: 1.55; }
+    .bfoot .deva { font-family: var(--deva); font-size: 9.5pt; color: #C9C2B6; }
+    .bfoot .caps { font-family: var(--caps); font-weight: 500; font-size: 6.4pt;
+                   letter-spacing: .22em; color: #C9C2B6; margin-top: .6mm; }
+
+    .refline-dark { position: absolute; top: 66mm; left: 25mm; right: 20mm;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-top: 2.6mm; border-top: 0.35mm solid var(--stone);
+      font-size: 8.5pt; letter-spacing: .06em; color: var(--ink); }
+    .refline-dark .deva { font-family: var(--deva); font-size: 10pt; }
+    .refline-dark .en { font-family: var(--ui); font-size: 7pt;
+                        letter-spacing: .18em; text-transform: uppercase; }
+    .refline-dark .slot { display: inline-block; min-width: 34mm;
+                          border-bottom: 0.3mm dotted var(--stone); }
   </style>
 </head>
 <body>
-  <div class="sheet">
-    <div class="head">
-      <img class="chakra" src="../dist/outlined/icons/rtam-chakra-day.svg"
-           alt="Ṛta-chakra — the temple icon, gold hub">
-      <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led.svg"
-           alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
+  <div class="sheet dark">
+    <div class="band bhead">
+      <div class="brandrow">
+        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-garbhagriha.svg"
+             alt="Ṛta-chakra — garbhagriha cut, gold hub">
+        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-garbhagriha.svg"
+             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR — ash on mahakala">
+      </div>
+    </div>
+    <div class="refline-dark">
+      <span><span class="deva">क्रमांक</span> <span class="en">/ Ref.</span> <span class="slot">&nbsp;</span></span>
+      <span><span class="deva">दिनांक</span> <span class="en">/ Date</span> <span class="slot">&nbsp;</span></span>
     </div>
 
-    <div class="refline">
-      <span><span class="deva">क्रमांक</span> <span class="en">/ Ref.</span>
-        <span class="slot">&nbsp;</span></span>
-      <span><span class="deva">दिनांक</span> <span class="en">/ Date</span>
-        <span class="slot">&nbsp;</span></span>
-    </div>
+    <!-- typing area: the letter itself, on the paper between the bands. -->
 
-    <!-- typing area: the letter itself. Left margin = the header's own left
-         edge (British Rail discipline); nothing prints here. -->
-
-    <footer class="foot">
+    <div class="band bfoot">
       <div class="deva">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.)</div>
       <div class="caps">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001</div>
-      <div class="meta">संस्थापक &mdash; श्री राजेश दुबे &middot; श्रीमती किरण बाला दुबे &nbsp;&nbsp;&middot;&nbsp;&nbsp; मो. 9098225177 &middot; 9407381069</div>
+      <div class="deva" style="font-size:8.5pt; margin-top:1mm">संस्थापक &mdash; श्री राजेश दुबे &middot; श्रीमती किरण बाला दुबे &nbsp;&middot;&nbsp; मो. 9098225177 &middot; 9407381069</div>
       <div class="caps">FOUNDERS &mdash; SHRI RAJESH DUBEY &middot; SMT. KIRAN BALA DUBEY &nbsp;&middot;&nbsp; MOB. 9098225177 &middot; 9407381069</div>
-    </footer>
+    </div>
   </div>
 </body>
 </html>

@@ -1275,6 +1275,20 @@
             "chandra",
             "ivory"
           ]
+        },
+        {
+          "path": "icons/rtam-chakra-night-ivory.svg",
+          "title": "Rta-chakra — ivory knockout for the sanctum dark (single ink)",
+          "desc": "Reproduction-floor cut for dark single-ink surfaces (the garbhagriha letterhead's mono edition, NCR receipt bands): everything ivory — reads as paper knocked out of the printed black; windows and seams read as the band.",
+          "colors": {
+            "body": "ivory",
+            "seam": "mahakala",
+            "window": "mahakala",
+            "hub": "ivory"
+          },
+          "grounds": [
+            "mahakala"
+          ]
         }
       ]
     },
@@ -1538,7 +1552,7 @@
     {
       "id": "lockup-temple-devanagari-led",
       "archetype": "lockup",
-      "$comment": "The city-print temple voice (stationery governance G1, ratified 2026-08-26; re-authored 2026-08-27 on founder review): Devanagari LEADS at 3x the English support line (v2.5 requires >=2x on city print). TIGHT viewBox [640,380] hugs the content (Deva adv 571.3, Latin adv 565.9 at fs32 ls4) so the img box IS the name block — no phantom padding beside the chakra on the letterhead. The support line is a LATIN FORM and therefore carries the bindu under its leading R (founder ruling 2026-08-27, per brand-book 'Latin forms carry the gold bindu'): cx = line left 37.05 + R ink-center 12.43 = 49.5, cy = 312 + 0.233*32 = 319.5, r = fs/8 = 4 — the THIRD sanctioned bindu deviation (small-size boost, favicon precedent; fs/12 = 0.3mm dust at letterhead scale). One-gold law holds via D1a: hub and bindu are the same point. Rule stays STONE (goldless lockup; the page's gold is the hub).",
+      "$comment": "The city-print temple voice (stationery governance G1, ratified 2026-08-26; re-authored 2026-08-27 on founder review): Devanagari LEADS at 3x the English support line (v2.5 requires >=2x on city print). TIGHT viewBox [640,380] hugs the content (Deva adv 571.3, Latin adv 565.9 at fs32 ls4) so the img box IS the name block — no phantom padding beside the chakra on the letterhead. The support line is a LATIN FORM and therefore carries the bindu under its leading R (founder ruling 2026-08-27, per brand-book 'Latin forms carry the gold bindu'): cx = line left 37.05 + R ink-center 12.43 = 49.5, cy = 312 + 0.233*32 = 319.5, r = fs/8 = 4 — the THIRD sanctioned bindu deviation (small-size boost, favicon precedent; fs/12 = 0.3mm dust at letterhead scale). One-gold law holds via D1a: hub and bindu are the same point. Rule stays STONE (goldless lockup; the page's gold is the hub). OPTICAL RECENTRE 2026-08-27: ink block shifted up 16u — box-centred placement left the name unit reading ~2mm low against an icon's horizontal centreline (founder's test: the name must be symmetric across the line drawn from the wheel's centre).",
       "viewBox": [
         640,
         380
@@ -1555,7 +1569,7 @@
           "font": "tiro",
           "fs": 96,
           "x": 320,
-          "y": 160,
+          "y": 144,
           "anchor": "middle"
         },
         {
@@ -1565,7 +1579,7 @@
           "weight": 500,
           "fs": 32,
           "x": 320,
-          "y": 312,
+          "y": 296,
           "anchor": "middle",
           "letterSpacing": 4
         }
@@ -1575,16 +1589,16 @@
           "role": "rule",
           "type": "line",
           "x1": 200,
-          "y1": 232,
+          "y1": 216,
           "x2": 440,
-          "y2": 232,
+          "y2": 216,
           "strokeWidth": 1.5
         },
         {
           "role": "bindu",
           "type": "circle",
           "cx": 49.5,
-          "cy": 319.5,
+          "cy": 303.5,
           "r": 4
         }
       ],
@@ -1631,6 +1645,20 @@
           "grounds": [
             "chandra",
             "ivory"
+          ]
+        },
+        {
+          "path": "lockups/rtambhareshvara-mandir-lockup-devanagari-led-night-ivory.svg",
+          "title": "ऋतम्भरेश्वर मंदिर — Devanagari-led lockup, ivory knockout for the sanctum dark",
+          "desc": "Reproduction-floor cut for dark single-ink surfaces: scripts, rule, and bindu all ivory — paper knocked out of the printed black band.",
+          "colors": {
+            "name": "ivory",
+            "support": "ivory",
+            "rule": "ivory",
+            "bindu": "ivory"
+          },
+          "grounds": [
+            "mahakala"
           ]
         }
       ]

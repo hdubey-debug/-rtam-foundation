@@ -157,7 +157,15 @@ Additional hard rules:
 - `favicon.svg` / `favicon-dark.svg` are the **bindu** (since P3.4).
   Never use a typographic R below 48 px.
 
-**Stationery (2026-08-26 — the temple's hand).**
+**Stationery (2026-08-26 — the temple's hand; garbhagriha ruling 2026-08-27).**
+- **THE letterhead is the garbhagriha edition** (founder-locked after four
+  printed rounds): inset mahakala bands — never full-bleed (printer rims
+  cheapen the black) — the V3-L śulba head (icon : name-block : gap =
+  13 : 12 : 5, left lane), ash marks, ONE gold: the chakra's hub (kansya was
+  print-tested and rejected — it dries brown). Single-ink reproduction uses
+  the **night-ivory knockout cuts** (marks read as paper out of the band).
+  The receipt leaf and book cover speak the same language. The chandra
+  (cream) editions remain the day alternative.
 - **Rubber stamps use the sanctioned seal artwork** (`seal-chakra-round` /
   `seal-chakra-rect` / `address-stamp` in the spec). The full chakra goes to
   rubber ONLY in its **thickened stamp edition** (founder ruling 2026-08-27):
