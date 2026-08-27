@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="75mm" height="38mm" viewBox="0 0 960 486" role="img" aria-labelledby="rtam-address-stamp-title rtam-address-stamp-desc">
+  <title id="rtam-address-stamp-title">पता-मुहर — bilingual address stamp, single ink, 75×38mm</title>
+  <desc id="rtam-address-stamp-desc">Five-line rectangular address stamp, fully bilingual: temple name, Devanagari address, English address over two lines closing with BARELA (M.P.) – 483001, and both phone numbers. True size 75×38mm on a Trodat 4926-class die.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="480" y="88" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="48" text-anchor="middle" fill="#1A1A1A">ऋतम्भरेश्वर मंदिर</text>
+  <text x="480" y="172" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="40" text-anchor="middle" fill="#1A1A1A">ग्राम पहाड़ीखेड़ा, मनेरी रोड, जिला जबलपुर</text>
+  <text x="480" y="250" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="32" letter-spacing="3" text-anchor="middle" fill="#1A1A1A">VILL. PAHADI KHEDA, MANERI ROAD</text>
+  <text x="480" y="322" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="32" letter-spacing="3" text-anchor="middle" fill="#1A1A1A">DISTT. JABALPUR · BARELA (M.P.) – 483001</text>
+  <text x="480" y="415" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="40" text-anchor="middle" fill="#1A1A1A">मो. 9098225177 · 9407381069</text>
+</svg>

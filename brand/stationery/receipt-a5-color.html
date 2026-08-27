@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <title>दान-रसीद — A5 landscape leaf (colour edition)</title>
+  <link rel="stylesheet" href="stationery.css">
+  <style>
+    /* Hand-fill-first दान-रसीद leaf, single ink. Press prints this 2-part NCR
+       (white/yellow), machine-numbers the क्रमांक slot, perforates the top
+       leaf — see receipt-press-spec.md. NO registration/PAN/80G lines by
+       ratified decision D8; the honest line stands instead. */
+    @page { size: 210mm 148mm; margin: 0; }
+
+    .sheet.a5-land { font-family: var(--ui); }
+    .r-head { display: flex; align-items: center; justify-content: space-between; }
+    .r-head .brandrow { display: flex; align-items: center; gap: 4.5mm; }
+    .r-head .chakra { width: 13mm; height: 13mm; display: block; }
+    .r-head .lockup { height: 15mm; width: auto; display: block; }
+    .r-title { text-align: right; }
+    .r-title .deva { font-family: var(--deva); font-size: 15pt; }
+    .r-title .en { font-family: var(--ui); font-size: 6.5pt; letter-spacing: .24em;
+                   text-transform: uppercase; margin-top: .5mm; }
+    .serial { display: flex; gap: 6mm; justify-content: flex-end; align-items: baseline;
+              margin-top: 1.6mm; font-family: var(--deva); font-size: 9.5pt; }
+    .serial .en { font-family: var(--ui); font-size: 5.6pt; letter-spacing: .14em;
+                  text-transform: uppercase; }
+    .serial .no { font-family: var(--ui); font-weight: 500; letter-spacing: .08em;
+                  border: 0.4mm solid var(--ink); padding: .8mm 6mm; min-width: 26mm;
+                  text-align: center; }
+    .serial .dt { border-bottom: 0.3mm dotted var(--stone); min-width: 30mm;
+                  display: inline-block; }
+
+    .fields { margin-top: 2.8mm; }
+    .row { display: flex; gap: 5mm; align-items: baseline; margin-top: 4mm; }
+    .f { display: flex; align-items: baseline; gap: 2.5mm; flex: 1; }
+    .f .lab { white-space: nowrap; }
+    .f .lab .deva { font-family: var(--deva); font-size: 10.5pt; }
+    .f .lab .en { font-family: var(--ui); font-size: 5.8pt; letter-spacing: .16em;
+                  text-transform: uppercase; color: var(--ink); display: block;
+                  margin-top: .2mm; }
+    .f .line { flex: 1; border-bottom: 0.3mm solid var(--stone); min-height: 6mm; }
+    .amtbox { border: 0.4mm solid var(--ink); min-width: 34mm; min-height: 8mm;
+              display: flex; align-items: center; padding: 0 2mm;
+              font-family: var(--ui); font-size: 11pt; }
+
+    .heads { margin-top: 4mm; display: flex; align-items: baseline; gap: 4mm; }
+    .heads .opts { display: flex; flex-wrap: wrap; gap: 3mm 6mm; }
+    .opt { display: flex; align-items: flex-start; gap: 1.6mm; white-space: nowrap; }
+    .opt .ol { display: flex; flex-direction: column; }
+    .opt .ol .deva { font-family: var(--deva); font-size: 9.5pt; line-height: 1.25; }
+    .opt .ol .en { font-family: var(--ui); font-size: 4.9pt; letter-spacing: .14em;
+                   text-transform: uppercase; color: var(--ink); margin-top: .3mm; }
+    .box { width: 3.4mm; height: 3.4mm; border: 0.35mm solid var(--ink);
+           display: inline-block; flex: 0 0 auto; margin-top: .7mm; }
+
+    .closing { display: flex; justify-content: space-between; align-items: flex-end;
+               margin-top: 2.5mm; }
+    .rev { width: 24mm; height: 17mm; border: 0.3mm dashed var(--stone);
+           text-align: center; display: flex; flex-direction: column;
+           align-items: center; justify-content: center;
+           padding: 1mm; line-height: 1.5; color: var(--ink); }
+    .rev .deva { font-family: var(--deva); font-size: 6.4pt; }
+    .rev .en { font-family: var(--ui); font-size: 4.4pt; letter-spacing: .1em;
+               text-transform: uppercase; margin-top: .5mm; line-height: 1.4; }
+    .muhar { width: 20mm; height: 20mm; border: 0.3mm dashed var(--stone);
+             border-radius: 50%; display: flex; flex-direction: column;
+             align-items: center; justify-content: center; color: var(--ink); }
+    .muhar .deva { font-family: var(--deva); font-size: 7pt; }
+    .muhar .en { font-family: var(--ui); font-size: 4.6pt; letter-spacing: .2em;
+                 text-transform: uppercase; margin-top: .4mm; }
+    .sign { width: 52mm; text-align: center; }
+    .sign .line { border-bottom: 0.35mm solid var(--ink); height: 7mm; }
+    .sign .deva { font-family: var(--deva); font-size: 9pt; margin-top: 1mm; }
+    .sign .en { font-family: var(--ui); font-size: 5.6pt;
+                letter-spacing: .16em; text-transform: uppercase; }
+
+    .r-foot { position: absolute; left: 12mm; right: 12mm; bottom: 4mm;
+              text-align: center; border-top: 0.3mm solid var(--stone);
+              padding-top: 1.4mm; line-height: 1.4; }
+    .r-foot .honest { font-family: var(--deva); font-size: 7.6pt; }
+    .r-foot .honest-en { font-family: var(--ui); font-size: 5.4pt;
+                         letter-spacing: .04em; color: var(--ink); margin-top: .5mm; }
+    .r-foot .addr { font-family: var(--deva); font-size: 7pt; color: var(--ink);
+                    margin-top: .8mm; }
+    .r-foot .po { font-family: var(--caps); font-weight: 500; font-size: 5.6pt;
+                  letter-spacing: .2em; margin-top: .5mm; }
+    .r-foot .rta { font-family: var(--deva); font-size: 7.5pt; margin-top: .8mm;
+                   letter-spacing: .04em; }
+  </style>
+</head>
+<body>
+  <div class="sheet a5-land">
+    <div class="r-head">
+      <div class="brandrow">
+        <img class="chakra" src="../dist/outlined/icons/rtam-chakra-day.svg"
+             alt="Ṛta-chakra — single-ink cut">
+        <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led.svg"
+             alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
+      </div>
+      <div class="r-title">
+        <div class="deva">दान-रसीद</div>
+        <div class="en">Donation Receipt</div>
+        <div class="serial">
+          <span>क्रमांक <span class="en">/ No.</span> <span class="no">&nbsp;</span></span>
+          <span>दिनांक <span class="en">/ Date</span> <span class="dt">&nbsp;</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fields">
+      <div class="row">
+        <div class="f" style="flex: 2.2">
+          <span class="lab"><span class="deva">श्री/श्रीमती</span><span class="en">Name</span></span>
+          <span class="line"></span>
+        </div>
+        <div class="f">
+          <span class="lab"><span class="deva">मोबाइल</span><span class="en">Mobile</span></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="f" style="flex: 2.2">
+          <span class="lab"><span class="deva">पता</span><span class="en">Address</span></span>
+          <span class="line"></span>
+        </div>
+        <div class="f">
+          <span class="lab"><span class="deva">PAN/आधार</span><span class="en">for records</span></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="f" style="flex: 0 0 auto;">
+          <span class="lab"><span class="deva">राशि ₹</span><span class="en">Amount</span></span>
+          <span class="amtbox">&nbsp;</span>
+        </div>
+        <div class="f">
+          <span class="lab"><span class="deva">शब्दों में</span><span class="en">In words</span></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="heads">
+        <span class="lab"><span class="deva" style="font-size:10.5pt">दान का प्रकार</span><span class="en" style="display:block;font-family:var(--ui);font-size:5.8pt;letter-spacing:.16em;text-transform:uppercase;margin-top:.2mm">Purpose</span></span>
+        <div class="opts">
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">मंदिर निर्माण निधि</span><span class="en">Construction fund</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">अन्नदान</span><span class="en">Annadaan</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">गौ सेवा</span><span class="en">Gau seva</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">दीप-ज्योति</span><span class="en">Deep-jyoti</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">सामान्य दान</span><span class="en">General donation</span></span></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="f" style="flex: 0 0 auto;">
+          <span class="lab"><span class="deva">माध्यम</span><span class="en">Mode</span></span>
+        </div>
+        <div class="opts" style="display:flex; gap: 6mm;">
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">नकद</span><span class="en">Cash</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">चेक</span><span class="en">Cheque</span></span></span>
+          <span class="opt"><span class="box"></span><span class="ol"><span class="deva">UPI</span><span class="en">&nbsp;</span></span></span>
+        </div>
+        <div class="f">
+          <span class="lab"><span class="deva">संदर्भ क्र.</span><span class="en">Ref. no.</span></span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="closing">
+      <div class="rev">
+        <span class="deva">₹5,000 से अधिक पर<br>₹1 रसीद टिकट</span>
+        <span class="en">₹1 revenue stamp<br>above ₹5,000</span>
+      </div>
+      <div class="muhar"><span class="deva">मुहर</span><span class="en">Seal</span></div>
+      <div class="sign">
+        <div class="line"></div>
+        <div class="deva">प्राप्तकर्ता के हस्ताक्षर</div>
+        <div class="en">Receiver's signature</div>
+      </div>
+    </div>
+
+    <footer class="r-foot">
+      <div class="honest">स्वैच्छिक दान सधन्यवाद प्राप्त। इस रसीद से किसी आयकर-कटौती का दावा नहीं बनता।</div>
+      <div class="honest-en">Received with gratitude as a voluntary contribution. No income-tax deduction is implied or available under this receipt.</div>
+      <div class="addr">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.) &middot; मो. 9098225177 &middot; 9407381069</div>
+      <div class="po">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001 &middot; MOB. 9098225177 &middot; 9407381069</div>
+      <div class="rta">ऋतस्य पन्थाम्</div>
+    </footer>
+  </div>
+</body>
+</html>

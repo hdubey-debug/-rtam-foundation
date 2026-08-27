@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="rtambhareshvara-mandir-lockup-devanagari-led-charcoal-title rtambhareshvara-mandir-lockup-devanagari-led-charcoal-desc">
+  <title id="rtambhareshvara-mandir-lockup-devanagari-led-charcoal-title">ऋतम्भरेश्वर मंदिर — Devanagari-led lockup, single-colour charcoal</title>
+  <desc id="rtambhareshvara-mandir-lockup-devanagari-led-charcoal-desc">The reproduction floor of the city-print voice: everything — scripts, hairline, and the bindu — in one ink, for mono print, photocopy, and the mono letterhead edition.</desc>
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;family=Cinzel:wght@400;500;600;700&amp;display=swap');</style>
+  </defs>
+  <text x="320" y="160" font-family="'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', serif" font-size="96" text-anchor="middle" fill="#1A1A1A">ऋतम्भरेश्वर मंदिर</text>
+  <text x="320" y="312" font-family="Cinzel, Marcellus, 'Trajan Pro', serif" font-weight="500" font-size="32" letter-spacing="4" text-anchor="middle" fill="#1A1A1A">RTAMBHARESHVARA MANDIR</text>
+  <line x1="200" y1="232" x2="440" y2="232" stroke="#1A1A1A" stroke-width="1.5"/>
+  <circle cx="49.5" cy="319.5" r="4" fill="#1A1A1A"/>
+</svg>

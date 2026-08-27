@@ -71,6 +71,17 @@ def render_bg(brand: dict, output: dict) -> str:
     return "#1A1A1A" if "ivory" in vals else "#FFFFFF"
 
 
+def strip_physical(svg: str) -> str:
+    """Physical width/height on the svg root (stationery true-size masters,
+    e.g. width="40mm") is presentation, not geometry: in this harness Chromium
+    would honor the mm size (drawing the mark at ~151 css px inside the 1024px
+    viewport) while cairosvg scales to the requested output size — a
+    whole-canvas false diff, and a resolution loss for every check. All three
+    checks compare viewBox geometry, so the attributes are stripped from every
+    render input."""
+    return re.sub(r'(<svg[^>]*?)\s+width="[^"]*"\s+height="[^"]*"', r"\1", svg, count=1)
+
+
 def normalize_geometry(svg: str) -> str:
     """For the renderer-independence check: strip any full-bleed ground rect and
     force every fill/stroke to black-on-white, so the comparison tests the
@@ -112,6 +123,7 @@ def main() -> int:
         def chrome(svg, tag, vb):
             # viewport matches the SVG aspect -> no letterbox border (which would
             # invert ink_mask's background detection on dark-ground variants)
+            svg = strip_physical(svg)
             w, h = vb
             page.set_viewport_size({"width": SIZE, "height": max(1, round(SIZE * h / w))})
             p = tmp / f"{tag}.svg"; p.write_text(svg)
@@ -131,7 +143,7 @@ def main() -> int:
             gen_outl = bl.emit_outlined(brand, asset, output)
             bg = render_bg(brand, output)
             m_gen = chrome(inject_bg(faithful(gen_live), bg), "gen", vb)
-            norm = normalize_geometry(gen_outl)
+            norm = strip_physical(normalize_geometry(gen_outl))
             m_outl_c = chrome(norm, "outlc", vb)        # for r-indep (black-on-white)
             m_outl_pos = chrome(inject_bg(gen_outl, bg), "outlp", vb)  # for drift
             op = tmp / "outl_cairo.png"

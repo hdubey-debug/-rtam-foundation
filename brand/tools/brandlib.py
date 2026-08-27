@@ -159,6 +159,111 @@ def petal_path(cx: float, cy: float, tip_r: float, base_r: float,
             f"C {F(c3[0])} {F(c3[1])} {F(c4[0])} {F(c4[1])} {F(b2[0])} {F(b2[1])}")
 
 
+# ---- arc text (stationery: round-seal rim) ---------------------------------
+def _fmt(v: float) -> str:
+    return f"{v:.2f}".rstrip("0").rstrip(".")
+
+
+def arc_cluster_placements(ttf: Path, text: str, fs: float,
+                           letter_spacing: float, arc: dict) -> list:
+    """Per-HarfBuzz-cluster placements along a circular arc.
+
+    arc = {cx, cy, r, centerDeg, dir}: baseline on the circle of radius r, the
+    run optically centred on centerDeg. dir=+1 = top text (glyph tops point
+    outward, reads with increasing angle); dir=-1 = bottom text (upright, tops
+    point inward, reads with decreasing angle).
+
+    The FULL string is shaped once (Indic shaping intact), glyphs grouped by
+    cluster; each cluster draws straight from its anchor, rotated to the local
+    tangent (rot = theta + 90*dir). Letter-spacing applies BETWEEN clusters
+    only — both backends consume this same math, so livetext and outlined
+    land on each other by construction (the parity contract).
+    Returns [{i0, i1, c0, c1, theta, rot, x, y}] over glyph indices [i0, i1)
+    and codepoint indices [c0, c1).
+    """
+    import math
+    infos, positions, upem = _shape(ttf, text)
+    s = fs / upem
+    bounds = [0]
+    for i in range(1, len(infos)):
+        if infos[i].cluster != infos[i - 1].cluster:
+            bounds.append(i)
+    bounds.append(len(infos))
+    widths = [sum(positions[i].x_advance for i in range(bounds[k], bounds[k + 1])) * s
+              for k in range(len(bounds) - 1)]
+    n = len(widths)
+    total = sum(widths) + letter_spacing * (n - 1 if n else 0)
+    r, cx, cy = arc["r"], arc["cx"], arc["cy"]
+    dirn = arc.get("dir", 1)
+    sweep = math.degrees(total / r)
+    theta = arc["centerDeg"] - dirn * sweep / 2
+    out, acc = [], 0.0
+    for k in range(n):
+        th = theta + dirn * math.degrees(acc / r)
+        px, py = polar(cx, cy, r, th)
+        c0 = infos[bounds[k]].cluster
+        c1 = infos[bounds[k + 1]].cluster if bounds[k + 1] < len(infos) else len(text)
+        out.append({"i0": bounds[k], "i1": bounds[k + 1], "c0": c0, "c1": c1,
+                    "theta": th, "rot": th + 90 * dirn, "x": px, "y": py})
+        acc += widths[k] + letter_spacing
+    return out
+
+
+def _arc_text_els(brand: dict, r: dict) -> list:
+    """Live-text backend for an arc run: one <text> per cluster, rotated about
+    its anchor. No letter-spacing attribute — spacing lives in the placement
+    math shared with the outlined backend. Whitespace clusters advance the pen
+    but emit nothing."""
+    ttf = ttf_path(brand, r["font"], r.get("weight", 400))
+    fam = brand["fonts"][r["font"]]["family"]
+    els = []
+    for pl in arc_cluster_placements(ttf, r["text"], r["fs"],
+                                     r.get("letterSpacing", 0.0), r["arc"]):
+        sub = r["text"][pl["c0"]:pl["c1"]]
+        if not sub.strip():
+            continue
+        attrs = [f'x="{_fmt(pl["x"])}"', f'y="{_fmt(pl["y"])}"', f'font-family="{fam}"']
+        if r.get("weight"):
+            attrs.append(f'font-weight="{r["weight"]}"')
+        attrs.append(f'font-size="{r["fs"]}"')
+        attrs.append(f'fill="{r["fill"]}"')
+        attrs.append(f'transform="rotate({_fmt(pl["rot"])} {_fmt(pl["x"])} {_fmt(pl["y"])})"')
+        els.append(f'<text {" ".join(attrs)}>{sub}</text>')
+    return els
+
+
+def _arc_outline_paths(ttf: Path, text: str, fs: float,
+                       letter_spacing: float, arc: dict) -> list:
+    """Outlined backend for an arc run: same placements, each cluster's glyphs
+    through a rotate-about-anchor + glyph-flip TransformPen. At rot=0 the
+    matrix reduces exactly to the straight-run (s,0,0,-s,·,·) form."""
+    import math
+    infos, positions, upem = _shape(ttf, text)
+    tt = _ttfont(ttf)
+    gs = tt.getGlyphSet()
+    order = tt.getGlyphOrder()
+    s = fs / upem
+    ds = []
+    for pl in arc_cluster_placements(ttf, text, fs, letter_spacing, arc):
+        a = math.radians(pl["rot"])
+        ca, sa = math.cos(a), math.sin(a)
+        lx = 0.0
+        for i in range(pl["i0"], pl["i1"]):
+            info, pos = infos[i], positions[i]
+            tx = lx + pos.x_offset * s
+            ty = -pos.y_offset * s
+            m = (ca * s, sa * s, sa * s, -ca * s,
+                 ca * tx - sa * ty + pl["x"], sa * tx + ca * ty + pl["y"])
+            spen = SVGPathPen(gs)
+            tpen = TransformPen(spen, m)
+            gs[order[info.codepoint]].draw(tpen)
+            d = spen.getCommands()
+            if d:
+                ds.append(d)
+            lx += pos.x_advance * s
+    return ds
+
+
 # ---- variant resolution ----------------------------------------------------
 def color(brand: dict, token_or_hex: str) -> str:
     return brand["tokens"].get(token_or_hex, token_or_hex)
@@ -251,7 +356,12 @@ def _svg_open(brand: dict, asset: dict, output: dict) -> str:
     # duplicated aria-label string. Ids are unique per file (each SVG is its own doc).
     slug = Path(output["path"]).stem
     tid, did = f"{slug}-title", f"{slug}-desc"
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" role="img" '
+    # Optional physical size (stationery artwork: true-size stamp/label masters).
+    phys = ""
+    if asset.get("widthMM"):
+        phys = (f' width="{asset["widthMM"]}mm"'
+                f' height="{asset.get("heightMM", asset["widthMM"])}mm"')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg"{phys} viewBox="0 0 {w} {h}" role="img" '
             f'aria-labelledby="{tid} {did}">\n'
             f'  <title id="{tid}">{title}</title>\n  <desc id="{did}">{desc}</desc>\n')
 
@@ -266,7 +376,11 @@ def emit_livetext(brand: dict, asset: dict, output: dict) -> str:
         w, h = m["viewBox"]
         parts.append(f'  <rect x="0" y="0" width="{w}" height="{h}" fill="{m["ground"]}"/>\n')
     for r in m["runs"]:
-        parts.append("  " + _text_el(brand, r) + "\n")
+        if r.get("arc"):
+            for el in _arc_text_els(brand, r):
+                parts.append("  " + el + "\n")
+        else:
+            parts.append("  " + _text_el(brand, r) + "\n")
     for sh in m["shapes"]:
         parts.append("  " + _shape_el_livetext(sh) + "\n")
     parts.append("</svg>\n")
@@ -286,8 +400,12 @@ def emit_outlined(brand: dict, asset: dict, output: dict) -> str:
         parts.append(f'  <rect x="0" y="0" width="{w}" height="{h}" fill="{m["ground"]}"/>\n')
     for r in m["runs"]:
         ttf = ttf_path(brand, r["font"], r.get("weight", 400))
-        sx = start_x_for(brand, r)
-        ds = outline_paths(ttf, r["text"], r["fs"], sx, r["y"], r.get("letterSpacing", 0.0))
+        if r.get("arc"):
+            ds = _arc_outline_paths(ttf, r["text"], r["fs"],
+                                    r.get("letterSpacing", 0.0), r["arc"])
+        else:
+            sx = start_x_for(brand, r)
+            ds = outline_paths(ttf, r["text"], r["fs"], sx, r["y"], r.get("letterSpacing", 0.0))
         for d in ds:
             parts.append(f'  <path d="{d}" fill="{r["fill"]}"/>\n')
     for sh in m["shapes"]:

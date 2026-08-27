@@ -327,6 +327,14 @@ Ceremonial print is **matte soft-touch mahakala with hot-stamp gold
 foil** — gloss against matte. Flex/outdoor prints gold as ink; reading
 stationery is uncoated chandra stock with gold used once per page.
 
+**Resolved for stationery (2026-08-26):** the chandra ground is achieved by
+the PAPER, never printed — BILT Royal Executive Bond "Corona Cream" 100 gsm
+everyday, Conqueror Cream Wove 100 gsm for formal runs. The letterhead's one
+gold is the chakra's hub (= the bindu, v2.2 — see usage-rules §7). The
+stationery system itself lives in `brand/stationery/` (letterhead press/mono
++ DOCX, दान-रसीद NCR book, Ø 50 mm full-chakra seal + 75×38 bilingual address stamp, ST-8 label
+sheet), with its own build and checks.
+
 ---
 
 *The work continues steadily, in keeping with the order it intends to serve.*

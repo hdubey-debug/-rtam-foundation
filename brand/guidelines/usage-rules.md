@@ -94,12 +94,21 @@ The bindu is **drawn**, not typed. It is a `<circle>` in the SVG with explicit `
 
 Need a different placement? Edit `brand/spec/brand.json` and run `brand/tools/build.sh --write` — never hand-edit the SVG in place. The generator keeps the bindu identical across the whole tree.
 
-Two sanctioned deviations from the placement grammar (and only these): the
+Three sanctioned deviations from the placement grammar (and only these): the
 **circle-enclosed icons** centre the bindu on the canvas axis so the composition
 sits still inside the ring; the **favicon** enlarges the dot and tightens its gap
-to survive 16 px tabs. Everything else follows `cy = baseline + 0.233·fs`, `r = fs/12`.
+to survive 16 px tabs; the **stationery support line** (the small Cinzel caps in
+the Devanagari-led lockup) enlarges its dot to `r = fs/8` — at fs/12 the dot
+prints as 0.3 mm dust at letterhead scale. Everything else follows
+`cy = baseline + 0.233·fs`, `r = fs/12`.
 
 The Devanagari marks (ऋ, ऋतम्…) take **no** bindu — the glyph already carries the vocalic-R.
+
+**The one gold (stationery ruling, 2026-08-26).** The dot under the R and the
+hub of the chakra are the same point (brand-book v2.2). On any single page
+they count as ONE gold in two renderings: a head may carry the chakra's gold
+hub and the wordmark's gold bindu together. A third gold instance remains a
+violation.
 
 ---
 
@@ -147,3 +156,41 @@ Additional hard rules:
 **Favicon.**
 - `favicon.svg` / `favicon-dark.svg` are the **bindu** (since P3.4).
   Never use a typographic R below 48 px.
+
+**Stationery (2026-08-26 — the temple's hand).**
+- **Rubber stamps use the sanctioned seal artwork** (`seal-chakra-round` /
+  `seal-chakra-rect` / `address-stamp` in the spec). The full chakra goes to
+  rubber ONLY in its **thickened stamp edition** (founder ruling 2026-08-27):
+  seams and window dots redrawn above the 0.5 mm rubber floor, at Ø ≥ 50 mm
+  round or 60×40 rect. The screen chakra's 0.34 mm seams never go to rubber;
+  the bindu rung remains the fallback for smaller dies.
+- **Mail numerals:** on mail-facing artifacts — labels, address stamps,
+  envelopes — figures are set in international numerals (483001) and the post
+  town appears in Latin block letters (BARELA). Devanagari digits remain
+  welcome on the round seal and anything that never enters the post.
+- **City-print temple voice:** `rtambhareshvara-mandir-lockup-devanagari-led`
+  (Devanagari 3× over Cinzel caps, stone rule, no bindu, no gold — the page's
+  gold belongs to the chakra hub). Cuts: default · `-garbhagriha` ·
+  `-charcoal` (single-ink reproduction floor).
+- **Paper is the chandra:** reading stationery is bought cream stock (BILT
+  Royal Executive Bond "Corona Cream" 100 gsm; Conqueror Cream Wove 100 gsm
+  formal) — the ground is never printed. No watermark on working sheets;
+  ceremony gets foil + blind emboss.
+- **The bilingual doctrine — labels echo, scripture doesn't.** Every
+  structural label (field names, tick options, serial rows, box captions)
+  is bilingual: Devanagari leads, a small letterspaced English echo sits
+  beneath or beside it. Sacred and ritual lines (ऋतस्य पन्थाम्, invocations)
+  stay Devanagari alone — the temple speaking in its own tongue. Devanagari
+  is never letterspaced. The support line inside the Devanagari-led lockup is
+  a Latin form and carries the gold bindu under its leading R (§7, third
+  deviation).
+- **One address, one rule: the FULL pair, everywhere human-facing** (founder
+  ruling 2026-08-27 — "every single thing" readable in both scripts): the
+  Devanagari line AND the full Latin caps line (which carries the postal
+  `BARELA (M.P.) – 483001`, G4). The earlier compact form is retired. The
+  founders' line pairs the same way (संस्थापक — … / FOUNDERS — SHRI RAJESH
+  DUBEY · SMT. KIRAN BALA DUBEY). One recorded de-minimis exception: the
+  rubber stamps' मो. label (digits are script-neutral).
+- **One hero edition per artifact** in any presentation: the mono edition is
+  the same sheet's photocopy-safe shadow, shown as an appendix, never as a
+  sibling design.

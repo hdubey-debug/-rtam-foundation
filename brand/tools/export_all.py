@@ -48,10 +48,16 @@ HTML_JOBS = [
     ("previews/kits/avatar-sheet.html",         "exports/kits/avatar-sheet.png",         1600, 1),
 ]
 
-# overlay variants proven on their intended dark ground (charcoal)
+# (source svg, output png, width, ground) — overlay variants prove on their
+# intended dark ground (charcoal); ink stationery artwork proves on chandra.
 SVG_JOBS = [
-    ("dist/outlined/icons/rtam-rdot-icon-ivory.svg", "exports/png/rtam-rdot-icon-ivory.png", 512),
-    ("dist/outlined/logos/rtam-wordmark-ivory.svg",  "exports/png/rtam-wordmark-ivory.png", 1080),
+    ("dist/outlined/icons/rtam-rdot-icon-ivory.svg", "exports/png/rtam-rdot-icon-ivory.png", 512, "#1A1A1A"),
+    ("dist/outlined/logos/rtam-wordmark-ivory.svg",  "exports/png/rtam-wordmark-ivory.png", 1080, "#1A1A1A"),
+    # stationery artwork (Ø40mm seal candidates · 69×24mm address stamp · city-print lockup)
+    ("dist/outlined/icons/rtam-seal-chakra-round.svg", "exports/stationery/rtam-seal-chakra-round.png", 1024, "#EDEBE6"),
+    ("dist/outlined/icons/rtam-address-stamp.svg",         "exports/stationery/rtam-address-stamp.png",         1380, "#EDEBE6"),
+    ("dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led.svg",
+     "exports/stationery/rtambhareshvara-mandir-lockup-devanagari-led.png", 1280, "#EDEBE6"),
 ]
 
 PDF_JOBS = [
@@ -72,11 +78,11 @@ def main() -> int:
         if want(out):
             render_html(BRAND / src, BRAND / out, width, scale)
             print(f"  html  {out}")
-    for src, out, width in SVG_JOBS:
+    for src, out, width, bg in SVG_JOBS:
         if want(out):
             (BRAND / out).parent.mkdir(parents=True, exist_ok=True)
             cairosvg.svg2png(url=str(BRAND / src), write_to=str(BRAND / out),
-                             output_width=width, background_color="#1A1A1A")
+                             output_width=width, background_color=bg)
             print(f"  svg   {out}")
     if want("exports/platform/"):
         export_platform.main()

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <title>दान-रसीद बही — book cover A5</title>
+  <link rel="stylesheet" href="stationery.css">
+  <style>
+    /* Wraparound book cover, single ink on the press's card stock. */
+    @page { size: 210mm 148mm; margin: 0; }
+    .cover { display: flex; flex-direction: column; align-items: center;
+             justify-content: center; text-align: center; height: 100%;
+             gap: 5mm; }
+    .cover img.chakra { width: 26mm; height: 26mm; }
+    .cover img.lockup { height: 24mm; width: auto; }
+    .cover .book { font-family: var(--deva); font-size: 19pt; margin-top: 2mm; }
+    .cover .booken { font-family: var(--ui); font-size: 7pt; letter-spacing: .3em;
+                     text-transform: uppercase; margin-top: 1mm; }
+    .cover .slot { font-family: var(--deva); font-size: 11pt; margin-top: 6mm; }
+    .cover .slot .en { font-family: var(--ui); font-size: 6pt; letter-spacing: .18em;
+                       text-transform: uppercase; }
+    .cover .slot .no { display: inline-block; min-width: 22mm;
+                       border-bottom: 0.35mm solid var(--ink); }
+    .cover .addr { position: absolute; left: 12mm; right: 12mm; bottom: 7mm;
+                   font-family: var(--deva); font-size: 8pt;
+                   border-top: 0.3mm solid var(--stone); padding-top: 2mm; }
+  </style>
+</head>
+<body>
+  <div class="sheet a5-land">
+    <div class="cover">
+      <img class="chakra" src="../dist/outlined/icons/rtam-chakra-mono.svg"
+           alt="Ṛta-chakra — single-ink cut">
+      <img class="lockup" src="../dist/outlined/lockups/rtambhareshvara-mandir-lockup-devanagari-led-charcoal.svg"
+           alt="ऋतम्भरेश्वर मंदिर / RTAMBHARESHVARA MANDIR">
+      <div>
+        <div class="book">दान-रसीद बही</div>
+        <div class="booken">Donation Receipt Book</div>
+      </div>
+      <div class="slot">बही क्रमांक <span class="en">/ Book no.</span> <span class="no">&nbsp;</span></div>
+      <div class="addr">ग्राम पहाड़ीखेड़ा, मनेरी रोड &middot; बरेला &ndash; 483001 &middot; जिला जबलपुर (म.प्र.) &middot; मो. 9098225177 &middot; 9407381069
+      <div style="font-family:var(--caps);font-weight:500;font-size:6.4pt;letter-spacing:.2em;margin-top:1mm">VILL. PAHADI KHEDA, MANERI ROAD &middot; BARELA (M.P.) &ndash; 483001 &middot; MOB. 9098225177 &middot; 9407381069</div></div>
+    </div>
+  </div>
+</body>
+</html>

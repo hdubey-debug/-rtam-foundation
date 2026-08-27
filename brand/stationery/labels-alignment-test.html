@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ST-8 die alignment test — print on PLAIN paper first</title>
+  <link rel="stylesheet" href="stationery.css">
+  <style>
+    /* Print this on PLAIN A4 at 100% scale and hold it against an Oddy ST-8
+       label sheet toward the light: every dashed outline must sit on a die
+       cut. If all eight drift the same way, fix the printer's scale/centering
+       before wasting a label sheet. */
+    @page { size: A4; margin: 0; }
+    .a4 { position: relative; width: 210mm; height: 296.5mm;
+          font-family: var(--ui); color: var(--ink); }
+    .die { position: absolute; width: 99.1mm; height: 67.7mm;
+           border: 0.3mm dashed #1A1A1A;
+           display: flex; align-items: center; justify-content: center;
+           font-size: 8pt; letter-spacing: .12em; color: #B8B1A4; }
+    .note { position: absolute; left: 10mm; top: 3.5mm; font-size: 7.5pt;
+            letter-spacing: .05em; }
+    @media screen { .a4 { background: #fff; margin: 40px auto;
+                          box-shadow: 0 6px 28px rgba(26,26,26,.1); }
+                    body { background: #EDEBE6; } }
+  </style>
+</head>
+<body>
+  <div class="a4" id="sheet">
+    <div class="note">ST-8 die test &middot; print at 100% ("Actual size") on plain paper &middot; hold against a label sheet</div>
+  </div>
+  <script>
+    const sheet = document.getElementById("sheet");
+    for (let r = 0; r < 4; r++) for (let c = 0; c < 2; c++) {
+      const d = document.createElement("div");
+      d.className = "die";
+      d.style.left = (4.65 + c * 101.6) + "mm";
+      d.style.top = (13.1 + r * 67.7) + "mm";
+      d.textContent = "99.1 × 67.7";
+      sheet.appendChild(d);
+    }
+  </script>
+</body>
+</html>

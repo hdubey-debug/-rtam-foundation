@@ -1,0 +1,91 @@
+/* ṚTAM stationery — shared print-first styles.
+   Print dialect: local file:// @font-face (the kits dialect; CDN banned in
+   print files), mm units, @page control. The paper IS the chandra ground
+   (BILT Corona Cream / Conqueror Cream) — no printed ground in the masters;
+   the desk surround exists only @media screen. */
+
+@font-face { font-family: 'Cinzel'; font-weight: 400; src: url('../fonts/cinzel/cinzel-400.ttf'); }
+@font-face { font-family: 'Cinzel'; font-weight: 500; src: url('../fonts/cinzel/cinzel-500.ttf'); }
+@font-face { font-family: 'Cinzel'; font-weight: 600; src: url('../fonts/cinzel/cinzel-600.ttf'); }
+@font-face { font-family: 'Tiro Devanagari Sanskrit'; font-weight: 400;
+             src: url('../fonts/tiro-devanagari-sanskrit/tiro-devanagari-sanskrit-400.ttf'); }
+@font-face { font-family: 'Inter'; font-weight: 300; src: url('../fonts/inter/inter-300.ttf'); }
+@font-face { font-family: 'Inter'; font-weight: 400; src: url('../fonts/inter/inter-400.ttf'); }
+@font-face { font-family: 'Inter'; font-weight: 500; src: url('../fonts/inter/inter-500.ttf'); }
+
+:root {
+  --ink: #1A1A1A;        /* charcoal — the only text colour on stationery   */
+  --stone: #B8B1A4;      /* bhasma mid — hairlines only, never text         */
+  --deva: 'Tiro Devanagari Sanskrit', serif;
+  --caps: 'Cinzel', Georgia, serif;
+  --ui: 'Inter', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Devanagari always resolves to Tiro wherever the class appears — scoped
+   rules alone once let a label escape to the system fallback font (caught by
+   the embedded-font assert on the receipt PDF). */
+.deva { font-family: var(--deva); }
+
+/* ---- the sheet -------------------------------------------------------- */
+.sheet {
+  position: relative;
+  width: 210mm;
+  height: 296.5mm;              /* hair under A4 — guards a rounding spill  */
+  padding: 20mm 20mm 18mm 25mm; /* 25mm left = ISO 838 punch margin        */
+  color: var(--ink);
+  font-family: var(--ui);
+}
+.sheet.a5-land {
+  width: 210mm;
+  height: 147.5mm;
+  padding: 10mm 12mm 9mm 12mm;
+}
+
+/* ---- letterhead head --------------------------------------------------- */
+.head {
+  display: flex;
+  align-items: center;
+  gap: 7mm;
+}
+.head img.chakra { width: 17mm; height: 17mm; display: block; }
+.head img.lockup { height: 21mm; width: auto; display: block; }
+
+.refline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6mm;
+  padding-top: 2.6mm;
+  border-top: 0.35mm solid var(--stone);
+  font-size: 8.5pt;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.refline .deva { font-family: var(--deva); font-size: 10pt; }
+.refline .en { font-family: var(--ui); font-weight: 400; font-size: 7pt;
+               letter-spacing: 0.18em; text-transform: uppercase; }
+.refline .slot { display: inline-block; min-width: 34mm;
+                 border-bottom: 0.3mm dotted var(--stone); }
+
+/* ---- footer ------------------------------------------------------------ */
+.foot {
+  position: absolute;
+  left: 25mm; right: 20mm; bottom: 12mm;
+  padding-top: 3mm;
+  border-top: 0.35mm solid var(--stone);
+  text-align: center;
+  line-height: 1.55;
+}
+.foot .deva { font-family: var(--deva); font-size: 10.5pt; }
+.foot .caps { font-family: var(--caps); font-weight: 500; font-size: 6.8pt;
+              letter-spacing: 0.22em; margin-top: 0.8mm; }
+.foot .meta { font-family: var(--deva); font-size: 9pt; margin-top: 1.6mm; }
+
+/* ---- screen preview only ---------------------------------------------- */
+@media screen {
+  body { background: #EDEBE6; padding: 40px 0; }
+  .sheet { background: #FFFFFF; margin: 0 auto;
+           box-shadow: 0 6px 28px rgba(26, 26, 26, 0.10); }
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <title>Return-address labels — Oddy ST-8 (99.1×67.7, 8-up A4)</title>
+  <link rel="stylesheet" href="stationery.css">
+  <style>
+    /* Sender ("From") labels for the home laser on Oddy ST-8 / Avery L7165
+       class sheets: A4, 2×4 of 99.1×67.7mm — left margin 4.65, top 13.1,
+       column pitch 101.6, row pitch 67.7 (sums exactly to 210×297).
+       Print at 100% scale ("Actual size" — never "fit to page").
+       Verify a plain-paper pass against labels-alignment-test.html first.
+       Postal rule G4: post town + PIN in Latin block letters, intl figures.
+       Sticker goes bottom-left of the envelope face (PO Guide cl. 30). */
+    @page { size: A4; margin: 0; }
+    .a4 { position: relative; width: 210mm; height: 296.5mm; }
+    .label { position: absolute; width: 99.1mm; height: 67.7mm;
+             display: flex; align-items: center; justify-content: center;
+             gap: 4mm; padding: 5mm; color: var(--ink); }
+    .label svg { flex: 0 0 auto; display: block; }
+    .label .txt { text-align: left; line-height: 1.5; }
+    .label .from { font-family: var(--ui); font-size: 5.5pt; letter-spacing: .28em;
+                   text-transform: uppercase; margin-bottom: 1mm; }
+    .label .from .deva { letter-spacing: 0; font-size: 6.5pt; }
+    .label .nm { font-family: var(--deva); font-size: 12pt; }
+    .label .nmen { font-family: var(--caps); font-weight: 500; font-size: 5.8pt;
+                   letter-spacing: .18em; margin-top: .4mm; }
+    .label .ad { font-family: var(--deva); font-size: 8.2pt; margin-top: .8mm; }
+    .label .aden { font-family: var(--ui); font-size: 5.4pt; letter-spacing: .1em;
+                   text-transform: uppercase; margin-top: .6mm; line-height: 1.5; }
+    .label .po { font-family: var(--caps); font-weight: 500; font-size: 8pt;
+                 letter-spacing: .14em; margin-top: 1.2mm; }
+    @media screen { .a4 { background: #fff; margin: 40px auto;
+                          box-shadow: 0 6px 28px rgba(26,26,26,.1); }
+                    body { background: #EDEBE6; } }
+  </style>
+</head>
+<body>
+  <div class="a4" id="sheet"></div>
+  <script>
+    const label = `
+      <svg width="34" height="34" viewBox="0 0 512 512" aria-hidden="true">
+        <circle cx="256" cy="256" r="118" fill="none" stroke="#1A1A1A" stroke-width="14"/>
+        <circle cx="256" cy="256" r="76" fill="#1A1A1A"/>
+      </svg>
+      <div class="txt">
+        <div class="from"><span class="deva">प्रेषक</span> &middot; From</div>
+        <div class="nm">ऋतम्भरेश्वर मंदिर</div>
+        <div class="nmen">RTAMBHARESHVARA MANDIR</div>
+        <div class="ad">ग्राम पहाड़ीखेड़ा, मनेरी रोड, जिला जबलपुर<br>मो. 9098225177 &middot; 9407381069</div>
+        <div class="aden">VILL. PAHADI KHEDA, MANERI ROAD,<br>DISTT. JABALPUR &middot; MOB. 9098225177</div>
+        <div class="po">BARELA (M.P.) &ndash; 483001</div>
+      </div>`;
+    const sheet = document.getElementById("sheet");
+    for (let r = 0; r < 4; r++) for (let c = 0; c < 2; c++) {
+      const d = document.createElement("div");
+      d.className = "label";
+      d.style.left = (4.65 + c * 101.6) + "mm";
+      d.style.top = (13.1 + r * 67.7) + "mm";
+      d.innerHTML = label;
+      sheet.appendChild(d);
+    }
+  </script>
+</body>
+</html>
