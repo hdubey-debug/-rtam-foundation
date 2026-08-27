@@ -86,6 +86,7 @@ async function boot() {
   try {
     const params = new URLSearchParams(window.location.search);
     const modelUrl = params.get("model") ?? "/indian%20temple%203d%20model.glb";
+    const fit = Number(params.get("fit") ?? "1.18");
     const gltf = await new GLTFLoader().loadAsync(modelUrl);
     const model = gltf.scene;
 
@@ -111,7 +112,7 @@ async function boot() {
     const verticalFov = radians(camera.fov);
     const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect);
     const limitingFov = Math.min(verticalFov, horizontalFov);
-    const distance = (sphere.radius * 1.18) / Math.sin(limitingFov / 2);
+    const distance = (sphere.radius * fit) / Math.sin(limitingFov / 2);
     camera.near = Math.max(0.001, distance - sphere.radius * 1.8);
     camera.far = distance + sphere.radius * 2.5;
     camera.updateProjectionMatrix();
@@ -153,4 +154,3 @@ async function boot() {
 }
 
 void boot();
-

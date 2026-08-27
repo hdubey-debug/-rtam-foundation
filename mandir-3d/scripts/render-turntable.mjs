@@ -2,7 +2,7 @@ import { createServer } from "vite";
 import { chromium } from "playwright";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, statSync } from "node:fs";
-import { basename, dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 
@@ -19,10 +19,19 @@ const width = Number(valueOf("width", "1920"));
 const height = Number(valueOf("height", "1080"));
 const fps = Number(valueOf("fps", "24"));
 const seconds = Number(valueOf("seconds", "15"));
+const fit = Number(valueOf("fit", "1.18"));
+const crf = Number(valueOf("crf", "18"));
+const frameFormat = valueOf("frame-format", "jpeg");
 const frames = Math.round(fps * seconds);
 
+if (!new Set(["jpeg", "png"]).has(frameFormat)) {
+  throw new Error('--frame-format must be either "jpeg" or "png".');
+}
+
 if (!existsSync(model)) throw new Error(`Model not found: ${model}`);
-if (dirname(model) !== ROOT) throw new Error("The model must be located in the project root so Vite can serve it.");
+if (model !== ROOT && !model.startsWith(`${ROOT}${sep}`)) {
+  throw new Error("The model must be located inside the project so Vite can serve it.");
+}
 mkdirSync(dirname(output), { recursive: true });
 
 const frameDir = mkdtempSync(join(tmpdir(), "temple-turntable-"));
@@ -45,8 +54,8 @@ try {
   });
   page.on("pageerror", (error) => console.error(`browser: ${error.message}`));
 
-  const modelPath = `/${encodeURIComponent(basename(model))}`;
-  await page.goto(`${baseUrl}turntable.html?model=${modelPath}`, { timeout: 120_000 });
+  const modelPath = `/${relative(ROOT, model).split(sep).map(encodeURIComponent).join("/")}`;
+  await page.goto(`${baseUrl}turntable.html?model=${modelPath}&fit=${encodeURIComponent(String(fit))}`, { timeout: 120_000 });
   await page.waitForFunction(
     () => window.__turntable?.ready === true || Boolean(window.__turntable?.error),
     null,
@@ -62,8 +71,13 @@ try {
       ({ frame, frames }) => window.__turntable?.renderFrame?.(frame, frames),
       { frame, frames },
     );
-    const path = join(frameDir, `frame-${String(frame).padStart(4, "0")}.jpg`);
-    await page.screenshot({ path, type: "jpeg", quality: 95 });
+    const extension = frameFormat === "png" ? "png" : "jpg";
+    const path = join(frameDir, `frame-${String(frame).padStart(4, "0")}.${extension}`);
+    await page.screenshot(
+      frameFormat === "png"
+        ? { path, type: "png" }
+        : { path, type: "jpeg", quality: 100 },
+    );
     if (frame === 0 || (frame + 1) % 24 === 0 || frame === frames - 1) {
       console.log(`  frame ${frame + 1}/${frames}`);
     }
@@ -80,13 +94,15 @@ try {
       "-framerate",
       String(fps),
       "-i",
-      join(frameDir, "frame-%04d.jpg"),
+      join(frameDir, `frame-%04d.${frameFormat === "png" ? "png" : "jpg"}`),
       "-c:v",
       "libx264",
       "-preset",
       "medium",
       "-crf",
-      "18",
+      String(crf),
+      "-tune",
+      "animation",
       "-pix_fmt",
       "yuv420p",
       "-movflags",
@@ -95,9 +111,11 @@ try {
     ],
     { stdio: "inherit" },
   );
-  execFileSync("ffmpeg", ["-y", "-hide_banner", "-loglevel", "warning", "-i", output, "-frames:v", "1", poster], {
-    stdio: "inherit",
-  });
+  execFileSync(
+    "ffmpeg",
+    ["-y", "-hide_banner", "-loglevel", "warning", "-i", output, "-frames:v", "1", "-update", "1", poster],
+    { stdio: "inherit" },
+  );
   console.log(`Video: ${output} (${(statSync(output).size / 1024 / 1024).toFixed(1)} MB)`);
   console.log(`Poster: ${poster}`);
 } finally {
