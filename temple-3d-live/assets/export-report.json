@@ -1,0 +1,25 @@
+{
+  "assets": [
+    {
+      "id": "exterior",
+      "url": "assets/exterior.glb",
+      "bytes": 5042684,
+      "phase": 0
+    },
+    {
+      "id": "landscape",
+      "url": "assets/landscape.glb",
+      "bytes": 961864,
+      "phase": 1
+    },
+    {
+      "id": "interior",
+      "url": "assets/interior.glb",
+      "bytes": 1583764,
+      "phase": 2
+    }
+  ],
+  "seconds": 508237.62931333296,
+  "irradianceRays": 11833071,
+  "cachePoints": 134331
+}
