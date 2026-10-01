@@ -175,11 +175,15 @@ footer{border-top:1px solid var(--hair);padding-top:18px;color:var(--quiet);font
 #lb .lbtop,#lb .lbfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#C9C2B6;font-size:.9rem;flex-wrap:wrap}
 #lb .lbimg{display:flex;align-items:center;justify-content:center;min-height:0;cursor:zoom-out}
 #lb img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-#lb button,#lb a{all:unset;box-sizing:border-box;cursor:pointer;color:#C9C2B6;font:600 .78rem/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:11px 12px;border:1px solid rgba(201,194,182,.35);border-radius:4px}
+#lb button,#lb a{all:unset;box-sizing:border-box;cursor:pointer;white-space:nowrap;color:#C9C2B6;font:600 .78rem/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:11px 12px;border:1px solid rgba(201,194,182,.35);border-radius:4px}
 #lb button [lang="hi"]{font:400 1rem/1 var(--deva);letter-spacing:0;text-transform:none}
 #lb button[aria-pressed="true"]{background:#C8A15A;border-color:#C8A15A;color:#141414}
 #lb button:focus-visible,#lb a:focus-visible{outline:2px solid #C8A15A;outline-offset:2px}
 #lbcap b{color:#C8A15A;font-size:1.1rem;margin-right:.5em}
+#lb .lbfoot{flex-wrap:nowrap}
+#lbprev,#lbnext{font-size:1rem!important;letter-spacing:0!important}
+#lbprev .w,#lbnext .w{font-size:.78rem;letter-spacing:.1em}
+@media (max-width:520px){#lbprev .w,#lbnext .w{display:none}#lb button,#lb a{padding:11px 10px;letter-spacing:.06em}#lbprev,#lbnext{padding:9px 14px!important;font-size:1.25rem!important}}
 @media (min-width:1500px){.g-up{grid-template-columns:repeat(6,minmax(0,1fr))}.g-w2{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:1000px){.g-four{grid-template-columns:repeat(2,minmax(0,1fr))}.g-w3,.g-pair{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.g-up{grid-template-columns:repeat(2,minmax(0,1fr))}.g-w2{grid-template-columns:minmax(0,1fr)}.wrap{gap:40px;padding:24px 0 60px}.grid{gap:22px 12px}}
@@ -436,7 +440,7 @@ def page(sizes):
 <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged poster">
   <div class="lbtop"><span id="lbcap"></span><button type="button" id="lbx"><span lang="hi">बंद करें</span> · Close</button></div>
   <div class="lbimg"><img alt=""></div>
-  <div class="lbfoot"><button type="button" id="lbprev">‹ Prev</button><button type="button" id="lbpick" aria-pressed="false"><span lang="hi">चुनें</span> · Select</button><a id="lbopen" target="_blank" rel="noopener">Full size</a><button type="button" id="lbnext">Next ›</button></div>
+  <div class="lbfoot"><button type="button" id="lbprev" aria-label="Previous poster">‹<span class="w"> Prev</span></button><button type="button" id="lbpick" aria-pressed="false"><span lang="hi">चुनें</span> · Select</button><a id="lbopen" target="_blank" rel="noopener">Full size</a><button type="button" id="lbnext" aria-label="Next poster"><span class="w">Next </span>›</button></div>
 </div>
 <script>{JS.replace('__META__', meta)}</script>
 </body>
