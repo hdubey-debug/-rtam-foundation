@@ -1,0 +1,5 @@
+# Built locally, never committed: full-size proofs, the assembled brand copy, and intermediate files.
+/out/
+/brand/
+/build/pages/
+/build/cache/

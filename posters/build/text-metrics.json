@@ -1,0 +1,134 @@
+{
+ "ऋतम्भरेश्वर": {
+  "w": 3.933,
+  "top": -0.183,
+  "bottom": 0.817,
+  "headline": 0.15,
+  "body_bottom": 0.7
+ },
+ "ऋतम्भरेश्वर मंदिर": {
+  "w": 6.0,
+  "top": -0.183,
+  "bottom": 0.817,
+  "headline": 0.15,
+  "body_bottom": 0.7
+ },
+ "address DN": {
+  "w": 25.083,
+  "top": -0.183,
+  "bottom": 1.0,
+  "headline": 0.15,
+  "body_bottom": 0.7
+ },
+ "address EN caps": {
+  "w": 41.95,
+  "top": 0.067,
+  "bottom": 0.883
+ },
+ "founders+phones DN": {
+  "w": 32.567,
+  "top": -0.183,
+  "bottom": 0.983,
+  "headline": 0.133,
+  "body_bottom": 0.717
+ },
+ "founders+mob EN caps": {
+  "w": 63.75,
+  "top": 0.067,
+  "bottom": 0.983
+ },
+ "founders DN": {
+  "w": 18.533,
+  "top": -0.183,
+  "bottom": 0.983,
+  "headline": 0.15,
+  "body_bottom": 0.683
+ },
+ "founders EN caps": {
+  "w": 40.983,
+  "top": 0.083,
+  "bottom": 0.983
+ },
+ "निर्माणाधीन": {
+  "w": 4.25,
+  "top": -0.183,
+  "bottom": 0.733,
+  "headline": 0.15,
+  "body_bottom": 0.683
+ },
+ "Under construction": {
+  "w": 15.05,
+  "top": 0.117,
+  "bottom": 0.85
+ },
+ "मो. phones": {
+  "w": 12.783,
+  "top": -0.183,
+  "bottom": 0.85,
+  "headline": 0.133,
+  "body_bottom": 0.833
+ },
+ "ऋतस्य पन्थाम्": {
+  "w": 5.167,
+  "top": 0.1,
+  "bottom": 1.0,
+  "headline": 0.15,
+  "body_bottom": 0.7
+ },
+ "मंदिर को 3D में देखें": {
+  "w": 7.117,
+  "top": -0.183,
+  "bottom": 0.85,
+  "headline": 0.15,
+  "body_bottom": 0.717
+ },
+ "Walk through in 3D": {
+  "w": 14.4,
+  "top": 0.117,
+  "bottom": 0.85
+ },
+ "प्रस्तावित स्वरूप": {
+  "w": 5.733,
+  "top": -0.15,
+  "bottom": 0.733,
+  "headline": 0.117,
+  "body_bottom": 0.683
+ },
+ "Architect’s visualisation": {
+  "w": 19.083,
+  "top": 0.117,
+  "bottom": 0.85
+ },
+ "Rtambhareshvara Mandir caps": {
+  "w": 19.5,
+  "top": 0.083,
+  "bottom": 0.8
+ },
+ "t:पहाड़ीखेड़ा में बन रहा है": {
+  "w": 8.45
+ },
+ "t:यहाँ बन रहा है": {
+  "w": 5.1
+ },
+ "e:Now rising at Pahadi Kheda": {
+  "w": 20.15
+ },
+ "e5:Now rising at Pahadi Kheda": {
+  "w": 20.233
+ },
+ "t:निर्माण आरंभ": {
+  "w": 4.9
+ },
+ "e:Architect’s visualisation": {
+  "w": 19.083
+ },
+ "e5:A temple to Lord Shiva": {
+  "w": 16.967
+ },
+ "t:संपर्क": {
+  "w": 2.05
+ },
+ "e5:Rtambhareshvara Mandir": {
+  "w": 18.65
+ }
+}
