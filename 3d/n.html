@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="hi" data-subject="nandi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#141414">
+<title>ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir</title>
+<meta name="description" content="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda. ऋतम्भरेश्वर मंदिर, ṚTAM Foundation, Jabalpur.">
+<meta property="og:title" content="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir">
+<meta property="og:description" content="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
+<meta property="og:image" content="https://hdubey-debug.github.io/-rtam-foundation/3d/media/share.jpg">
+<meta property="og:url" content="https://hdubey-debug.github.io/-rtam-foundation/3d/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="img/lotus.svg">
+<link rel="preload" as="image" href="media/nandi-first.webp">
+<link rel="preload" as="image" href="img/lockup.svg">
+<style>
+/* One screen, in the posters' night register. Upright it is the A2 poster: the name on top, the picture in the middle,
+   the foot below. Sideways it is the A3 board: the name column on the left, the picture on the right. */
+@font-face { font-family: 'Tiro'; src: url('fonts/tiro-devanagari-sanskrit-400.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Cinzel'; font-weight: 500; src: url('fonts/cinzel-500.ttf') format('truetype'); font-display: swap; }
+:root {
+  color-scheme: dark;
+  --ground: #141414; --ash: #C9C2B6; --quiet: #8F887C; --hair: rgba(201,194,182,.28); --lamp: #f3d9a0;
+  --deva: 'Tiro', 'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', 'Kohinoor Devanagari', 'Devanagari Sangam MN', serif;
+  --caps: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --st: env(safe-area-inset-top, 0px); --sb: env(safe-area-inset-bottom, 0px);
+  --sl: env(safe-area-inset-left, 0px); --sr: env(safe-area-inset-right, 0px);
+  --ease: cubic-bezier(.45, .05, .25, 1);
+}
+* { box-sizing: border-box }
+.nb { white-space: nowrap }
+[hidden] { display: none !important }
+html, body { margin: 0; height: 100%; background: var(--ground); color: var(--ash); overflow: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none }
+body { font: 400 16px/1.4 var(--deva) }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; touch-action: manipulation }
+button:focus-visible, a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px }
+img, video { display: block }
+.en { font-family: var(--caps); font-weight: 500; text-transform: uppercase }
+#app { position: fixed; inset: 0; overflow: hidden }
+
+/* the 3D, full screen behind everything; it appears when the lamps hand over */
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ease); touch-action: none }
+.s-walk #gl { opacity: 1 }
+
+/* scrims: the name and the captions stay readable over a close view of the lit stone */
+.scrim { position: absolute; left: 0; right: 0; pointer-events: none; opacity: 0; transition: opacity 1s }
+#scrim-t { top: 0; height: calc(var(--st) + 26vh); background: linear-gradient(#141414 0%, rgba(20,20,20,.86) 45%, rgba(20,20,20,0)) }
+#scrim-b { bottom: 0; height: calc(var(--sb) + 36vh); background: linear-gradient(rgba(20,20,20,0), rgba(20,20,20,.86) 42%, #141414 82%) }
+.s-walk .scrim { opacity: 1 }
+
+/* the picture area: the poster frame, the film, the lamps (with the poster's side margins) */
+#stage { position: absolute; left: 0; right: 0; top: 33vh; height: 45vh; pointer-events: none; container-type: size; transition: top .9s var(--ease), height .9s var(--ease) }
+#frame { position: absolute; left: 50%; top: 50%; width: min(92cqw, 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%) }
+#frame > * { position: absolute; inset: 0; width: 100%; height: 100% }
+#still, #film, #lamps, #last { opacity: 0; transition: opacity .9s var(--ease) }
+.s-poster #still { opacity: 1 }
+.s-film #film, .s-hold #last { opacity: 1 }
+.s-handoff #lamps { opacity: 1 }
+.s-walk #lamps { opacity: 0; transition: opacity 1.6s .3s var(--ease) }
+[data-tier="still"].s-walk #still { opacity: 1 }
+#frame > #thread { inset: auto; left: var(--tx, 50%); top: var(--ty, 50%); width: 2px; height: var(--th, 6%); margin-left: -1px; border-radius: 1px; opacity: 0;
+  background: linear-gradient(transparent, var(--lamp) 25%, var(--lamp) 75%, transparent); box-shadow: 0 0 10px rgba(243,217,160,.8) }
+.s-poster #thread, .s-hold #thread { animation: thread 1.8s ease-in-out infinite alternate }
+@keyframes thread { from { opacity: .15 } to { opacity: calc(.45 + var(--p, 0) * .55) } }
+
+/* the name: upright, on top (as the A2 poster). When the film ends the poster opens up: the name steps back and the
+   picture rises to where the walk happens; only then does it dim to its lamps and the stone return (the lamps never move) */
+#title { position: absolute; left: 0; right: 0; top: calc(var(--st) + 5vh); display: flex; flex-direction: column; align-items: center; gap: 1.2vh;
+  pointer-events: none; transform-origin: 50% 0; transition: transform .9s var(--ease), opacity .6s }
+#title .lotus { display: none }
+#title .kicker { width: min(46vw, 260px); transition: opacity .6s }
+#title .lockup { width: min(84vw, 470px); margin-top: -1vh }
+:is(.s-hold, .s-handoff, .s-walk) #title { transform: translateY(-2vh) scale(.62) }
+:is(.s-hold, .s-handoff, .s-walk) #title .kicker { opacity: 0 }
+:is(.s-hold, .s-handoff, .s-walk) #stage { top: 21vh; height: 53vh }
+/* close to the stone the name steps away (the lockup never sits on a busy picture) */
+.near #title { opacity: 0 }
+
+/* the walk: a caption, where one is on the path, and where to go; text only, as the posters */
+#ui { position: absolute; left: 0; right: 0; bottom: calc(var(--sb) + 14.5vh); display: flex; flex-direction: column; align-items: center; gap: 1.4vh;
+  opacity: 0; pointer-events: none; transition: opacity .8s .4s }
+.s-walk #ui { opacity: 1 }
+.s-walk #ui button { pointer-events: auto }
+#caption { margin: 0; text-align: center; display: flex; flex-direction: column; gap: 4px; min-height: 3.2em; padding-inline: 16px; transition: opacity .35s }
+#caption .dn { font: 400 clamp(17px, 5vw, 22px)/1.25 var(--deva) }
+#caption .en { font-size: clamp(8px, 2.3vw, 10px); line-height: 1.3; letter-spacing: .22em; color: var(--quiet) }
+#caption.fade { opacity: 0 }
+#path { position: relative; width: 120px; height: 28px; display: block }
+#path::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--hair) }
+#path i { position: absolute; left: 0; top: calc(50% - 3.5px); width: 1.5px; height: 7px; margin-left: -.75px; background: var(--ash); transform: translateX(var(--at, 0px)) }
+#chips { display: flex; align-items: baseline; justify-content: center; gap: 2px }
+#chips button { font: 400 clamp(15px, 4.3vw, 18px)/1 var(--deva); color: var(--quiet); padding: 13px 10px; transition: color .3s }
+#chips button.on, #chips button:active { color: var(--ash) }
+#chips b { font-weight: 400; color: var(--quiet); opacity: .6 }
+
+/* the foot: as the A2 poster's (the chakra, the full address pair, and in the QR's place, sharing) */
+#foot { position: absolute; left: calc(var(--sl) + 5vw); right: calc(var(--sr) + 5vw); bottom: calc(var(--sb) + 2.6vh); display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: opacity .6s }
+#foot .lotus { width: 38px; height: 38px; flex: none }
+.addr { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center }
+.addr .dn { font: 400 clamp(11.5px, 3.3vw, 14px)/1.3 var(--deva); text-wrap: balance }
+.addr .en { font-size: clamp(6.5px, 1.85vw, 8px); line-height: 1.45; letter-spacing: .16em; color: var(--quiet); text-wrap: balance }
+.txt { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: none; min-width: 44px; padding: 8px 0 }
+.txt > span:first-child { font: 400 clamp(13px, 3.8vw, 15px)/1 var(--deva) }
+.txt .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
+.s-film #foot { opacity: 0; pointer-events: none }
+
+/* moments */
+#play { position: absolute; left: 50%; bottom: calc(var(--sb) + 15vh); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 18px }
+#play > span:first-child { font: 400 21px/1 var(--deva) } #play .en { font-size: 8.5px; letter-spacing: .22em; color: var(--quiet) }
+#skip { position: absolute; top: calc(var(--st) + 10px); right: calc(var(--sr) + 10px); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 12px; opacity: 0; transition: opacity .5s }
+#skip > span:first-child { font: 400 15px/1 var(--deva) } #skip .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
+.s-film #skip { opacity: 1 }
+
+/* the address and contact sheet */
+#visit { position: absolute; left: 0; right: 0; bottom: 0; max-height: 86vh; overflow: auto; background: #1b1a18; color: var(--ash); border-top: 1px solid var(--hair);
+  border-radius: 4px 4px 0 0; padding: 26px 22px calc(var(--sb) + 22px); display: flex; flex-direction: column; gap: 16px; transform: translateY(105%); transition: transform .5s var(--ease); -webkit-user-select: text; user-select: text }
+#visit.on { transform: none }
+#visit h2 { margin: 0; padding-right: 72px; font: 400 24px/1.2 var(--deva) } #visit h2 .en { display: block; font-size: 9px; letter-spacing: .22em; color: var(--quiet); margin-top: 6px }
+#visit p { margin: 0 } #visit .dn { font: 400 17px/1.45 var(--deva) } #visit p.en { font-size: 10px; line-height: 1.6; letter-spacing: .16em; color: var(--quiet) }
+#visit ul { list-style: none; margin: 4px 0 0; padding: 0; border-top: 1px solid var(--hair) }
+#visit li { border-bottom: 1px solid var(--hair) }
+#visit li > a, #visit li > button { width: 100%; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 15px 2px; color: inherit; text-decoration: none; font: 400 18px/1.2 var(--deva); text-align: left }
+#visit li .en { font-size: 8.5px; letter-spacing: .2em; color: var(--quiet) }
+#visit .close { position: absolute; top: 14px; right: 10px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px }
+#visit .close > span:first-child { font: 400 14px/1 var(--deva) } #visit .close .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
+#visit .note { font: 400 13px/1.4 var(--deva); color: var(--quiet) } #visit .note .en { font-size: 8px; letter-spacing: .2em; margin-left: 8px }
+
+/* sideways: the A3 board (the name column left, the picture right) */
+@media (orientation: landscape) {
+  #scrim-t { top: 0; bottom: 0; left: 0; right: auto; width: 50vw; height: auto; background: linear-gradient(90deg, #141414 0%, rgba(20,20,20,.9) 62%, rgba(20,20,20,0)) }
+  #scrim-b { display: none }
+  #title { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; top: 0; bottom: 0; justify-content: center; gap: 2.2vh }
+  #title .lotus { display: block; width: min(9vh, 64px) }
+  #title .kicker { width: min(24vw, 260px) }
+  #title .lockup { width: min(36vw, 470px); margin-top: 0 }
+  #stage, :is(.s-hold, .s-handoff, .s-walk) #stage { left: 42vw; right: calc(var(--sr) + 2vw); top: 5vh; height: 90vh }
+  #frame { width: min(100cqw, 133.333cqh) }
+  :is(.s-hold, .s-handoff, .s-walk) #title { transform: translateY(-11vh) scale(.78) }
+  .near #title { opacity: 1 }
+  #ui { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; bottom: calc(var(--sb) + 14vh) }
+  #foot { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; bottom: calc(var(--sb) + 2vh); justify-content: center; gap: 30px }
+  #foot .lotus, #foot .addr > span { display: none }
+  #foot .addr::before { content: 'पता · संपर्क'; font: 400 14px/1 var(--deva) }
+  #foot .addr::after { content: 'ADDRESS · CONTACT'; font: 500 7px/1 var(--caps); letter-spacing: .2em; color: var(--quiet) }
+  #foot .addr { gap: 4px; padding: 8px 0 }
+  #play { left: calc(var(--sl) + 22vw); bottom: calc(var(--sb) + 12vh) }
+  #visit { left: auto; right: 0; top: 0; bottom: 0; width: min(440px, 60vw); max-height: none; border-radius: 4px 0 0 4px; transform: translateX(105%) }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
+</style>
+<script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
+</head>
+<body class="s-poster">
+<div id="app">
+  <canvas id="gl" aria-label="ऋतम्भरेश्वर मंदिर, त्रिआयाम · the temple in 3D"></canvas>
+  <div class="scrim" id="scrim-t"></div><div class="scrim" id="scrim-b"></div>
+  <div id="stage"><div id="frame">
+    <img id="still" src="media/nandi-first.webp" alt="ऋतम्भरेश्वर मंदिर, संध्या में · the temple at dusk">
+    <video id="film" muted playsinline preload="auto" aria-hidden="true"></video>
+    <img id="last" src="media/nandi-last.webp" alt="" aria-hidden="true">
+    <img id="lamps" src="media/nandi-lamps.webp" alt="" aria-hidden="true">
+    <div id="thread" aria-hidden="true"></div>
+  </div></div>
+  <header id="title">
+    <img class="lotus" src="img/lotus.svg" alt="">
+    <img class="kicker" src="img/kicker.svg" alt="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
+    <img class="lockup" src="img/lockup.svg" alt="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir">
+  </header>
+  <div id="ui">
+    <p id="caption" aria-live="polite"><span class="dn"></span><span class="en"></span></p>
+    <button type="button" id="path" role="slider" aria-label="प्रदक्षिणा पथ · the walk" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i></i></button>
+    <nav id="chips" aria-label="चलें · go to">
+      <button type="button" data-act="walk">प्रदक्षिणा</button><b aria-hidden="true">·</b>
+      <button type="button" data-act="nandi">नन्दी</button>
+    </nav>
+  </div>
+  <footer id="foot">
+    <img class="lotus" src="img/lotus.svg" alt="">
+    <button type="button" class="addr" data-act="visit" aria-label="पता और संपर्क · address and contact">
+      <span class="dn">ग्राम पहाड़ीखेड़ा, <span class="nb">मनेरी रोड</span>&nbsp;· <span class="nb">बरेला – 483001</span>&nbsp;· <span class="nb">जिला जबलपुर (म.प्र.)</span></span>
+      <span class="en"><span class="nb">Vill. Pahadi Kheda,</span> <span class="nb">Maneri Road</span>&nbsp;· <span class="nb">Barela (M.P.) – 483001</span></span>
+    </button>
+    <button type="button" class="txt" data-act="share"><span>भेजें</span><span class="en">Share</span></button>
+  </footer>
+  <button type="button" id="play" hidden><span>दीप जलाएँ</span><span class="en">Light the lamps</span></button>
+  <button type="button" id="skip"><span>छोड़ें</span><span class="en">Skip</span></button>
+  <section id="visit" role="dialog" aria-modal="true" aria-label="पता और संपर्क · address and contact" hidden>
+    <button type="button" class="close" data-act="close"><span>बंद करें</span><span class="en">Close</span></button>
+    <h2>ऋतम्भरेश्वर मंदिर<span class="en">Rtambhareshvara Mandir</span></h2>
+    <p class="dn">ग्राम पहाड़ीखेड़ा, <span class="nb">मनेरी रोड</span>&nbsp;· <span class="nb">बरेला – 483001</span>&nbsp;· <span class="nb">जिला जबलपुर (म.प्र.)</span></p>
+    <p class="en"><span class="nb">Vill. Pahadi Kheda,</span> <span class="nb">Maneri Road</span>&nbsp;· <span class="nb">Barela (M.P.) – 483001</span></p>
+    <ul>
+      <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Pahadi%20Kheda%2C%20Maneri%20Road%2C%20Barela%2C%20Jabalpur%2C%20Madhya%20Pradesh%20483001" target="_blank" rel="noopener">रास्ता देखें<span class="en">Directions ↗</span></a></li>
+      <li><a href="tel:+919098225177"><span>मो. 9098225177</span><span class="en">Call</span></a></li>
+      <li><a href="tel:+919407381069"><span>मो. 9407381069</span><span class="en">Call</span></a></li>
+      <li><button type="button" data-act="share">भेजें<span class="en">Share</span></button></li>
+    </ul>
+    <p class="note">प्रस्तावित स्वरूप<span class="en">Proposed design</span></p>
+  </section>
+</div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
