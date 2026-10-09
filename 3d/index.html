@@ -75,8 +75,8 @@ img, video { display: block }
 :is(.s-hold, .s-handoff, .s-walk) #title .kicker { opacity: 0 }
 :is(.s-hold, .s-handoff, .s-walk) #stage { top: 21vh; height: 53vh }
 /* close to the stone the name steps away (the lockup never sits on a busy picture) */
-.near #title { opacity: 0 }
 
+#side { display: contents }
 /* the walk: a caption, where one is on the path, and where to go; text only, as the posters */
 #ui { position: absolute; left: 0; right: 0; bottom: calc(var(--sb) + 14.5vh); display: flex; flex-direction: column; align-items: center; gap: 1.4vh;
   opacity: 0; pointer-events: none; transition: opacity .8s .4s }
@@ -86,13 +86,22 @@ img, video { display: block }
 #caption .dn { font: 400 clamp(17px, 5vw, 22px)/1.25 var(--deva) }
 #caption .en { font-size: clamp(8px, 2.3vw, 10px); line-height: 1.3; letter-spacing: .22em; color: var(--quiet) }
 #caption.fade { opacity: 0 }
-#path { position: relative; width: 120px; height: 28px; display: block }
-#path::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--hair) }
-#path i { position: absolute; left: 0; top: calc(50% - 3.5px); width: 1.5px; height: 7px; margin-left: -.75px; background: var(--ash); transform: translateX(var(--at, 0px)) }
-#chips { display: flex; align-items: baseline; justify-content: center; gap: 2px }
-#chips button { font: 400 clamp(15px, 4.3vw, 18px)/1 var(--deva); color: var(--quiet); padding: 13px 10px; transition: color .3s }
-#chips button.on, #chips button:active { color: var(--ash) }
-#chips b { font-weight: 400; color: var(--quiet); opacity: .6 }
+/* प्रदक्षिणा: a dial (the building seen from above, its front at the top; the dot is where you stand) that walks you round */
+#walk { display: flex; align-items: center; gap: 11px; padding: 6px 12px; color: var(--ash) }
+#walk .dial { position: relative; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--hair); flex: none; transition: border-color .4s }
+#walk .dial i { position: absolute; inset: 0 }
+#walk .dial i::before { content: ''; position: absolute; left: 50%; top: -3.5px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--ash); transition: background .4s, box-shadow .4s }
+#walk .lbl { display: flex; flex-direction: column; align-items: flex-start; gap: 4px }
+#walk .lbl > span:first-child { font: 400 clamp(14px, 4vw, 16px)/1 var(--deva) }
+#walk .lbl .en { font-size: 7.5px; letter-spacing: .2em; color: var(--quiet) }
+#walk.on .dial { border-color: rgba(243,217,160,.6) } #walk.on .dial i::before { background: var(--lamp); box-shadow: 0 0 9px rgba(243,217,160,.9) }
+/* what to walk round: the temple, Nandi's mandapa, or the whole complex */
+#modes { display: flex; justify-content: center; gap: clamp(10px, 5vw, 30px) }
+#modes button { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 9px 8px 6px; color: var(--quiet); transition: color .3s }
+#modes button > span:first-child { font: 400 clamp(15px, 4.4vw, 18px)/1 var(--deva) }
+#modes button .en { font-size: 7.5px; letter-spacing: .2em; color: var(--quiet); transition: color .3s }
+#modes button::after { content: ''; width: 16px; height: 1px; margin-top: 2px; background: transparent; transition: background .3s }
+#modes button.on, #modes button.on .en { color: var(--ash) } #modes button.on::after { background: var(--ash) }
 
 /* the foot: as the A2 poster's (the chakra, the full address pair, and in the QR's place, sharing) */
 #foot { position: absolute; left: calc(var(--sl) + 5vw); right: calc(var(--sr) + 5vw); bottom: calc(var(--sb) + 2.6vh); display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: opacity .6s }
@@ -106,8 +115,16 @@ img, video { display: block }
 .s-film #foot { opacity: 0; pointer-events: none }
 
 /* moments */
-#play { position: absolute; left: 50%; bottom: calc(var(--sb) + 15vh); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 18px }
-#play > span:first-child { font: 400 21px/1 var(--deva) } #play .en { font-size: 8.5px; letter-spacing: .22em; color: var(--quiet) }
+/* when the phone will not start the film by itself: a lamp to light, plainly a thing to tap (it breathes and rings) */
+#play { position: absolute; left: 50%; bottom: calc(var(--sb) + 14vh); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 12px 18px; white-space: nowrap }
+#play .lamp { position: relative; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid rgba(243,217,160,.7); background: radial-gradient(closest-side, rgba(243,217,160,.22), rgba(243,217,160,.04) 70%, transparent) }
+#play .lamp::before, #play .lamp::after { content: ''; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid var(--lamp); animation: ring 2.4s ease-out infinite }
+#play .lamp::after { animation-delay: 1.2s }
+@keyframes ring { from { transform: scale(1); opacity: .75 } to { transform: scale(1.75); opacity: 0 } }
+#play .lamp svg { width: 24px; height: 24px; fill: var(--lamp); filter: drop-shadow(0 0 6px rgba(243,217,160,.9)); transform-origin: 50% 85%; animation: flame 1.6s ease-in-out infinite alternate }
+@keyframes flame { from { transform: scale(.94) rotate(-2deg) } to { transform: scale(1.06) rotate(2deg) } }
+#play > span:nth-child(2) { font: 400 21px/1 var(--deva) } #play .en { font-size: 8.5px; letter-spacing: .22em; color: var(--ash) }
 #skip { position: absolute; top: calc(var(--st) + 10px); right: calc(var(--sr) + 10px); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 12px; opacity: 0; transition: opacity .5s }
 #skip > span:first-child { font: 400 15px/1 var(--deva) } #skip .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
 .s-film #skip { opacity: 1 }
@@ -130,23 +147,32 @@ img, video { display: block }
 @media (orientation: landscape) {
   #scrim-t { top: 0; bottom: 0; left: 0; right: auto; width: 50vw; height: auto; background: linear-gradient(90deg, #141414 0%, rgba(20,20,20,.9) 62%, rgba(20,20,20,0)) }
   #scrim-b { display: none }
-  #title { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; top: 0; bottom: 0; justify-content: center; gap: 2.2vh }
-  #title .lotus { display: block; width: min(9vh, 64px) }
-  #title .kicker { width: min(24vw, 260px) }
-  #title .lockup { width: min(36vw, 470px); margin-top: 0 }
-  #stage, :is(.s-hold, .s-handoff, .s-walk) #stage { left: 42vw; right: calc(var(--sr) + 2vw); top: 5vh; height: 90vh }
-  #frame { width: min(100cqw, 133.333cqh) }
-  :is(.s-hold, .s-handoff, .s-walk) #title { transform: translateY(-11vh) scale(.78) }
-  .near #title { opacity: 1 }
-  #ui { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; bottom: calc(var(--sb) + 14vh) }
-  #foot { left: calc(var(--sl) + 4vw); right: auto; width: 36vw; bottom: calc(var(--sb) + 2vh); justify-content: center; gap: 30px }
+  /* the name column, as the A3 board's: the lotus and the name at its top, the walk's controls, the foot at its bottom;
+     one flowing column sized by the phone's height, so nothing can overlap */
+  #side { position: absolute; left: calc(var(--sl) + 3vw); width: 38vw; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center;
+    justify-content: space-between; gap: 1.5vh; padding: calc(var(--st) + 4vh) 0 calc(var(--sb) + 2.5vh); pointer-events: none }
+  #side > * { position: relative !important; inset: auto !important; transform: none !important }
+  #title { gap: 1.2vh; width: 100% }
+  #title .lotus { display: block; width: min(7vh, 48px) }
+  #title .kicker { width: min(21vw, 31vh) }
+  #title .lockup { width: min(25vw, 40vh); margin-top: 0 }
+  #ui { gap: 1.2vh; width: 100% }
+  #caption { min-height: 0; padding-inline: 0 }
+  #caption .dn { font-size: clamp(14px, 4.6vh, 19px) } #caption .en { font-size: clamp(7px, 2.2vh, 9px) }
+  #walk { padding-block: 2px }
+  #modes button { padding-block: 6px 4px }
+  #foot { width: 100%; justify-content: center; gap: 30px; pointer-events: auto }
+  .s-film #foot { pointer-events: none }
   #foot .lotus, #foot .addr > span { display: none }
   #foot .addr::before { content: 'पता · संपर्क'; font: 400 14px/1 var(--deva) }
   #foot .addr::after { content: 'ADDRESS · CONTACT'; font: 500 7px/1 var(--caps); letter-spacing: .2em; color: var(--quiet) }
-  #foot .addr { gap: 4px; padding: 8px 0 }
-  #play { left: calc(var(--sl) + 22vw); bottom: calc(var(--sb) + 12vh) }
+  #foot .addr { gap: 4px; padding: 6px 0 }
+  #foot .txt { padding: 6px 0 }
+  #play { left: calc(var(--sl) + 22vw); bottom: calc(var(--sb) + 13vh); gap: 1.6vh }
+  #play .lamp { width: min(52px, 13vh); height: min(52px, 13vh) }
   #visit { left: auto; right: 0; top: 0; bottom: 0; width: min(440px, 60vw); max-height: none; border-radius: 4px 0 0 4px; transform: translateX(105%) }
 }
+.rot, .rot * { transition: none !important }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
 </style>
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
@@ -162,6 +188,7 @@ img, video { display: block }
     <img id="lamps" src="media/temple-lamps.webp" alt="" aria-hidden="true">
     <div id="thread" aria-hidden="true"></div>
   </div></div>
+  <div id="side">
   <header id="title">
     <img class="lotus" src="img/lotus.svg" alt="">
     <img class="kicker" src="img/kicker.svg" alt="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
@@ -169,10 +196,11 @@ img, video { display: block }
   </header>
   <div id="ui">
     <p id="caption" aria-live="polite"><span class="dn"></span><span class="en"></span></p>
-    <button type="button" id="path" role="slider" aria-label="प्रदक्षिणा पथ · the walk" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><i></i></button>
-    <nav id="chips" aria-label="चलें · go to">
-      <button type="button" data-act="walk">प्रदक्षिणा</button><b aria-hidden="true">·</b>
-      <button type="button" data-act="nandi">नन्दी</button>
+    <button type="button" id="walk" aria-label="प्रदक्षिणा · walk round once"><span class="dial" aria-hidden="true"><i></i></span><span class="lbl"><span>प्रदक्षिणा</span><span class="en">Walk round</span></span></button>
+    <nav id="modes" aria-label="क्या देखें · what to see">
+      <button type="button" data-mode="temple"><span>मंदिर</span><span class="en">Temple</span></button>
+      <button type="button" data-mode="nandi"><span>नन्दी</span><span class="en">Nandi</span></button>
+      <button type="button" data-mode="complex"><span>परिसर</span><span class="en">Complex</span></button>
     </nav>
   </div>
   <footer id="foot">
@@ -183,7 +211,8 @@ img, video { display: block }
     </button>
     <button type="button" class="txt" data-act="share"><span>भेजें</span><span class="en">Share</span></button>
   </footer>
-  <button type="button" id="play" hidden><span>दीप जलाएँ</span><span class="en">Light the lamps</span></button>
+  </div>
+  <button type="button" id="play" hidden><span class="lamp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5c3 3.9 4.6 6.7 4.6 9.3a4.6 4.6 0 0 1-9.2 0c0-2.6 1.6-5.4 4.6-9.3z"/></svg></span><span>दीप जलाएँ</span><span class="en">Tap to light the lamps</span></button>
   <button type="button" id="skip"><span>छोड़ें</span><span class="en">Skip</span></button>
   <section id="visit" role="dialog" aria-modal="true" aria-label="पता और संपर्क · address and contact" hidden>
     <button type="button" class="close" data-act="close"><span>बंद करें</span><span class="en">Close</span></button>

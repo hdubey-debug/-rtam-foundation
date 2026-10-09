@@ -1,10 +1,11 @@
 // संध्या दर्शन · Sandhya Darshan. The page opens on the poster that was scanned, its lamps are lit (the film), the 3D
-// temple rises around the same lamps, and the visitor walks around it (pradakshina) to Nandi's view of it.
-// States (on <body>): s-poster → s-film → s-hold → s-handoff → s-walk. Phones that cannot run the 3D walk the same path
-// through night pictures (tier "still").
-import { Stage, STOPS, NANDI_FRONT, NANDI_CRANE } from './stage.js';
+// rises around the same lamps, and the visitor walks round it, a full circle: the temple, Nandi's mandapa, or the whole
+// complex. States (on <body>): s-poster → s-film → s-hold → s-handoff → s-walk. Phones that cannot run the 3D see the
+// same through night pictures (tier "still").
+import { Stage, MODES } from './stage.js';
 
 const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
 const body = document.body;
 const subject = document.documentElement.dataset.subject || 'temple';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -14,13 +15,13 @@ const qs = new URLSearchParams(location.search);
 function detectTier() {
   if (qs.get('tier')) return qs.get('tier');
   const c = document.createElement('canvas');
-  if (!(c.getContext('webgl2') || c.getContext('webgl'))) return 'still';
+  const gl = c.getContext('webgl2') || c.getContext('webgl');
+  if (!gl) return 'still';
   const conn = navigator.connection || {};
   if (conn.saveData || /(^|-)(slow-2g|2g)$/.test(conn.effectiveType || '')) return 'still';
-  const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const mem = navigator.deviceMemory || 4;
+  const mem = navigator.deviceMemory || 4;                 // Chrome reports at most 8; Safari reports nothing
   if (mem < 2) return 'still';
-  return ios || mem >= 6 ? 'hi' : 'lo';
+  return mem >= 4 ? 'hi' : 'lo';                          // iPhones (no report) and most phones get the sharp models
 }
 const tier = detectTier();
 body.dataset.tier = tier;
@@ -28,18 +29,36 @@ body.dataset.tier = tier;
 // ---------------------------------------------------------------- words (Hindi first, a small English echo)
 const WORDS = {
   intro: ['अब मंदिर आपका है', 'Swipe to walk around it'],
+  introNandi: ['नन्दी · अपने स्वामी की ओर', 'Swipe to walk around Nandi'],
   poster: ['पहाड़ीखेड़ा में बन रहा है', 'Now rising at Pahadi Kheda'],
   door: ['द्वार · दीप की एक रेखा', 'The door · a thread of lamplight'],
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
   side: ['प्रदक्षिणा · मंदिर सदा दाहिने हाथ', 'Keep the temple on your right'],
-  nandi: ['नन्दी · अपने स्वामी की ओर', 'Nandi · facing his lord'],
+  nandiFace: ['नन्दी · अपने स्वामी की ओर', 'Nandi · facing his lord'],
+  nandiBack: ['नन्दी · शिव का वाहन', "Nandi · Shiva's mount"],
+  mandapa: ['नन्दी मंडप', 'The Nandi mandapa'],
   gaze: ['नन्दी की दृष्टि से', 'As Nandi sees it'],
+  complex: ['मंदिर परिसर', 'The temple and its mandapa'],
 };
+let shown = '';
 function caption(key) {
+  if (key === shown) return; shown = key;
   const c = $('#caption'), w = WORDS[key]; if (!w) return;
   c.classList.add('fade');
   setTimeout(() => { c.querySelector('.dn').textContent = w[0]; c.querySelector('.en').textContent = w[1]; c.classList.remove('fade'); }, 250);
+}
+// what is in front of you, as you walk round
+function sectorWord(mode, az, facing) {
+  if (mode === 'temple') {
+    if (Math.abs(((az - MODES.temple.home) % 360 + 540) % 360 - 180) < 14) return 'poster';
+    const f = Math.abs(facing);
+    if (f <= 35) return 'door';
+    if (f >= 135) return 'tower';
+    return facing > 0 ? 'jali' : 'side';
+  }
+  if (mode === 'nandi') { const f = Math.abs(facing); return f <= 55 ? 'nandiFace' : f >= 125 ? 'nandiBack' : 'mandapa'; }
+  return Math.abs(facing) <= 18 ? 'gaze' : 'complex';
 }
 
 // ---------------------------------------------------------------- state
@@ -52,32 +71,35 @@ const FILM = await fetch(`media/${subject}-film.json`).then((r) => r.json()).cat
 if (FILM.thread) { const st = $('#frame').style; st.setProperty('--tx', FILM.thread[0] + '%'); st.setProperty('--ty', FILM.thread[1] + '%'); st.setProperty('--th', FILM.thread[2] + '%'); }
 film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;
 
-let stage = null, stageReady = false, filmDone = false, entering = false;
+const START = subject === 'nandi' ? 'nandi' : 'temple';
+let stage = null, stageReady = false, filmDone = false, introUntil = 0;
 if (tier !== 'still') {
   try {
     stage = new Stage($('#gl'), { tier, breathe: !reduce });
-    stage.onframe = onFrame;
+    stage.onframe = onFrame; stage.onspinend = () => $('#walk').classList.remove('on');
     layout();
     stage.load((p) => $('#frame').style.setProperty('--p', p.toFixed(2)))
-      .then(() => { stageReady = true; if (subject === 'nandi') { stage.view = { ...NANDI_FRONT, look: NANDI_FRONT.look.slice() }; stage.u = stage.uNow = 5; } if (filmDone && state === 'hold') waitThenHandoff(); })
+      .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); })
       .catch(() => { stage = null; body.dataset.tier = 'still'; if (filmDone && state === 'hold') waitThenHandoff(); });
   } catch (e) { stage = null; body.dataset.tier = 'still'; }
 }
 
 function startFilm() {
   if (state !== 'poster') return;
-  set('film');
+  $('#play').hidden = true; set('film');
   const p = film.play();
   if (p && p.catch) p.catch(() => { set('poster'); $('#play').hidden = false; });   // autoplay refused: the visitor lights the lamps
 }
 let heldAt = 0;
 function hold() { if (state === 'poster' || state === 'film') { set('hold'); heldAt = performance.now(); follow(1000); } }
-function filmEnded() { if (filmDone) return; filmDone = true; film.pause(); hold(); waitThenHandoff(); }
+function filmEnded() { if (filmDone) return; filmDone = true; film.pause(); $('#play').hidden = true; hold(); waitThenHandoff(); }
 film.addEventListener('ended', filmEnded);
 film.addEventListener('error', () => { if (state === 'poster' || state === 'film') filmEnded(); });
 setTimeout(() => { if (state === 'poster' && $('#play').hidden) filmEnded(); }, 7000);   // the film never came
 $('#skip').addEventListener('click', filmEnded);
-$('#play').addEventListener('click', () => { $('#play').hidden = true; startFilm(); });
+// the lamps are lit by a tap: on the button, or anywhere on the poster while it waits
+$('#play').addEventListener('click', (e) => { e.stopPropagation(); startFilm(); });
+$('#app').addEventListener('click', () => { if (state === 'poster' && !$('#play').hidden) startFilm(); });
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
@@ -95,126 +117,99 @@ function handoff() {
   set('handoff'); layout();
   setTimeout(() => {
     if (!stage) { stillWalk(); return; }
-    set('walk');
-    if (subject === 'nandi') {                       // facing Nandi as on the poster, then see what he sees
-      entering = true; stage.view = { ...NANDI_FRONT, look: NANDI_FRONT.look.slice() }; stage.u = stage.uNow = 5; stage.dirty = true; caption('nandi');
-      setTimeout(() => {
-        if (state !== 'walk' || stage.anim) { entering = false; return; }
-        stage.goPoses(NANDI_CRANE, 5200, () => { entering = false; stage.scrub(5); caption('gaze'); });
-      }, 2400);
-    } else {
-      stage.scrub(0); caption('intro'); setTimeout(() => { if (Math.round(stage.u) === 0 && !stage.anim) caption('poster'); }, 4200);
-    }
+    set('walk'); markMode(START);
+    stage.setMode(START); introUntil = performance.now() + 4200; shown = '';
+    caption(START === 'nandi' ? 'introNandi' : 'intro');
+    setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
     follow(1200);
-    if (tier === 'hi') setTimeout(() => stage.upgrade(), 3000);
+    if (tier === 'hi') setTimeout(() => stage.upgrade(), 2500);
   }, 1100);
 }
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
 function layout() { if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize(); }
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
-addEventListener('resize', () => follow(1000));
-addEventListener('orientationchange', () => follow(1200));
+// turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
+let rotT = null;
+function turned() { body.classList.add('rot'); clearTimeout(rotT); rotT = setTimeout(() => body.classList.remove('rot'), 700); follow(1000); }
+addEventListener('resize', turned);
+addEventListener('orientationchange', turned);
 
 // ---------------------------------------------------------------- the walk
-// where one is: a tick sliding along a hairline; close to the stone, the name steps away
-const PATH_W = 120;
-function onFrame(u) {
-  $('#path').style.setProperty('--at', (u / (STOPS.length - 1) * PATH_W).toFixed(1) + 'px');
-  const i = Math.round(u), near = state === 'walk' && !entering && STOPS[i] && STOPS[i].near && Math.abs(u - i) < .3;
-  body.classList.toggle('near', !!near);
+// the dial: a ring with one tick, where you stand around the building (its front at the top)
+function onFrame(az) {
+  if (!stage) return;
+  const f = stage.facing();
+  $('#walk .dial i').style.transform = `rotate(${f.toFixed(1)}deg)`;      // walking round clockwise turns the dot clockwise
+  if (state === 'walk' && performance.now() > introUntil) caption(sectorWord(stage.mode, az, f));
 }
-function markPath() { $('#path').setAttribute('aria-valuenow', String(Math.round(stage ? stage.u : 0))); }
-function toStop(i, dur, done) {
-  i = Math.max(0, Math.min(STOPS.length - 1, i));
-  stage.goU(i, dur || 1500, () => { caption(STOPS[i].id === 'poster' ? 'poster' : STOPS[i].id); markPath(); done && done(); });
-  markPath();
-}
-$('#path').addEventListener('click', (e) => {         // tap along the path: walk to the nearest stop
-  if (state !== 'walk' || !stage) return;
-  const r = $('#path').getBoundingClientRect(); auto(false);
-  toStop(Math.round((e.clientX - r.left) / r.width * (STOPS.length - 1)));
-});
+function markMode(name) { $$('#modes button').forEach((b) => b.classList.toggle('on', b.dataset.mode === name)); }
 
-// gestures: drag sideways to walk (the temple turns with the finger), pinch to come closer
+// drag sideways to walk round (the building turns with the finger), flick to keep going, pinch to come closer
 const gl = $('#gl'); const pts = new Map(); let drag = null, pinch = null;
 const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+const degPerPx = () => 300 / Math.max(320, stage.frame.w * 1.6);
 gl.addEventListener('pointerdown', (e) => {
-  if (state !== 'walk' || entering) return;
-  gl.setPointerCapture(e.pointerId); pts.set(e.pointerId, e); auto(false); stage.wake();
-  if (pts.size === 1) drag = { x: e.clientX, u: stage.uNow, last: e.clientX, v: 0, moved: false };
+  if (state !== 'walk') return;
+  gl.setPointerCapture(e.pointerId); pts.set(e.pointerId, e); stage.stopSpin(); stage.vel = 0;
+  if (pts.size === 1) drag = { last: e.clientX, t: performance.now(), v: 0 };
   if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: dist(a, b), z: stage.zoom }; drag = null; }
 });
 gl.addEventListener('pointermove', (e) => {
   if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
-  if (pinch && pts.size === 2) { const [a, b] = [...pts.values()]; stage.zoom = Math.max(.72, Math.min(1.3, pinch.z * pinch.d / dist(a, b))); stage.dirty = true; return; }
+  if (pinch && pts.size === 2) { const [a, b] = [...pts.values()]; stage.zoom = Math.max(.8, Math.min(2.2, pinch.z * dist(a, b) / pinch.d)); stage.dirty = true; stage.wake(); return; }
   if (drag) {
-    const dx = e.clientX - drag.x; if (Math.abs(dx) > 4) drag.moved = true;
-    stage.scrub(drag.u + dx / (stage.frame.w * .75)); drag.v = e.clientX - drag.last; drag.last = e.clientX;
+    const now = performance.now(), dx = e.clientX - drag.last, d = dx * degPerPx();
+    stage.rotate(d); drag.v = .7 * drag.v + .3 * (d / Math.max(8, now - drag.t) * 1000); drag.last = e.clientX; drag.t = now;
   }
 });
 const lift = (e) => {
   pts.delete(e.pointerId); if (pts.size < 2) pinch = null;
-  if (drag && pts.size === 0) {
-    const flick = Math.abs(drag.v) > 5 ? Math.sign(drag.v) * .5 : 0;
-    if (drag.moved) toStop(Math.round(stage.u + flick), 700);
-    drag = null;
-  }
+  if (drag && pts.size === 0) { if (performance.now() - drag.t < 90) stage.fling(drag.v); drag = null; }
 };
 gl.addEventListener('pointerup', lift); gl.addEventListener('pointercancel', lift);
-gl.addEventListener('wheel', (e) => { if (state !== 'walk') return; e.preventDefault(); stage.zoom = Math.max(.72, Math.min(1.3, stage.zoom * (1 + e.deltaY * .0012))); stage.dirty = true; }, { passive: false });
+gl.addEventListener('wheel', (e) => { if (state !== 'walk') return; e.preventDefault(); stage.zoom = Math.max(.8, Math.min(2.2, stage.zoom * (1 - e.deltaY * .0012))); stage.dirty = true; }, { passive: false });
 addEventListener('keydown', (e) => {
-  if (state === 'walk' && stage && !entering) {
-    if (e.key === 'ArrowRight') { auto(false); toStop(Math.round(stage.u) + 1); }
-    if (e.key === 'ArrowLeft') { auto(false); toStop(Math.round(stage.u) - 1); }
-  }
+  if (state !== 'walk' || !stage) return;
+  if (e.key === 'ArrowRight') { stage.stopSpin(); stage.fling(140); }
+  if (e.key === 'ArrowLeft') { stage.stopSpin(); stage.fling(-140); }
 });
 
-// प्रदक्षिणा: a slow walk round, pausing at each stop, that stops when touched; it ends at Nandi, facing the temple
-let autoT = null;
-function auto(on) {
-  clearTimeout(autoT); autoT = null;
-  $('#chips [data-act="walk"]').classList.toggle('on', !!on);
-  if (!on) return;
-  const step = () => {
-    const i = Math.round(stage.u);
-    if (i >= STOPS.length - 1) { auto(false); return; }
-    toStop(i + 1, 2600, () => { autoT = setTimeout(step, 2300); });
-  };
-  if (Math.round(stage.u) < STOPS.length - 1) { step(); return; }
-  // at Nandi, a new round: step back to where the poster stands (a short glide, the same side of the temple), then walk
-  const s0 = STOPS[0];
-  stage.goPoses([{ ...s0, az: s0.az + 360, look: s0.look.slice() }], 1800, () => { stage.scrub(0); caption('poster'); markPath(); autoT = setTimeout(step, 1500); });
-}
-$('#chips').addEventListener('click', (e) => {
-  const b = e.target.closest('button'); if (!b || !stage || entering) return;
-  const a = b.dataset.act;
-  if (a === 'walk') auto(!b.classList.contains('on'));
-  if (a === 'nandi') { auto(false); toStop(STOPS.length - 1); }
+// प्रदक्षिणा: walk round once, slowly, keeping it on your right; a touch stops it
+$('#walk').addEventListener('click', () => {
+  if (!stage || state !== 'walk') return;
+  if (stage.spinning) { stage.stopSpin(); return; }
+  $('#walk').classList.add('on'); stage.spin(reduce ? 60 : 16);
+});
+
+// what to walk round: the temple, Nandi's mandapa, or the whole complex; the view dips to the night and comes back on it
+$('#modes').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-mode]'); if (!b || state !== 'walk') return;
+  const name = b.dataset.mode; if (!stage) { stillShow(name, 0); return; }
+  if (name === stage.mode) { stage.setMode(name, MODES[name].home); return; }       // again: back to where it starts
+  markMode(name); shown = '';
+  const keep = name !== 'nandi' && stage.mode !== 'nandi';                           // temple ↔ complex keep their direction
+  gl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: reduce ? 1 : 320, fill: 'forwards', easing: 'ease-in' }).finished.then(() => {
+    stage.setMode(name, keep ? stage.az : undefined);
+    gl.getAnimations().forEach((a) => a.cancel());
+    gl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: reduce ? 1 : 700, easing: 'ease-out' });
+  });
 });
 
 // ---------------------------------------------------------------- the night pictures (phones without the 3D)
-const STILLS = [
-  { src: `media/temple-last.webp`, key: 'poster' }, { src: 'media/front-night.webp', key: 'door' },
-  { src: 'media/nandi-last.webp', key: 'nandi' }];
-let stillI = 0, stillOn = false;
-function stillShow(i) {
-  stillI = Math.max(0, Math.min(STILLS.length - 1, i));
+const STILLS = { temple: ['media/temple-last.webp', 'media/front-night.webp'], nandi: ['media/nandi-last.webp'], complex: ['media/front-night.webp'] };
+let stillName = START, stillI = 0;
+function stillShow(name, i) {
+  const list = STILLS[name]; stillName = name; stillI = ((i % list.length) + list.length) % list.length;
   const im = $('#still'); im.style.transition = 'opacity .45s'; im.style.opacity = '0';
-  setTimeout(() => { im.src = STILLS[stillI].src; im.onload = () => { im.style.opacity = '1'; }; caption(STILLS[stillI].key); }, 460);
-  $('#path').style.setProperty('--at', (stillI / (STILLS.length - 1) * PATH_W).toFixed(1) + 'px');
+  setTimeout(() => { im.src = list[stillI]; im.onload = () => { im.style.opacity = '1'; }; }, 460);
+  caption(name === 'nandi' ? 'nandiFace' : name === 'complex' ? 'gaze' : stillI ? 'door' : 'poster'); markMode(name);
 }
 function stillWalk() {
-  set('walk'); stillShow(0);
-  if (stillOn) return; stillOn = true;
+  set('walk'); stillShow(START, 0);
   let x0 = null;
   $('#app').addEventListener('pointerdown', (e) => { x0 = e.clientX; });
-  $('#app').addEventListener('pointerup', (e) => { if (x0 === null || state !== 'walk') return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) stillShow(stillI + (dx > 0 ? 1 : -1)); });   // as the 3D: the finger moves you forward
-  $('#chips').addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b || state !== 'walk') return;
-    if (b.dataset.act === 'walk') stillShow(stillI + 1);
-    if (b.dataset.act === 'nandi') stillShow(STILLS.length - 1);
-  });
+  $('#app').addEventListener('pointerup', (e) => { if (x0 === null || state !== 'walk') return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) stillShow(stillName, stillI + (dx > 0 ? 1 : -1)); });
 }
 
 // ---------------------------------------------------------------- address, contact, sharing
