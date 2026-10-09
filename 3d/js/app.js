@@ -41,12 +41,23 @@ const WORDS = {
   gaze: ['नन्दी की दृष्टि से', 'As Nandi sees it'],
   complex: ['मंदिर परिसर', 'The temple and its mandapa'],
 };
-let shown = '';
-function caption(key) {
-  if (key === shown) return; shown = key;
-  const c = $('#caption'), w = WORDS[key]; if (!w) return;
+// one caption at a time: the old one fades out completely before the new one fades in, and while one walks round, a new
+// caption waits until its side has stayed in view a moment (no flicker at the boundaries, never two at once)
+let shown = '', want = '', busy = false, waitT = null;
+function caption(key, now) {
+  if (key === want && !now) return;                      // already on its way (or shown): let its wait run
+  want = key; clearTimeout(waitT);
+  if (now) swapCaption(); else waitT = setTimeout(swapCaption, 450);
+}
+function swapCaption() {
+  if (busy || want === shown || !WORDS[want]) return;
+  busy = true; const key = want, c = $('#caption');
   c.classList.add('fade');
-  setTimeout(() => { c.querySelector('.dn').textContent = w[0]; c.querySelector('.en').textContent = w[1]; c.classList.remove('fade'); }, 250);
+  setTimeout(() => {
+    shown = key; c.querySelector('.dn').textContent = WORDS[key][0]; c.querySelector('.en').textContent = WORDS[key][1];
+    c.classList.remove('fade');
+    setTimeout(() => { busy = false; if (want !== shown) swapCaption(); }, 380);
+  }, shown ? 380 : 0);
 }
 // what is in front of you, as you walk round
 function sectorWord(mode, az, facing) {
@@ -118,8 +129,8 @@ function handoff() {
   setTimeout(() => {
     if (!stage) { stillWalk(); return; }
     set('walk'); markMode(START);
-    stage.setMode(START); introUntil = performance.now() + 4200; shown = '';
-    caption(START === 'nandi' ? 'introNandi' : 'intro');
+    stage.setMode(START); introUntil = performance.now() + 4200;
+    caption(START === 'nandi' ? 'introNandi' : 'intro', true);
     setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
     follow(1200);
     if (tier === 'hi') setTimeout(() => stage.upgrade(), 2500);
@@ -127,11 +138,19 @@ function handoff() {
 }
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
-function layout() { if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize(); }
+function layout() {
+  // the 3D fades out behind the name above and the controls below, wherever they stand on this screen
+  const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect(), st = document.documentElement.style;
+  st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');
+  if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
+}
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
 // turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
-let rotT = null;
-function turned() { body.classList.add('rot'); clearTimeout(rotT); rotT = setTimeout(() => body.classList.remove('rot'), 700); follow(1000); }
+let rotT = null, wide = innerWidth > innerHeight;
+function turned() {
+  if ((innerWidth > innerHeight) !== wide) { wide = !wide; body.classList.add('rot'); clearTimeout(rotT); rotT = setTimeout(() => body.classList.remove('rot'), 700); }
+  follow(1000);
+}
 addEventListener('resize', turned);
 addEventListener('orientationchange', turned);
 
@@ -187,10 +206,11 @@ $('#modes').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-mode]'); if (!b || state !== 'walk') return;
   const name = b.dataset.mode; if (!stage) { stillShow(name, 0); return; }
   if (name === stage.mode) { stage.setMode(name, MODES[name].home); return; }       // again: back to where it starts
-  markMode(name); shown = '';
+  markMode(name);
   const keep = name !== 'nandi' && stage.mode !== 'nandi';                           // temple ↔ complex keep their direction
   gl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: reduce ? 1 : 320, fill: 'forwards', easing: 'ease-in' }).finished.then(() => {
     stage.setMode(name, keep ? stage.az : undefined);
+    caption(sectorWord(stage.mode, stage.az, stage.facing()), true);                 // a choice: its words come at once
     gl.getAnimations().forEach((a) => a.cancel());
     gl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: reduce ? 1 : 700, easing: 'ease-out' });
   });
@@ -203,7 +223,7 @@ function stillShow(name, i) {
   const list = STILLS[name]; stillName = name; stillI = ((i % list.length) + list.length) % list.length;
   const im = $('#still'); im.style.transition = 'opacity .45s'; im.style.opacity = '0';
   setTimeout(() => { im.src = list[stillI]; im.onload = () => { im.style.opacity = '1'; }; }, 460);
-  caption(name === 'nandi' ? 'nandiFace' : name === 'complex' ? 'gaze' : stillI ? 'door' : 'poster'); markMode(name);
+  caption(name === 'nandi' ? 'nandiFace' : name === 'complex' ? 'gaze' : stillI ? 'door' : 'poster', true); markMode(name);
 }
 function stillWalk() {
   set('walk'); stillShow(START, 0);

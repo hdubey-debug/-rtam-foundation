@@ -43,16 +43,25 @@ img, video { display: block }
 #gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ease); touch-action: none }
 .s-walk #gl { opacity: 1 }
 
-/* scrims: the name and the captions stay readable over a close view of the lit stone */
-.scrim { position: absolute; left: 0; right: 0; pointer-events: none; opacity: 0; transition: opacity 1s }
-#scrim-t { top: 0; height: calc(var(--st) + 26vh); background: linear-gradient(#141414 0%, rgba(20,20,20,.86) 45%, rgba(20,20,20,0)) }
-#scrim-b { bottom: 0; height: calc(var(--sb) + 36vh); background: linear-gradient(rgba(20,20,20,0), rgba(20,20,20,.86) 42%, #141414 82%) }
-.s-walk .scrim { opacity: 1 }
+/* the name and the captions stay readable over the stone: the 3D itself fades out behind them, so only the page's own
+   black is ever there (a dark veil laid over the page would band against it) */
+.scrim { display: none }
+#gl { --m: linear-gradient(transparent calc(var(--fadeTop, 18vh) - 7vh), #000 var(--fadeTop, 18vh), #000 calc(var(--fadeBot, 70vh) - 8vh), transparent var(--fadeBot, 70vh));
+      -webkit-mask: var(--m); mask: var(--m) }
 
 /* the picture area: the poster frame, the film, the lamps (with the poster's side margins) */
 #stage { position: absolute; left: 0; right: 0; top: 33vh; height: 45vh; pointer-events: none; container-type: size; transition: top .9s var(--ease), height .9s var(--ease) }
-#frame { position: absolute; left: 50%; top: 50%; width: min(92cqw, 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%) }
+#frame { position: absolute; left: 50%; top: 50%; width: min(92cqw, 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%);
+  /* its edges dissolve into the page: a film's black can decode a level or two off the page's, and no edge may show */
+  -webkit-mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
+  -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
+  mask-composite: intersect }
 #frame > * { position: absolute; inset: 0; width: 100%; height: 100% }
+/* the pictures lie on the page's black and lighten it: where a film's black decodes a level dark, the page's shows */
+#frame { background: var(--ground); transition: background-color 1.6s .3s }
+#frame > img, #frame > video { mix-blend-mode: lighten }
+.s-walk #frame { background-color: transparent }
+[data-tier="still"].s-walk #frame { background-color: var(--ground) }
 #still, #film, #lamps, #last { opacity: 0; transition: opacity .9s var(--ease) }
 .s-poster #still { opacity: 1 }
 .s-film #film, .s-hold #last { opacity: 1 }
@@ -145,19 +154,21 @@ img, video { display: block }
 
 /* sideways: the A3 board (the name column left, the picture right) */
 @media (orientation: landscape) {
-  #scrim-t { top: 0; bottom: 0; left: 0; right: auto; width: 50vw; height: auto; background: linear-gradient(90deg, #141414 0%, rgba(20,20,20,.9) 62%, rgba(20,20,20,0)) }
-  #scrim-b { display: none }
+  #gl { -webkit-mask: linear-gradient(90deg, transparent calc(var(--sl) + 33vw), #000 calc(var(--sl) + 43vw)); mask: linear-gradient(90deg, transparent calc(var(--sl) + 33vw), #000 calc(var(--sl) + 43vw)) }
   /* the name column, as the A3 board's: the lotus and the name at its top, the walk's controls, the foot at its bottom;
      one flowing column sized by the phone's height, so nothing can overlap */
   #side { position: absolute; left: calc(var(--sl) + 3vw); width: 38vw; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center;
     justify-content: space-between; gap: 1.5vh; padding: calc(var(--st) + 4vh) 0 calc(var(--sb) + 2.5vh); pointer-events: none }
   #side > * { position: relative !important; inset: auto !important; transform: none !important }
+  /* the picture: everything right of the name column, as large as fits, up to a size where the models stay crisp */
+  #stage, :is(.s-hold, .s-handoff, .s-walk) #stage { left: 42vw; right: calc(var(--sr) + 1.5vw); top: calc(var(--st) + 3vh); bottom: calc(var(--sb) + 3vh); height: auto }
+  #frame { width: min(100cqw, 133.333cqh, 1000px) }
   #title { gap: 1.2vh; width: 100% }
   #title .lotus { display: block; width: min(7vh, 48px) }
   #title .kicker { width: min(21vw, 31vh) }
   #title .lockup { width: min(25vw, 40vh); margin-top: 0 }
   #ui { gap: 1.2vh; width: 100% }
-  #caption { min-height: 0; padding-inline: 0 }
+  #caption { min-height: 2.6em; justify-content: center; padding-inline: 0 }     /* a steady height: the controls never jump */
   #caption .dn { font-size: clamp(14px, 4.6vh, 19px) } #caption .en { font-size: clamp(7px, 2.2vh, 9px) }
   #walk { padding-block: 2px }
   #modes button { padding-block: 6px 4px }
@@ -173,6 +184,13 @@ img, video { display: block }
   #visit { left: auto; right: 0; top: 0; bottom: 0; width: min(440px, 60vw); max-height: none; border-radius: 4px 0 0 4px; transform: translateX(105%) }
 }
 .rot, .rot * { transition: none !important }
+/* big sideways screens (a laptop, a desktop): the column's words and controls grow with it */
+@media (orientation: landscape) and (min-height: 700px) {
+  #caption .dn { font-size: 24px } #caption .en { font-size: 10.5px }
+  #walk .dial { width: 32px; height: 32px } #walk .lbl > span:first-child { font-size: 19px } #walk .lbl .en { font-size: 9px }
+  #modes { gap: 36px } #modes button > span:first-child { font-size: 22px } #modes button .en { font-size: 9px }
+  #foot .addr::before { font-size: 17px } #foot .addr::after { font-size: 8.5px } .txt > span:first-child { font-size: 17px } .txt .en { font-size: 8.5px }
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
 </style>
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>

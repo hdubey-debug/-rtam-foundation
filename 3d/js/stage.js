@@ -48,11 +48,11 @@ export class Stage {
     this.breathe = breathe; this.awakeUntil = 0; this.lastBreath = 0; this.onframe = null; this.now = 0; this.last = 0;
     this.mode = 'temple'; this.az = MODES.temple.home; this.vel = 0; this.spinning = 0; this.spun = 0; this.onspinend = null;
     this.ext = document.documentElement.dataset.models || '.glb';
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-    this.renderer.setClearColor(GROUND, 1);
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    this.renderer.setClearColor(GROUND, 0);                 // see-through: the page's own black shows where there is no stone
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.NoToneMapping;
-    this.scene = new THREE.Scene(); this.scene.background = GROUND;
+    this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(30, 1, .01, 30);
     this.frame = { x: 0, y: 0, w: 1, h: 1 };              // the picture area, in CSS px
     this.view = orbitView('temple', this.az);             // the camera's current pose
