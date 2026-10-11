@@ -118,7 +118,11 @@ $('#app').addEventListener('click', () => { if (state === 'poster' && !$('#play'
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
-else if (PILOT) { film.load(); $('#play').hidden = false; }   // the pilot: the visitor lights the lamps; nothing starts by itself
+else if (PILOT) {                                     // the pilot: the visitor lights the lamps; nothing starts by itself
+  film.load(); $('#play').hidden = false;
+  // decode the pictures the film hands over to now, not at the moment they appear (a decode then drops frames)
+  for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
+}
 else {
   film.addEventListener('canplaythrough', () => setTimeout(startFilm, 500), { once: true });
   film.load();

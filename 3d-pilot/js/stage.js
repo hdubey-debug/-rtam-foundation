@@ -202,9 +202,21 @@ export class Stage {
     if (!this.hull) return;
     const fr = this.frame, band = this.band || { top: fr.y, bottom: fr.y + fr.h };
     const key = [fr.x, fr.y, fr.w, fr.h, band.top, band.bottom].map(Math.round).join(','); if (key === this.fitKey) return; this.fitKey = key;
-    const up = new THREE.Vector3(0, 1, 0), C = new THREE.Vector3(), L = new THREE.Vector3(), f = new THREE.Vector3(),
-      rt = new THREE.Vector3(), u = new THREE.Vector3(), d = new THREE.Vector3();
+    if (!this.extents) this.extents = this.measureExtents();          // the sweep round each subject: once, not per layout frame
     const Hb = Math.max(40, band.bottom - band.top), bandCy = (band.top + band.bottom) / 2, frameCy = fr.y + fr.h / 2;
+    for (const name of Object.keys(MODES)) {
+      const { U, Vt, Vb, dist } = this.extents[name];
+      const span = Math.max(U * dist / .96, (Vt + Vb) * fr.w * dist / (Hb * .9));
+      const k = fr.w * dist / span;                                         // px per unit of tan, at zoom 1
+      this.walkFit[name] = { span, dy: bandCy - (frameCy - (Vt - Vb) / 2 * k) };   // dy: px to move it down, onto the band
+    }
+    this.view = this.viewAt(this.az); this.dirty = true;
+  }
+  // each subject's widest angular extent (U), and its reach above (Vt) and below (Vb) the line of sight, over a full
+  // circle of the walk's own orbit: independent of the screen, so it is measured once
+  measureExtents() {
+    const out = {}, up = new THREE.Vector3(0, 1, 0), C = new THREE.Vector3(), L = new THREE.Vector3(), f = new THREE.Vector3(),
+      rt = new THREE.Vector3(), u = new THREE.Vector3(), d = new THREE.Vector3();
     for (const name of Object.keys(MODES)) {
       const M = MODES[name], pts = this.hull[name]; let U = 0, Vt = 0, Vb = 0, dist = 1;
       for (let a = 0; a < 360; a += 3) {
@@ -215,11 +227,9 @@ export class Stage {
           if (x < u0) u0 = x; if (x > u1) u1 = x; if (y < v0) v0 = y; if (y > v1) v1 = y; }
         U = Math.max(U, u1 - u0); Vt = Math.max(Vt, v1); Vb = Math.max(Vb, -v0);
       }
-      const span = Math.max(U * dist / .96, (Vt + Vb) * fr.w * dist / (Hb * .9));
-      const k = fr.w * dist / span;                                         // px per unit of tan, at zoom 1
-      this.walkFit[name] = { span, dy: bandCy - (frameCy - (Vt - Vb) / 2 * k) };   // dy: px to move it down, onto the band
+      out[name] = { U, Vt, Vb, dist };
     }
-    this.view = this.viewAt(this.az); this.dirty = true;
+    return out;
   }
   // where the film's picture must move, and how much it must shrink, to sit exactly on the walk's view of the same stone
   // (one size, centred), from the subject's extreme points seen through both cameras: a least-squares fit of a scale
@@ -294,7 +304,10 @@ export class Stage {
   resize() {
     const w = this.canvas.clientWidth || innerWidth, h = this.canvas.clientHeight || innerHeight;
     const dpr = Math.min(devicePixelRatio || 1, this.tier === 'hi' ? 2 : 1.6);
-    this.renderer.setPixelRatio(dpr); this.renderer.setSize(w, h, false);
+    // only when something changed: resizing the canvas resets it and forces the page's layout again (a dropped frame,
+    // every frame, while the layout follows a transition)
+    if (this.size && this.size.w === w && this.size.h === h && this.dpr === dpr) return;
+    this.renderer.setPixelRatio(dpr); this.renderer.setSize(w, h, false); this.dpr = dpr;
     this.size = { w, h }; this.dirty = true;
   }
   // where a world point lands on screen (CSS px)
