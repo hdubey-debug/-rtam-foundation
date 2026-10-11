@@ -39,7 +39,9 @@
   const marks = ['#title .lotus', '#foot .lotus'].map($).filter(Boolean);
   const after = ['#still', '#foot', '#play .lamp', '#play > span:nth-child(2)', '#play .en'].map($).filter(Boolean);
   const thread = $('#thread'), rest = [...after.filter((e) => e.id !== 'still'), ...marks];
-  G.set([...titleParts, ...after, ...marks], { opacity: 0 });
+  // hidden at once, with their own CSS fades held off: otherwise a child fading out (1 → 0) inside a parent fading in (the
+  // name's block, 0 → 1, as .intro comes off) shows faintly for half a second
+  G.set([...titleParts, ...after, ...marks], { opacity: 0, transition: 'none' });
   html.classList.add('intro-run'); html.classList.remove('intro');   // the overlay owns the hiding from here; the lamp waits
 
   const tl = G.timeline({ onComplete: done });
@@ -103,7 +105,7 @@
   addEventListener('resize', () => { if (tl.isActive()) tl.progress(1); }, { once: true });
 
   function done() {
-    G.set([...titleParts, ...after, ...marks, thread].filter(Boolean), { clearProps: 'opacity' });
+    G.set([...titleParts, ...after, ...marks, thread].filter(Boolean), { clearProps: 'opacity,transition' });
     html.classList.remove('intro-run');                            // the lamp begins to breathe; the thread, its own breath
     svg.remove();
   }
