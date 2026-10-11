@@ -10,7 +10,8 @@ const body = document.body;
 const subject = document.documentElement.dataset.subject || 'temple';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const qs = new URLSearchParams(location.search);
-// the pilot (test pages only, <html data-pilot="1">): पहला कदम · the first step, and प्रदक्षिणा पूर्ण · the return
+// the pilot (test pages only, <html data-pilot="1">): the lamps are lit by a hand, the walk goes round by itself at one size,
+// centred, and प्रदक्षिणा पूर्ण · the return
 const PILOT = document.documentElement.dataset.pilot === '1';
 
 // ---------------------------------------------------------------- what this phone gets
@@ -37,7 +38,6 @@ const WORDS = {
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
   side: ['प्रदक्षिणा · मंदिर सदा दाहिने हाथ', 'Keep the temple on your right'],
-  sideNandi: ['प्रदक्षिणा · नन्दी सदा दाहिने हाथ', 'Keep Nandi on your right'],
   returned: ['प्रदक्षिणा पूर्ण', 'One round, complete'],
   nandiFace: ['नन्दी · अपने स्वामी की ओर', 'Nandi · facing his lord'],
   nandiBack: ['नन्दी · शिव का वाहन', "Nandi · Shiva's mount"],
@@ -91,7 +91,7 @@ let stage = null, stageReady = false, filmDone = false, introUntil = 0;
 if (tier !== 'still') {
   try {
     stage = new Stage($('#gl'), { tier, breathe: !reduce });
-    stage.onframe = onFrame; stage.onspinend = () => $('#walk').classList.remove('on');
+    stage.onframe = onFrame; stage.onspinend = () => { $('#walk').classList.remove('on'); if (PILOT && state === 'walk') invite(); };
     layout();
     stage.load((p) => $('#frame').style.setProperty('--p', p.toFixed(2)))
       .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); })
@@ -118,6 +118,7 @@ $('#app').addEventListener('click', () => { if (state === 'poster' && !$('#play'
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
+else if (PILOT) { film.load(); $('#play').hidden = false; }   // the pilot: the visitor lights the lamps; nothing starts by itself
 else {
   film.addEventListener('canplaythrough', () => setTimeout(startFilm, 500), { once: true });
   film.load();
@@ -130,11 +131,15 @@ function waitThenHandoff() { if (stageReady || !stage) setTimeout(handoff, Math.
 function handoff() {
   if (state !== 'hold') return;
   set('handoff'); layout();
+  if (PILOT && stage) {                                   // the picture settles onto the walk's one size as it dims to its lamps
+    const fit = stage.pictureFit();
+    if (fit) $('#frame').style.setProperty('--pt', `translate(${fit.x.toFixed(1)}px, ${fit.y.toFixed(1)}px) scale(${fit.scale.toFixed(4)})`);
+  }
   setTimeout(() => {
     if (!stage) { stillWalk(); return; }
     set('walk'); markMode(START);
     stage.setMode(START);
-    if (PILOT) firstStep();
+    if (PILOT) { stage.setSettle(1); beginWalk(); }
     else {
       introUntil = performance.now() + 4200;
       caption(START === 'nandi' ? 'introNandi' : 'intro', true);
@@ -151,6 +156,8 @@ function layout() {
   const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect(), st = document.documentElement.style;
   st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
+  // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
+  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
 }
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
 // turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
@@ -172,49 +179,52 @@ function onFrame(az) {
   if (state === 'walk' && performance.now() > introUntil && !hintOn) caption(sectorWord(stage.mode, az, f));
 }
 
-// पहला कदम: the visit begins with the first step of pradakshina. The camera takes it, because the visitor has not yet,
-// and stops, because the rest of the walk is theirs. 600 ms of stillness, then 18° clockwise in 2.6 s (sine in-out) with
-// a 4.5 % lean in (out-quint); no words until it lands, and the first words are the door. A touch takes over where it is.
-let stepping = null, hintT = null, hintOn = false;
-function firstStep() {
-  const STEP = 18, HOLD = 600, DUR = 2600, PUSH = .045, mode = stage.mode, a0 = stage.az;
-  introUntil = Infinity;
-  if (reduce) { stage.rotate(STEP); stage.zoom = 1 + PUSH; stage.dirty = true; return stepDone(true); }
-  stage.breathe = false;
-  const me = stepping = { stop: false }, t0 = performance.now() + HOLD;
-  const tick = (now) => {
-    if (me.stop || stage.mode !== mode || state !== 'walk') return stepDone(false);
-    const p = Math.max(0, Math.min(1, (now - t0) / DUR));
-    stage.rotate(a0 + STEP * (.5 - .5 * Math.cos(Math.PI * p)) - stage.az);
-    stage.zoom = 1 + PUSH * (1 - Math.pow(1 - p, 5)); stage.dirty = true; stage.wake();
-    if (p < 1) requestAnimationFrame(tick); else stepDone(true);
-  };
-  requestAnimationFrame(tick);
+// the walk begins by itself, once the stone has risen (already at the walk's one size, centred: the hand-over settled
+// the picture onto it): three rounds at a walking pace, easing in and out, then it rests where it began. A touch takes
+// over; प्रदक्षिणा stops it softly and starts it again; while it rests, a light goes round the dial now and then.
+const WALK_DPS = 14, ROUNDS = 3;
+let held = false, inviteT = null, invites = 0;
+function beginWalk() {
+  introUntil = 0; onFrame(stage.az);
+  if (reduce) { invite(); return; }
+  setTimeout(() => {
+    if (state !== 'walk') return;
+    if (!held) { $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 2.4, 3); } else invite();
+  }, 1100);
 }
-function stepDone(arrived) {
-  stepping = null; stage.breathe = !reduce; introUntil = 0;
-  if (!arrived) { onFrame(stage.az); return; }
-  caption(sectorWord(stage.mode, stage.az, stage.facing()), true);
-  // left alone for 3 s, the instruction comes in the ritual's own words
-  hintT = setTimeout(() => { if (state === 'walk') { hintOn = true; caption(stage.mode === 'nandi' ? 'sideNandi' : 'side', true); } }, 3000);
-}
-// any touch, key, dial or mode choice: the step stops where it is, and the instruction gives way to what is in front
+// a touch, a key, the dial or a choice of view: the walk is theirs now
 function touched() {
-  if (stepping) stepping.stop = true;
-  clearTimeout(hintT); hintT = null;
-  if (hintOn) { hintOn = false; if (stage) onFrame(stage.az); }
+  held = true; clearTimeout(inviteT);
+}
+// the dial asks, without words: a thin light goes once round it, clockwise, every few seconds, three times at most
+function invite() {
+  if (!PILOT || reduce) return;
+  clearTimeout(inviteT); invites = 0;
+  const go = () => {
+    if (state !== 'walk' || (stage && stage.spinning) || invites >= 3) return;
+    if (pts.size) { inviteT = setTimeout(go, 1500); return; }                 // not while a finger is on the stone
+    invites++; traceDial(); inviteT = setTimeout(go, 5200);
+  };
+  inviteT = setTimeout(go, 1800);
+}
+function traceDial() {
+  const dial = $('#walk .dial'); let c = dial.querySelector('svg.trace circle');
+  if (!c) { dial.insertAdjacentHTML('beforeend', '<svg class="trace" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19"/></svg>'); c = dial.querySelector('svg.trace circle'); }
+  const L = 2 * Math.PI * 19 * 1.01;
+  c.animate([{ strokeDashoffset: L, opacity: 0 }, { strokeDashoffset: L * .8, opacity: 1, offset: .15 }, { strokeDashoffset: 0, opacity: 1, offset: .82 }, { strokeDashoffset: 0, opacity: 0 }],
+            { duration: 1600, easing: 'cubic-bezier(.45, 0, .55, 1)' });
 }
 
 // प्रदक्षिणा पूर्ण: a full clockwise circle in one view, back where it began: the door's lamp burns brighter for the
 // rest of the visit (900 ms, sine in-out), and the words say so. Once a visit.
-let walked = 0, lastAz = null, walkMode = null, returned = false;
+let walked = 0, lastAz = null, walkMode = null, returned = false, hintOn = false;
 function walkedRound(az) {
   if (returned || state !== 'walk' || !stage) return;
   if (stage.mode !== walkMode || lastAz === null) { walkMode = stage.mode; walked = 0; lastAz = az; return; }
   walked += ((az - lastAz) % 360 + 540) % 360 - 180; lastAz = az;          // signed: pradakshina is clockwise (+)
   const home = MODES[stage.mode].home, off = Math.abs(((az - home) % 360 + 540) % 360 - 180);
   if (walked < 346 || off > 14) return;
-  returned = true; clearTimeout(hintT); hintOn = true;
+  returned = true; hintOn = true;
   caption('returned', true);
   setTimeout(() => { hintOn = false; onFrame(stage.az); }, 4500);
   brighten(stage.mode === 'nandi' ? 2 : 1, 1.5, 900);
@@ -266,6 +276,11 @@ addEventListener('keydown', (e) => {
 $('#walk').addEventListener('click', () => {
   if (!stage || state !== 'walk') return;
   touched();
+  if (PILOT) {
+    if (stage.spinning) stage.stopSpin(true);
+    else { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 1.2, 3); }
+    return;
+  }
   if (stage.spinning) { stage.stopSpin(); return; }
   $('#walk').classList.add('on'); stage.spin(reduce ? 60 : 16);
 });
@@ -297,9 +312,8 @@ function stillShow(name, i) {
 }
 function stillWalk() {
   set('walk'); stillShow(START, 0);
-  if (PILOT) hintT = setTimeout(() => { if (state === 'walk') caption(START === 'nandi' ? 'sideNandi' : 'side', true); }, 3000);
   let x0 = null;
-  $('#app').addEventListener('pointerdown', (e) => { x0 = e.clientX; clearTimeout(hintT); });
+  $('#app').addEventListener('pointerdown', (e) => { x0 = e.clientX; });
   $('#app').addEventListener('pointerup', (e) => { if (x0 === null || state !== 'walk') return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) stillShow(stillName, stillI + (dx > 0 ? 1 : -1)); });
 }
 

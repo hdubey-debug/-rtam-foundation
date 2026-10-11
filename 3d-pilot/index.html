@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="hi" data-subject="temple" data-pilot="1">
+<html lang="hi" data-subject="temple" data-pilot="1" class="intro">
 <head>
 <meta name="robots" content="noindex">
 <meta charset="utf-8">
@@ -193,6 +193,24 @@ img, video { display: block }
   #foot .addr::before { font-size: 17px } #foot .addr::after { font-size: 8.5px } .txt > span:first-child { font-size: 17px } .txt .en { font-size: 8.5px }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
+
+/* the pilot (test pages only: <html data-pilot="1">) */
+[data-pilot] #film, [data-pilot] #last, [data-pilot] #lamps { transition: opacity .9s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
+[data-pilot] .s-walk #lamps { transition: opacity 1.6s .3s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
+[data-pilot] .s-handoff #frame > :is(#film, #last, #lamps), [data-pilot] .s-walk #frame > :is(#film, #last, #lamps) { transform: var(--pt, none) }
+[data-pilot] #walk { min-height: 48px }
+[data-pilot] #walk.on .dial i::before { box-shadow: none }
+[data-pilot] #walk .dial svg.trace { position: absolute; left: -5px; top: -5px; width: calc(100% + 10px); height: calc(100% + 10px); transform: rotate(-90deg); pointer-events: none; overflow: visible }
+[data-pilot] #walk .dial svg.trace circle { fill: none; stroke: var(--ash); stroke-width: 1.3; stroke-linecap: butt; stroke-dasharray: 120.6 120.6; stroke-dashoffset: 120.6; opacity: 0 }
+[data-pilot] #play .lamp::before, [data-pilot] #play .lamp::after { display: none }
+[data-pilot] #play .lamp { background: none; animation: lampRing 2.8s cubic-bezier(.45, 0, .55, 1) infinite alternate }
+[data-pilot] #play .lamp svg { filter: none; fill: #C8A15A; animation: lampFlame 3s cubic-bezier(.45, 0, .55, 1) infinite }
+@keyframes lampFlame { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .72 } }
+[data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
+[data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
+#intro { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none }
+@keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
+@media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
 </head>
@@ -247,6 +265,7 @@ img, video { display: block }
     <p class="note">प्रस्तावित स्वरूप<span class="en">Proposed design</span></p>
   </section>
 </div>
+<script src="lib/gsap.min.js"></script><script src="lib/MorphSVGPlugin.min.js"></script><script src="js/chakra.js"></script><script src="js/intro.js"></script>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>
