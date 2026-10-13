@@ -205,7 +205,6 @@ img, video { display: block }
 [data-pilot] #play .lamp::before, [data-pilot] #play .lamp::after { display: none }
 [data-pilot] #play .lamp { background: none; animation: lampRing 2.8s cubic-bezier(.45, 0, .55, 1) infinite alternate }
 [data-pilot] #play .lamp svg { filter: none; fill: var(--lamp); animation: lampFlame 3s cubic-bezier(.45, 0, .55, 1) infinite }
-[data-pilot][data-open="lamp"] #play .lamp svg { fill: #C8A15A }   /* there the flame is the bindu: its gold */
 @keyframes lampFlame { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .72 } }
 [data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
@@ -267,7 +266,7 @@ img, video { display: block }
     <p class="note">प्रस्तावित स्वरूप<span class="en">Proposed design</span></p>
   </section>
 </div>
-<script src="lib/gsap.min.js"></script><script src="lib/MorphSVGPlugin.min.js"></script><script src="js/chakra.js"></script><script src="js/intro.js"></script>
+<script src="lib/gsap.min.js"></script><script src="js/chakra.js"></script><script src="js/intro.js"></script>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>

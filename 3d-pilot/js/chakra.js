@@ -62,6 +62,7 @@
     gsap.set([p.ring, p.light], { strokeDashoffset: p.OFF }); gsap.set(p.light, { opacity: 0 });
     gsap.set([p.wheel, p.back, p.rta], { rotation: 0, svgOrigin: '256 256' });
     gsap.set(p.ring, { attr: { 'stroke-dasharray': `${p.L} ${p.L + 60}` } });
+    p.adityas.forEach((a) => gsap.set(a, { scale: 1, svgOrigin: `${a.getAttribute('cx')} ${a.getAttribute('cy')}` }));
   }
   // the finished mark, at once (for films that begin with it, and for the site's marks)
   function show(p) {
@@ -93,6 +94,25 @@
     const t3 = at + lead + dur;
     tl.fromTo(p.back, { rotation: 0, svgOrigin: '256 256' }, { rotation: -15, svgOrigin: '256 256', duration: tuck, ease: 'sine.inOut', immediateRender: false }, t3);
     return t3 + tuck;
+  }
+  // Harsh's opening (13 Oct 2026): the 12 seen petals come one by one, clockwise from the top (the order of pradakshina),
+  // each out of the bindu; then the ring; then the 12 Ādityas one by one. Returns the end time.
+  function petalsInOrder(tl, p, at, { stagger = .30, dur = .8 } = {}) {
+    p.frontP.forEach((q, k) => petalIn(tl, p.frontS[k], q, at + k * stagger, dur));
+    return at + 11 * stagger + dur;
+  }
+  // the ring alone, traced clockwise from the top (its windows come after, one by one)
+  function traceRing(tl, p, at, dur = 1.4) {
+    tl.set(p.ring, { attr: { 'stroke-dasharray': `${p.L} ${p.L + 60}`, transform: 'rotate(-90 256 256)' } }, at);
+    tl.fromTo(p.ring, { strokeDashoffset: p.OFF }, { strokeDashoffset: 0, duration: dur, ease: 'sine.inOut', immediateRender: false }, at);
+    tl.set(p.ring, { attr: { 'stroke-dasharray': 'none' } }, at + dur);        // whole: no seam where the trace began
+    return at + dur;
+  }
+  // the 12 Ādityas, one by one clockwise from the top: each window darkens into the ring (a fade, 200 ms: they are holes,
+  // and a hole that scales up pops)
+  function adityasIn(tl, p, at, { stagger = .2, dur = .2 } = {}) {
+    p.adityas.forEach((a, k) => tl.fromTo(a, { opacity: 0 }, { opacity: 1, duration: dur, ease: 'sine.out', immediateRender: false }, at + k * stagger));
+    return at + 11 * stagger + dur;
   }
   // prakriti blooms as one: the 12 seen petals open together (a single breath)
   function bloom12(tl, p, at, dur = 1.0) {
@@ -156,5 +176,5 @@
     return t + .95;
   }
 
-  root.RtaChakra = { build, hide, show, petalIn, petalOut, bloom24, bloom12, traceRta, untraceRta, withdraw24, turnMonths, aarti, nameIn, passAt, PETAL, BINDU, COLORS };
+  root.RtaChakra = { build, hide, show, petalsInOrder, traceRing, adityasIn, petalIn, petalOut, bloom24, bloom12, traceRta, untraceRta, withdraw24, turnMonths, aarti, nameIn, passAt, PETAL, BINDU, COLORS };
 })(typeof window !== 'undefined' ? window : globalThis);
