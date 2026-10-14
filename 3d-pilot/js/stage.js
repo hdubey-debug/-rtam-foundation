@@ -66,6 +66,7 @@ export class Stage {
     this.zoom = 1; this.dirty = true; this.anim = null;
     this.settle = 0; this.walkFit = {}; this.hull = null; this.fitKey = ''; this.band = null;   // the walk's framing (see orbitView)
     this.groups = { temple: new THREE.Group(), nandi: new THREE.Group(), mirror: new THREE.Group() };
+    this.lit = this.litMirror = null; this.onmode = null; this.shadowsDirty = false;   // the light you move (js/light.js, a test)
     this.groups.nandi.position.set(NANDI.x, 0, NANDI.z); this.groups.nandi.rotation.y = NANDI.turn; this.groups.nandi.scale.setScalar(NANDI.scale);
     this.groups.mirror.scale.y = -1;
     for (const g of Object.values(this.groups)) this.scene.add(g);
@@ -84,8 +85,10 @@ export class Stage {
   }
 
   // ---------------------------------------------------------------- models
-  material(src, mirror) {
+  material(src, mirror, name) {
     const map = src.map; if (map) { map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = Math.min(this.tier === 'hi' ? 8 : 4, this.renderer.capabilities.getMaxAnisotropy()); }
+    if (this.lit && !mirror) return this.lit(src, name);          // lit by the light you move (js/light.js)
+    if (this.litMirror && mirror) return this.litMirror(src, name);
     const m = new THREE.MeshBasicMaterial({ map });
     if (mirror) {
       // the reflection: the same picture mirrored, fading into the ground with depth (as on the posters, about a third)
@@ -125,10 +128,12 @@ export class Stage {
 
   place(name, model, { mirror = true } = {}) {
     const grp = this.groups[name];
-    grp.children.filter((o) => o.isMesh).forEach((o) => grp.remove(o)); grp.add(new THREE.Mesh(model.geometry, this.material(model, false)));
+    grp.children.filter((o) => o.isMesh).forEach((o) => grp.remove(o));
+    const mesh = new THREE.Mesh(model.geometry, this.material(model, false, name)); mesh.userData.model = model; grp.add(mesh);
+    if (this.lit) { mesh.castShadow = mesh.receiveShadow = true; this.shadowsDirty = true; }
     if (mirror) {
       this.groups.mirror.children.filter((c) => c.userData.of === name).forEach((c) => this.groups.mirror.remove(c));
-      const m = new THREE.Mesh(model.geometry, this.material(model, true)); m.userData.of = name;
+      const m = new THREE.Mesh(model.geometry, this.material(model, true, name)); m.userData.of = name;
       if (name === 'nandi') { m.position.copy(this.groups.nandi.position); m.rotation.copy(this.groups.nandi.rotation); m.scale.copy(this.groups.nandi.scale); }
       this.groups.mirror.add(m);
     }
@@ -191,6 +196,7 @@ export class Stage {
     for (const m of this.groups.mirror.children) m.visible = M.show[m.userData.of];
     this.az = az === undefined ? M.home : az; this.zoom = 1;
     this.view = this.viewAt(this.az); this.dirty = true; this.wake();
+    this.shadowsDirty = true; this.onmode && this.onmode(name);
   }
   viewAt(az) { const w = this.walkFit[this.mode]; return orbitView(this.mode, az, this.settle, w && w.span); }
   setSettle(k) { this.settle = k; this.view = this.viewAt(this.az); this.dirty = true; this.wake(); }
@@ -333,6 +339,7 @@ export class Stage {
     this.breathing = this.breathe && !this.spinning && !this.vel && now < this.awakeUntil;
     if (this.breathing && now - this.lastBreath > 40) { this.dirty = true; this.lastBreath = now; }
     if (!this.dirty || !this.ready) return;
+    if (this.shadowsDirty) { this.renderer.shadowMap.needsUpdate = true; this.shadowsDirty = false; }   // only when the light or the stone changed
     this.apply(); this.renderer.render(this.scene, this.camera); this.dirty = false;
     this.onframe && this.onframe(this.az);
   }

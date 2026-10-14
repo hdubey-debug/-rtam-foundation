@@ -44,6 +44,7 @@ const WORDS = {
   mandapa: ['नन्दी मंडप', 'The Nandi mandapa'],
   gaze: ['नन्दी की दृष्टि से', 'As Nandi sees it'],
   complex: ['मंदिर परिसर', 'The temple and its mandapa'],
+  lightOn: ['प्रकाश को कहीं भी ले जाएँ', 'Drag the light anywhere'],     // (?light, a test)
 };
 // one caption at a time: the old one fades out completely before the new one fades in, and while one walks round, a new
 // caption waits until its side has stayed in view a moment (no flicker at the boundaries, never two at once)
@@ -88,13 +89,15 @@ film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
 let stage = null, stageReady = false, filmDone = false, introUntil = 0;
+const LIGHT = PILOT && qs.has('light');              // a light you move over the stone: a test (js/light.js)
+let light = null;
 if (tier !== 'still') {
   try {
     stage = new Stage($('#gl'), { tier, breathe: !reduce });
     stage.onframe = onFrame; stage.onspinend = () => { $('#walk').classList.remove('on'); if (PILOT && state === 'walk') invite(); };
     layout();
     stage.load((p) => $('#frame').style.setProperty('--p', p.toFixed(2)))
-      .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); })
+      .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); if (LIGHT) startLight(); })
       .catch(() => { stage = null; body.dataset.tier = 'still'; if (filmDone && state === 'hold') waitThenHandoff(); });
   } catch (e) { stage = null; body.dataset.tier = 'still'; }
 }
@@ -127,6 +130,22 @@ else {
   film.addEventListener('canplaythrough', () => setTimeout(startFilm, 500), { once: true });
   film.load();
   setTimeout(() => { if (state === 'poster' && film.readyState >= 3) startFilm(); }, 2500);
+}
+// the light (?light): its button beside प्रदक्षिणा; on, the stone is lit from wherever its handle is dragged
+function startLight() {
+  import('./light.js').then(async (m) => {
+    light = await m.addLight(stage, { host: $('#app') });
+    const walk = $('#walk'), row = document.createElement('div'); row.className = 'walkrow';
+    walk.parentNode.insertBefore(row, walk); row.appendChild(walk);
+    const b = document.createElement('button'); b.type = 'button'; b.id = 'lightbtn'; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<span>प्रकाश</span><span class="en">Light</span>'; row.appendChild(b);
+    b.addEventListener('click', () => {
+      if (state !== 'walk') return;
+      touched(); const on = !light.on; light.set(on); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on));
+      if (on) { stage.stopSpin(true); hintOn = true; caption('lightOn', true); setTimeout(() => { hintOn = false; onFrame(stage.az); }, 4000); }
+    });
+    if (qs.has('test')) window.__light = light;
+  }).catch((e) => { console.warn('light', e); });
 }
 // the hand-over waits for the 3D, and for the picture to finish rising into place
 function waitThenHandoff() { if (stageReady || !stage) setTimeout(handoff, Math.max(0, 950 - (performance.now() - heldAt))); }
@@ -161,7 +180,8 @@ function layout() {
   st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
   // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
-  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
+  const land = matchMedia('(orientation: landscape)').matches;
+  stage.setBand(land ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
 }
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
 // turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
