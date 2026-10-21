@@ -12,11 +12,18 @@
   const $ = (s) => document.querySelector(s), NS = 'http://www.w3.org/2000/svg';
   const play = $('#play'); play.hidden = false;
 
-  // the mark in the middle of the screen: half the shorter side, at most 360 px
-  const W = innerWidth, H = innerHeight, size = Math.min(360, Math.min(W, H) * .5), k = size / 512;
-  const svg = document.createElementNS(NS, 'svg'); svg.id = 'intro';
-  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('aria-hidden', 'true');
-  const g = document.createElementNS(NS, 'g'); g.setAttribute('transform', `translate(${W / 2 - 256 * k} ${H / 2 - 256 * k}) scale(${k})`); svg.appendChild(g);
+  // the mark in the middle of what is visible: half the shorter side, at most 360 px. Sized in px from the visual viewport
+  // (a phone's 100vh is the screen without its browser bars, so a 100vh overlay put the mark below the visible middle);
+  // re-centred when the phone turns or the bars come and go, and it plays on.
+  const svg = document.createElementNS(NS, 'svg'); svg.id = 'intro'; svg.setAttribute('aria-hidden', 'true');
+  const g = document.createElementNS(NS, 'g'); svg.appendChild(g);
+  const place = () => {
+    const vv = window.visualViewport, W = Math.round(vv ? vv.width : innerWidth), H = Math.round(vv ? vv.height : innerHeight);
+    const size = Math.min(360, Math.min(W, H) * .5), k = size / 512;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.style.width = W + 'px'; svg.style.height = H + 'px';
+    g.setAttribute('transform', `translate(${(W / 2 - 256 * k).toFixed(2)} ${(H / 2 - 256 * k).toFixed(2)}) scale(${k.toFixed(5)})`);
+  };
+  place();
   const holder = document.createElementNS(NS, 'svg'); holder.setAttribute('width', 512); holder.setAttribute('height', 512); holder.setAttribute('overflow', 'visible'); g.appendChild(holder);
   document.body.appendChild(svg);
   const p = C.build(holder);
@@ -54,13 +61,12 @@
     tl.progress(1);
   };
   svg.addEventListener('pointerdown', skip);
-  // a turn of the phone ends it (the overlay was laid out for the old shape). Only a real change counts: phones also send
-  // resize as the page loads and as the address bar slides, at the same width.
-  const turned = () => { if (Math.abs(innerWidth - W) > 40 || (innerWidth > innerHeight) !== (W > H)) tl.progress(1); };
-  addEventListener('resize', turned);
+  // a turn of the phone, or the browser's bars coming and going: the mark is re-centred and the opening plays on
+  const turned = () => place();
+  addEventListener('resize', turned); if (window.visualViewport) visualViewport.addEventListener('resize', turned);
 
   function done() {
-    removeEventListener('resize', turned);
+    removeEventListener('resize', turned); if (window.visualViewport) visualViewport.removeEventListener('resize', turned);
     G.set([...titleParts, ...after, ...marks, thread].filter(Boolean), { clearProps: 'opacity,transition' });
     html.classList.remove('intro-run');                            // the lamp begins to breathe; the thread, its own breath
     svg.remove();

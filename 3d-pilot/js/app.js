@@ -104,6 +104,7 @@ if (tier !== 'still') {
     } else loadStage();
   } catch (e) { stage = null; body.dataset.tier = 'still'; }
 }
+fitPoster();
 dispatchEvent(new Event('rtam:app-ready'));            // (the pilot's opening starts once the page's own start-up is done)
 
 function startFilm() {
@@ -162,7 +163,27 @@ function handoff() {
 }
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
+// the landing, upright: the temple's picture and the lamp under it, fitted between the name and the address in what is
+// visible. (On a phone, vh is the screen without the browser's bars: with the picture hung from the top and the lamp from
+// the bottom, the lamp rode up onto the temple whenever the bars showed.) The picture shrinks only if it must.
+function fitPoster() {
+  const st = $('#stage'), pl = $('#play');
+  if (matchMedia('(orientation: landscape)').matches || !['poster', 'film'].includes(state)) {
+    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ''; return;
+  }
+  const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
+  const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top, P = pl.offsetHeight || 135;
+  const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
+  let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
+  if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
+  const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(W * .92 * .75, H * .45, (room - P) / under));   // (90: an iPhone SE with its bars)
+  const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
+  st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
+  pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
+}
+addEventListener('load', () => fitPoster());
 function layout() {
+  fitPoster();
   // the 3D fades out behind the name above and the controls below, wherever they stand on this screen
   const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect(), st = document.documentElement.style;
   st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');

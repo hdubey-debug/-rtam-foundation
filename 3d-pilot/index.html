@@ -209,7 +209,7 @@ img, video { display: block }
 [data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
-#intro { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none }
+#intro { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none }   /* (sized in px by intro.js) */
 @keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
 @media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>
