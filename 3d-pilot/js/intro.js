@@ -1,32 +1,37 @@
-// The opening, on the pilot pages (<html data-pilot="1" class="intro">). Before the page, the Ṛta-chakra is made by light
-// in the middle of the screen, and nothing in it moves (Harsh, 20 Oct 2026: "nothing from the bottom up; smoother, more
-// professional"): the bindu; each of the 12 petals fills with light from the bindu out to its tip, one after another
-// clockwise from the top, as one flowing wave; the ring is swept in by light, clockwise; the 12 Ādityas open behind the
-// sweep. No words. The finished mark dims where it stands as the landing rises by light (the temple at dusk, the name,
-// the lamp). A touch skips to the landing (and doesn't light the lamps). Skipped under reduced motion and with ?skip.
-// The choreography is the same code as the HyperFrames films (motion-skills/hf-chakra, js/chakra.js; film I7).
+// The opening, on the pilot pages (<html data-pilot="1" class="intro">): before the page, a short film of the Ṛta-chakra
+// made as a real object (ash-stone petals and ring in Shivalinga-black stone, a gold bindu; motion-skills/icon3d, 21 Oct
+// 2026). Harsh's order holds: the bindu alone; the 12 petals one by one clockwise from the top; the ring and its 12
+// windows. No words. Three films to compare on the phone: ?open=darshan (the default; the view rises from the bindu),
+// ?open=dipamala (from above, lit part by part), ?open=kamal (the petals laid open one by one). The film plays in the
+// middle of what is visible; its last frame dims where it stands as the landing rises by light (the temple at dusk, the
+// name, the lamp). A touch skips to the landing (and doesn't light the lamps). Skipped under reduced motion, with ?skip,
+// and when the phone won't play it (no autoplay, as in iOS Low Power Mode, or not begun within 6 s).
 (function () {
-  const html = document.documentElement, C = window.RtaChakra, G = window.gsap;
+  const html = document.documentElement, G = window.gsap;
   const finish = () => { html.classList.remove('intro'); };
-  if (!C || !G || matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]skip\b/.test(location.search)) { finish(); return; }
-  const $ = (s) => document.querySelector(s), NS = 'http://www.w3.org/2000/svg';
+  if (!G || matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]skip\b/.test(location.search)) { finish(); return; }
+  const FILMS = { darshan: 8.4, dipamala: 8.4, kamal: 8.8 };
+  const m = /[?&]open=([a-z]+)/.exec(location.search), film = m && FILMS[m[1]] ? m[1] : 'darshan';
+  const $ = (s) => document.querySelector(s);
   const play = $('#play'); play.hidden = false;
 
-  // the mark in the middle of what is visible: half the shorter side, at most 360 px. Sized in px from the visual viewport
-  // (a phone's 100vh is the screen without its browser bars, so a 100vh overlay put the mark below the visible middle);
-  // re-centred when the phone turns or the bars come and go, and it plays on.
-  const svg = document.createElementNS(NS, 'svg'); svg.id = 'intro'; svg.setAttribute('aria-hidden', 'true');
-  const g = document.createElementNS(NS, 'g'); svg.appendChild(g);
+  // the film in the middle of what is visible, its mark as large as the drawn mark was (the film's frame is 640 mm for a
+  // 460 mm mark: 1.25 × half the shorter side, at most 450 px). Sized in px from the visual viewport (a phone's 100vh is
+  // the screen without its browser bars); re-centred when the phone turns or the bars come and go, and it plays on.
+  const box = document.createElement('div'); box.id = 'intro'; box.setAttribute('aria-hidden', 'true');
+  const v = document.createElement('video');
+  v.muted = true; v.defaultMuted = true; v.playsInline = true; v.preload = 'auto';
+  for (const a of ['muted', 'playsinline', 'disablepictureinpicture', 'disableremoteplayback']) v.setAttribute(a, '');
+  v.src = `media/open-${film}-720.mp4`;
+  box.appendChild(v);
   const place = () => {
     const vv = window.visualViewport, W = Math.round(vv ? vv.width : innerWidth), H = Math.round(vv ? vv.height : innerHeight);
-    const size = Math.min(360, Math.min(W, H) * .5), k = size / 512;
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.style.width = W + 'px'; svg.style.height = H + 'px';
-    g.setAttribute('transform', `translate(${(W / 2 - 256 * k).toFixed(2)} ${(H / 2 - 256 * k).toFixed(2)}) scale(${k.toFixed(5)})`);
+    const s = Math.round(Math.min(450, Math.min(W, H) * .625));
+    box.style.width = W + 'px'; box.style.height = H + 'px';
+    Object.assign(v.style, { width: s + 'px', height: s + 'px', left: Math.round((W - s) / 2) + 'px', top: Math.round((H - s) / 2) + 'px' });
   };
   place();
-  const holder = document.createElementNS(NS, 'svg'); holder.setAttribute('width', 512); holder.setAttribute('height', 512); holder.setAttribute('overflow', 'visible'); g.appendChild(holder);
-  document.body.appendChild(svg);
-  const p = C.build(holder);
+  document.body.appendChild(box);
 
   // what the landing brings, in place. Hidden at once with their own CSS fades held off: otherwise a child fading out
   // (1 → 0) inside a parent fading in (the name's block, 0 → 1, as .intro comes off) shows faintly for half a second.
@@ -37,39 +42,44 @@
   G.set([...titleParts, ...after, ...marks], { opacity: 0, transition: 'none' });
   html.classList.add('intro-run'); html.classList.remove('intro');   // the overlay owns the hiding from here; the lamp waits
 
-  // it begins once the page's start-up (three.js, the 3D's canvas) is done, so its first light never stutters: at most 2 s
+  // the landing: the film's last frame dims where it stands; the temple's light begins as the mark is nearly gone, so
+  // there is never a black frame nor the two at once; then the name; the lamp last
   const tl = G.timeline({ onComplete: done, paused: true });
-  const go = () => { if (!go.on) { go.on = true; tl.play(); } };
-  addEventListener('rtam:app-ready', () => requestAnimationFrame(() => requestAnimationFrame(go)), { once: true }); setTimeout(go, 2000);
-  C.primeLight(p);                                                   // the mark is made by light: nothing in it moves
-  C.binduIn(tl, p, .15, .6);                                         // the bindu, then stillness
-  C.fillPetals(tl, p, 1.2);                                          // each petal fills with light from the bindu out, clockwise
-  const r = C.ringIn(tl, p, 3.6, 2.0);                               // the ring is swept in by light as the last petal fills
-  const h = Math.max(r, C.adityasOpen(tl, p)) + 1.0;                 // the twelve open as the sweep passes; then held
-  tl.to(svg, { opacity: 0, duration: 1.0, ease: 'sine.inOut' }, h);  // it dims where it stands, all of it at once
-  // the temple's light begins as the mark is nearly gone, so there is never a black frame nor the two at once
-  tl.to('#still', { opacity: 1, duration: 1.4, ease: 'sine.inOut' }, h + .6);
-  if (thread) tl.fromTo(thread, { opacity: 0 }, { opacity: .15, duration: 1, ease: 'sine.inOut', immediateRender: false }, h + 1.1);
-  tl.to([...titleParts, ...marks], { opacity: 1, duration: .8, ease: 'sine.out', stagger: .15 }, h + 1.1);    // the name
-  tl.to(after.filter((e) => e.id !== 'still'), { opacity: 1, duration: .6, ease: 'sine.out', stagger: .08 }, h + 1.7);   // the lamp, last
+  tl.to(box, { opacity: 0, duration: 1.0, ease: 'sine.inOut' }, 0);
+  tl.to('#still', { opacity: 1, duration: 1.4, ease: 'sine.inOut' }, .6);
+  if (thread) tl.fromTo(thread, { opacity: 0 }, { opacity: .15, duration: 1, ease: 'sine.inOut', immediateRender: false }, 1.1);
+  tl.to([...titleParts, ...marks], { opacity: 1, duration: .8, ease: 'sine.out', stagger: .15 }, 1.1);
+  tl.to(after.filter((e) => e.id !== 'still'), { opacity: 1, duration: .6, ease: 'sine.out', stagger: .08 }, 1.7);
+  const land = () => { if (!land.on) { land.on = true; tl.play(); } };
+  const abort = () => { v.pause(); land(); tl.progress(1); };       // straight to the landing
+
+  // the film shows from its first played frame (until then the box is empty ground, never a black square)
+  v.style.opacity = '0';
+  v.addEventListener('playing', () => {
+    v.style.opacity = '1'; clearTimeout(watchdog);
+    setTimeout(land, (FILMS[film] + 2.5) * 1000);                    // should 'ended' never come
+  }, { once: true });
+  v.addEventListener('ended', land);
+  const watchdog = setTimeout(abort, 6000);                         // not begun in 6 s (a slow line): the page directly
+  const p = v.play(); if (p && p.catch) p.catch(abort);             // autoplay refused (Low Power Mode): the page directly
 
   // a touch before the end: straight to the landing
   const skip = (e) => {
     e.preventDefault(); e.stopPropagation();
     const swallow = (c) => { c.stopPropagation(); c.preventDefault(); };   // the click that ends this touch must not light the lamps
     addEventListener('click', swallow, { capture: true, once: true }); setTimeout(() => removeEventListener('click', swallow, true), 700);
-    tl.progress(1);
+    abort();
   };
-  svg.addEventListener('pointerdown', skip);
-  // a turn of the phone, or the browser's bars coming and going: the mark is re-centred and the opening plays on
+  box.addEventListener('pointerdown', skip);
   const turned = () => place();
   addEventListener('resize', turned); if (window.visualViewport) visualViewport.addEventListener('resize', turned);
 
   function done() {
+    clearTimeout(watchdog);
     removeEventListener('resize', turned); if (window.visualViewport) visualViewport.removeEventListener('resize', turned);
     G.set([...titleParts, ...after, ...marks, thread].filter(Boolean), { clearProps: 'opacity,transition' });
     html.classList.remove('intro-run');                            // the lamp begins to breathe; the thread, its own breath
-    svg.remove();
+    v.removeAttribute('src'); v.load(); box.remove();               // let the film's memory go
     dispatchEvent(new Event('rtam:intro-done'));                    // (app.js: now the 3D may load)
   }
 })();
