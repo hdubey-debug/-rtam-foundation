@@ -210,19 +210,6 @@ img, video { display: block }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
 #intro { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none }
-/* the light you move (?light, a test): its button beside प्रदक्षिणा, and its handle (a point in a ring; no sun) */
-[data-pilot] .walkrow { display: flex; align-items: center; gap: 30px }
-[data-pilot] #lightbtn { display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 48px; justify-content: center; padding: 6px 6px; color: var(--quiet); transition: color .3s }
-[data-pilot] #lightbtn > span:first-child { font: 400 clamp(14px, 4vw, 16px)/1 var(--deva) }
-[data-pilot] #lightbtn .en { font-size: 7.5px; letter-spacing: .2em; color: var(--quiet) }
-[data-pilot] #lightbtn::after { content: ''; width: 16px; height: 1px; background: transparent; transition: background .3s }
-[data-pilot] #lightbtn.on, [data-pilot] #lightbtn.on .en { color: var(--ash) } [data-pilot] #lightbtn.on::after { background: var(--ash) }
-#lightknob { position: fixed; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; opacity: 0; pointer-events: none; touch-action: none;
-  cursor: grab; transition: opacity .6s var(--ease) }
-#lightknob::before { content: ''; position: absolute; inset: 9px; border-radius: 50%; border: 1.5px solid var(--ash) }
-#lightknob::after { content: ''; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--lamp) }
-.s-walk #lightknob.on { opacity: 1; pointer-events: auto }
-#lightknob.held { cursor: grabbing }
 @keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
 @media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>

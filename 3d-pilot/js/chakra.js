@@ -114,6 +114,109 @@
     p.adityas.forEach((a, k) => tl.fromTo(a, { opacity: 0 }, { opacity: 1, duration: dur, ease: 'sine.out', immediateRender: false }, at + k * stagger));
     return at + 11 * stagger + dur;
   }
+  // The opening, second form (Harsh, 20 Oct 2026: "nothing from the bottom up; smooth; professional"; refined with the
+  // advisor's measurements). Nothing moves: the mark is made by light. Each petal fills with light from the bindu out to
+  // its tip, one after another clockwise from the top, as one flowing wave that gathers a little; the ring is swept in by
+  // light, clockwise from the top, at no more than 1.5 times the wave's pace, soft at both ends, closing its own seam; the
+  // twelve Ādityas open as the sweep passes them. The light is the bindu's gold where it moves and ash where it rests.
+  let uid = 0;
+  const R_FILL = 168, R_BAND = 240, PETAL_IN = 73.6, PETAL_OUT = 163.5;
+  const stops = (g, spec) => spec.map(([o, c]) => el('stop', { offset: o, 'stop-color': c }, g));
+  function primeLight(p, { gold = .35 } = {}) {
+    const id = 'rc' + (++uid), defs = el('defs', {}, null); p.svg.insertBefore(defs, p.svg.firstChild);
+    const L = PETAL_OUT - PETAL_IN, maskRect = (m) => el('rect', { x: 170, y: 76, width: 172, height: 128, fill: m.fill }, m.node);
+    p.fill = p.frontP.map((q, k) => {
+      // the ash: lit behind a soft front 40 % of the petal long (no hard sliver when it first shows)
+      const g = el('radialGradient', { id: `${id}g${k}`, gradientUnits: 'userSpaceOnUse', cx: 256, cy: 256, r: R_FILL, fx: 256, fy: 256 }, defs);
+      const [, a, b] = stops(g, [[0, '#fff'], [0, '#fff'], [0, '#000']]);
+      const m = el('mask', { id: `${id}m${k}`, maskUnits: 'userSpaceOnUse', x: 170, y: 76, width: 172, height: 128 }, defs);
+      maskRect({ node: m, fill: `url(#${id}g${k})` }); q.setAttribute('mask', `url(#${id}m${k})`);
+      // the gold: a band riding the front (35 % of the petal behind it, the front's own softness ahead), over the ash
+      const gg = el('radialGradient', { id: `${id}h${k}`, gradientUnits: 'userSpaceOnUse', cx: 256, cy: 256, r: R_BAND, fx: 256, fy: 256 }, defs);
+      const band = stops(gg, [[0, '#000'], [0, '#000'], [0, '#fff'], [0, '#000']]);
+      const gm = el('mask', { id: `${id}n${k}`, maskUnits: 'userSpaceOnUse', x: 170, y: 76, width: 172, height: 128 }, defs);
+      maskRect({ node: gm, fill: `url(#${id}h${k})` });
+      const gq = el('path', { d: PETAL, fill: COLORS.gold, opacity: gold, stroke: COLORS.ground, 'stroke-width': 5, 'stroke-linejoin': 'round',
+        mask: `url(#${id}n${k})` }, q.parentNode);                       // (its own dark edge: the gold never lines the petal)
+      return { a, b, band, gq, soft: .4 * L, back: .35 * L };
+    });
+    // the ring: a sweep mask of stacked strokes (an opaque one and feathered ones), and a gold copy under a band mask
+    const ringG = el('g', {}, null); p.rta.insertBefore(ringG, p.ring); ringG.appendChild(p.ring);
+    const C = 2 * Math.PI * R_RING * 1.01, deg = C / 360, N = 24, M = 12;
+    const rm = el('mask', { id: `${id}r`, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 512, height: 512 }, defs);
+    const arc = (parent, alpha) => el('circle', { cx: 256, cy: 256, r: R_RING, fill: 'none', stroke: '#fff', 'stroke-width': 62, 'stroke-opacity': alpha,
+      transform: 'rotate(-90 256 256)', 'stroke-dasharray': `0 ${C + 400}`, visibility: 'hidden' }, parent);
+    const sweep = [arc(rm, 1)]; for (let i = 1; i <= N; i++) sweep.push(arc(rm, .12));
+    ringG.setAttribute('mask', `url(#${id}r)`);
+    const bm = el('mask', { id: `${id}b`, maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: 512, height: 512 }, defs);
+    const bandArcs = []; for (let j = 1; j <= M; j++) bandArcs.push(arc(bm, .2));
+    const goldRing = el('circle', { cx: 256, cy: 256, r: R_RING, fill: 'none', stroke: COLORS.gold, 'stroke-width': 33, opacity: gold, mask: `url(#${id}b)` }, ringG);
+    p.sweep = { sweep, bandArcs, goldRing, ringG, C, deg, N, M, feather: 20 * deg, ramp: 12 * deg, over: 20 * deg, band: 20 * deg };
+    gsap.set([...p.backS, ...p.frontS], { y: 0 }); gsap.set(p.frontP, { opacity: 1, scale: 1, svgOrigin: '256 182.4' });
+    gsap.set(p.backP, { opacity: 0 });                                      // only the twelve seen petals are made
+    gsap.set(p.ring, { opacity: 1, strokeDashoffset: 0, attr: { 'stroke-dasharray': 'none' } });
+    gsap.set(p.adityas, { opacity: 0 }); gsap.set(p.bindu, { opacity: 0 });
+  }
+  function binduIn(tl, p, at, dur = .6) {
+    tl.fromTo(p.bindu, { opacity: 0 }, { opacity: 1, duration: dur, ease: 'sine.out', immediateRender: false }, at);
+    return at + dur;
+  }
+  // a dash along the ring covering [s, e] (arc length from the top, clockwise)
+  const span = (c, s, e) => {
+    const len = e - s; c.setAttribute('visibility', len > .05 ? 'visible' : 'hidden');
+    c.setAttribute('stroke-dasharray', `${Math.max(0, len).toFixed(2)} ${(1e4).toFixed(0)}`); c.setAttribute('stroke-dashoffset', (-s).toFixed(2));
+  };
+  // the petals: one after another clockwise, the gaps closing from 0.20 s to 0.15 s (the wave gathers); 0.95 s each,
+  // sine in-out (no dwell at either end); the front starts inside the bindu, so a petal first shows already soft
+  function fillPetals(tl, p, at, { dur = .95, first = .20, last = .15 } = {}) {
+    let t = at;
+    p.fill.forEach((f, k) => {
+      const v0 = .75 * 50.6 - f.soft, v1 = PETAL_OUT + f.back + f.soft, st = { v: v0 };   // the front's full-light point, in units out
+      const c = (x, R) => Math.max(0, Math.min(1, x / R)).toFixed(4);
+      const put = () => {
+        const v = st.v;
+        f.a.setAttribute('offset', c(v, R_FILL)); f.b.setAttribute('offset', c(v + f.soft, R_FILL));
+        f.band[1].setAttribute('offset', c(v - f.back, R_BAND)); f.band[2].setAttribute('offset', c(v, R_BAND)); f.band[3].setAttribute('offset', c(v + f.soft, R_BAND));
+      };
+      put();
+      tl.fromTo(st, { v: v0 }, { v: v1, duration: dur * (v1 - v0) / (PETAL_OUT + f.soft - v0), ease: 'sine.inOut', immediateRender: false, onUpdate: put }, t);
+      if (k < 11) t += first + (last - first) * k / 10;
+    });
+    return t + dur;
+  }
+  // the ring: its front runs from the top clockwise, past the start by 20° so the seam closes in full light (2.0 s, sine
+  // in-out: at most about 1.4 times the wave's pace); then the masks are let go
+  function ringIn(tl, p, at, dur = 2.0) {
+    const S = p.sweep, st = { v: 0 }, end = S.C + S.over;
+    const put = () => {
+      // R: the start's soft ramp, filled in while the front is 40° to 20° short of the top, so that when the front's soft
+      // edge reaches the top it meets solid ring (a dash cannot wrap past the top: the seam is closed from the start's side)
+      const front = -S.feather + (end + S.feather) * st.v, R = Math.max(0, Math.min(1, (S.C - 20 * S.deg - front) / (20 * S.deg)));
+      span(S.sweep[0], S.ramp * R, front);
+      for (let i = 1; i <= S.N; i++) span(S.sweep[i], S.ramp * R * (S.N - i) / S.N, front + S.feather * i / S.N);
+      for (let j = 1; j <= S.M; j++) span(S.bandArcs[j - 1], front - S.band * j / S.M, front + S.feather * .5);
+    };
+    put();
+    tl.fromTo(st, { v: 0 }, { v: 1, duration: dur, ease: 'sine.inOut', immediateRender: false, onUpdate: put }, at);
+    tl.to(S.goldRing, { opacity: 0, duration: .3, ease: 'sine.in' }, at + dur - .3);
+    tl.set(S.ringG, { attr: { mask: 'none' } }, at + dur);
+    p.ringAt = { at, dur, S };
+    return at + dur;
+  }
+  // the Ādityas open as the sweep passes them: window k when the front's middle is 40° beyond it; 0.45 s, sine out, from .7
+  function adityasOpen(tl, p, { dur = .45 } = {}) {
+    const { at, dur: rd, S } = p.ringAt, end = S.C + S.over;
+    let last = at;
+    p.adityas.forEach((a, k) => {
+      const want = (30 * k + 40) * S.deg - S.feather / 2;                 // the front's position then
+      const e = Math.max(0, Math.min(1, (want + S.feather) / (end + S.feather)));
+      const t = at + rd * Math.acos(1 - 2 * e) / Math.PI;                 // sine in-out, inverted
+      const o = `${a.getAttribute('cx')} ${a.getAttribute('cy')}`;
+      tl.fromTo(a, { opacity: 0, scale: .7, svgOrigin: o }, { opacity: 1, scale: 1, svgOrigin: o, duration: dur, ease: 'sine.out', immediateRender: false }, t);
+      last = Math.max(last, t + dur);
+    });
+    return last;
+  }
   // prakriti blooms as one: the 12 seen petals open together (a single breath)
   function bloom12(tl, p, at, dur = 1.0) {
     p.frontP.forEach((q, k) => {
@@ -176,5 +279,5 @@
     return t + .95;
   }
 
-  root.RtaChakra = { build, hide, show, petalsInOrder, traceRing, adityasIn, petalIn, petalOut, bloom24, bloom12, traceRta, untraceRta, withdraw24, turnMonths, aarti, nameIn, passAt, PETAL, BINDU, COLORS };
+  root.RtaChakra = { build, hide, show, primeLight, binduIn, fillPetals, ringIn, adityasOpen, petalsInOrder, traceRing, adityasIn, petalIn, petalOut, bloom24, bloom12, traceRta, untraceRta, withdraw24, turnMonths, aarti, nameIn, passAt, PETAL, BINDU, COLORS };
 })(typeof window !== 'undefined' ? window : globalThis);

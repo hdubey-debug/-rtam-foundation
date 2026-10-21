@@ -1,9 +1,10 @@
-// The opening, on the pilot pages (<html data-pilot="1" class="intro">), as Harsh asked on 13 Oct 2026. Before the page,
-// the Ṛta-chakra is built in the middle of the screen: the bindu alone and still; the 12 petals one by one, clockwise from
-// the top (the order of pradakshina); the ring; the 12 Ādityas one by one. No words. Nothing is moved once it is made: the
-// finished mark dims where it stands as the landing rises by light (the temple at dusk, then the name, then the lamp).
-// A touch skips to the landing (and doesn't light the lamps). Skipped under reduced motion and with ?skip.
-// The choreography is the same code as the HyperFrames films (motion-skills/hf-chakra, js/chakra.js; film I6).
+// The opening, on the pilot pages (<html data-pilot="1" class="intro">). Before the page, the Ṛta-chakra is made by light
+// in the middle of the screen, and nothing in it moves (Harsh, 20 Oct 2026: "nothing from the bottom up; smoother, more
+// professional"): the bindu; each of the 12 petals fills with light from the bindu out to its tip, one after another
+// clockwise from the top, as one flowing wave; the ring is swept in by light, clockwise; the 12 Ādityas open behind the
+// sweep. No words. The finished mark dims where it stands as the landing rises by light (the temple at dusk, the name,
+// the lamp). A touch skips to the landing (and doesn't light the lamps). Skipped under reduced motion and with ?skip.
+// The choreography is the same code as the HyperFrames films (motion-skills/hf-chakra, js/chakra.js; film I7).
 (function () {
   const html = document.documentElement, C = window.RtaChakra, G = window.gsap;
   const finish = () => { html.classList.remove('intro'); };
@@ -29,14 +30,18 @@
   G.set([...titleParts, ...after, ...marks], { opacity: 0, transition: 'none' });
   html.classList.add('intro-run'); html.classList.remove('intro');   // the overlay owns the hiding from here; the lamp waits
 
-  const tl = G.timeline({ onComplete: done });
-  let t = C.petalsInOrder(tl, p, 1.2);                              // the bindu alone; then the petals, one every 0.3 s
-  t = C.traceRing(tl, p, t - .2, 1.5);                              // the ring, clockwise from the top
-  t = C.adityasIn(tl, p, t + .15);                                  // the twelve, one by one
-  const h = t + .85;                                                // the finished mark, held
-  tl.to(svg, { opacity: 0, duration: .8, ease: 'power2.in' }, h);   // it dims where it stands, all of it at once
-  // the temple rises only once the mark is nearly gone (both at once reads as a watermark on the stone)
-  tl.to('#still', { opacity: 1, duration: 1.4, ease: 'sine.inOut' }, h + .55);
+  // it begins once the page's start-up (three.js, the 3D's canvas) is done, so its first light never stutters: at most 2 s
+  const tl = G.timeline({ onComplete: done, paused: true });
+  const go = () => { if (!go.on) { go.on = true; tl.play(); } };
+  addEventListener('rtam:app-ready', () => requestAnimationFrame(() => requestAnimationFrame(go)), { once: true }); setTimeout(go, 2000);
+  C.primeLight(p);                                                   // the mark is made by light: nothing in it moves
+  C.binduIn(tl, p, .15, .6);                                         // the bindu, then stillness
+  C.fillPetals(tl, p, 1.2);                                          // each petal fills with light from the bindu out, clockwise
+  const r = C.ringIn(tl, p, 3.6, 2.0);                               // the ring is swept in by light as the last petal fills
+  const h = Math.max(r, C.adityasOpen(tl, p)) + 1.0;                 // the twelve open as the sweep passes; then held
+  tl.to(svg, { opacity: 0, duration: 1.0, ease: 'sine.inOut' }, h);  // it dims where it stands, all of it at once
+  // the temple's light begins as the mark is nearly gone, so there is never a black frame nor the two at once
+  tl.to('#still', { opacity: 1, duration: 1.4, ease: 'sine.inOut' }, h + .6);
   if (thread) tl.fromTo(thread, { opacity: 0 }, { opacity: .15, duration: 1, ease: 'sine.inOut', immediateRender: false }, h + 1.1);
   tl.to([...titleParts, ...marks], { opacity: 1, duration: .8, ease: 'sine.out', stagger: .15 }, h + 1.1);    // the name
   tl.to(after.filter((e) => e.id !== 'still'), { opacity: 1, duration: .6, ease: 'sine.out', stagger: .08 }, h + 1.7);   // the lamp, last
@@ -59,5 +64,6 @@
     G.set([...titleParts, ...after, ...marks, thread].filter(Boolean), { clearProps: 'opacity,transition' });
     html.classList.remove('intro-run');                            // the lamp begins to breathe; the thread, its own breath
     svg.remove();
+    dispatchEvent(new Event('rtam:intro-done'));                    // (app.js: now the 3D may load)
   }
 })();
