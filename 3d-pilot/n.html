@@ -2,6 +2,7 @@
 <html lang="hi" data-subject="nandi" data-pilot="1" class="intro">
 <head>
 <meta name="robots" content="noindex">
+<script>setTimeout(function () { document.documentElement.classList.remove("intro") }, 6000)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#141414">
@@ -209,10 +210,28 @@ img, video { display: block }
 [data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
-#intro { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none }   /* (sized in px by intro.js) */
-/* the opening film: its darks are the page's ground already; the square's edge is feathered as well, so no frame shows */
-#intro video { position: absolute; display: block; object-fit: contain; background: transparent; pointer-events: none;
-  -webkit-mask-image: radial-gradient(closest-side, #000 84%, transparent 100%); mask-image: radial-gradient(closest-side, #000 84%, transparent 100%) }
+/* the loader (js/intro.js), as on the first temple-3d page: the chakra turns slowly in its glow, the name, a thin line that
+   fills as the 3D arrives. Its own ground; sized in px to what is visible. */
+#intro { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none; background: var(--ground);
+  display: flex; align-items: center; justify-content: center; --p: 0 }
+#intro .ld { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center }
+#intro .mk { position: relative; width: var(--s, 132px); height: var(--s, 132px); margin-bottom: calc(var(--s, 132px) * .22) }
+#intro .ck { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 14px rgba(200,161,90,.38)); animation: turn 36s linear infinite }
+#intro .glow, #intro .halo { position: absolute; left: -65%; top: -65%; width: 230%; height: 230%; border-radius: 50%; pointer-events: none }
+#intro .glow { background: radial-gradient(closest-side, rgba(200,161,90,.30), rgba(200,161,90,.10) 48%, rgba(200,161,90,0) 100%);
+  animation: breathe 3.2s cubic-bezier(.45, 0, .55, 1) infinite }
+#intro .halo { background: radial-gradient(closest-side, rgba(243,217,160,.16), rgba(243,217,160,0) 70%); opacity: calc(.15 + .85 * var(--p));
+  transition: opacity .8s var(--ease) }
+#intro.done .halo { opacity: 1; transform: scale(1.12); transition: opacity .5s var(--ease), transform 1.2s var(--ease) }
+#intro .nm { font: 400 30px/1.25 var(--deva); color: var(--ash) }
+#intro .sb { font: 500 10px/1.4 var(--caps); letter-spacing: .32em; text-transform: uppercase; color: var(--quiet); padding-left: .32em }
+#intro .bar { width: 200px; height: 2px; margin-top: 10px; background: rgba(201,194,182,.16); overflow: hidden }
+#intro .bar i { display: block; width: 100%; height: 100%; background: var(--ash); transform-origin: 0 50%; transform: scaleX(var(--p));
+  transition: transform .4s var(--ease) }
+@keyframes turn { to { transform: rotate(360deg) } }
+@keyframes breathe { 0%, 100% { opacity: .55; transform: scale(.94) } 50% { opacity: 1; transform: scale(1.05) } }
+@media (min-width: 720px) and (min-height: 560px) { #intro .nm { font-size: 34px } #intro .sb { font-size: 11px } #intro .bar { width: 260px } }
+@media (prefers-reduced-motion: reduce) { #intro .ck, #intro .glow { animation: none } }
 @keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
 @media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>

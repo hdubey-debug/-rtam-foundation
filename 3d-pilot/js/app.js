@@ -93,17 +93,14 @@ if (tier !== 'still') {
     stage = new Stage($('#gl'), { tier, breathe: !reduce });
     stage.onframe = onFrame; stage.onspinend = () => { $('#walk').classList.remove('on'); if (PILOT && state === 'walk') invite(); };
     layout();
-    const loadStage = () => stage && stage.load((p) => $('#frame').style.setProperty('--p', p.toFixed(2)))
-      .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); })
-      .catch(() => { stage = null; body.dataset.tier = 'still'; if (filmDone && state === 'hold') waitThenHandoff(); });
-    // the pilot's opening owns the first seconds: the models download now, but are taken apart and drawn only once it is
-    // over (their decoding stalled the petals' light by up to a third of a second on a mid phone); the film gives them time
-    if (document.documentElement.classList.contains('intro-run')) {
-      for (const m of ['temple', 'nandi']) fetch(`models/${m}-lo.glb`).catch(() => {});
-      addEventListener('rtam:intro-done', loadStage, { once: true });
-    } else loadStage();
+    // the pilot's loader (js/intro.js) shows the 3D arriving: its bytes (rtam:progress), then ready to draw (rtam:stage).
+    // It is all CSS on the compositor, so taking the models apart now never stutters it.
+    stage.load((p) => { $('#frame').style.setProperty('--p', p.toFixed(2)); dispatchEvent(new CustomEvent('rtam:progress', { detail: p })); })
+      .then(() => { stageReady = true; stage.setMode(START); dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); })
+      .catch(() => { stage = null; body.dataset.tier = 'still'; dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); });
   } catch (e) { stage = null; body.dataset.tier = 'still'; }
 }
+if (!stage) dispatchEvent(new Event('rtam:stage'));       // no 3D on this phone: nothing more to wait for
 fitPoster();
 dispatchEvent(new Event('rtam:app-ready'));            // (the pilot's opening starts once the page's own start-up is done)
 

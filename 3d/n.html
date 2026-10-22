@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="hi" data-subject="nandi">
+<html lang="hi" data-subject="nandi" data-pilot="1" class="intro">
 <head>
+<script>setTimeout(function () { document.documentElement.classList.remove("intro") }, 6000)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#141414">
@@ -192,6 +193,46 @@ img, video { display: block }
   #foot .addr::before { font-size: 17px } #foot .addr::after { font-size: 8.5px } .txt > span:first-child { font-size: 17px } .txt .en { font-size: 8.5px }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
+
+/* the pilot (test pages only: <html data-pilot="1">) */
+[data-pilot] #film, [data-pilot] #last, [data-pilot] #lamps { transition: opacity .9s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
+[data-pilot] .s-walk #lamps { transition: opacity 1.6s .3s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
+[data-pilot] .s-handoff #frame > :is(#film, #last, #lamps), [data-pilot] .s-walk #frame > :is(#film, #last, #lamps) { transform: var(--pt, none) }
+[data-pilot] #walk { min-height: 48px }
+[data-pilot] #walk.on .dial i::before { box-shadow: none }
+[data-pilot] #walk .dial svg.trace { position: absolute; left: -5px; top: -5px; width: calc(100% + 10px); height: calc(100% + 10px); transform: rotate(-90deg); pointer-events: none; overflow: visible }
+[data-pilot] #walk .dial svg.trace circle { fill: none; stroke: var(--ash); stroke-width: 1.3; stroke-linecap: butt; stroke-dasharray: 120.6 120.6; stroke-dashoffset: 120.6; opacity: 0 }
+[data-pilot] #play .lamp::before, [data-pilot] #play .lamp::after { display: none }
+[data-pilot] #play .lamp { background: none; animation: lampRing 2.8s cubic-bezier(.45, 0, .55, 1) infinite alternate }
+[data-pilot] #play .lamp svg { filter: none; fill: var(--lamp); animation: lampFlame 3s cubic-bezier(.45, 0, .55, 1) infinite }
+@keyframes lampFlame { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .72 } }
+[data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
+[data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
+[data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
+/* the loader (js/intro.js), as on the first temple-3d page: the chakra turns slowly in its glow, the name, a thin line that
+   fills as the 3D arrives. Its own ground; sized in px to what is visible. */
+#intro { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none; background: var(--ground);
+  display: flex; align-items: center; justify-content: center; --p: 0 }
+#intro .ld { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center }
+#intro .mk { position: relative; width: var(--s, 132px); height: var(--s, 132px); margin-bottom: calc(var(--s, 132px) * .22) }
+#intro .ck { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 14px rgba(200,161,90,.38)); animation: turn 36s linear infinite }
+#intro .glow, #intro .halo { position: absolute; left: -65%; top: -65%; width: 230%; height: 230%; border-radius: 50%; pointer-events: none }
+#intro .glow { background: radial-gradient(closest-side, rgba(200,161,90,.30), rgba(200,161,90,.10) 48%, rgba(200,161,90,0) 100%);
+  animation: breathe 3.2s cubic-bezier(.45, 0, .55, 1) infinite }
+#intro .halo { background: radial-gradient(closest-side, rgba(243,217,160,.16), rgba(243,217,160,0) 70%); opacity: calc(.15 + .85 * var(--p));
+  transition: opacity .8s var(--ease) }
+#intro.done .halo { opacity: 1; transform: scale(1.12); transition: opacity .5s var(--ease), transform 1.2s var(--ease) }
+#intro .nm { font: 400 30px/1.25 var(--deva); color: var(--ash) }
+#intro .sb { font: 500 10px/1.4 var(--caps); letter-spacing: .32em; text-transform: uppercase; color: var(--quiet); padding-left: .32em }
+#intro .bar { width: 200px; height: 2px; margin-top: 10px; background: rgba(201,194,182,.16); overflow: hidden }
+#intro .bar i { display: block; width: 100%; height: 100%; background: var(--ash); transform-origin: 0 50%; transform: scaleX(var(--p));
+  transition: transform .4s var(--ease) }
+@keyframes turn { to { transform: rotate(360deg) } }
+@keyframes breathe { 0%, 100% { opacity: .55; transform: scale(.94) } 50% { opacity: 1; transform: scale(1.05) } }
+@media (min-width: 720px) and (min-height: 560px) { #intro .nm { font-size: 34px } #intro .sb { font-size: 11px } #intro .bar { width: 260px } }
+@media (prefers-reduced-motion: reduce) { #intro .ck, #intro .glow { animation: none } }
+@keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
+@media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
 </head>
@@ -246,6 +287,7 @@ img, video { display: block }
     <p class="note">प्रस्तावित स्वरूप<span class="en">Proposed design</span></p>
   </section>
 </div>
+<script src="lib/gsap.min.js"></script><script src="js/intro.js"></script>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>

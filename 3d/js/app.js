@@ -10,6 +10,9 @@ const body = document.body;
 const subject = document.documentElement.dataset.subject || 'temple';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const qs = new URLSearchParams(location.search);
+// the pilot (test pages only, <html data-pilot="1">): the lamps are lit by a hand, the walk goes round by itself at one size,
+// centred, and प्रदक्षिणा पूर्ण · the return
+const PILOT = document.documentElement.dataset.pilot === '1';
 
 // ---------------------------------------------------------------- what this phone gets
 function detectTier() {
@@ -35,6 +38,7 @@ const WORDS = {
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
   side: ['प्रदक्षिणा · मंदिर सदा दाहिने हाथ', 'Keep the temple on your right'],
+  returned: ['प्रदक्षिणा पूर्ण', 'One round, complete'],
   nandiFace: ['नन्दी · अपने स्वामी की ओर', 'Nandi · facing his lord'],
   nandiBack: ['नन्दी · शिव का वाहन', "Nandi · Shiva's mount"],
   mandapa: ['नन्दी मंडप', 'The Nandi mandapa'],
@@ -87,13 +91,18 @@ let stage = null, stageReady = false, filmDone = false, introUntil = 0;
 if (tier !== 'still') {
   try {
     stage = new Stage($('#gl'), { tier, breathe: !reduce });
-    stage.onframe = onFrame; stage.onspinend = () => $('#walk').classList.remove('on');
+    stage.onframe = onFrame; stage.onspinend = () => { $('#walk').classList.remove('on'); if (PILOT && state === 'walk') invite(); };
     layout();
-    stage.load((p) => $('#frame').style.setProperty('--p', p.toFixed(2)))
-      .then(() => { stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff(); })
-      .catch(() => { stage = null; body.dataset.tier = 'still'; if (filmDone && state === 'hold') waitThenHandoff(); });
+    // the pilot's loader (js/intro.js) shows the 3D arriving: its bytes (rtam:progress), then ready to draw (rtam:stage).
+    // It is all CSS on the compositor, so taking the models apart now never stutters it.
+    stage.load((p) => { $('#frame').style.setProperty('--p', p.toFixed(2)); dispatchEvent(new CustomEvent('rtam:progress', { detail: p })); })
+      .then(() => { stageReady = true; stage.setMode(START); dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); })
+      .catch(() => { stage = null; body.dataset.tier = 'still'; dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); });
   } catch (e) { stage = null; body.dataset.tier = 'still'; }
 }
+if (!stage) dispatchEvent(new Event('rtam:stage'));       // no 3D on this phone: nothing more to wait for
+fitPoster();
+dispatchEvent(new Event('rtam:app-ready'));            // (the pilot's opening starts once the page's own start-up is done)
 
 function startFilm() {
   if (state !== 'poster') return;
@@ -114,6 +123,11 @@ $('#app').addEventListener('click', () => { if (state === 'poster' && !$('#play'
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
+else if (PILOT) {                                     // the pilot: the visitor lights the lamps; nothing starts by itself
+  film.load(); $('#play').hidden = false;
+  // decode the pictures the film hands over to now, not at the moment they appear (a decode then drops frames)
+  for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
+}
 else {
   film.addEventListener('canplaythrough', () => setTimeout(startFilm, 500), { once: true });
   film.load();
@@ -126,23 +140,53 @@ function waitThenHandoff() { if (stageReady || !stage) setTimeout(handoff, Math.
 function handoff() {
   if (state !== 'hold') return;
   set('handoff'); layout();
+  if (PILOT && stage) {                                   // the picture settles onto the walk's one size as it dims to its lamps
+    const fit = stage.pictureFit();
+    if (fit) $('#frame').style.setProperty('--pt', `translate(${fit.x.toFixed(1)}px, ${fit.y.toFixed(1)}px) scale(${fit.scale.toFixed(4)})`);
+  }
   setTimeout(() => {
     if (!stage) { stillWalk(); return; }
     set('walk'); markMode(START);
-    stage.setMode(START); introUntil = performance.now() + 4200;
-    caption(START === 'nandi' ? 'introNandi' : 'intro', true);
-    setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
+    stage.setMode(START);
+    if (PILOT) { stage.setSettle(1); beginWalk(); }
+    else {
+      introUntil = performance.now() + 4200;
+      caption(START === 'nandi' ? 'introNandi' : 'intro', true);
+      setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
+    }
     follow(1200);
     if (tier === 'hi') setTimeout(() => stage.upgrade(), 2500);
   }, 1100);
 }
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
+// the landing, upright: the temple's picture and the lamp under it, fitted between the name and the address in what is
+// visible. (On a phone, vh is the screen without the browser's bars: with the picture hung from the top and the lamp from
+// the bottom, the lamp rode up onto the temple whenever the bars showed.) The picture shrinks only if it must.
+function fitPoster() {
+  const st = $('#stage'), pl = $('#play');
+  if (matchMedia('(orientation: landscape)').matches || !['poster', 'film'].includes(state)) {
+    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ''; return;
+  }
+  const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
+  const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top, P = pl.offsetHeight || 135;
+  const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
+  let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
+  if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
+  const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(W * .92 * .75, H * .45, (room - P) / under));   // (90: an iPhone SE with its bars)
+  const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
+  st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
+  pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
+}
+addEventListener('load', () => fitPoster());
 function layout() {
+  fitPoster();
   // the 3D fades out behind the name above and the controls below, wherever they stand on this screen
   const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect(), st = document.documentElement.style;
   st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
+  // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
+  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
 }
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
 // turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
@@ -160,7 +204,68 @@ function onFrame(az) {
   if (!stage) return;
   const f = stage.facing();
   $('#walk .dial i').style.transform = `rotate(${f.toFixed(1)}deg)`;      // walking round clockwise turns the dot clockwise
-  if (state === 'walk' && performance.now() > introUntil) caption(sectorWord(stage.mode, az, f));
+  if (PILOT) walkedRound(az);
+  if (state === 'walk' && performance.now() > introUntil && !hintOn) caption(sectorWord(stage.mode, az, f));
+}
+
+// the walk begins by itself, once the stone has risen (already at the walk's one size, centred: the hand-over settled
+// the picture onto it): three rounds at a walking pace, easing in and out, then it rests where it began. A touch takes
+// over; प्रदक्षिणा stops it softly and starts it again; while it rests, a light goes round the dial now and then.
+const WALK_DPS = 14, ROUNDS = 3;
+let held = false, inviteT = null, invites = 0;
+function beginWalk() {
+  introUntil = 0; onFrame(stage.az);
+  if (reduce) { invite(); return; }
+  setTimeout(() => {
+    if (state !== 'walk') return;
+    if (!held) { $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 2.4, 3); } else invite();
+  }, 1100);
+}
+// a touch, a key, the dial or a choice of view: the walk is theirs now
+function touched() {
+  held = true; clearTimeout(inviteT);
+}
+// the dial asks, without words: a thin light goes once round it, clockwise, every few seconds, three times at most
+function invite() {
+  if (!PILOT || reduce) return;
+  clearTimeout(inviteT); invites = 0;
+  const go = () => {
+    if (state !== 'walk' || (stage && stage.spinning) || invites >= 3) return;
+    if (pts.size) { inviteT = setTimeout(go, 1500); return; }                 // not while a finger is on the stone
+    invites++; traceDial(); inviteT = setTimeout(go, 5200);
+  };
+  inviteT = setTimeout(go, 1800);
+}
+function traceDial() {
+  const dial = $('#walk .dial'); let c = dial.querySelector('svg.trace circle');
+  if (!c) { dial.insertAdjacentHTML('beforeend', '<svg class="trace" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19"/></svg>'); c = dial.querySelector('svg.trace circle'); }
+  const L = 2 * Math.PI * 19 * 1.01;
+  c.animate([{ strokeDashoffset: L, opacity: 0 }, { strokeDashoffset: L * .8, opacity: 1, offset: .15 }, { strokeDashoffset: 0, opacity: 1, offset: .82 }, { strokeDashoffset: 0, opacity: 0 }],
+            { duration: 1600, easing: 'cubic-bezier(.45, 0, .55, 1)' });
+}
+
+// प्रदक्षिणा पूर्ण: a full clockwise circle in one view, back where it began: the door's lamp burns brighter for the
+// rest of the visit (900 ms, sine in-out), and the words say so. Once a visit.
+let walked = 0, lastAz = null, walkMode = null, returned = false, hintOn = false;
+function walkedRound(az) {
+  if (returned || state !== 'walk' || !stage) return;
+  if (stage.mode !== walkMode || lastAz === null) { walkMode = stage.mode; walked = 0; lastAz = az; return; }
+  walked += ((az - lastAz) % 360 + 540) % 360 - 180; lastAz = az;          // signed: pradakshina is clockwise (+)
+  const home = MODES[stage.mode].home, off = Math.abs(((az - home) % 360 + 540) % 360 - 180);
+  if (walked < 346 || off > 14) return;
+  returned = true; hintOn = true;
+  caption('returned', true);
+  setTimeout(() => { hintOn = false; onFrame(stage.az); }, 4500);
+  brighten(stage.mode === 'nandi' ? 2 : 1, 1.5, 900);
+}
+function brighten(i, k, ms) {
+  const m = stage.glows && stage.glows[i]; if (!m) return;
+  const from = m.opacity, to = Math.min(1, from * k), t0 = performance.now();
+  const tick = (now) => {
+    const p = Math.min(1, (now - t0) / ms); m.opacity = from + (to - from) * (.5 - .5 * Math.cos(Math.PI * p));
+    stage.dirty = true; stage.wake(); if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 function markMode(name) { $$('#modes button').forEach((b) => b.classList.toggle('on', b.dataset.mode === name)); }
 
@@ -170,6 +275,7 @@ const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 const degPerPx = () => 300 / Math.max(320, stage.frame.w * 1.6);
 gl.addEventListener('pointerdown', (e) => {
   if (state !== 'walk') return;
+  touched();
   gl.setPointerCapture(e.pointerId); pts.set(e.pointerId, e); stage.stopSpin(); stage.vel = 0;
   if (pts.size === 1) drag = { last: e.clientX, t: performance.now(), v: 0 };
   if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: dist(a, b), z: stage.zoom }; drag = null; }
@@ -190,6 +296,7 @@ gl.addEventListener('pointerup', lift); gl.addEventListener('pointercancel', lif
 gl.addEventListener('wheel', (e) => { if (state !== 'walk') return; e.preventDefault(); stage.zoom = Math.max(.8, Math.min(2.2, stage.zoom * (1 - e.deltaY * .0012))); stage.dirty = true; }, { passive: false });
 addEventListener('keydown', (e) => {
   if (state !== 'walk' || !stage) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') touched();
   if (e.key === 'ArrowRight') { stage.stopSpin(); stage.fling(140); }
   if (e.key === 'ArrowLeft') { stage.stopSpin(); stage.fling(-140); }
 });
@@ -197,6 +304,12 @@ addEventListener('keydown', (e) => {
 // प्रदक्षिणा: walk round once, slowly, keeping it on your right; a touch stops it
 $('#walk').addEventListener('click', () => {
   if (!stage || state !== 'walk') return;
+  touched();
+  if (PILOT) {
+    if (stage.spinning) stage.stopSpin(true);
+    else { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 1.2, 3); }
+    return;
+  }
   if (stage.spinning) { stage.stopSpin(); return; }
   $('#walk').classList.add('on'); stage.spin(reduce ? 60 : 16);
 });
@@ -204,6 +317,7 @@ $('#walk').addEventListener('click', () => {
 // what to walk round: the temple, Nandi's mandapa, or the whole complex; the view dips to the night and comes back on it
 $('#modes').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-mode]'); if (!b || state !== 'walk') return;
+  touched();
   const name = b.dataset.mode; if (!stage) { stillShow(name, 0); return; }
   if (name === stage.mode) { stage.setMode(name, MODES[name].home); return; }       // again: back to where it starts
   markMode(name);
