@@ -102,7 +102,6 @@ if (tier !== 'still') {
 }
 if (!stage) dispatchEvent(new Event('rtam:stage'));       // no 3D on this phone: nothing more to wait for
 fitPoster();
-dispatchEvent(new Event('rtam:app-ready'));            // (the pilot's opening starts once the page's own start-up is done)
 
 function startFilm() {
   if (state !== 'poster') return;
@@ -116,10 +115,13 @@ function filmEnded() { if (filmDone) return; filmDone = true; film.pause(); $('#
 film.addEventListener('ended', filmEnded);
 film.addEventListener('error', () => { if (state === 'poster' || state === 'film') filmEnded(); });
 setTimeout(() => { if (state === 'poster' && $('#play').hidden) filmEnded(); }, 7000);   // the film never came
-$('#skip').addEventListener('click', filmEnded);
+$('#skip').addEventListener('click', (e) => { e.stopPropagation(); if (state === 'film') filmEnded(); });   // only while the film plays
 // the lamps are lit by a tap: on the button, or anywhere on the poster while it waits
 $('#play').addEventListener('click', (e) => { e.stopPropagation(); startFilm(); });
-$('#app').addEventListener('click', () => { if (state === 'poster' && !$('#play').hidden) startFilm(); });
+$('#app').addEventListener('click', (e) => {
+  if (e.target.closest('button, a, #visit')) return;                   // the address, share and the sheet never light the lamps
+  if (state === 'poster' && !$('#play').hidden) startFilm();
+});
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
@@ -362,3 +364,6 @@ document.addEventListener('click', (e) => {
   if (a === 'visit') { const v = $('#visit'); v.hidden = false; requestAnimationFrame(() => v.classList.add('on')); }
   if (a === 'close') { const v = $('#visit'); v.classList.remove('on'); setTimeout(() => { v.hidden = true; }, 500); }
 });
+
+// the loader's handshake: every control above is wired (intro.js lifts onto a working lamp, or hides it)
+dispatchEvent(new Event('rtam:app-ready'));

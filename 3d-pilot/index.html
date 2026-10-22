@@ -2,7 +2,6 @@
 <html lang="hi" data-subject="temple" data-pilot="1" class="intro">
 <head>
 <meta name="robots" content="noindex">
-<script>setTimeout(function () { document.documentElement.classList.remove("intro") }, 6000)</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#141414">
@@ -136,9 +135,9 @@ img, video { display: block }
 #play .lamp svg { width: 24px; height: 24px; fill: var(--lamp); filter: drop-shadow(0 0 6px rgba(243,217,160,.9)); transform-origin: 50% 85%; animation: flame 1.6s ease-in-out infinite alternate }
 @keyframes flame { from { transform: scale(.94) rotate(-2deg) } to { transform: scale(1.06) rotate(2deg) } }
 #play > span:nth-child(2) { font: 400 21px/1 var(--deva) } #play .en { font-size: 8.5px; letter-spacing: .22em; color: var(--ash) }
-#skip { position: absolute; top: calc(var(--st) + 10px); right: calc(var(--sr) + 10px); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 12px; opacity: 0; transition: opacity .5s }
+#skip { position: absolute; top: calc(var(--st) + 10px); right: calc(var(--sr) + 10px); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 12px; opacity: 0; visibility: hidden; transition: opacity .5s, visibility 0s .5s }
 #skip > span:first-child { font: 400 15px/1 var(--deva) } #skip .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
-.s-film #skip { opacity: 1 }
+.s-film #skip { opacity: 1; visibility: visible; transition: opacity .5s }   /* untappable outside the film */
 
 /* the address and contact sheet */
 #visit { position: absolute; left: 0; right: 0; bottom: 0; max-height: 86vh; overflow: auto; background: #1b1a18; color: var(--ash); border-top: 1px solid var(--hair);
@@ -208,7 +207,8 @@ img, video { display: block }
 [data-pilot] #play .lamp svg { filter: none; fill: var(--lamp); animation: lampFlame 3s cubic-bezier(.45, 0, .55, 1) infinite }
 @keyframes lampFlame { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .72 } }
 [data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
-[data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0 }
+[data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0; animation: failsafe 0s linear 8s forwards }
+@keyframes failsafe { to { opacity: 1 } }   /* the loader's script never ran (JS off or failed): the landing shows by itself */
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
 /* the loader (js/intro.js), as on the first temple-3d page: the chakra turns slowly in its glow, the name, a thin line that
    fills as the 3D arrives. Its own ground; sized in px to what is visible. */

@@ -57,6 +57,8 @@
   else { still.addEventListener('load', stillDone, { once: true }); still.addEventListener('error', stillDone, { once: true }); }
   addEventListener('rtam:progress', (e) => { got.stage = Math.max(got.stage, .9 * e.detail); show(); });   // bytes: 90 %
   addEventListener('rtam:stage', () => { got.stage = 1; got.staged = true; show(); }, { once: true });  // drawn: the rest
+  let appReady = false;                                              // app.js's handshake: every control is wired
+  addEventListener('rtam:app-ready', () => { appReady = true; }, { once: true });
 
   // the landing: the line closes and the light swells once; the loader fades where it stands; the temple's light begins
   // as it is nearly gone (never a black frame, never the two at once); then the name; the lamp last
@@ -70,6 +72,8 @@
     if (lift.on) return; lift.on = true;
     got.stage = Math.max(got.stage, got.staged ? 1 : got.stage);
     box.style.setProperty('--p', '1'); box.classList.add('done');
+    box.style.pointerEvents = 'none';                               // from here a tap reaches the page (the lamp) beneath
+    if (!appReady) play.hidden = true;                              // the page's script never came: no lamp that does nothing
     tl.play();
   };
   function ready() { if (!ready.on) { ready.on = true; setTimeout(lift, Math.max(0, MIN - (performance.now() - shownAt))); } }
