@@ -16,6 +16,7 @@ export class Stage {
     this.loop = this.loop.bind(this); this.raf = 0; this._dirty = false; this.last = 0;
     this.canvas = canvas; this.tier = tier; this.base = base; this.onframe = null; this.onspinend = null; this.onlost = null;
     this.mode = 'temple'; this.az = MODES.temple.home; this.vel = 0; this.walk = null;
+    this.shown = false;                                   // nothing is drawn until the page shows the 3D (app.js: the hand-over)
     this.ext = document.documentElement.dataset.models || '.glb';
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
     this.renderer.setClearColor(GROUND, 0);                 // see-through: the page's own black shows where there is no stone
@@ -143,6 +144,9 @@ export class Stage {
       }
       this.fitKey = ''; this.fitWalk();
     }
+    // every shader compiled and every texture on the GPU now, while the page is still: a material's first frame costs
+    // tens of milliseconds, and must never fall in the hand-over
+    this.apply(); this.renderer.compile(this.scene, this.camera); this.renderer.render(this.scene, this.camera);
     this.ready = true; this.dirty = true;
   }
 
@@ -268,7 +272,7 @@ export class Stage {
     } else if (Math.abs(this.vel) > 1) {                    // a flick carries on, slowing
       this.rotate(this.vel * dt); this.vel *= Math.exp(-dt / .45); moving = true;
     } else this.vel = 0;
-    if (this._dirty && this.ready) {
+    if (this._dirty && this.ready && this.shown) {
       this.apply(); this.renderer.render(this.scene, this.camera); this._dirty = false;
       this.onframe && this.onframe(this.az);
     }

@@ -129,12 +129,13 @@ function startFilm() {
 // and the lamps hand over (the dusk picture stays until it plays: body.playing)
 film.addEventListener('playing', () => body.classList.add('playing'));
 function watch() {
-  let last = -1, idle = 0;
+  let last = -1, at = performance.now();
   const t = setInterval(() => {
     if (state !== 'film') { clearInterval(t); return; }
-    if (film.currentTime !== last) { last = film.currentTime; idle = 0; }
-    else if (++idle >= (body.classList.contains('playing') ? 4 : 8)) { clearInterval(t); filmEnded(); }
-  }, 1000);
+    const now = performance.now();
+    if (film.currentTime !== last && body.classList.contains('playing')) { last = film.currentTime; at = now; }
+    if (now - at >= (body.classList.contains('playing') ? 4000 : 8000)) { clearInterval(t); filmEnded(); }
+  }, 250);
 }
 let heldAt = 0;
 function hold() {
@@ -180,7 +181,7 @@ function waitThenHandoff() { if (stageReady || !has3D) setTimeout(handoff, Math.
 // the lamps stay, the stone returns: the picture dims to its lamps, and the 3D rises around them from the same view
 function handoff() {
   if (state !== 'hold') return;
-  set('handoff'); layout();
+  set('handoff'); if (stage) stage.shown = true; layout();
   if (PILOT && stage) {                                   // the picture settles onto the walk's one size as it dims to its lamps
     const fit = stage.pictureFit();
     if (fit) $('#frame').style.setProperty('--pt', `translate(${fit.x.toFixed(1)}px, ${fit.y.toFixed(1)}px) scale(${fit.scale.toFixed(4)})`);
@@ -222,12 +223,15 @@ addEventListener('load', () => fitPoster());
 function layout() {
   fitPoster();
   // the 3D fades out behind the name above and the controls below, wherever they stand on this screen
-  const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect(), st = document.documentElement.style;
-  st.setProperty('--fadeTop', Math.round(tt.bottom) + 'px'); st.setProperty('--fadeBot', Math.round(ui.top + 8) + 'px');
+  const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect();
+  fade('--fadeTop', Math.round(tt.bottom) + 'px'); fade('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
   // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
   stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
 }
+// the 3D's mask edges, set only when they move (each change restyles the page and redraws the mask)
+const fades = {};
+function fade(k, v) { if (fades[k] !== v) { fades[k] = v; document.documentElement.style.setProperty(k, v); } }
 function follow(ms) { const t0 = performance.now(); const tick = (t) => { layout(); if (t - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
 // turning the phone: the layout jumps to its new place at once (no sliding text), then the 3D follows
 let rotT = null, wide = innerWidth > innerHeight;
