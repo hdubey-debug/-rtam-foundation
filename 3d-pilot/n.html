@@ -43,6 +43,7 @@ img, video { display: block }
 /* the 3D, full screen behind everything; it appears when the lamps hand over */
 #gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ease); touch-action: none }
 .s-walk #gl { opacity: 1 }
+[data-tier="still"] #gl { visibility: hidden }
 
 /* the name and the captions stay readable over the stone: the 3D itself fades out behind them, so only the page's own
    black is ever there (a dark veil laid over the page would band against it) */
@@ -69,6 +70,7 @@ img, video { display: block }
 .s-handoff #lamps { opacity: 1 }
 .s-walk #lamps { opacity: 0; transition: opacity 1.6s .3s var(--ease) }
 [data-tier="still"].s-walk #still { opacity: 1 }
+[data-subject="temple"] #frame { --tx: 34.39%; --ty: 50.1%; --th: 14.08% } [data-subject="nandi"] #frame { --tx: 50.0%; --ty: 47.0%; --th: 9.0% }
 #frame > #thread { inset: auto; left: var(--tx, 50%); top: var(--ty, 50%); width: 2px; height: var(--th, 6%); margin-left: -1px; border-radius: 1px; opacity: 0;
   background: linear-gradient(transparent, var(--lamp) 25%, var(--lamp) 75%, transparent); box-shadow: 0 0 10px rgba(243,217,160,.8) }
 .s-poster #thread, .s-hold #thread { animation: thread 1.8s ease-in-out infinite alternate }
@@ -209,32 +211,22 @@ img, video { display: block }
 [data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0; animation: failsafe 0s linear 8s forwards }
 @keyframes failsafe { to { opacity: 1 } }   /* the loader's script never ran (JS off or failed): the landing shows by itself */
+/* the door's thread, once lit by the opening, breathes with the lamp (3 s, sine), from its ignition's .85 */
+[data-pilot] :is(.s-poster, .s-hold) #thread { animation: threadBreath 3s cubic-bezier(.37, 0, .63, 1) infinite }
+@keyframes threadBreath { 0%, 100% { opacity: .85 } 50% { opacity: .4 } }
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
-/* the loader (js/intro.js), as on the first temple-3d page: the chakra turns slowly in its glow, the name, a thin line that
-   fills as the 3D arrives. Its own ground; sized in px to what is visible. */
-#intro { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 20; touch-action: none; background: var(--ground);
-  display: flex; align-items: center; justify-content: center; --p: 0 }
-#intro .ld { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center }
-#intro .mk { position: relative; width: var(--s, 132px); height: var(--s, 132px); margin-bottom: calc(var(--s, 132px) * .22) }
-#intro .ck { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 0 14px rgba(200,161,90,.38)); animation: turn 36s linear infinite }
-#intro .glow, #intro .halo { position: absolute; left: -65%; top: -65%; width: 230%; height: 230%; border-radius: 50%; pointer-events: none }
-#intro .glow { background: radial-gradient(closest-side, rgba(200,161,90,.30), rgba(200,161,90,.10) 48%, rgba(200,161,90,0) 100%);
-  animation: breathe 3.2s cubic-bezier(.45, 0, .55, 1) infinite }
-#intro .halo { background: radial-gradient(closest-side, rgba(243,217,160,.16), rgba(243,217,160,0) 70%); opacity: calc(.15 + .85 * var(--p));
-  transition: opacity .8s var(--ease) }
-#intro.done .halo { opacity: 1; transform: scale(1.12); transition: opacity .5s var(--ease), transform 1.2s var(--ease) }
-#intro .nm { font: 400 30px/1.25 var(--deva); color: var(--ash) }
-#intro .sb { font: 500 10px/1.4 var(--caps); letter-spacing: .32em; text-transform: uppercase; color: var(--quiet); padding-left: .32em }
-#intro .bar { width: 200px; height: 2px; margin-top: 10px; background: rgba(201,194,182,.16); overflow: hidden }
-#intro .bar i { display: block; width: 100%; height: 100%; background: var(--ash); transform-origin: 0 50%; transform: scaleX(var(--p));
-  transition: transform .4s var(--ease) }
-@keyframes turn { to { transform: rotate(360deg) } }
-@keyframes breathe { 0%, 100% { opacity: .55; transform: scale(.94) } 50% { opacity: 1; transform: scale(1.05) } }
-@media (min-width: 720px) and (min-height: 560px) { #intro .nm { font-size: 34px } #intro .sb { font-size: 11px } #intro .bar { width: 260px } }
-@media (prefers-reduced-motion: reduce) { #intro .ck, #intro .glow { animation: none } }
+/* the opening (js/intro.js): the Ṛta-chakra alone on the page's own ground, at the landing picture's centre, in a faint
+   warm light outside its ring (a dithered canvas, 2.2× the mark); it turns, rests upright, and dissolves as the temple
+   rises where it was */
+#intro { position: fixed; inset: 0; z-index: 20; touch-action: none }
+#intro .lt { position: absolute; left: var(--x, 50vw); top: var(--y, 50vh); width: var(--s, 132px); height: var(--s, 132px);
+  margin: calc(var(--s, 132px) / -2) 0 0 calc(var(--s, 132px) / -2) }
+#intro .lt canvas { position: absolute; left: -60%; top: -60%; width: 220%; height: 220% }
+#intro .ck { position: absolute; inset: 0; width: 100%; height: 100% }
 @keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
 @media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
 </style>
+<link rel="modulepreload" href="js/motion.js">
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
 </head>
 <body class="s-poster">
@@ -243,7 +235,7 @@ img, video { display: block }
   <div class="scrim" id="scrim-t"></div><div class="scrim" id="scrim-b"></div>
   <div id="stage"><div id="frame">
     <img id="still" src="media/nandi-first.webp" alt="ऋतम्भरेश्वर मंदिर, संध्या में · the temple at dusk">
-    <video id="film" muted playsinline preload="auto" aria-hidden="true"></video>
+    <video id="film" muted playsinline preload="metadata" aria-hidden="true"></video>
     <img id="last" src="media/nandi-last.webp" alt="" aria-hidden="true">
     <img id="lamps" src="media/nandi-lamps.webp" alt="" aria-hidden="true">
     <div id="thread" aria-hidden="true"></div>
@@ -288,7 +280,7 @@ img, video { display: block }
     <p class="note">प्रस्तावित स्वरूप<span class="en">Proposed design</span></p>
   </section>
 </div>
-<script src="lib/gsap.min.js"></script><script src="js/intro.js"></script>
+<script type="module" src="js/intro.js"></script>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 // rises around the same lamps, and the visitor walks round it, a full circle: the temple, Nandi's mandapa, or the whole
 // complex. States (on <body>): s-poster → s-film → s-hold → s-handoff → s-walk. Phones that cannot run the 3D see the
 // same through night pictures (tier "still").
-import { Stage, MODES } from './stage.js';
+import { MODES } from './motion.js';
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -15,16 +15,18 @@ const qs = new URLSearchParams(location.search);
 const PILOT = document.documentElement.dataset.pilot === '1';
 
 // ---------------------------------------------------------------- what this phone gets
+// One set of models for the whole visit, never swapped mid-walk: a desktop (a fine pointer and no touch) gets the sharp
+// ones; every phone and tablet the light ones. No WebGL, a data saver, a 2G line or under 2 GB: the night pictures.
 function detectTier() {
   if (qs.get('tier')) return qs.get('tier');
   const c = document.createElement('canvas');
   const gl = c.getContext('webgl2') || c.getContext('webgl');
   if (!gl) return 'still';
+  const lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();     // the probe gives its GPU context back
   const conn = navigator.connection || {};
   if (conn.saveData || /(^|-)(slow-2g|2g)$/.test(conn.effectiveType || '')) return 'still';
-  const mem = navigator.deviceMemory || 4;                 // Chrome reports at most 8; Safari reports nothing
-  if (mem < 2) return 'still';
-  return mem >= 4 ? 'hi' : 'lo';                          // iPhones (no report) and most phones get the sharp models
+  if ((navigator.deviceMemory || 4) < 2) return 'still';                                  // Chrome reports at most 8; Safari nothing
+  return navigator.maxTouchPoints === 0 && matchMedia('(pointer: fine)').matches ? 'hi' : 'lo';
 }
 const tier = detectTier();
 body.dataset.tier = tier;
@@ -81,36 +83,57 @@ let state = 'poster';
 function set(s) { state = s; body.classList.remove(...[...body.classList].filter((c) => c.startsWith('s-'))); body.classList.add('s-' + s); }
 
 // ---------------------------------------------------------------- the film and the 3D
+// (where the door's thread sits in the film is written into the page by the build: build_site.py)
 const film = $('#film');
-const FILM = await fetch(`media/${subject}-film.json`).then((r) => r.json()).catch(() => ({}));
-if (FILM.thread) { const st = $('#frame').style; st.setProperty('--tx', FILM.thread[0] + '%'); st.setProperty('--ty', FILM.thread[1] + '%'); st.setProperty('--th', FILM.thread[2] + '%'); }
-film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;
+film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;      // only its first bytes for now (preload="metadata")
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
-let stage = null, stageReady = false, filmDone = false, introUntil = 0;
-if (tier !== 'still') {
-  try {
-    stage = new Stage($('#gl'), { tier, breathe: !reduce });
-    stage.onframe = onFrame; stage.onspinend = () => { $('#walk').classList.remove('on'); if (PILOT && state === 'walk') invite(); };
+let stage = null, has3D = tier !== 'still', stageReady = false, filmDone = false, introUntil = 0;
+// the 3D (three.js and the models) arrives behind the opening and the landing, never in their way: the page is ready
+// without it, and waits for it only after the film, 15 s at most
+if (has3D) {
+  import('./stage.js').then(({ Stage }) => {
+    if (!has3D) return null;
+    stage = new Stage($('#gl'), { tier });
+    stage.onframe = onFrame; stage.onspinend = spinEnded; stage.onlost = lost;
     layout();
-    // the pilot's loader (js/intro.js) shows the 3D arriving: its bytes (rtam:progress), then ready to draw (rtam:stage).
-    // It is all CSS on the compositor, so taking the models apart now never stutters it.
-    stage.load((p) => { $('#frame').style.setProperty('--p', p.toFixed(2)); dispatchEvent(new CustomEvent('rtam:progress', { detail: p })); })
-      .then(() => { stageReady = true; stage.setMode(START); dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); })
-      .catch(() => { stage = null; body.dataset.tier = 'still'; dispatchEvent(new Event('rtam:stage')); if (filmDone && state === 'hold') waitThenHandoff(); });
-  } catch (e) { stage = null; body.dataset.tier = 'still'; }
+    return stage.load();
+  }).then(() => {
+    if (!stage) return;
+    stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff();
+  }).catch(lost);
 }
-if (!stage) dispatchEvent(new Event('rtam:stage'));       // no 3D on this phone: nothing more to wait for
 fitPoster();
+// the 3D gave up (its code or models failed, the phone took the GPU back, or it came too late): the night pictures
+function lost() {
+  const s = stage; stage = null; has3D = false; stageReady = false; body.dataset.tier = 'still';
+  if (s) s.stop();
+  if (state === 'hold') waitThenHandoff(); else if (state === 'walk') stillWalk();
+}
 
 function startFilm() {
   if (state !== 'poster') return;
-  $('#play').hidden = true; set('film');
-  const p = film.play();
-  if (p && p.catch) p.catch(() => { set('poster'); $('#play').hidden = false; });   // autoplay refused: the visitor lights the lamps
+  $('#play').hidden = true; set('film'); watch();
+  const p = film.play();                                // inside the tap itself: a WebView refuses a play() that comes later
+  if (p && p.catch) p.catch(() => {
+    if (PILOT) filmEnded();                             // refused or broken: on to the stone (never a lamp that does nothing)
+    else { set('poster'); $('#play').hidden = false; }  // autoplay refused: the visitor lights the lamps
+  });
+}
+// a film that stalls (a weak line) does not hold the visit up: 4 s without a new frame, and the lamps hand over
+function watch() {
+  let last = -1, idle = 0;
+  const t = setInterval(() => {
+    if (state !== 'film') { clearInterval(t); return; }
+    if (film.currentTime !== last) { last = film.currentTime; idle = 0; } else if (++idle >= 4) { clearInterval(t); filmEnded(); }
+  }, 1000);
 }
 let heldAt = 0;
-function hold() { if (state === 'poster' || state === 'film') { set('hold'); heldAt = performance.now(); follow(1000); } }
+function hold() {
+  if (state !== 'poster' && state !== 'film') return;
+  set('hold'); heldAt = performance.now(); follow(1000);
+  setTimeout(() => { if (state === 'hold' && has3D && !stageReady) lost(); }, 15000);   // the 3D, 15 s at most
+}
 function filmEnded() { if (filmDone) return; filmDone = true; film.pause(); $('#play').hidden = true; hold(); waitThenHandoff(); }
 film.addEventListener('ended', filmEnded);
 film.addEventListener('error', () => { if (state === 'poster' || state === 'film') filmEnded(); });
@@ -126,17 +149,25 @@ $('#app').addEventListener('click', (e) => {
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
 else if (PILOT) {                                     // the pilot: the visitor lights the lamps; nothing starts by itself
-  film.load(); $('#play').hidden = false;
-  // decode the pictures the film hands over to now, not at the moment they appear (a decode then drops frames)
-  for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
+  $('#play').hidden = false;
+  // once the landing is up (intro.js), the film's bytes, and the pictures it hands over to decoded now (a decode at the
+  // moment they appear drops frames)
+  afterOpening(() => {
+    if (state === 'poster') { film.preload = 'auto'; film.load(); }
+    for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
+  });
 }
 else {
   film.addEventListener('canplaythrough', () => setTimeout(startFilm, 500), { once: true });
   film.load();
   setTimeout(() => { if (state === 'poster' && film.readyState >= 3) startFilm(); }, 2500);
 }
+function afterOpening(fn) {
+  const h = document.documentElement.classList;
+  if (h.contains('intro') || h.contains('intro-run')) addEventListener('rtam:intro-done', fn, { once: true }); else fn();
+}
 // the hand-over waits for the 3D, and for the picture to finish rising into place
-function waitThenHandoff() { if (stageReady || !stage) setTimeout(handoff, Math.max(0, 950 - (performance.now() - heldAt))); }
+function waitThenHandoff() { if (stageReady || !has3D) setTimeout(handoff, Math.max(0, 950 - (performance.now() - heldAt))); }
 
 // the lamps stay, the stone returns: the picture dims to its lamps, and the 3D rises around them from the same view
 function handoff() {
@@ -147,7 +178,7 @@ function handoff() {
     if (fit) $('#frame').style.setProperty('--pt', `translate(${fit.x.toFixed(1)}px, ${fit.y.toFixed(1)}px) scale(${fit.scale.toFixed(4)})`);
   }
   setTimeout(() => {
-    if (!stage) { stillWalk(); return; }
+    if (!stage || !stageReady) { stillWalk(); return; }
     set('walk'); markMode(START);
     stage.setMode(START);
     if (PILOT) { stage.setSettle(1); beginWalk(); }
@@ -157,7 +188,6 @@ function handoff() {
       setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
     }
     follow(1200);
-    if (tier === 'hi') setTimeout(() => stage.upgrade(), 2500);
   }, 1100);
 }
 
@@ -211,17 +241,24 @@ function onFrame(az) {
 }
 
 // the walk begins by itself, once the stone has risen (already at the walk's one size, centred: the hand-over settled
-// the picture onto it): three rounds at a walking pace, easing in and out, then it rests where it began. A touch takes
-// over; प्रदक्षिणा stops it softly and starts it again; while it rests, a light goes round the dial now and then.
-const WALK_DPS = 14, ROUNDS = 3;
+// the picture onto it): one round, easing up to a walking pace and down again, to rest where it began; the door's lamp
+// brightens in its last moments and प्रदक्षिणा पूर्ण comes as it rests. A touch takes over; प्रदक्षिणा walks another
+// round (or, while it walks, stops it softly); while it rests, a light goes round the dial now and then.
 let held = false, inviteT = null, invites = 0;
 function beginWalk() {
   introUntil = 0; onFrame(stage.az);
   if (reduce) { invite(); return; }
   setTimeout(() => {
-    if (state !== 'walk') return;
-    if (!held) { $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 2.4, 3); } else invite();
+    if (state !== 'walk' || !stage) return;
+    if (!held) walkRound(); else invite();
   }, 1100);
+}
+function walkRound() { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(); }
+function spinEnded(completed) {
+  $('#walk').classList.remove('on');
+  if (state !== 'walk') return;
+  if (completed) roundDone();
+  if (PILOT) invite();
 }
 // a touch, a key, the dial or a choice of view: the walk is theirs now
 function touched() {
@@ -246,20 +283,26 @@ function traceDial() {
             { duration: 1600, easing: 'cubic-bezier(.45, 0, .55, 1)' });
 }
 
-// प्रदक्षिणा पूर्ण: a full clockwise circle in one view, back where it began: the door's lamp burns brighter for the
-// rest of the visit (900 ms, sine in-out), and the words say so. Once a visit.
-let walked = 0, lastAz = null, walkMode = null, returned = false, hintOn = false;
+// प्रदक्षिणा पूर्ण: a full clockwise circle, back where it began (the walk's own round as it rests, or one walked by
+// hand in one view): the words say so, and the door's lamp burns brighter for the rest of the visit (×1.5, 900 ms, sine
+// in-out; in the walk's own round, over its last 900 ms)
+let walked = 0, lastAz = null, walkMode = null, returned = false, lit = false, hintOn = false;
 function walkedRound(az) {
-  if (returned || state !== 'walk' || !stage) return;
+  if (state !== 'walk' || !stage) return;
   if (stage.mode !== walkMode || lastAz === null) { walkMode = stage.mode; walked = 0; lastAz = az; return; }
   walked += ((az - lastAz) % 360 + 540) % 360 - 180; lastAz = az;          // signed: pradakshina is clockwise (+)
+  if (stage.roundLeft() <= .9) lampUp();
+  if (returned || stage.spinning) return;                                  // the walk's own round: its words come as it rests
   const home = MODES[stage.mode].home, off = Math.abs(((az - home) % 360 + 540) % 360 - 180);
-  if (walked < 346 || off > 14) return;
-  returned = true; hintOn = true;
-  caption('returned', true);
-  setTimeout(() => { hintOn = false; onFrame(stage.az); }, 4500);
-  brighten(stage.mode === 'nandi' ? 2 : 1, 1.5, 900);
+  if (walked >= 346 && off <= 14) roundDone();
 }
+function roundDone() {
+  returned = true; walked = 0; hintOn = true;
+  caption('returned', true);
+  setTimeout(() => { hintOn = false; if (stage) onFrame(stage.az); }, 4500);
+  lampUp();
+}
+function lampUp() { if (lit || !stage) return; lit = true; brighten(stage.mode === 'nandi' ? 2 : 1, 1.5, 900); }
 function brighten(i, k, ms) {
   const m = stage.glows && stage.glows[i]; if (!m) return;
   const from = m.opacity, to = Math.min(1, from * k), t0 = performance.now();
@@ -276,14 +319,14 @@ const gl = $('#gl'); const pts = new Map(); let drag = null, pinch = null;
 const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 const degPerPx = () => 300 / Math.max(320, stage.frame.w * 1.6);
 gl.addEventListener('pointerdown', (e) => {
-  if (state !== 'walk') return;
+  if (state !== 'walk' || !stage) return;
   touched();
   gl.setPointerCapture(e.pointerId); pts.set(e.pointerId, e); stage.stopSpin(); stage.vel = 0;
   if (pts.size === 1) drag = { last: e.clientX, t: performance.now(), v: 0 };
   if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: dist(a, b), z: stage.zoom }; drag = null; }
 });
 gl.addEventListener('pointermove', (e) => {
-  if (!pts.has(e.pointerId)) return; pts.set(e.pointerId, e);
+  if (!pts.has(e.pointerId) || !stage) return; pts.set(e.pointerId, e);
   if (pinch && pts.size === 2) { const [a, b] = [...pts.values()]; stage.zoom = Math.max(.8, Math.min(2.2, pinch.z * dist(a, b) / pinch.d)); stage.dirty = true; stage.wake(); return; }
   if (drag) {
     const now = performance.now(), dx = e.clientX - drag.last, d = dx * degPerPx();
@@ -292,10 +335,10 @@ gl.addEventListener('pointermove', (e) => {
 });
 const lift = (e) => {
   pts.delete(e.pointerId); if (pts.size < 2) pinch = null;
-  if (drag && pts.size === 0) { if (performance.now() - drag.t < 90) stage.fling(drag.v); drag = null; }
+  if (drag && pts.size === 0) { if (stage && performance.now() - drag.t < 90) stage.fling(drag.v); drag = null; }
 };
 gl.addEventListener('pointerup', lift); gl.addEventListener('pointercancel', lift);
-gl.addEventListener('wheel', (e) => { if (state !== 'walk') return; e.preventDefault(); stage.zoom = Math.max(.8, Math.min(2.2, stage.zoom * (1 - e.deltaY * .0012))); stage.dirty = true; }, { passive: false });
+gl.addEventListener('wheel', (e) => { if (state !== 'walk' || !stage) return; e.preventDefault(); stage.zoom = Math.max(.8, Math.min(2.2, stage.zoom * (1 - e.deltaY * .0012))); stage.dirty = true; }, { passive: false });
 addEventListener('keydown', (e) => {
   if (state !== 'walk' || !stage) return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') touched();
@@ -303,17 +346,11 @@ addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') { stage.stopSpin(); stage.fling(-140); }
 });
 
-// प्रदक्षिणा: walk round once, slowly, keeping it on your right; a touch stops it
+// प्रदक्षिणा: walk round once more, keeping it on your right; while it walks, it stops softly
 $('#walk').addEventListener('click', () => {
   if (!stage || state !== 'walk') return;
   touched();
-  if (PILOT) {
-    if (stage.spinning) stage.stopSpin(true);
-    else { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(WALK_DPS, ROUNDS, 1.2, 3); }
-    return;
-  }
-  if (stage.spinning) { stage.stopSpin(); return; }
-  $('#walk').classList.add('on'); stage.spin(reduce ? 60 : 16);
+  if (stage.spinning) stage.stopSpin(true); else walkRound();
 });
 
 // what to walk round: the temple, Nandi's mandapa, or the whole complex; the view dips to the night and comes back on it
