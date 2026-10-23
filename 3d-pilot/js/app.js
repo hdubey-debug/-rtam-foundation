@@ -140,7 +140,7 @@ function watch() {
 let heldAt = 0;
 function hold() {
   if (state !== 'poster' && state !== 'film') return;
-  set('hold'); heldAt = performance.now(); follow(1000);
+  set('hold'); heldAt = performance.now();
   setTimeout(() => { if (state === 'hold' && has3D && !stageReady) lost(); }, 15000);   // the 3D, 15 s at most
 }
 function filmEnded() { if (filmDone) return; filmDone = true; film.pause(); $('#play').hidden = true; hold(); waitThenHandoff(); }
@@ -163,7 +163,7 @@ else if (PILOT) {                                     // the pilot: the visitor 
   // moment they appear drops frames)
   afterOpening(() => {
     if (state === 'poster') { film.preload = 'auto'; film.load(); }
-    for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
+    const last = $('#last'); if (last.decode) last.decode().catch(() => {});
   });
 }
 else {
@@ -175,29 +175,27 @@ function afterOpening(fn) {
   const h = document.documentElement.classList;
   if (h.contains('intro') || h.contains('intro-run')) addEventListener('rtam:intro-done', fn, { once: true }); else fn();
 }
-// the hand-over waits for the 3D, and for the picture to finish rising into place
+// the hand-over waits for the 3D, and lets the film's last frame be seen a moment
 function waitThenHandoff() { if (stageReady || !has3D) setTimeout(handoff, Math.max(0, 950 - (performance.now() - heldAt))); }
 
-// the lamps stay, the stone returns: the picture dims to its lamps, and the 3D rises around them from the same view
+// the same size, in the same place (Harsh, 22 Oct: "the image is there, and then the 3D model shows up at a similar size"):
+// the 3D is drawn through the film's own camera (the anchor: the view solved on the film's lamps), so it rises exactly
+// under the picture, and the picture then leaves. Nothing moves; the camera steps back only as the walk begins.
 function handoff() {
   if (state !== 'hold') return;
-  set('handoff'); if (stage) stage.shown = true; layout();
-  if (PILOT && stage) {                                   // the picture settles onto the walk's one size as it dims to its lamps
-    const fit = stage.pictureFit();
-    if (fit) $('#frame').style.setProperty('--pt', `translate(${fit.x.toFixed(1)}px, ${fit.y.toFixed(1)}px) scale(${fit.scale.toFixed(4)})`);
-  }
+  if (!stage || !stageReady) { set('handoff'); setTimeout(stillWalk, 900); return; }
+  layout(); stage.setMode(START); stage.setSettle(0); stage.shown = true;
+  set('handoff');
   setTimeout(() => {
-    if (!stage || !stageReady) { stillWalk(); return; }
+    if (!stage) { stillWalk(); return; }
     set('walk'); markMode(START);
-    stage.setMode(START);
-    if (PILOT) { stage.setSettle(1); beginWalk(); }
+    if (PILOT) beginWalk();
     else {
-      introUntil = performance.now() + 4200;
+      stage.setSettle(1); introUntil = performance.now() + 4200;
       caption(START === 'nandi' ? 'introNandi' : 'intro', true);
       setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
     }
-    follow(1200);
-  }, 1100);
+  }, 1300);
 }
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
@@ -205,19 +203,21 @@ function handoff() {
 // visible. (On a phone, vh is the screen without the browser's bars: with the picture hung from the top and the lamp from
 // the bottom, the lamp rode up onto the temple whenever the bars showed.) The picture shrinks only if it must.
 function fitPoster() {
-  const st = $('#stage'), pl = $('#play');
-  if (matchMedia('(orientation: landscape)').matches || !['poster', 'film'].includes(state)) {
-    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ''; return;
+  const st = $('#stage'), pl = $('#play'), ui = $('#ui');
+  if (matchMedia('(orientation: landscape)').matches) {          // (the same in every state: nothing moves after the landing)
+    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; return;
   }
   const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
-  const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top, P = pl.offsetHeight || 135;
+  // the lamp, and in the walk its controls, in one place under the temple's base (on its reflection): the taller sets it
+  const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top;
+  const P = Math.max(pl.offsetHeight || 135, ui.offsetHeight || 150);
   const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
   let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
   if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
   const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(W * .92 * .75, H * .45, (room - P) / under));   // (90: an iPhone SE with its bars)
   const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
   st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
-  pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
+  pl.style.top = ui.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = ui.style.bottom = 'auto';
 }
 addEventListener('load', () => fitPoster());
 function layout() {
@@ -227,7 +227,8 @@ function layout() {
   fade('--fadeTop', Math.round(tt.bottom) + 'px'); fade('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
   // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
-  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4 } : { top: tt.bottom, bottom: ui.top + 8 - innerHeight * .08 });
+  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4, left: r.left, right: r.right }
+                                                                : { top: tt.bottom, bottom: ui.top, left: 0, right: innerWidth });
 }
 // the 3D's mask edges, set only when they move (each change restyles the page and redraws the mask)
 const fades = {};
@@ -262,11 +263,12 @@ function onFrame(az) {
 let held = false, inviteT = null, invites = 0;
 function beginWalk() {
   introUntil = 0; onFrame(stage.az);
-  if (reduce) { invite(); return; }
+  if (reduce) { stage.setSettle(1); invite(); return; }
   setTimeout(() => {
     if (state !== 'walk' || !stage) return;
+    stage.settleTo(1, 4500);                              // the camera steps back to the walk's one size as it starts round
     if (!held) walkRound(); else invite();
-  }, 1100);
+  }, 700);
 }
 function walkRound() { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(); }
 function spinEnded(completed) {

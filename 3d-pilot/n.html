@@ -41,9 +41,9 @@ img, video { display: block }
 #app { position: fixed; inset: 0; overflow: hidden }
 
 /* the 3D, full screen behind everything; it appears when the lamps hand over */
-#gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s var(--ease); touch-action: none }
-.s-walk #gl { opacity: 1 }
-[data-pilot] .s-handoff #gl { opacity: .002; transition: none }   /* composited (unseen) before it rises: no hitch as it does */
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .5s var(--ease); touch-action: none }
+:is(.s-handoff, .s-walk) #gl { opacity: 1 }
+[data-pilot] .s-hold #gl { opacity: .002; transition: none }   /* composited (unseen) before it rises: no hitch as it does */
 [data-tier="still"] #gl { visibility: hidden }
 
 /* the name and the captions stay readable over the stone: the 3D itself fades out behind them, so only the page's own
@@ -61,16 +61,17 @@ img, video { display: block }
   mask-composite: intersect }
 #frame > * { position: absolute; inset: 0; width: 100%; height: 100% }
 /* the pictures lie on the page's black and lighten it: where a film's black decodes a level dark, the page's shows */
-#frame { background: var(--ground); transition: background-color 1.6s .3s }
+#frame { background: var(--ground) }
 #frame > img, #frame > video { mix-blend-mode: lighten }
-.s-walk #frame { background-color: transparent }
-[data-tier="still"].s-walk #frame { background-color: var(--ground) }
-#still, #film, #lamps, #last { opacity: 0; transition: opacity .9s var(--ease) }
+#still, #film, #last { opacity: 0; transition: opacity .9s var(--ease) }
 .s-poster #still { opacity: 1 }
-.s-film #film, .s-hold #last { opacity: 1 }
+.s-film #film, :is(.s-hold, .s-handoff) #last { opacity: 1 }
 [data-pilot] .s-film:not(.playing) #still { opacity: 1 }   /* until the film plays its first frame (the same picture) */
-.s-handoff #lamps { opacity: 1 }
-.s-walk #lamps { opacity: 0; transition: opacity 1.6s .3s var(--ease) }
+/* the hand-over, in place (Harsh, 22 Oct: "the image is there, and then the 3D model shows up at a similar size"): the 3D
+   rises under the film's last frame, drawn through the film's own camera, and the picture then leaves; nothing moves */
+#frame { transition: opacity .9s .35s var(--ease) }
+:is(.s-handoff, .s-walk) #frame { opacity: 0 }
+[data-tier="still"].s-walk #frame { opacity: 1; transition: none }
 [data-tier="still"].s-walk #still { opacity: 1 }
 [data-subject="temple"] #frame { --tx: 34.39%; --ty: 50.1%; --th: 14.08% } [data-subject="nandi"] #frame { --tx: 50.0%; --ty: 47.0%; --th: 9.0% }
 #frame > #thread { inset: auto; left: var(--tx, 50%); top: var(--ty, 50%); width: 2px; height: var(--th, 6%); margin-left: -1px; border-radius: 1px; opacity: 0;
@@ -78,17 +79,12 @@ img, video { display: block }
 .s-poster #thread, .s-hold #thread { animation: thread 1.8s ease-in-out infinite alternate }
 @keyframes thread { from { opacity: .15 } to { opacity: calc(.45 + var(--p, 0) * .55) } }
 
-/* the name: upright, on top (as the A2 poster). When the film ends the poster opens up: the name steps back and the
-   picture rises to where the walk happens; only then does it dim to its lamps and the stone return (the lamps never move) */
+/* the name: upright, on top (as the A2 poster); it stays where it is for the whole visit */
 #title { position: absolute; left: 0; right: 0; top: calc(var(--st) + 5vh); display: flex; flex-direction: column; align-items: center; gap: 1.2vh;
   pointer-events: none; transform-origin: 50% 0; transition: transform .9s var(--ease), opacity .6s }
 #title .lotus { display: none }
 #title .kicker { width: min(46vw, 260px); transition: opacity .6s }
 #title .lockup { width: min(84vw, 470px); margin-top: -1vh }
-:is(.s-hold, .s-handoff, .s-walk) #title { transform: translateY(-2vh) scale(.62) }
-:is(.s-hold, .s-handoff, .s-walk) #title .kicker { opacity: 0 }
-:is(.s-hold, .s-handoff, .s-walk) #stage { top: 21vh; height: 53vh }
-/* close to the stone the name steps away (the lockup never sits on a busy picture) */
 
 #side { display: contents }
 /* the walk: a caption, where one is on the path, and where to go; text only, as the posters */
@@ -166,7 +162,7 @@ img, video { display: block }
     justify-content: space-between; gap: 1.5vh; padding: calc(var(--st) + 4vh) 0 calc(var(--sb) + 2.5vh); pointer-events: none }
   #side > * { position: relative !important; inset: auto !important; transform: none !important }
   /* the picture: everything right of the name column, as large as fits, up to a size where the models stay crisp */
-  #stage, :is(.s-hold, .s-handoff, .s-walk) #stage { left: 42vw; right: calc(var(--sr) + 1.5vw); top: calc(var(--st) + 3vh); bottom: calc(var(--sb) + 3vh); height: auto }
+  #stage { left: 42vw; right: calc(var(--sr) + 1.5vw); top: calc(var(--st) + 3vh); bottom: calc(var(--sb) + 3vh); height: auto }
   #frame { width: min(100cqw, 133.333cqh, 1000px) }
   #title { gap: 1.2vh; width: 100% }
   #title .lotus { display: block; width: min(7vh, 48px) }
@@ -199,9 +195,6 @@ img, video { display: block }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
 
 /* the pilot (test pages only: <html data-pilot="1">) */
-[data-pilot] #film, [data-pilot] #last, [data-pilot] #lamps { transition: opacity .9s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
-[data-pilot] .s-walk #lamps { transition: opacity 1.6s .3s var(--ease), transform 1.2s cubic-bezier(.45, 0, .55, 1) }
-[data-pilot] .s-handoff #frame > :is(#film, #last, #lamps), [data-pilot] .s-walk #frame > :is(#film, #last, #lamps) { transform: var(--pt, none) }
 [data-pilot] #walk { min-height: 48px }
 [data-pilot] #walk.on .dial i::before { box-shadow: none }
 [data-pilot] #walk .dial svg.trace { position: absolute; left: -5px; top: -5px; width: calc(100% + 10px); height: calc(100% + 10px); transform: rotate(-90deg); pointer-events: none; overflow: visible }
@@ -239,7 +232,6 @@ img, video { display: block }
     <img id="still" src="media/nandi-first.webp" alt="ऋतम्भरेश्वर मंदिर, संध्या में · the temple at dusk">
     <video id="film" muted playsinline preload="metadata" aria-hidden="true"></video>
     <img id="last" src="media/nandi-last.webp" alt="" aria-hidden="true">
-    <img id="lamps" src="media/nandi-lamps.webp" alt="" aria-hidden="true">
     <div id="thread" aria-hidden="true"></div>
   </div></div>
   <div id="side">

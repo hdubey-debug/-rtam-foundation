@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from '../lib/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from '../lib/addons/loaders/DRACOLoader.js';
-import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, roundAt, roundDuration, softStop } from './motion.js';
+import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, roundAt, roundDuration, softStop, smoothstep } from './motion.js';
 
 export { MODES };
 const GROUND = new THREE.Color(0x141414);
@@ -27,7 +27,11 @@ export class Stage {
     this.frame = { x: 0, y: 0, w: 1, h: 1 };              // the picture area, in CSS px
     this.view = orbitView('temple', this.az);             // the camera's current pose
     this.zoom = 1; this.anim = null;
-    this.settle = 0; this.walkFit = {}; this.hull = null; this.centring = null; this.extents = null; this.fitKey = ''; this.band = null;   // the walk's framing
+    this.settle = 0; this.settleTween = null; this.walkFit = {}; this.hull = null; this.centring = null; this.extents = null; this.fitKey = ''; this.band = null;   // the walk's framing
+    // how far past the space between the placards the widest view of the walk may reach (behind a placard, or the screen's
+    // edge): an elongated temple seen from its long side is half again as wide as from its corner, and a walk that never
+    // crossed the edge would show the corner view, the poster's, much smaller than the poster
+    this.overflow = 1.1;
     this.groups = { temple: new THREE.Group(), nandi: new THREE.Group(), mirror: new THREE.Group() };
     const N = { x: .0176, z: .98, scale: .2014, turn: Math.PI };    // motion.js NANDI: the mandapa before the door, facing it
     this.groups.nandi.position.set(N.x, 0, N.z); this.groups.nandi.rotation.y = N.turn; this.groups.nandi.scale.setScalar(N.scale);
@@ -172,28 +176,31 @@ export class Stage {
     this.view = this.viewAt(this.az); this.dirty = true;
   }
   viewAt(az) { const w = this.walkFit[this.mode]; return orbitView(this.mode, az, this.settle, w && w.span); }
-  setSettle(k) { this.settle = k; this.view = this.viewAt(this.az); this.dirty = true; }
-  // the walk's one size per subject on this screen: its widest view, either side of its centre, fills 92 % of the picture
-  // area's width, and from the tower's top to its base it fits the band the stone is seen in (between the name and the
-  // controls), at every angle, seen from the walk's own orbit. Its height in that band is fixed too (no bobbing).
+  setSettle(k) { this.settleTween = null; this.settle = k; this.view = this.viewAt(this.az); this.dirty = true; }
+  // ease from the film's framing (0) to the walk's (1) over ms: the camera stepping back as the walk begins
+  settleTo(k, ms) { this.settleTween = { from: this.settle, to: k, dur: ms / 1000, t0: null }; this.request(); }
+  // the walk's one size per subject on this screen: its widest view, either side of its centre, reaches at most `overflow`
+  // of the space between the placards (the band), and from the tower's top to its base it fits 90 % of the band's height,
+  // at every angle, seen from the walk's own orbit. Its height in that band is fixed too (no bobbing).
   setBand(band) { this.band = band; this.fitWalk(); }
   fitWalk() {
     if (!this.extents) return;
-    const fr = this.frame, band = this.band || { top: fr.y, bottom: fr.y + fr.h };
-    const key = [fr.x, fr.y, fr.w, fr.h, band.top, band.bottom].map(Math.round).join(','); if (key === this.fitKey) return; this.fitKey = key;
-    const Hb = Math.max(40, band.bottom - band.top), bandCy = (band.top + band.bottom) / 2, frameCy = fr.y + fr.h / 2;
+    const fr = this.frame, band = this.band || { top: fr.y, bottom: fr.y + fr.h, left: fr.x, right: fr.x + fr.w };
+    const key = [fr.x, fr.y, fr.w, fr.h, band.top, band.bottom, band.left, band.right, this.overflow * 100].map(Math.round).join(',');
+    if (key === this.fitKey) return; this.fitKey = key;
+    const Hb = Math.max(40, band.bottom - band.top), Wb = Math.max(40, band.right !== undefined ? band.right - band.left : fr.w);
+    const bandCy = (band.top + band.bottom) / 2, frameCy = fr.y + fr.h / 2;
     for (const name of Object.keys(MODES)) {
       const { U, Vt, Vb, dist } = this.extents[name];
-      const span = Math.max(U * dist / .92, (Vt + Vb) * fr.w * dist / (Hb * .9));
+      const span = Math.max(U * fr.w * dist / (this.overflow * Wb), (Vt + Vb) * fr.w * dist / (Hb * .9));
       const k = fr.w * dist / span;                                         // px per unit of tan, at zoom 1
       this.walkFit[name] = { span, dy: bandCy - (frameCy - (Vt - Vb) / 2 * k) };   // dy: px to move it down, onto the band
     }
     this.view = this.viewAt(this.az); this.dirty = true;
   }
-  // where the film's picture must move, and how much it must shrink, to sit exactly on the walk's view of the same stone
-  // (one size, centred), from the subject's extreme points seen through both cameras: a least-squares fit of a scale
-  // and a shift, in CSS px about the picture area's centre. The hand-over plays it on the picture, so the 3D rises in
-  // place and never zooms afterwards.
+  // how the walk's view of the stone relates to the film's (the picture's): a least-squares scale and shift of the
+  // subject's extreme points seen through both cameras, in CSS px about the picture area's centre (the tests measure
+  // the camera's step back with it)
   pictureFit() {
     if (!this.hull || !this.walkFit[this.mode]) return null;
     const keep = { settle: this.settle, view: this.view, zoom: this.zoom }, mode = this.mode, home = MODES[mode].home;
@@ -252,7 +259,11 @@ export class Stage {
     // stone turns about a steady axis; in the canvas's NDC (vfov may be clamped)
     const cx = this.settle > 0 && this.centring ? centreAt(this.centring[this.mode], v.az) / (Math.tan(vfov / 2) * aspect) * (f.w / W) * this.settle : 0;
     const fit = this.walkFit[this.mode], dy = fit && this.settle > 0 ? fit.dy * this.settle : 0;
-    cam.projectionMatrix.elements[8] = -sx + cx; cam.projectionMatrix.elements[9] = -sy + dy / (H / 2);
+    // the film's own optical centre (the anchor's `shift`, in fractions of the picture area, right and down): the films
+    // are cut from larger renders, whose centres are not the picture's; it fades as the camera steps into the walk
+    const A = MODES[this.mode].anchor, k = A && A.shift ? 1 - this.settle : 0;
+    const ox = k ? A.shift[0] * 2 * f.w / W * k : 0, oy = k ? A.shift[1] * 2 * f.h / H * k : 0;
+    cam.projectionMatrix.elements[8] = -sx + cx - ox; cam.projectionMatrix.elements[9] = -sy + dy / (H / 2) + oy;
     cam.projectionMatrixInverse.copy(cam.projectionMatrix).invert();
   }
 
@@ -277,6 +288,12 @@ export class Stage {
     if (document.hidden) { this.last = 0; return; }        // asleep while put away; coming back marks it dirty
     const dt = Math.min(.05, (now - (this.last || now)) / 1000); this.last = now;
     let moving = false;
+    if (this.settleTween) {                                 // the camera stepping back to the walk's framing
+      const s = this.settleTween; if (s.t0 === null) s.t0 = now;
+      const u = Math.min(1, (now - s.t0) / 1000 / s.dur);
+      this.settle = s.from + (s.to - s.from) * smoothstep(u); this.view = this.viewAt(this.az); this.dirty = true;
+      if (u >= 1) this.settleTween = null; else moving = true;
+    }
     if (this.walk) {                                        // a round, or a soft stop: the angle is a function of time
       const w = this.walk; if (w.t0 === null) w.t0 = now;
       const t = (now - w.t0) / 1000; this.setAz(w.az0 + w.at(t));

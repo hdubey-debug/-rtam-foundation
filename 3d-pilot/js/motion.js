@@ -45,14 +45,18 @@ export const NANDI = { scale: 0.2014, x: 0.0176, z: 0.98, turn: Math.PI };
 // Each walk: the orbit's centre (x, z), the camera's distance and height, the height it looks at, what is shown, the
 // footprint whose width the picture keeps framed as it turns (and the least it frames, so the tower or the roof is never
 // cut), and where it starts. Azimuths in degrees from +x toward +z (increasing = clockwise from above, the temple on
-// one's right: pradakshina). `front` is the side the building faces (the dial's top). At its `anchor` the view is
-// exactly the film's last frame: the temple's solved on its lamps (solve_view.py), the mandapa's calibrated on its
-// silhouette; turning away, the view eases onto the orbit's centre.
+// one's right: pradakshina). `front` is the side the building faces (the dial's top). At its `anchor` the view is the
+// film's last frame (the hand-over draws the 3D through it, exactly over the picture): the temple's solved on its lamps
+// (solve_view.py), the mandapa's on its edges and outline (solve_anchor.cjs); turning away, the view eases onto the
+// orbit's centre.
 export const MODES = {
   temple: { c: [0, 0], r: 1.4961, h: .0658, ly: .1272, show: { temple: true, nandi: false }, front: 90, home: 60.34,
             box: [.488, 1.078], least: .78, anchor: { az: 60.34, look: [.0184, .1272, .144], span: .8004 } },
-  nandi: { c: [NANDI.x, NANDI.z], r: .43, h: .085, ly: .062, show: { temple: false, nandi: true }, front: 258.24, home: 258.24,
-           box: [.19, .19], least: .23, k: 1.2, anchor: { az: 258.24, r: .2771, h: .0501, look: [NANDI.x, .0601, NANDI.z], span: .2462 } },
+  // the mandapa's anchor: re-solved 22 Oct 2026 on the film's own edges and outline (build/solve_anchor.cjs), with the
+  // film's optical centre (`shift`: its render was larger than its frame); the silhouette fit before left it a pillar off
+  nandi: { c: [NANDI.x, NANDI.z], r: .43, h: .085, ly: .062, show: { temple: false, nandi: true }, front: 258.24, home: 251.89,
+           box: [.19, .19], least: .23, k: 1.2,
+           anchor: { az: 251.89, r: .3111, h: .0676, look: [.0138, .0618, .9842], span: .2489, shift: [.0087, .0077] } },
   complex: { c: [0, .30], r: 2.6, h: .64, ly: .09, show: { temple: true, nandi: true }, front: 90, home: 52,
              box: [.50, 1.57], least: .85, k: 1.12 },
 };
