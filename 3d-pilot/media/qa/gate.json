@@ -1,13 +1,13 @@
 {
- "video": "/Users/harshdubey/Desktop/Temple/rtam-site/site/media/temple-960.mp4",
+ "video": "site/media/nandi-960.mp4",
  "fps": 30.0,
  "size": [
   960,
   720
  ],
- "duration": 9.2,
+ "duration": 7.6,
  "genre": "reverent",
- "coverage": 0.6,
+ "coverage": 0.4052863436123348,
  "hits_per_min": 0.0,
  "pops": [],
  "rows": [
@@ -24,7 +24,7 @@
   {
    "level": "OK",
    "check": "size/fps/duration",
-   "detail": "960x720 @ 30.000 fps, 9.20 s, audio: no"
+   "detail": "960x720 @ 30.000 fps, 7.60 s, audio: no"
   },
   {
    "level": "OK",
@@ -44,7 +44,7 @@
   {
    "level": "OK",
    "check": "motion coverage",
-   "detail": "60% of frames move (target for reverent: ≥ 35%)"
+   "detail": "41% of frames move (target for reverent: ≥ 35%)"
   },
   {
    "level": "OK",
