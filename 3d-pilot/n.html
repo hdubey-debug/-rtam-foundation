@@ -43,7 +43,9 @@ img, video { display: block }
 /* the 3D, full screen behind everything; it appears when the lamps hand over */
 #gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .5s var(--ease); touch-action: none }
 :is(.s-handoff, .s-walk) #gl { opacity: 1 }
-[data-pilot] .s-hold #gl { opacity: .002; transition: none }   /* composited (unseen) before it rises: no hitch as it does */
+/* composited (unseen) from the landing on, while the page is still: its first compositing costs a frame or so, which
+   must fall neither in the film's last moment nor in the hand-over */
+[data-pilot] :is(.s-poster, .s-film, .s-hold) #gl { opacity: .002; transition: none }
 [data-tier="still"] #gl { visibility: hidden }
 
 /* the name and the captions stay readable over the stone: the 3D itself fades out behind them, so only the page's own
