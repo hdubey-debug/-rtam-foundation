@@ -124,14 +124,15 @@ function open() {
   addEventListener('rtam:app-ready', () => { if (done.on || box.style.pointerEvents === 'none') play.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: SINE }); }, { once: true });
 }
 
-// The chakra's own light: the lamp's colour at a tenth of its strength (rgb(42,40,34) at its brightest), from the ring's
-// outer edge outward, gone by 2.2× the mark. Nothing inside the ring (35 % of the halo's radius is the ring's inner
-// edge), so the mark's dark seams never show against it. Dithered at the screen's own pixels, so no cheap screen bands.
+// The chakra's own light: the lamp's colour at a fifteenth of its strength (rgb(35,33,29) at its brightest; a tenth
+// until Harsh, 22 Oct: "the glow has to be a bit subtle"), from the ring's outer edge outward, gone by 2.2× the mark.
+// Nothing inside the ring (35 % of the halo's radius is the ring's inner edge), so the mark's dark seams never show
+// against it. Dithered at the screen's own pixels, so no cheap screen bands.
 function drawHalo(cv, s) {
   const d = Math.min(2, devicePixelRatio || 1), n = Math.round(2.2 * s * d), g = cv.getContext('2d');
   cv.width = cv.height = n;
   const img = g.createImageData(n, n), px = img.data, c = (n - 1) / 2, R = n / 2;
-  const G = 20, L = [243, 217, 160], K = .1, lut = new Float32Array(1025);
+  const G = 20, L = [243, 217, 160], K = .066, lut = new Float32Array(1025);
   const ss = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u));
   for (let i = 0; i <= 1024; i++) {
     const r = Math.sqrt(i / 1024);

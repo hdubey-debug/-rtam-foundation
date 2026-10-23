@@ -9,6 +9,9 @@ import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, 
 
 export { MODES };
 const GROUND = new THREE.Color(0x141414);
+const TINT = { temple: [.99, .915, .832], nandi: [.937, .883, .829] };   // the film's stone ÷ the model's (red, green, blue)
+// how the walk gives up the picture's height round the far side (0 at home, smooth; skew moves its peak off 180°)
+const yieldShape = (deg, skew) => { const r = deg * Math.PI / 180; return (1 - Math.cos(r)) / 2 * (1 + skew * Math.sin(r)); };
 
 export class Stage {
   constructor(canvas, { tier = 'lo', base = '' } = {}) {
@@ -27,9 +30,16 @@ export class Stage {
     this.frame = { x: 0, y: 0, w: 1, h: 1 };              // the picture area, in CSS px
     this.view = orbitView('temple', this.az);             // the camera's current pose
     this.zoom = 1; this.anim = null;
-    this.settle = 0; this.settleTween = null; this.walkFit = {}; this.hull = null; this.centring = null; this.extents = null; this.fitKey = ''; this.band = null;   // the walk's framing
-    // how far past the space between the placards the widest view of the walk may reach (behind a placard, or the screen's
-    // edge): an elongated temple seen from its long side is half again as wide as from its corner, and a walk that never
+    // the light on the stone (stone: 1 lit by its floods, 0 only its own lamps, as the film's lamps-only frame) and an
+    // overall exposure: shared by every material, so the hand-over can bring the stone back by light
+    this.u = { stone: { value: 1 }, exposure: { value: 1 }, tint: {} }; this.tweens = {};
+    // each subject's stone in the film's own colour: the baked models are paler and cooler than the film's last frame,
+    // the poster's look (mean ratios over the stone both draw at the hand-over, 23 Oct 2026), so a change from the
+    // picture to the 3D showed as a change of stone; warmed alike, only the light and the detail change hands
+    for (const [name, t] of Object.entries(TINT)) this.u.tint[name] = { value: new THREE.Vector3(...t) };
+    this.settle = 0; this.walkFit = {}; this.hull = null; this.centring = null; this.extents = null; this.fitKey = ''; this.band = null;   // the walk's framing
+    // how far past its space (the band between the name and the controls) the widest view of the walk may reach (under
+    // the name, or past the screen's edge): an elongated temple seen from its long side is half again as wide as from its corner, and a walk that never
     // crossed the edge would show the corner view, the poster's, much smaller than the poster
     this.overflow = 1.1;
     this.groups = { temple: new THREE.Group(), nandi: new THREE.Group(), mirror: new THREE.Group() };
@@ -59,20 +69,29 @@ export class Stage {
   stop() { this.lost = true; this.walk = null; cancelAnimationFrame(this.raf); this.raf = 0; try { this.renderer.dispose(); } catch (e) { /* already gone */ } }
 
   // ---------------------------------------------------------------- models
-  material(src, mirror) {
+  material(src, mirror, name) {
     const map = src.map; if (map) { map.colorSpace = THREE.SRGBColorSpace; map.anisotropy = Math.min(this.tier === 'hi' ? 8 : 4, this.renderer.capabilities.getMaxAnisotropy()); }
     const m = new THREE.MeshBasicMaterial({ map });
-    if (mirror) {
-      // the reflection: the same picture mirrored, fading into the ground with depth (as on the posters, about a third)
-      m.onBeforeCompile = (sh) => {
+    // the stone's light: at uStone 0 only the texture's lamps remain (its brightest, warm pixels: the lit jali, the door),
+    // as in the film's lamps-only frame; the stone returns as uStone rises. uExposure dims the whole. Both go to the
+    // page's own ground (#141414), as a picture fading on it does: unlit stone is never a black shape on the ground.
+    const light = 'vec3 lit = gl_FragColor.rgb * uTint, g = vec3(20.0 / 255.0); float lum = dot(lit, vec3(.2126, .7152, .0722));\n' +
+      'gl_FragColor.rgb = mix(g, mix(mix(g, lit, smoothstep(.62, .86, lum)), lit, uStone), uExposure);';
+    m.onBeforeCompile = (sh) => {
+      sh.uniforms.uStone = this.u.stone; sh.uniforms.uExposure = this.u.exposure; sh.uniforms.uTint = this.u.tint[name];
+      if (mirror) {
+        // the reflection: the same picture mirrored, fading into the ground with depth (as on the posters, about a third)
         sh.uniforms.uGround = { value: new THREE.Vector3(20 / 255, 20 / 255, 20 / 255) }; sh.uniforms.uK = { value: .28 }; sh.uniforms.uLen = { value: .16 };
         sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vWY;')
           .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWY = (modelMatrix * vec4(transformed, 1.0)).y;');
-        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen;')
-          .replace('#include <dithering_fragment>', '#include <dithering_fragment>\nfloat k = uK * pow(clamp(1.0 + vWY / uLen, 0.0, 1.0), 1.3);\ngl_FragColor.rgb = mix(uGround, gl_FragColor.rgb, k);');
-      };
-      m.customProgramCacheKey = () => 'mirror';
-    }
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen; uniform float uStone; uniform float uExposure; uniform vec3 uTint;')
+          .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light + '\nfloat k = uK * pow(clamp(1.0 + vWY / uLen, 0.0, 1.0), 1.3);\ngl_FragColor.rgb = mix(uGround, gl_FragColor.rgb, k);');
+      } else {
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uStone; uniform float uExposure; uniform vec3 uTint;')
+          .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light);
+      }
+    };
+    m.customProgramCacheKey = () => (mirror ? 'mirror' : 'stone');
     return m;
   }
 
@@ -100,9 +119,9 @@ export class Stage {
 
   place(name, model) {
     const grp = this.groups[name];
-    grp.children.filter((o) => o.isMesh).forEach((o) => grp.remove(o)); grp.add(new THREE.Mesh(model.geometry, this.material(model, false)));
+    grp.children.filter((o) => o.isMesh).forEach((o) => grp.remove(o)); grp.add(new THREE.Mesh(model.geometry, this.material(model, false, name)));
     this.groups.mirror.children.filter((c) => c.userData.of === name).forEach((c) => this.groups.mirror.remove(c));
-    const m = new THREE.Mesh(model.geometry, this.material(model, true)); m.userData.of = name;
+    const m = new THREE.Mesh(model.geometry, this.material(model, true, name)); m.userData.of = name;
     if (name === 'nandi') { m.position.copy(this.groups.nandi.position); m.rotation.copy(this.groups.nandi.rotation); m.scale.copy(this.groups.nandi.scale); }
     this.groups.mirror.add(m);
     this.dirty = true;
@@ -176,11 +195,16 @@ export class Stage {
     this.view = this.viewAt(this.az); this.dirty = true;
   }
   viewAt(az) { const w = this.walkFit[this.mode]; return orbitView(this.mode, az, this.settle, w && w.span); }
-  setSettle(k) { this.settleTween = null; this.settle = k; this.view = this.viewAt(this.az); this.dirty = true; }
+  setSettle(k) { delete this.tweens.settle; this.settle = k; this.view = this.viewAt(this.az); this.dirty = true; }
   // ease from the film's framing (0) to the walk's (1) over ms: the camera stepping back as the walk begins
-  settleTo(k, ms) { this.settleTween = { from: this.settle, to: k, dur: ms / 1000, t0: null }; this.request(); }
+  settleTo(k, ms) { this.tweenTo('settle', k, ms); }
+  // the stone's light and the exposure, now or over ms (the hand-over: the stone returns by light)
+  setLight(stone, exposure = this.u.exposure.value) { delete this.tweens.stone; delete this.tweens.exposure; this.u.stone.value = stone; this.u.exposure.value = exposure; this.dirty = true; }
+  tweenTo(name, to, ms) { this.tweens[name] = { from: this.value(name), to, dur: Math.max(.001, ms / 1000), t0: null }; this.request(); }
+  value(name) { return name === 'settle' ? this.settle : this.u[name].value; }
+  get settleTween() { return this.tweens.settle || null; }
   // the walk's one size per subject on this screen: its widest view, either side of its centre, reaches at most `overflow`
-  // of the space between the placards (the band), and from the tower's top to its base it fits 90 % of the band's height,
+  // of its space (the band between the name and the controls), and from the tower's top to its base it fits 90 % of the band's height,
   // at every angle, seen from the walk's own orbit. Its height in that band is fixed too (no bobbing).
   setBand(band) { this.band = band; this.fitWalk(); }
   fitWalk() {
@@ -194,19 +218,66 @@ export class Stage {
       const { U, Vt, Vb, dist } = this.extents[name];
       const span = Math.max(U * fr.w * dist / (this.overflow * Wb), (Vt + Vb) * fr.w * dist / (Hb * .9));
       const k = fr.w * dist / span;                                         // px per unit of tan, at zoom 1
-      this.walkFit[name] = { span, dy: bandCy - (frameCy - (Vt - Vb) / 2 * k) };   // dy: px to move it down, onto the band
+      this.walkFit[name] = { span, dy: bandCy - (frameCy - (Vt - Vb) / 2 * k), dx: 0, hy: 0 };   // dy: px to move it down, onto the band
+    }
+    // where a walk starts from the film's picture (a subject with an anchor), the camera steps back about the stone's own
+    // centre, and the walk keeps the picture's height as far round as it can: the picture sets the stone high, over its
+    // reflection, and a walk centred in its space let it sink as it began (54 px on a phone, 136 on a desktop; Harsh,
+    // 22 Oct: "why is it being dragged down?"). Seen from the far side the tower, nearest, stands up to a third taller;
+    // where the screen has no room above it (a phone sideways: the picture fills the height), the stone yields only as
+    // much as it must, on a smooth curve of the walk's angle that is nothing at home and greatest where the tower stands
+    // highest (alpha, its size; skew, where it peaks), so the tower's top stays nearly level; it is back at the picture's
+    // height by home. Sideways, the hold (a few px) eases away as it turns. The walk is never larger than the picture
+    // (one that began by drawing closer moved as much as one that stepped back)
+    for (const name of Object.keys(MODES)) if (MODES[name].anchor && this.hull) {
+      const { Vt, Vb, dist } = this.extents[name], f = this.walkFit[name];
+      const s = this.pictureFit(name).scale; if (s > 1) { f.span *= s; f.dy = bandCy - (frameCy - (Vt - Vb) / 2 * fr.w * dist / f.span); }
+      const d = this.homeShift(name); f.dx = d[0]; f.hy = d[1]; f.alpha = 0; f.skew = 0;
+      // (what it must give up at each angle, held at the picture's height: px past its space)
+      const ar = this.around(name), need = ar.map((e) => Math.max(0, f.hy < 0 ? band.top - (e.top + f.hy) : e.bottom + f.hy - band.bottom));
+      if (Math.max(...need) > .5) {
+        let best = Infinity;
+        for (let B = -.9; B < .95; B += .1) {
+          let A = 0, peak = 0;
+          ar.forEach((e, i) => { const sh = yieldShape(e.d, B); peak = Math.max(peak, sh); if (need[i] > 0) A = sh > .02 ? Math.max(A, need[i] / sh) : Infinity; });
+          if (A * peak < best) { best = A * peak; f.alpha = A / Math.abs(f.hy); f.skew = B; }
+        }
+      }
     }
     this.view = this.viewAt(this.az); this.dirty = true;
   }
+  // the stone's top and bottom (CSS px) in the walk's own framing, every 5° round from home
+  around(name) {
+    const keep = { mode: this.mode, settle: this.settle, view: this.view, zoom: this.zoom }, home = MODES[name].home, out = [];
+    this.mode = name; this.settle = 1; this.zoom = 1;
+    for (let d = 0; d < 360; d += 5) {
+      this.view = orbitView(name, home + d, 1, this.walkFit[name].span); this.apply(true); this.camera.updateMatrixWorld();
+      let top = Infinity, bottom = -Infinity;
+      for (const p of this.hull[name]) { const y = (1 - p.clone().project(this.camera).y) / 2 * this.size.h; if (y < top) top = y; if (y > bottom) bottom = y; }
+      out.push({ d, top, bottom });
+    }
+    Object.assign(this, keep); return out;
+  }
+  // the stone's centre at home, seen in the picture's framing (settle 0) less in the walk's (settle 1), in CSS px
+  homeShift(name) {
+    const keep = { mode: this.mode, settle: this.settle, view: this.view, zoom: this.zoom }, home = MODES[name].home;
+    const mean = (k) => {
+      this.mode = name; this.settle = k; this.zoom = 1; this.view = orbitView(name, home, k, this.walkFit[name].span); this.apply(true);
+      this.camera.updateMatrixWorld(); let x = 0, y = 0; const pts = this.hull[name];
+      for (const p of pts) { const v = p.clone().project(this.camera); x += (v.x + 1) / 2 * this.size.w; y += (1 - v.y) / 2 * this.size.h; }
+      return [x / pts.length, y / pts.length];
+    };
+    const a = mean(0), b = mean(1); Object.assign(this, keep); return [a[0] - b[0], a[1] - b[1]];
+  }
   // how the walk's view of the stone relates to the film's (the picture's): a least-squares scale and shift of the
-  // subject's extreme points seen through both cameras, in CSS px about the picture area's centre (the tests measure
-  // the camera's step back with it)
-  pictureFit() {
-    if (!this.hull || !this.walkFit[this.mode]) return null;
-    const keep = { settle: this.settle, view: this.view, zoom: this.zoom }, mode = this.mode, home = MODES[mode].home;
+  // subject's extreme points seen through both cameras, in CSS px about the picture area's centre (fitWalk keeps the walk
+  // no larger than the picture with it; the tests measure the camera's step back with it)
+  pictureFit(mode = this.mode) {
+    if (!this.hull || !this.walkFit[mode]) return null;
+    const keep = { mode: this.mode, settle: this.settle, view: this.view, zoom: this.zoom }, home = MODES[mode].home;
     const cx0 = this.frame.x + this.frame.w / 2, cy0 = this.frame.y + this.frame.h / 2;
     const seen = (k) => {
-      this.settle = k; this.zoom = 1; this.view = orbitView(mode, home, k, this.walkFit[mode].span); this.apply();
+      this.mode = mode; this.settle = k; this.zoom = 1; this.view = orbitView(mode, home, k, this.walkFit[mode].span); this.apply();
       this.camera.updateMatrixWorld();
       return this.hull[mode].map((p) => { const v = p.clone().project(this.camera); return [(v.x + 1) / 2 * this.size.w - cx0, (1 - v.y) / 2 * this.size.h - cy0]; });
     };
@@ -238,7 +309,7 @@ export class Stage {
   // the azimuth relative to the building's front (0 = facing its front), for the dial and the captions
   facing() { return wrap(this.az - MODES[this.mode].front + 180) - 180; }
 
-  apply() {
+  apply(bare) {
     const v = this.view, cam = this.camera, c = v.c || [0, 0];
     const a = THREE.MathUtils.degToRad(v.az);
     cam.position.set(c[0] + Math.cos(a) * v.r, v.h, c[1] + Math.sin(a) * v.r);
@@ -258,12 +329,17 @@ export class Stage {
     // the walk keeps the subject centred by a lens shift that follows a smooth curve of the azimuth (motion.js), so the
     // stone turns about a steady axis; in the canvas's NDC (vfov may be clamped)
     const cx = this.settle > 0 && this.centring ? centreAt(this.centring[this.mode], v.az) / (Math.tan(vfov / 2) * aspect) * (f.w / W) * this.settle : 0;
-    const fit = this.walkFit[this.mode], dy = fit && this.settle > 0 ? fit.dy * this.settle : 0;
+    // (the walk at the picture's height, yielding where it must toward the far side; sideways, its hold on the picture's
+    // centre fades as it turns from home)
+    const fit = this.walkFit[this.mode], An = MODES[this.mode].anchor, rel = An ? (v.az - An.az) * Math.PI / 180 : 0;
+    const hold = !bare && fit && An ? this.settle * Math.pow(Math.max(0, Math.cos(rel)), 8) : 0;
+    const keep = !bare && fit && An ? 1 - Math.min(1, (fit.alpha || 0) * yieldShape(v.az - An.az, fit.skew || 0)) : 0;
+    const dx = hold * (fit ? fit.dx : 0), dy = fit && this.settle > 0 ? (fit.dy + keep * (fit.hy || 0)) * this.settle : 0;
     // the film's own optical centre (the anchor's `shift`, in fractions of the picture area, right and down): the films
     // are cut from larger renders, whose centres are not the picture's; it fades as the camera steps into the walk
     const A = MODES[this.mode].anchor, k = A && A.shift ? 1 - this.settle : 0;
     const ox = k ? A.shift[0] * 2 * f.w / W * k : 0, oy = k ? A.shift[1] * 2 * f.h / H * k : 0;
-    cam.projectionMatrix.elements[8] = -sx + cx - ox; cam.projectionMatrix.elements[9] = -sy + dy / (H / 2) + oy;
+    cam.projectionMatrix.elements[8] = -sx + cx - ox - dx / (W / 2); cam.projectionMatrix.elements[9] = -sy + dy / (H / 2) + oy;
     cam.projectionMatrixInverse.copy(cam.projectionMatrix).invert();
   }
 
@@ -288,11 +364,11 @@ export class Stage {
     if (document.hidden) { this.last = 0; return; }        // asleep while put away; coming back marks it dirty
     const dt = Math.min(.05, (now - (this.last || now)) / 1000); this.last = now;
     let moving = false;
-    if (this.settleTween) {                                 // the camera stepping back to the walk's framing
-      const s = this.settleTween; if (s.t0 === null) s.t0 = now;
-      const u = Math.min(1, (now - s.t0) / 1000 / s.dur);
-      this.settle = s.from + (s.to - s.from) * smoothstep(u); this.view = this.viewAt(this.az); this.dirty = true;
-      if (u >= 1) this.settleTween = null; else moving = true;
+    for (const [name, s] of Object.entries(this.tweens)) {   // the camera stepping back; the stone's light; the exposure
+      if (s.t0 === null) s.t0 = now;
+      const u = Math.min(1, (now - s.t0) / 1000 / s.dur), v = s.from + (s.to - s.from) * smoothstep(u);
+      if (name === 'settle') { this.settle = v; this.view = this.viewAt(this.az); } else this.u[name].value = v;
+      this.dirty = true; if (u >= 1) delete this.tweens[name]; else moving = true;
     }
     if (this.walk) {                                        // a round, or a soft stop: the angle is a function of time
       const w = this.walk; if (w.t0 === null) w.t0 = now;

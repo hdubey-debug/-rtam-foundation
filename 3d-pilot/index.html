@@ -42,7 +42,7 @@ img, video { display: block }
 
 /* the 3D, full screen behind everything; it appears when the lamps hand over */
 #gl { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .5s var(--ease); touch-action: none }
-:is(.s-handoff, .s-walk) #gl { opacity: 1 }
+.s-walk #gl { opacity: 1 }
 /* composited (unseen) from the landing on, while the page is still: its first compositing costs a frame or so, which
    must fall neither in the film's last moment nor in the hand-over */
 [data-pilot] :is(.s-poster, .s-film, .s-hold) #gl { opacity: .002; transition: none }
@@ -65,14 +65,17 @@ img, video { display: block }
 /* the pictures lie on the page's black and lighten it: where a film's black decodes a level dark, the page's shows */
 #frame { background: var(--ground) }
 #frame > img, #frame > video { mix-blend-mode: lighten }
-#still, #film, #last { opacity: 0; transition: opacity .9s var(--ease) }
+#still, #film, #last, #lamps { opacity: 0; transition: opacity .9s var(--ease) }
 .s-poster #still { opacity: 1 }
 .s-film #film, :is(.s-hold, .s-handoff) #last { opacity: 1 }
+/* the film's end: its last frame, as a still, covers it at once and the film leaves beneath (two copies of one picture
+   cross-fading would dip the light by a quarter at their midpoint: a blink as the film ends) */
+:is(.s-hold, .s-handoff) #last { transition: none }
 [data-pilot] .s-film:not(.playing) #still { opacity: 1 }   /* until the film plays its first frame (the same picture) */
 /* the hand-over, in place (Harsh, 22 Oct: "the image is there, and then the 3D model shows up at a similar size"): the 3D
-   rises under the film's last frame, drawn through the film's own camera, and the picture then leaves; nothing moves */
-#frame { transition: opacity .9s .35s var(--ease) }
-:is(.s-handoff, .s-walk) #frame { opacity: 0 }
+   rises under the picture, drawn through the film's own camera, and the picture leaves; nothing moves. Its timing is
+   app.js's (HANDOVER); here only where it ends */
+.s-walk #frame { opacity: 0 }
 [data-tier="still"].s-walk #frame { opacity: 1; transition: none }
 [data-tier="still"].s-walk #still { opacity: 1 }
 [data-subject="temple"] #frame { --tx: 34.39%; --ty: 50.1%; --th: 14.08% } [data-subject="nandi"] #frame { --tx: 50.0%; --ty: 47.0%; --th: 9.0% }
@@ -114,6 +117,15 @@ img, video { display: block }
 #modes button .en { font-size: 7.5px; letter-spacing: .2em; color: var(--quiet); transition: color .3s }
 #modes button::after { content: ''; width: 16px; height: 1px; margin-top: 2px; background: transparent; transition: background .3s }
 #modes button.on, #modes button.on .en { color: var(--ash) } #modes button.on::after { background: var(--ash) }
+/* upright, under the caption, the dial and the three views share one row (the 3D keeps the height); a phone narrower
+   than 360 px keeps them in two */
+@media (orientation: portrait) and (min-width: 360px) {
+  #ui { display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center; column-gap: 6px; row-gap: 4px }
+  #caption { grid-column: 1 / -1 }
+  #walk { padding-inline: 6px 8px; gap: 9px }
+  #modes { gap: 4px }
+  #modes button { padding-inline: 6px }
+}
 
 /* the foot: as the A2 poster's (the chakra, the full address pair, and in the QR's place, sharing) */
 #foot { position: absolute; left: calc(var(--sl) + 5vw); right: calc(var(--sr) + 5vw); bottom: calc(var(--sb) + 2.6vh); display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: opacity .6s }
@@ -234,6 +246,7 @@ img, video { display: block }
     <img id="still" src="media/temple-first.webp" alt="ऋतम्भरेश्वर मंदिर, संध्या में · the temple at dusk">
     <video id="film" muted playsinline preload="metadata" aria-hidden="true"></video>
     <img id="last" src="media/temple-last.webp" alt="" aria-hidden="true">
+    <img id="lamps" src="media/temple-lamps.webp" alt="" aria-hidden="true">
     <div id="thread" aria-hidden="true"></div>
   </div></div>
   <div id="side">

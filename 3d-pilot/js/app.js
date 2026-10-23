@@ -163,7 +163,7 @@ else if (PILOT) {                                     // the pilot: the visitor 
   // moment they appear drops frames)
   afterOpening(() => {
     if (state === 'poster') { film.preload = 'auto'; film.load(); }
-    const last = $('#last'); if (last.decode) last.decode().catch(() => {});
+    for (const im of [$('#last'), $('#lamps')]) if (im.decode) im.decode().catch(() => {});
   });
 }
 else {
@@ -186,7 +186,9 @@ function handoff() {
   if (!stage || !stageReady) { set('handoff'); setTimeout(stillWalk, 900); return; }
   layout(); stage.setMode(START); stage.setSettle(0); stage.shown = true;
   set('handoff');
+  const ms = ((!reduce && HANDOVER[qs.get('ho')]) || HANDOVER.a)();      // (under reduced motion, A's quiet cross-fade)
   setTimeout(() => {
+    for (const a of hoAnims.splice(0)) a.cancel();      // the page's own CSS holds the end state
     if (!stage) { stillWalk(); return; }
     set('walk'); markMode(START);
     if (PILOT) beginWalk();
@@ -195,8 +197,44 @@ function handoff() {
       caption(START === 'nandi' ? 'introNandi' : 'intro', true);
       setTimeout(() => { introUntil = 0; onFrame(stage.az); }, 4300);
     }
-  }, 1300);
+  }, ms);
 }
+// Three ways for the picture to become the 3D, in place, to compare (?ho=a|b|c; a the default). Light carries each one.
+const SINE = 'cubic-bezier(.37, 0, .63, 1)';
+let hoAnims = [];
+// (a second fade of the same element waits for its own start: fill 'forwards', or its first value would apply at once)
+const fadeTo = (el, from, to, ms, delay = 0, fill = 'both') => hoAnims.push(el.animate([{ opacity: from }, { opacity: to }], { duration: ms, delay, easing: SINE, fill }));
+const HANDOVER = {
+  // A, the lamps stay, the stone returns: the floods go down and the lamps stay lit; the 3D rises under those lamps with
+  // its stone dark (its own lamps-only look); the picture leaves; then the stone comes back by light (1.6 s, a flood).
+  // The temple's lamps are its windows and door, lit in the picture and in the 3D alike. Nandi's lamps-only picture is
+  // its lamp's light on the ceiling alone, a bar of light in the dark (Harsh, 22 Oct: "a rectangular patch"): the
+  // mandapa dims instead to the 3D's own lamp, which rises as the picture goes.
+  a() {
+    if (reduce) { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#frame'), 1, 0, 300, 150); return 500; }
+    stage.setLight(0, 1);
+    if (START === 'nandi') { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#last'), 1, 0, 900); fadeTo($('#frame'), 1, 0, 700, 400); }
+    else { fadeTo($('#lamps'), 0, 1, 600); fadeTo($('#last'), 1, 0, 900); fadeTo($('#gl'), .002, 1, 400, 400); fadeTo($('#frame'), 1, 0, 600, 1000); }
+    setTimeout(() => stage && stage.tweenTo('stone', 1, 1600), 1200);
+    return 2900;
+  },
+  // B, a breath of light: the scene dims to under half; at its lowest the picture becomes the 3D; the light comes back.
+  // (The picture dims inside its frame, over the frame's own ground, while the 3D rises unseen under the frame at the
+  // same light; then the frame leaves: dimmed picture to dimmed 3D, with no brightening between.)
+  b() {
+    stage.setLight(1, .42);
+    fadeTo($('#last'), 1, .42, 550); fadeTo($('#gl'), .002, 1, 300, 300); fadeTo($('#frame'), 1, 0, 500, 650);
+    setTimeout(() => stage && stage.tweenTo('exposure', 1, 1000), 1100);
+    return 2200;
+  },
+  // C, the poster comes alive: the 3D takes over as it begins to turn, so its depth is what tells the change
+  c() {
+    stage.setLight(1, 1);
+    fadeTo($('#gl'), .002, 1, 300); fadeTo($('#frame'), 1, 0, 1300, 300);
+    stage.settleTo(1, 4500); stage.spin(); $('#walk').classList.add('on');
+    return 1500;
+  },
+};
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
 // the landing, upright: the temple's picture and the lamp under it, fitted between the name and the address in what is
@@ -208,16 +246,17 @@ function fitPoster() {
     st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; return;
   }
   const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
-  // the lamp, and in the walk its controls, in one place under the temple's base (on its reflection): the taller sets it
+  // the lamp under the temple's base (on its reflection); in the walk, its controls just above the foot
   const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top;
-  const P = Math.max(pl.offsetHeight || 135, ui.offsetHeight || 150);
+  const P = pl.offsetHeight || 135;
   const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
   let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
   if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
   const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(W * .92 * .75, H * .45, (room - P) / under));   // (90: an iPhone SE with its bars)
   const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
   st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
-  pl.style.top = ui.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = ui.style.bottom = 'auto';
+  pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
+  ui.style.top = (F - g2 - (ui.offsetHeight || 150)).toFixed(1) + 'px'; ui.style.bottom = 'auto';
 }
 addEventListener('load', () => fitPoster());
 function layout() {
@@ -226,8 +265,11 @@ function layout() {
   const tt = $('#title .lockup').getBoundingClientRect(), ui = $('#ui').getBoundingClientRect();
   fade('--fadeTop', Math.round(tt.bottom) + 'px'); fade('--fadeBot', Math.round(ui.top + 8) + 'px');
   if (!stage) return; const r = $('#frame').getBoundingClientRect(); stage.setFrame({ x: r.left, y: r.top, w: r.width, h: r.height }); stage.resize();
-  // where the stone is seen: sideways, the picture area; upright, between the name and the controls (the 3D's mask)
-  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: r.top + 4, bottom: r.bottom - 4, left: r.left, right: r.right }
+  // where the stone is seen: sideways, the picture's column, its full height (over and under the picture is only the
+  // page's ground once the picture has gone, room the tower uses when it comes nearest); upright, between the name and
+  // the controls (the 3D's mask)
+  const sc = $('#stage').getBoundingClientRect();
+  stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: Math.min(r.top, sc.top) + 4, bottom: Math.max(r.bottom, sc.bottom) - 4, left: r.left, right: r.right }
                                                                 : { top: tt.bottom, bottom: ui.top, left: 0, right: innerWidth });
 }
 // the 3D's mask edges, set only when they move (each change restyles the page and redraws the mask)
@@ -265,10 +307,10 @@ function beginWalk() {
   introUntil = 0; onFrame(stage.az);
   if (reduce) { stage.setSettle(1); invite(); return; }
   setTimeout(() => {
-    if (state !== 'walk' || !stage) return;
-    stage.settleTo(1, 4500);                              // the camera steps back to the walk's one size as it starts round
+    if (state !== 'walk' || !stage || stage.spinning) return;
+    if (stage.settle < 1 && !stage.settleTween) stage.settleTo(1, 4500);   // the camera steps back, about the stone's centre
     if (!held) walkRound(); else invite();
-  }, 700);
+  }, 500);
 }
 function walkRound() { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(); }
 function spinEnded(completed) {
