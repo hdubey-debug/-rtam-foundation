@@ -13,7 +13,10 @@ const SINE = 'cubic-bezier(.37, 0, .63, 1)', EXPO = 'cubic-bezier(.16, 1, .3, 1)
 let appReady = false;                                     // app.js's handshake: every control is wired
 addEventListener('rtam:app-ready', () => { appReady = true; }, { once: true });
 
-if (!Element.prototype.animate || /[?&]skip\b/.test(location.search)) { html.classList.remove('intro'); dispatchEvent(new Event('rtam:intro-done')); }
+// rtam:ready: the page is ready (the 3D may start arriving: it never competes with the landing); rtam:intro-done: the
+// landing is up (the film's bytes may come)
+const ready = () => { if (!html.dataset.ready) { html.dataset.ready = '1'; dispatchEvent(new Event('rtam:ready')); } };
+if (!Element.prototype.animate || /[?&]skip\b/.test(location.search)) { html.classList.remove('intro'); ready(); dispatchEvent(new Event('rtam:intro-done')); }
 else open();
 
 function open() {
@@ -67,7 +70,7 @@ function open() {
   started.then((t0) => {
     let decided = false;
     const decide = () => {
-      if (decided) return; decided = true;
+      if (decided) return; decided = true; ready();
       const readyAt = (now() - t0) / 1000;
       if (reduce) { dissolve(Math.max(now(), t0 + 1200), true); return; }
       // the turn as one animation from its start: steady, then braking from its slot to rest upright (the same curve
@@ -107,7 +110,7 @@ function open() {
     for (const el of held) el.style.opacity = '';         // their own CSS again (the animations hold them meanwhile)
     for (const a of anims) a.cancel();
     if (turn) turn.cancel();
-    html.classList.remove('intro-run');                   // the lamp and the door's thread begin to breathe
+    ready(); html.classList.remove('intro-run');                   // the lamp and the door's thread begin to breathe
     box.remove();
     requestAnimationFrame(() => requestAnimationFrame(() => { for (const el of held) el.style.transition = ''; }));
     dispatchEvent(new Event('rtam:intro-done'));

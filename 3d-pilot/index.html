@@ -67,6 +67,7 @@ img, video { display: block }
 #still, #film, #lamps, #last { opacity: 0; transition: opacity .9s var(--ease) }
 .s-poster #still { opacity: 1 }
 .s-film #film, .s-hold #last { opacity: 1 }
+[data-pilot] .s-film:not(.playing) #still { opacity: 1 }   /* until the film plays its first frame (the same picture) */
 .s-handoff #lamps { opacity: 1 }
 .s-walk #lamps { opacity: 0; transition: opacity 1.6s .3s var(--ease) }
 [data-tier="still"].s-walk #still { opacity: 1 }

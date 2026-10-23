@@ -89,9 +89,9 @@ film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;      // only it
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
 let stage = null, has3D = tier !== 'still', stageReady = false, filmDone = false, introUntil = 0;
-// the 3D (three.js and the models) arrives behind the opening and the landing, never in their way: the page is ready
-// without it, and waits for it only after the film, 15 s at most
-if (has3D) {
+// the 3D (three.js and the models) starts arriving once the page itself is ready (intro.js: rtam:ready; 8 s at most),
+// so on a slow line it never takes the landing's bandwidth; it is waited for only after the film, 15 s at most
+if (has3D) whenReady(() => {
   import('./stage.js').then(({ Stage }) => {
     if (!has3D) return null;
     stage = new Stage($('#gl'), { tier });
@@ -102,8 +102,13 @@ if (has3D) {
     if (!stage) return;
     stageReady = true; stage.setMode(START); if (filmDone && state === 'hold') waitThenHandoff();
   }).catch(lost);
-}
+});
 fitPoster();
+function whenReady(fn) {
+  const h = document.documentElement, go = () => { if (!go.on) { go.on = true; fn(); } };
+  if (h.dataset.ready || !(h.classList.contains('intro') || h.classList.contains('intro-run'))) { go(); return; }
+  addEventListener('rtam:ready', go, { once: true }); setTimeout(go, 8000);
+}
 // the 3D gave up (its code or models failed, the phone took the GPU back, or it came too late): the night pictures
 function lost() {
   const s = stage; stage = null; has3D = false; stageReady = false; body.dataset.tier = 'still';
@@ -120,12 +125,15 @@ function startFilm() {
     else { set('poster'); $('#play').hidden = false; }  // autoplay refused: the visitor lights the lamps
   });
 }
-// a film that stalls (a weak line) does not hold the visit up: 4 s without a new frame, and the lamps hand over
+// a film that stalls (a weak line) does not hold the visit up: 8 s for its first frame, then 4 s without a new one,
+// and the lamps hand over (the dusk picture stays until it plays: body.playing)
+film.addEventListener('playing', () => body.classList.add('playing'));
 function watch() {
   let last = -1, idle = 0;
   const t = setInterval(() => {
     if (state !== 'film') { clearInterval(t); return; }
-    if (film.currentTime !== last) { last = film.currentTime; idle = 0; } else if (++idle >= 4) { clearInterval(t); filmEnded(); }
+    if (film.currentTime !== last) { last = film.currentTime; idle = 0; }
+    else if (++idle >= (body.classList.contains('playing') ? 4 : 8)) { clearInterval(t); filmEnded(); }
   }, 1000);
 }
 let heldAt = 0;
