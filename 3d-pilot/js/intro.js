@@ -40,18 +40,19 @@ function open() {
   const box = document.createElement('div'); box.id = 'intro'; box.setAttribute('aria-hidden', 'true');
   box.innerHTML = `<div class="lt"><canvas></canvas>${mark}</div>`;
   const lt = box.firstChild, halo = lt.firstChild, ck = lt.lastChild;
-  // on the landing picture's centre, so the temple rises where the chakra was; a third of the shorter side, 112-160 px
+  // in the centre of what is visible, upright or sideways (Harsh, 22 Oct: "the icon has to be centered"; a phone's fixed
+  // layer can be taller than the screen while the browser's bars show); a third of the shorter side, 112-160 px
   let size = 0;
   const place = () => {
-    const r = $('#stage').getBoundingClientRect(), vv = window.visualViewport;
-    const s = Math.round(Math.min(160, Math.max(112, Math.min(vv ? vv.width : innerWidth, vv ? vv.height : innerHeight) * .34)));
-    box.style.setProperty('--x', Math.round(r.left + r.width / 2) + 'px'); box.style.setProperty('--y', Math.round(r.top + r.height / 2) + 'px');
+    const vv = window.visualViewport, W = vv ? vv.width : innerWidth, H = vv ? vv.height : innerHeight;
+    const s = Math.round(Math.min(160, Math.max(112, Math.min(W, H) * .34)));
+    box.style.setProperty('--x', Math.round((vv ? vv.offsetLeft : 0) + W / 2) + 'px'); box.style.setProperty('--y', Math.round((vv ? vv.offsetTop : 0) + H / 2) + 'px');
     box.style.setProperty('--s', s + 'px');
     if (s !== size) { size = s; drawHalo(halo, s); }
   };
   place();
   document.body.appendChild(box);
-  addEventListener('resize', place);
+  addEventListener('resize', place); if (window.visualViewport) visualViewport.addEventListener('resize', place);   // (the bars come and go)
 
   const anims = [], now = () => document.timeline.currentTime;
   const at = (el, frames, ms, start, easing) => {            // an animation starting at a moment of the document's timeline
@@ -110,6 +111,7 @@ function open() {
   function done() {
     if (done.on) return; done.on = true;
     document.removeEventListener('click', done, true); removeEventListener('resize', place);
+    if (window.visualViewport) visualViewport.removeEventListener('resize', place);
     for (const el of held) el.style.opacity = '';         // their own CSS again (the animations hold them meanwhile)
     for (const a of anims) a.cancel();
     if (turn) turn.cancel();
