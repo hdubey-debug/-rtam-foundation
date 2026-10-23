@@ -249,6 +249,9 @@ function onFrame(az) {
   const f = stage.facing();
   $('#walk .dial i').style.transform = `rotate(${f.toFixed(1)}deg)`;      // walking round clockwise turns the dot clockwise
   if (PILOT) walkedRound(az);
+  // the walk's own round slowing to rest: its words hold, and प्रदक्षिणा पूर्ण follows as it stops (never the start's
+  // words in between)
+  if (stage.spinning && stage.roundLeft() < 3.5) { clearTimeout(waitT); want = shown; return; }
   if (state === 'walk' && performance.now() > introUntil && !hintOn) caption(sectorWord(stage.mode, az, f));
 }
 

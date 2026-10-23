@@ -114,15 +114,27 @@ export class Stage {
     g.fillStyle = rg; g.fillRect(0, 0, 128, 128);
     const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
     const mat = (o) => new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: o, depthWrite: false, blending: THREE.AdditiveBlending });
-    const win = mat(.42), door = mat(.6), lamp = mat(.5);
+    const win = mat(.42), lamp = mat(.5);
     for (const [x, y, z, nx, nz, w, h] of L.temple.windows) {
       const sp = new THREE.Sprite(win); sp.position.set(x + nx * .012, y, z + nz * .012); sp.scale.set(w * 2.4, h * 2.4, 1); this.groups.temple.add(sp);
     }
+    // the door's light is the landing's thread: a thin vertical line of lamplight in the gap of the door, fading at its
+    // ends (a round glow there read as nothing at all)
+    const t = document.createElement('canvas'); t.width = 32; t.height = 128; const tg = t.getContext('2d'), td = tg.createImageData(32, 128);
+    const ss = (u) => (u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u));
+    for (let y = 0; y < 128; y++) for (let x = 0; x < 32; x++) {
+      const u = (x + .5) / 32 - .5, v = (y + .5) / 128, end = ss(v / .22) * ss((1 - v) / .22);
+      const core = Math.exp(-((u / .05) ** 2)), soft = .35 * Math.exp(-((u / .2) ** 2)), a = Math.min(1, (core + soft) * end), o = (y * 32 + x) * 4;
+      td.data[o] = 255; td.data[o + 1] = Math.round(206 + 30 * core); td.data[o + 2] = Math.round(140 + 50 * core); td.data[o + 3] = Math.round(255 * a);
+    }
+    tg.putImageData(td, 0, 0);
+    const tt = new THREE.CanvasTexture(t); tt.colorSpace = THREE.SRGBColorSpace;
+    const doorLight = new THREE.SpriteMaterial({ map: tt, transparent: true, opacity: .6, depthWrite: false, blending: THREE.AdditiveBlending });
     const [dx, dy, dz, dh] = L.temple.door;
-    const sd = new THREE.Sprite(door); sd.position.set(dx, dy, dz + .012); sd.scale.set(.02, dh * 1.25, 1); this.groups.temple.add(sd);
+    const sd = new THREE.Sprite(doorLight); sd.position.set(dx, dy, dz + .012); sd.scale.set(.02, dh * 1.25, 1); this.groups.temple.add(sd);
     const [lx, ly, lz, ls] = L.nandi.lamp;
     const sl = new THREE.Sprite(lamp); sl.position.set(lx, ly, lz); sl.scale.set(ls, ls * .55, 1); this.groups.nandi.add(sl);
-    this.glows = [win, door, lamp]; this.dirty = true;
+    this.glows = [win, doorLight, lamp]; this.dirty = true;
   }
 
   // one set of models for the whole visit, never swapped mid-walk: the sharp ones on a desktop, the light ones on phones

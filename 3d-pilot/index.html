@@ -223,7 +223,7 @@ img, video { display: block }
 #intro { position: fixed; inset: 0; z-index: 20; touch-action: none }
 #intro .lt { position: absolute; left: var(--x, 50vw); top: var(--y, 50vh); width: var(--s, 132px); height: var(--s, 132px);
   margin: calc(var(--s, 132px) / -2) 0 0 calc(var(--s, 132px) / -2) }
-#intro .lt canvas { position: absolute; left: -60%; top: -60%; width: 220%; height: 220% }
+#intro .lt canvas { position: absolute; left: -60%; top: -60%; width: 220%; height: 220%; mix-blend-mode: lighten }   /* its ground never darkens the temple rising beneath */
 #intro .ck { position: absolute; inset: 0; width: 100%; height: 100% }
 @keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
 @media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }

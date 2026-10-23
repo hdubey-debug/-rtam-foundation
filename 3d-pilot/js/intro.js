@@ -23,11 +23,12 @@ function open() {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const play = $('#play'), still = $('#still'), thread = $('#thread');
   play.hidden = false;                                    // laid out beneath, so it is ready the moment it shows
-  // what the landing brings, hidden until the opening hands over (their own CSS fades held off meanwhile, or a fade
-  // of theirs would show through)
+  // what the landing brings, held unseen until the opening hands over (their own CSS fades held off meanwhile, or a
+  // fade of theirs would show through). At a thousandth, not nothing: already painted and on the GPU, so the dissolve
+  // needs no first paint from a main thread that may be busy taking the 3D apart
   const words = ['#title .kicker', '#title .lockup', '#title .lotus', '#foot', '#play'].map($).filter(Boolean);
   const held = [still, thread, ...words].filter(Boolean);
-  for (const el of held) { el.style.transition = 'none'; el.style.opacity = '0'; }
+  for (const el of held) { el.style.transition = 'none'; el.style.opacity = '.001'; }
   html.classList.add('intro-run'); html.classList.remove('intro');     // the opening owns the landing from here
 
   // the mark (the garbhagriha register: bhasma ash, mahakala windows and seams, the gold bindu), in its own light
@@ -84,13 +85,15 @@ function open() {
     setTimeout(decide, Math.max(0, t0 + TURN.slots[TURN.slots.length - 1] * 1000 - 60 - now()));
   });
 
-  // the dissolve, in two beats from D (S1). Light: the chakra fades (900 ms) as the door's thread ignites (500 ms) and
-  // the temple floods in (1600 ms, from 300 ms), so the two are never seen at once and the frame is never black.
+  // the dissolve, in two beats from D (S1). Light: the chakra fades (900 ms) as the door's thread ignites (400 ms, to
+  // full, then settling) and the temple floods in (1600 ms, from 300 ms), so the two are never seen at once and the
+  // frame is never black; the chakra's own light lingers 400 ms longer, so warm light is there as the stone arrives.
   // Then the name, the lamp and the foot, together (900 ms, from 1400 ms). Under reduced motion, all within 600 ms.
   function dissolve(D, quick) {
     const k = quick ? .3 : 1;
-    at(lt, [{ opacity: 1 }, { opacity: 0 }], 900 * k, D, SINE);
-    if (thread) at(thread, [{ opacity: 0 }, { opacity: .85 }], 500 * k, D, EXPO);
+    at(ck, [{ opacity: 1 }, { opacity: 0 }], 900 * k, D, SINE);
+    at(halo, [{ opacity: 1 }, { opacity: 0 }], 1300 * k, D, SINE);
+    if (thread) { at(thread, [{ opacity: 0 }, { opacity: 1 }], 400 * k, D, EXPO); at(thread, [{ opacity: 1 }, { opacity: .85 }], 600 * k, D + 400 * k, SINE); }
     at(still, [{ opacity: 0 }, { opacity: 1 }], quick ? 400 : 1600, D + 300 * k, SINE);
     let last = null;
     for (const el of words) last = at(el, [{ opacity: 0 }, { opacity: 1 }], quick ? 400 : 900, D + (quick ? 200 : 1400), SINE);
