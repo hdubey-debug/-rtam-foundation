@@ -56,7 +56,7 @@ img, video { display: block }
 
 /* the picture area: the poster frame, the film, the lamps (with the poster's side margins) */
 #stage { position: absolute; left: 0; right: 0; top: 33vh; height: 45vh; pointer-events: none; container-type: size; transition: top .9s var(--ease), height .9s var(--ease) }
-#frame { position: absolute; left: 50%; top: 50%; width: min(92cqw, 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%);
+#frame { position: absolute; left: 50%; top: 50%; width: min(var(--fw, 92cqw), 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%);
   /* its edges dissolve into the page: a film's black can decode a level or two off the page's, and no edge may show */
   -webkit-mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
   -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
@@ -90,6 +90,15 @@ img, video { display: block }
 #title .lotus { display: none }
 #title .kicker { width: min(46vw, 260px); transition: opacity .6s }
 #title .lockup { width: min(84vw, 470px); margin-top: -1vh }
+#title picture { display: contents } #title source { display: none }   /* (the lockup's own box in the column, as before) */
+/* upright, the temple and Nandi are what the page is for (Harsh, 23 Oct: "They look like tiny icons… we want to show
+   them the Temple"): the name is set smaller and cut to its letters (lockup-tight.svg), so the stone below gets the
+   height; sideways it stays as the A3 board */
+@media (orientation: portrait) {
+  #title { top: calc(var(--st) + 3vh); gap: .8vh }
+  #title .kicker { width: min(38vw, 220px) }
+  #title .lockup { width: min(60vw, 360px); margin-top: 0 }
+}
 
 #side { display: contents }
 /* the walk: a caption, where one is on the path, and where to go; text only, as the posters */
@@ -253,7 +262,7 @@ img, video { display: block }
   <header id="title">
     <img class="lotus" src="img/lotus.svg" alt="">
     <img class="kicker" src="img/kicker.svg" alt="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
-    <img class="lockup" src="img/lockup.svg" alt="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir">
+    <picture><source media="(orientation: portrait)" srcset="img/lockup-tight.svg"><img class="lockup" src="img/lockup.svg" alt="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir"></picture>
   </header>
   <div id="ui">
     <p id="caption" aria-live="polite"><span class="dn"></span><span class="en"></span></p>

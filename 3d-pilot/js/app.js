@@ -88,6 +88,8 @@ const film = $('#film');
 film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;      // only its first bytes for now (preload="metadata")
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
+// the stone's width in its picture (a share of the film's frame): the temple's spans it nearly whole, the mandapa's not
+const FILL = START === 'nandi' ? .87 : .97;
 let stage = null, has3D = tier !== 'still', stageReady = false, filmDone = false, introUntil = 0;
 // the 3D (three.js and the models) starts arriving once the page itself is ready (intro.js: rtam:ready; 8 s at most),
 // so on a slow line it never takes the landing's bandwidth; it is waited for only after the film, 15 s at most
@@ -243,7 +245,7 @@ const HANDOVER = {
 function fitPoster() {
   const st = $('#stage'), pl = $('#play'), ui = $('#ui');
   if (matchMedia('(orientation: landscape)').matches) {          // (the same in every state: nothing moves after the landing)
-    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; return;
+    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; st.style.removeProperty('--fw'); return;
   }
   const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
   // the lamp under the temple's base (on its reflection); in the walk, its controls just above the foot
@@ -252,8 +254,12 @@ function fitPoster() {
   const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
   let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
   if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
-  const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(W * .92 * .75, H * .45, (room - P) / under));   // (90: an iPhone SE with its bars)
+  // the picture sized by the stone in it, not by its frame: the stone fills nine tenths of the width (Harsh, 23 Oct:
+  // "They look like tiny icons"); the frame's dark sides may pass the screen's edges
+  const fw = W * .9 / FILL;
+  const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(fw * .75, H * .52, (room - P) / under));   // (90: an iPhone SE with its bars)
   const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
+  st.style.setProperty('--fw', fw.toFixed(1) + 'px');
   st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
   pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
   ui.style.top = (F - g2 - (ui.offsetHeight || 150)).toFixed(1) + 'px'; ui.style.bottom = 'auto';
