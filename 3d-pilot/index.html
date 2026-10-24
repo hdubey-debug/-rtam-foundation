@@ -125,6 +125,32 @@ img, video { display: block }
 #walk .lbl > span:first-child { font: 400 clamp(14px, 4vw, 16px)/1 var(--deva) }
 #walk .lbl .en { font-size: 7.5px; letter-spacing: .2em; color: var(--quiet) }
 #walk.on .dial { border-color: rgba(243,217,160,.6) } #walk.on .dial i::before { background: var(--lamp); box-shadow: 0 0 9px rgba(243,217,160,.9) }
+/* the dial is the wheel of the twelve Ādityas (the chakra's twelve: ṛta, in Harsh's reading): a bead on the ring for every
+   30° round the building, from its front at the top; each lights as the visitor's place passes it walking clockwise
+   (pradakshina) and goes out again walking back; at twelve the wheel is whole and the temple's lamps answer (app.js
+   beadWalk). Ash, never gold: the bindu keeps the one gold */
+#walk .dial { width: 34px; height: 34px }
+#walk .dial b { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%; background: var(--ground);
+  box-shadow: inset 0 0 0 1px var(--hair); transform: rotate(calc(var(--k) * 30deg)) translateY(calc(.5px - var(--r, 17px)));
+  transition: background .5s cubic-bezier(.16, 1, .3, 1), box-shadow .5s cubic-bezier(.16, 1, .3, 1) }
+#walk .dial b.lit { background: var(--ash); box-shadow: 0 0 0 0 transparent }
+#walk .dial i { z-index: 1 }
+/* the stone can be turned by hand: a desktop's pointer says so */
+.s-walk #gl { cursor: grab } .s-walk #gl:active { cursor: grabbing }
+/* Nandi's picture has no door: no thread over it (it lay on his chest) */
+[data-subject="nandi"] #thread { display: none }
+#walk .dial b:nth-of-type(1) { --k: 0 }
+#walk .dial b:nth-of-type(2) { --k: 1 }
+#walk .dial b:nth-of-type(3) { --k: 2 }
+#walk .dial b:nth-of-type(4) { --k: 3 }
+#walk .dial b:nth-of-type(5) { --k: 4 }
+#walk .dial b:nth-of-type(6) { --k: 5 }
+#walk .dial b:nth-of-type(7) { --k: 6 }
+#walk .dial b:nth-of-type(8) { --k: 7 }
+#walk .dial b:nth-of-type(9) { --k: 8 }
+#walk .dial b:nth-of-type(10) { --k: 9 }
+#walk .dial b:nth-of-type(11) { --k: 10 }
+#walk .dial b:nth-of-type(12) { --k: 11 }
 /* what to walk round: the temple, Nandi's mandapa, or the whole complex */
 #modes { display: flex; justify-content: center; gap: clamp(10px, 5vw, 30px) }
 #modes button { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 9px 8px 6px; color: var(--quiet); transition: color .3s }
@@ -142,7 +168,8 @@ img, video { display: block }
   #modes button { padding-inline: 6px }
 }
 
-/* the foot: as the A2 poster's (the chakra, the full address pair, and in the QR's place, sharing) */
+/* the foot: as the A2 poster's (the chakra, the full address pair, and in the QR's place, contact: the sheet with
+   directions, the phones and sharing; Harsh, 23 Oct: "I don't know that I need to click on the address to contact") */
 #foot { position: absolute; left: calc(var(--sl) + 5vw); right: calc(var(--sr) + 5vw); bottom: calc(var(--sb) + 2.6vh); display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: opacity .6s }
 #foot .lotus { width: 38px; height: 38px; flex: none }
 .addr { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; text-align: center }
@@ -184,20 +211,23 @@ img, video { display: block }
 
 /* sideways: the A3 board (the name column left, the picture right) */
 @media (orientation: landscape) {
-  #scrim-t { top: 0; bottom: 0; height: auto; right: auto; width: calc(var(--sl) + 43vw); background: linear-gradient(90deg, var(--ground) calc(100% - 10vw), transparent) }
+  /* the A3 board: its column, its picture and their gaps in shares of the board's width (--bw), the board placed at
+     --bx; on a phone or a laptop the board is the screen itself (below) */
+  :root { --bw: 100vw; --bx: 0px }
+  #scrim-t { top: 0; bottom: 0; height: auto; right: auto; width: calc(var(--sl) + var(--bx) + var(--bw) * .43); background: linear-gradient(90deg, var(--ground) calc(100% - var(--bw) * .1), transparent) }
   #scrim-b { display: none }
   /* the name column, as the A3 board's: the lotus and the name at its top, the walk's controls, the foot at its bottom;
      one flowing column sized by the phone's height, so nothing can overlap */
-  #side { position: absolute; left: calc(var(--sl) + 3vw); width: 38vw; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center;
+  #side { position: absolute; left: calc(var(--sl) + var(--bx) + var(--bw) * .03); width: calc(var(--bw) * .38); top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center;
     justify-content: space-between; gap: 1.5vh; padding: calc(var(--st) + 4vh) 0 calc(var(--sb) + 2.5vh); pointer-events: none }
   #side > * { position: relative !important; inset: auto !important; transform: none !important }
   /* the picture: everything right of the name column, as large as fits, up to a size where the models stay crisp */
-  #stage { left: 42vw; right: calc(var(--sr) + 1.5vw); top: calc(var(--st) + 3vh); bottom: calc(var(--sb) + 3vh); height: auto }
-  #frame { width: min(100cqw, 133.333cqh, 1000px) }
+  #stage { left: calc(var(--bx) + var(--bw) * .42); right: calc(var(--sr) + var(--bx) + var(--bw) * .015); top: calc(var(--st) + 3vh); bottom: calc(var(--sb) + 3vh); height: auto }
+  #frame { width: min(100cqw, 133.333cqh, var(--cap, 1000px)) }   /* (--cap: app.js, by the screen's own pixels) */
   #title { gap: 1.2vh; width: 100% }
   #title .lotus { display: block; width: min(7vh, 48px) }
-  #title .kicker { width: min(21vw, 31vh) }
-  #title .lockup { width: min(25vw, 40vh); margin-top: 0 }
+  #title .kicker { width: min(var(--bw) * .21, 31vh) }
+  #title .lockup { width: min(var(--bw) * .25, 40vh); margin-top: 0 }
   #ui { gap: 1.2vh; width: 100% }
   #caption { min-height: 2.6em; justify-content: center; padding-inline: 0 }     /* a steady height: the controls never jump */
   #caption .dn { font-size: clamp(14px, 4.6vh, 19px) } #caption .en { font-size: clamp(7px, 2.2vh, 9px) }
@@ -209,18 +239,30 @@ img, video { display: block }
   #foot .addr::before { content: 'पता · संपर्क'; font: 400 14px/1 var(--deva) }
   #foot .addr::after { content: 'ADDRESS · CONTACT'; font: 500 7px/1 var(--caps); letter-spacing: .2em; color: var(--quiet) }
   #foot .addr { gap: 4px; padding: 6px 0 }
-  #foot .txt { padding: 6px 0 }
-  #play { left: calc(var(--sl) + 22vw); bottom: calc(var(--sb) + 13vh); gap: 1.6vh }
+  #foot .txt { display: none }   /* (sideways the address is already the button: पता · संपर्क) */
+  #play { left: calc(var(--sl) + var(--bx) + var(--bw) * .22); bottom: calc(var(--sb) + 13vh); gap: 1.6vh }
   #play .lamp { width: min(52px, 13vh); height: min(52px, 13vh) }
   #visit { left: auto; right: 0; top: 0; bottom: 0; width: min(440px, 60vw); max-height: none; border-radius: 4px 0 0 4px; transform: translateX(105%) }
+  /* (a phone sideways: all of it in view, the note included) */
+  @media (max-height: 500px) { #visit { padding-block: 14px; gap: 10px } #visit h2 { font-size: 20px } #visit li > a, #visit li > button { padding-block: 9px; font-size: 16px } #visit .dn { font-size: 15px } }
 }
 .rot, .rot * { transition: none !important }
-/* big sideways screens (a laptop, a desktop): the column's words and controls grow with it */
+/* a wide screen holds the board at 2 : 1 at most (the A3's own shape), centred on its ground: past that it stopped being
+   one composition (a 21:9 monitor showed a small stone far from its name; Harsh, 23 Oct: "too spacey"). 16:10 and 16:9
+   screens and phones are their own boards, as before */
+@media (orientation: landscape) and (min-height: 600px) {
+  :root { --bw: min(100vw, 200vh); --bx: calc((100vw - var(--bw)) / 2) }
+}
+/* big sideways screens (a laptop, a desktop): the column's words and controls grow with it, as the screen's height over
+   a laptop's (945 px; up to half again): a laptop exactly as before */
 @media (orientation: landscape) and (min-height: 700px) {
-  #caption .dn { font-size: 24px } #caption .en { font-size: 10.5px }
-  #walk .dial { width: 32px; height: 32px } #walk .lbl > span:first-child { font-size: 19px } #walk .lbl .en { font-size: 9px }
-  #modes { gap: 36px } #modes button > span:first-child { font-size: 22px } #modes button .en { font-size: 9px }
-  #foot .addr::before { font-size: 17px } #foot .addr::after { font-size: 8.5px } .txt > span:first-child { font-size: 17px } .txt .en { font-size: 8.5px }
+  #caption .dn { font-size: clamp(24px, 2.54vh, 36px) } #caption .en { font-size: clamp(10.5px, 1.11vh, 16px) }
+  #walk .dial { --d: clamp(42px, 4.44vh, 63px); width: var(--d); height: var(--d); --r: calc(var(--d) / 2) }
+  #walk .lbl > span:first-child { font-size: clamp(19px, 2.01vh, 28.5px) } #walk .lbl .en { font-size: clamp(9px, .95vh, 13.5px) }
+  #modes { gap: clamp(36px, 3.81vh, 54px) } #modes button > span:first-child { font-size: clamp(22px, 2.33vh, 33px) } #modes button .en { font-size: clamp(9px, .95vh, 13.5px) }
+  #foot .addr::before { font-size: clamp(17px, 1.8vh, 25.5px) } #foot .addr::after { font-size: clamp(8.5px, .9vh, 12.75px) } .txt > span:first-child { font-size: 17px } .txt .en { font-size: 8.5px }
+  #title .lotus { width: clamp(48px, 5.08vh, 72px) }
+  #play .lamp { width: clamp(52px, 5.5vh, 78px); height: clamp(52px, 5.5vh, 78px) }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01s !important; animation: none !important } }
 
@@ -273,7 +315,7 @@ img, video { display: block }
   </header>
   <div id="ui">
     <p id="caption" aria-live="polite"><span class="dn"></span><span class="en"></span></p>
-    <button type="button" id="walk" aria-label="प्रदक्षिणा · walk round once"><span class="dial" aria-hidden="true"><i></i></span><span class="lbl"><span>प्रदक्षिणा</span><span class="en">Walk round</span></span></button>
+    <button type="button" id="walk" aria-label="प्रदक्षिणा · walk round once"><span class="dial" aria-hidden="true"><i></i><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span><span class="lbl"><span>प्रदक्षिणा</span><span class="en">Walk round</span></span></button>
     <nav id="modes" aria-label="क्या देखें · what to see">
       <button type="button" data-mode="temple"><span>मंदिर</span><span class="en">Temple</span></button>
       <button type="button" data-mode="nandi"><span>नन्दी</span><span class="en">Nandi</span></button>
@@ -286,14 +328,14 @@ img, video { display: block }
       <span class="dn">ग्राम पहाड़ीखेड़ा, <span class="nb">मनेरी रोड</span>&nbsp;· <span class="nb">बरेला – 483001</span>&nbsp;· <span class="nb">जिला जबलपुर (म.प्र.)</span></span>
       <span class="en"><span class="nb">Vill. Pahadi Kheda,</span> <span class="nb">Maneri Road</span>&nbsp;· <span class="nb">Barela (M.P.) – 483001</span></span>
     </button>
-    <button type="button" class="txt" data-act="share"><span>भेजें</span><span class="en">Share</span></button>
+    <button type="button" class="txt" data-act="visit"><span>संपर्क</span><span class="en">Contact</span></button>
   </footer>
   </div>
   <button type="button" id="play" hidden><span class="lamp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5c3 3.9 4.6 6.7 4.6 9.3a4.6 4.6 0 0 1-9.2 0c0-2.6 1.6-5.4 4.6-9.3z"/></svg></span><span>दीप जलाएँ</span><span class="en">Tap to light the lamps</span></button>
   <button type="button" id="skip"><span>छोड़ें</span><span class="en">Skip</span></button>
   <section id="visit" role="dialog" aria-modal="true" aria-label="पता और संपर्क · address and contact" hidden>
     <button type="button" class="close" data-act="close"><span>बंद करें</span><span class="en">Close</span></button>
-    <h2>ऋतम्भरेश्वर मंदिर<span class="en">Rtambhareshvara Mandir</span></h2>
+    <h2>पता · संपर्क<span class="en">Address · Contact</span></h2>
     <p class="dn">ग्राम पहाड़ीखेड़ा, <span class="nb">मनेरी रोड</span>&nbsp;· <span class="nb">बरेला – 483001</span>&nbsp;· <span class="nb">जिला जबलपुर (म.प्र.)</span></p>
     <p class="en"><span class="nb">Vill. Pahadi Kheda,</span> <span class="nb">Maneri Road</span>&nbsp;· <span class="nb">Barela (M.P.) – 483001</span></p>
     <ul>

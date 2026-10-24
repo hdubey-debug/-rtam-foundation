@@ -35,7 +35,7 @@ body.dataset.tier = tier;
 const WORDS = {
   intro: ['अब मंदिर आपका है', 'Swipe to walk around it'],
   introNandi: ['नन्दी · अपने स्वामी की ओर', 'Swipe to walk around Nandi'],
-  poster: ['पहाड़ीखेड़ा में बन रहा है', 'Now rising at Pahadi Kheda'],
+  poster: ['प्रस्तावित स्वरूप', 'Proposed design'],          // (the posters' own note: the kicker is already above)
   door: ['द्वार · दीप की एक रेखा', 'The door · a thread of lamplight'],
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
@@ -88,6 +88,9 @@ const film = $('#film');
 film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;      // only its first bytes for now (preload="metadata")
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
+// sideways, the picture as large as 1700 of the screen's own pixels (the 1280 film at 1.33×, as a laptop shows it), never
+// under 1000 CSS px: a laptop as before, a 1× wide monitor's picture larger
+document.documentElement.style.setProperty('--cap', Math.round(Math.min(1700, Math.max(1000, 1700 / (devicePixelRatio || 1)))) + 'px');
 // the stone on the A2 poster (left, top, right; its width = 100) and where its reflection fades out; and the stone's place
 // in the film's frame (left, top, right, base, %: sandhya_film.py, written in by the build). fitPoster sets one on the other
 const A2 = { temple: [8.25, 60.0, 91.69], nandi: [14.94, 60.62, 85.06] }, A2_END = 122.75;
@@ -303,7 +306,7 @@ function beginWalk() {
     if (!held) walkRound(); else invite();
   }, 500);
 }
-function walkRound() { clearTimeout(inviteT); $('#walk').classList.add('on'); stage.spin(); }
+function walkRound() { clearTimeout(inviteT); $('#walk').classList.add('on'); if (beadSum >= 360) beadsFrom(); stage.spin(); }
 function spinEnded(completed) {
   $('#walk').classList.remove('on');
   if (state !== 'walk') return;
@@ -339,9 +342,10 @@ function traceDial() {
 let walked = 0, lastAz = null, walkMode = null, returned = false, lit = false, hintOn = false;
 function walkedRound(az) {
   if (state !== 'walk' || !stage) return;
-  if (stage.mode !== walkMode || lastAz === null) { walkMode = stage.mode; walked = 0; lastAz = az; return; }
-  walked += ((az - lastAz) % 360 + 540) % 360 - 180; lastAz = az;          // signed: pradakshina is clockwise (+)
-  if (stage.roundLeft() <= .9) lampUp();
+  if (stage.mode !== walkMode || lastAz === null) { walkMode = stage.mode; walked = 0; lastAz = az; beadsFrom(); return; }
+  const d = ((az - lastAz) % 360 + 540) % 360 - 180;
+  walked += d; lastAz = az; beadWalk(d);                                  // signed: pradakshina is clockwise (+)
+  if (stage.roundLeft() <= 1.5) lampUp();                                  // (as its last beads light)
   if (returned || stage.spinning) return;                                  // the walk's own round: its words come as it rests
   const home = MODES[stage.mode].home, off = Math.abs(((az - home) % 360 + 540) % 360 - 180);
   if (walked >= 346 && off <= 14) roundDone();
@@ -352,7 +356,26 @@ function roundDone() {
   setTimeout(() => { hintOn = false; if (stage) onFrame(stage.az); }, 4500);
   lampUp();
 }
-function lampUp() { if (lit || !stage) return; lit = true; brighten(stage.mode === 'nandi' ? 2 : 1, 1.5, 900); }
+// the round complete, the temple's lamps answer: the door's (or the mandapa's) lamp brighter by half, the jali by a
+// quarter, together over 1.4 s, and they stay
+function lampUp() {
+  if (lit || !stage) return; lit = true;
+  if (stage.mode === 'nandi') brighten(2, 1.5, 1400); else { brighten(1, 1.5, 1400); brighten(0, 1.25, 1400); }
+}
+// the dial is the wheel of the twelve Ādityas (page.html): a bead every 30° round the building, from its front at the
+// dial's top; each lights as the visitor's place reaches it walking clockwise and goes out again walking back (1.5° behind
+// it, so a place that rests on a bead never flickers it); at 360° the wheel is whole. A new round (the dial) starts it
+// again, as does another view
+const beads = [...document.querySelectorAll('#walk .dial b')];
+let bead0 = 0, beadSum = 0;
+function beadsFrom() { bead0 = stage ? stage.facing() : 0; beadSum = 0; paintBeads(); }
+function beadWalk(d) { beadSum = Math.max(-30, Math.min(400, beadSum + d)); paintBeads(); }
+function paintBeads() {
+  beads.forEach((b, k) => {
+    const at = ((30 * k - bead0) % 360 + 360) % 360 || 360;              // how far round, from the start, this bead stands
+    if (beadSum >= Math.min(at - .5, 360)) b.classList.add('lit'); else if (beadSum < at - 2) b.classList.remove('lit');
+  });
+}
 function brighten(i, k, ms) {
   const m = stage.glows && stage.glows[i]; if (!m) return;
   const from = m.opacity, to = Math.min(1, from * k), t0 = performance.now();
