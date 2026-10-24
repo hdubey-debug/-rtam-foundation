@@ -53,10 +53,13 @@ export const MODES = {
   temple: { c: [0, 0], r: 1.4961, h: .0658, ly: .1272, show: { temple: true, nandi: false }, front: 90, home: 60.34,
             box: [.488, 1.078], least: .78, anchor: { az: 60.34, look: [.0184, .1272, .144], span: .8004 } },
   // the mandapa's anchor: re-solved 22 Oct 2026 on the film's own edges and outline (build/solve_anchor.cjs), with the
-  // film's optical centre (`shift`: its render was larger than its frame); the silhouette fit before left it a pillar off
-  nandi: { c: [NANDI.x, NANDI.z], r: .43, h: .085, ly: .062, show: { temple: false, nandi: true }, front: 258.24, home: 251.89,
+  // film's optical centre (`shift`: its render was larger than its frame); the silhouette fit before left it a pillar off.
+  // 23 Oct: the film's picture is 1031 px wide, not 1200 (the A2's whole reflection fits its frame): the camera carried
+  // over (its span over 1031/1200, its optical centre scaled about the picture's top centre), then refined by the solver
+  // (outlines .702 → .713); its home moves with it (the hand-over's view is the walk's start)
+  nandi: { c: [NANDI.x, NANDI.z], r: .43, h: .085, ly: .062, show: { temple: false, nandi: true }, front: 258.24, home: 251.64,
            box: [.19, .19], least: .23, k: 1.2,
-           anchor: { az: 251.89, r: .3111, h: .0676, look: [.0138, .0618, .9842], span: .2489, shift: [.0087, .0077] } },
+           anchor: { az: 251.64, r: .3326, h: .0682, look: [.0143, .0619, .9854], span: .2896, shift: [.008, -.0641] } },
   complex: { c: [0, .30], r: 2.6, h: .64, ly: .09, show: { temple: true, nandi: true }, front: 90, home: 52,
              box: [.50, 1.57], least: .85, k: 1.12 },
 };

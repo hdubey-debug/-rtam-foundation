@@ -57,9 +57,10 @@ img, video { display: block }
 /* the picture area: the poster frame, the film, the lamps (with the poster's side margins) */
 #stage { position: absolute; left: 0; right: 0; top: 33vh; height: 45vh; pointer-events: none; container-type: size; transition: top .9s var(--ease), height .9s var(--ease) }
 #frame { position: absolute; left: 50%; top: 50%; width: min(var(--fw, 92cqw), 133.333cqh); aspect-ratio: 4 / 3; transform: translate(-50%, -50%);
-  /* its edges dissolve into the page: a film's black can decode a level or two off the page's, and no edge may show */
-  -webkit-mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
-  -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 5%, #000 90%, transparent);
+  /* its edges dissolve into the page: a film's black can decode a level or two off the page's, and no edge may show
+     (2 %: the A2's reflection now ends inside the frame, and no longer needs the bottom's tenth to hide a cut) */
+  -webkit-mask: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent), linear-gradient(transparent, #000 2%, #000 98%, transparent);
+  -webkit-mask-composite: source-in; mask: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent), linear-gradient(transparent, #000 2%, #000 98%, transparent);
   mask-composite: intersect }
 #frame > * { position: absolute; inset: 0; width: 100%; height: 100% }
 /* the pictures lie on the page's black and lighten it: where a film's black decodes a level dark, the page's shows */
@@ -78,10 +79,10 @@ img, video { display: block }
 .s-walk #frame { opacity: 0 }
 [data-tier="still"].s-walk #frame { opacity: 1; transition: none }
 [data-tier="still"].s-walk #still { opacity: 1 }
-[data-subject="temple"] #frame { --tx: 34.39%; --ty: 50.1%; --th: 14.08% } [data-subject="nandi"] #frame { --tx: 50.0%; --ty: 47.0%; --th: 9.0% }
+[data-subject="temple"] #frame { --tx: 34.39%; --ty: 50.1%; --th: 14.08% } [data-subject="nandi"] #frame { --tx: 50.0%; --ty: 40.56%; --th: 7.73% } [data-subject="temple"] { --box: 3.359 1.667 96.641 80.208 } [data-subject="nandi"] { --box: 9.922 1.771 90.0 80.833 }
 #frame > #thread { inset: auto; left: var(--tx, 50%); top: var(--ty, 50%); width: 2px; height: var(--th, 6%); margin-left: -1px; border-radius: 1px; opacity: 0;
   background: linear-gradient(transparent, var(--lamp) 25%, var(--lamp) 75%, transparent); box-shadow: 0 0 10px rgba(243,217,160,.8) }
-.s-poster #thread, .s-hold #thread { animation: thread 1.8s ease-in-out infinite alternate }
+.s-poster #thread { animation: thread 1.8s ease-in-out infinite alternate }   /* (lit, the picture is the poster's: no thread) */
 @keyframes thread { from { opacity: .15 } to { opacity: calc(.45 + var(--p, 0) * .55) } }
 
 /* the name: upright, on top (as the A2 poster); it stays where it is for the whole visit */
@@ -91,13 +92,14 @@ img, video { display: block }
 #title .kicker { width: min(46vw, 260px); transition: opacity .6s }
 #title .lockup { width: min(84vw, 470px); margin-top: -1vh }
 #title picture { display: contents } #title source { display: none }   /* (the lockup's own box in the column, as before) */
-/* upright, the temple and Nandi are what the page is for (Harsh, 23 Oct: "They look like tiny icons… we want to show
-   them the Temple"): the name is set smaller and cut to its letters (lockup-tight.svg), so the stone below gets the
-   height; sideways it stays as the A3 board */
+/* upright: the A2 poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection and
+   look is exactly like" the poster people scan): the kicker and the name where the A2 has them, placed by their ink, in
+   the A2's own unit (--u: its width / 100, and --y0: its top, both set by app.js, which places the picture under them
+   the same way); the name is the lockup cut to its letters (lockup-tight.svg); sideways it stays as the A3 board */
 @media (orientation: portrait) {
-  #title { top: calc(var(--st) + 3vh); gap: .8vh }
-  #title .kicker { width: min(38vw, 220px) }
-  #title .lockup { width: min(60vw, 360px); margin-top: 0 }
+  #title { top: var(--y0, 0px); height: calc(var(--u, 1vw) * 57); display: block }
+  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 20.05); top: calc(var(--u, 1vw) * 7.93); width: calc(var(--u, 1vw) * 40.04) }
+  #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 42.64); top: calc(var(--u, 1vw) * 17.73); width: calc(var(--u, 1vw) * 85.61); margin: 0 }
 }
 
 #side { display: contents }
@@ -230,7 +232,7 @@ img, video { display: block }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0; animation: failsafe 0s linear 8s forwards }
 @keyframes failsafe { to { opacity: 1 } }   /* the loader's script never ran (JS off or failed): the landing shows by itself */
 /* the door's thread, once lit by the opening, breathes with the lamp (3 s, sine), from its ignition's .85 */
-[data-pilot] :is(.s-poster, .s-hold) #thread { animation: threadBreath 3s cubic-bezier(.37, 0, .63, 1) infinite }
+[data-pilot] .s-poster #thread { animation: threadBreath 3s cubic-bezier(.37, 0, .63, 1) infinite }
 @keyframes threadBreath { 0%, 100% { opacity: .85 } 50% { opacity: .4 } }
 [data-pilot].intro #thread, [data-pilot].intro-run #thread { animation: none }   /* the door's light waits for the opening */
 /* the opening (js/intro.js): the Ṛta-chakra alone on the page's own ground, at the landing picture's centre, in a faint

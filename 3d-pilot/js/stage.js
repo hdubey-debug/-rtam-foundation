@@ -10,6 +10,11 @@ import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, 
 export { MODES };
 const GROUND = new THREE.Color(0x141414);
 const TINT = { temple: [.99, .915, .832], nandi: [.937, .883, .829] };   // the film's stone ÷ the model's (red, green, blue)
+// the floor's reflection, as the A2 poster's (reflect.py; final_light.SUBJECTS[..]['refl']['a2']): from .65 of the stone at
+// its base, falling as (1 - depth/len)^1.3 over .235 (.238) of the stone's height; and the floor's pool of ground light,
+// .22 of the stone's colour falling as (1 - depth/pool)^2 over 10 of the A2's units. World units, at the film's camera
+// (the stone .334 and .125 high, .581 and .142 wide at its nearest base point); was .28 over .16 for both
+const REFL = { temple: { len: .0786, pool: .029 }, nandi: { len: .0297, pool: .0085 } };
 // how the walk gives up the picture's height round the far side (0 at home, smooth; skew moves its peak off 180°)
 const yieldShape = (deg, skew) => { const r = deg * Math.PI / 180; return (1 - Math.cos(r)) / 2 * (1 + skew * Math.sin(r)); };
 
@@ -80,12 +85,15 @@ export class Stage {
     m.onBeforeCompile = (sh) => {
       sh.uniforms.uStone = this.u.stone; sh.uniforms.uExposure = this.u.exposure; sh.uniforms.uTint = this.u.tint[name];
       if (mirror) {
-        // the reflection: the same picture mirrored, fading into the ground with depth (as on the posters, about a third)
-        sh.uniforms.uGround = { value: new THREE.Vector3(20 / 255, 20 / 255, 20 / 255) }; sh.uniforms.uK = { value: .28 }; sh.uniforms.uLen = { value: .16 };
+        // the reflection: the same picture mirrored on the polished floor, as the A2 poster's (REFL)
+        sh.uniforms.uGround = { value: new THREE.Vector3(20 / 255, 20 / 255, 20 / 255) }; sh.uniforms.uK = { value: .65 };
+        sh.uniforms.uLen = { value: REFL[name].len }; sh.uniforms.uPool = { value: REFL[name].pool };
         sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vWY;')
           .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWY = (modelMatrix * vec4(transformed, 1.0)).y;');
-        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen; uniform float uStone; uniform float uExposure; uniform vec3 uTint;')
-          .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light + '\nfloat k = uK * pow(clamp(1.0 + vWY / uLen, 0.0, 1.0), 1.3);\ngl_FragColor.rgb = mix(uGround, gl_FragColor.rgb, k);');
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen; uniform float uPool; uniform float uStone; uniform float uExposure; uniform vec3 uTint;')
+          .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light + '\nfloat d = max(0.0, -vWY), k = uK * pow(clamp(1.0 - d / uLen, 0.0, 1.0), 1.3);\n' +
+            'vec3 c = gl_FragColor.rgb, lin = pow(mix(uGround, c, k), vec3(2.2)) + .22 * pow(clamp(1.0 - d / uPool, 0.0, 1.0), 2.0) * pow(c, vec3(2.2));\n' +
+            'gl_FragColor.rgb = pow(lin, vec3(1.0 / 2.2));');
       } else {
         sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uStone; uniform float uExposure; uniform vec3 uTint;')
           .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light);

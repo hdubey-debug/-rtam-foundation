@@ -88,8 +88,10 @@ const film = $('#film');
 film.src = `media/${subject}-${tier === 'hi' ? 1280 : 960}.mp4`;      // only its first bytes for now (preload="metadata")
 
 const START = subject === 'nandi' ? 'nandi' : 'temple';
-// the stone's width in its picture (a share of the film's frame): the temple's spans it nearly whole, the mandapa's not
-const FILL = START === 'nandi' ? .87 : .97;
+// the stone on the A2 poster (left, top, right; its width = 100) and where its reflection fades out; and the stone's place
+// in the film's frame (left, top, right, base, %: sandhya_film.py, written in by the build). fitPoster sets one on the other
+const A2 = { temple: [8.25, 60.0, 91.69], nandi: [14.94, 60.62, 85.06] }, A2_END = 122.75;
+const BOX = (getComputedStyle(document.documentElement).getPropertyValue('--box').trim() || '3.3 1.3 96.3 80').split(/\s+/).map(Number);
 let stage = null, has3D = tier !== 'still', stageReady = false, filmDone = false, introUntil = 0;
 // the 3D (three.js and the models) starts arriving once the page itself is ready (intro.js: rtam:ready; 8 s at most),
 // so on a slow line it never takes the landing's bandwidth; it is waited for only after the film, 15 s at most
@@ -239,31 +241,32 @@ const HANDOVER = {
 };
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
-// the landing, upright: the temple's picture and the lamp under it, fitted between the name and the address in what is
-// visible. (On a phone, vh is the screen without the browser's bars: with the picture hung from the top and the lamp from
-// the bottom, the lamp rode up onto the temple whenever the bars showed.) The picture shrinks only if it must.
+// Upright: the A2 poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection and look
+// is exactly like" the poster people scan, "Specifically, A2"): the kicker and the name (page.html), and the stone with
+// its reflection where the A2 has them, in the A2's unit (its width / 100). On the A2 the stone stands at left, top,
+// right and its reflection fades out at 122.75 (A2, measured on the finals); the film's frame is sized and placed so
+// that its own stone (BOX) falls there. Under the reflection the lamp (in the walk, its controls), then
+// the foot. A screen too short for the poster with the lamp under it takes it a little smaller. (On a phone, vh is the
+// screen without the browser's bars: the visible height is measured.)
 function fitPoster() {
-  const st = $('#stage'), pl = $('#play'), ui = $('#ui');
+  const st = $('#stage'), pl = $('#play'), ui = $('#ui'), root = document.documentElement.style;
   if (matchMedia('(orientation: landscape)').matches) {          // (the same in every state: nothing moves after the landing)
-    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; st.style.removeProperty('--fw'); return;
+    st.style.top = st.style.height = pl.style.top = pl.style.bottom = ui.style.top = ui.style.bottom = ''; st.style.removeProperty('--fw');
+    root.removeProperty('--u'); root.removeProperty('--y0'); return;
   }
   const W = innerWidth, H = window.visualViewport ? visualViewport.height : innerHeight;
-  // the lamp under the temple's base (on its reflection); in the walk, its controls just above the foot
-  const T = $('#title .lockup').getBoundingClientRect().bottom, F = $('#foot').getBoundingClientRect().top;
-  const P = pl.offsetHeight || 135;
-  const under = .84;                                                       // the lamp's top at 84 % of the picture (its reflection)
-  let g1 = Math.max(10, H * .02), g2 = Math.max(10, H * .015);
-  if ((F - g2 - T - g1 - P) / under < 100) g1 = g2 = 5;                    // a very short screen: closer gaps before a smaller picture
-  // the picture sized by the stone in it, not by its frame: the stone fills nine tenths of the width (Harsh, 23 Oct:
-  // "They look like tiny icons"); the frame's dark sides may pass the screen's edges
-  const fw = W * .9 / FILL;
-  const room = F - g2 - (T + g1), fh = Math.max(90, Math.min(fw * .75, H * .52, (room - P) / under));   // (90: an iPhone SE with its bars)
-  const ft = T + g1 + Math.max(0, room - under * fh - P) * .45;
+  const F = $('#foot').getBoundingClientRect().top, P = pl.offsetHeight || 135, g = Math.max(6, H * .01);
+  const lamp = P * .8;                                                     // (its ring may lie on the reflection's last light)
+  const u = Math.min(W / 100, (F - g - lamp) / A2_END), y0 = Math.max(0, (F - g - lamp - A2_END * u) / 2);
+  root.setProperty('--u', u.toFixed(3) + 'px'); root.setProperty('--y0', y0.toFixed(1) + 'px');
+  const a = A2[START], fw = (a[2] - a[0]) * u / ((BOX[2] - BOX[0]) / 100), fh = fw * .75;
   st.style.setProperty('--fw', fw.toFixed(1) + 'px');
-  st.style.top = ft.toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
-  pl.style.top = (ft + under * fh).toFixed(1) + 'px'; pl.style.bottom = 'auto';
-  ui.style.top = (F - g2 - (ui.offsetHeight || 150)).toFixed(1) + 'px'; ui.style.bottom = 'auto';
+  st.style.top = (y0 + a[1] * u - BOX[1] / 100 * fh).toFixed(1) + 'px'; st.style.height = fh.toFixed(1) + 'px';
+  const end = y0 + A2_END * u;                                             // the reflection's end: the lamp under it
+  pl.style.top = (end - P * .2 + Math.max(0, (F - g - end - lamp) / 2)).toFixed(1) + 'px'; pl.style.bottom = 'auto';
+  ui.style.top = (F - g - (ui.offsetHeight || 95)).toFixed(1) + 'px'; ui.style.bottom = 'auto';
 }
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitPoster());   // (the foot's height is its font's)
 addEventListener('load', () => fitPoster());
 function layout() {
   fitPoster();
