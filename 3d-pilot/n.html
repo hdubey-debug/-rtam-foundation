@@ -46,13 +46,17 @@ img, video { display: block }
 /* composited (unseen) from the landing on, while the page is still: its first compositing costs a frame or so, which
    must fall neither in the film's last moment nor in the hand-over */
 [data-pilot] :is(.s-poster, .s-film, .s-hold) #gl { opacity: .002; transition: none }
+/* the hand-over brings it up itself (app.js handOver); at the walk it stays where that left it. (With a transition here,
+   Safari restarted the canvas from 0 as the hand-over's animations ended: the 3D vanished and faded back, a flicker) */
+[data-pilot] :is(.s-handoff, .s-walk) #gl { transition: none }
 [data-tier="still"] #gl { visibility: hidden }
 
-/* the name and the captions stay readable over the stone: the 3D itself fades out behind them, so only the page's own
-   black is ever there (a dark veil laid over the page would band against it) */
-.scrim { display: none }
-#gl { --m: linear-gradient(transparent calc(var(--fadeTop, 18vh) - 7vh), #000 var(--fadeTop, 18vh), #000 calc(var(--fadeBot, 70vh) - 8vh), transparent var(--fadeBot, 70vh));
-      -webkit-mask: var(--m); mask: var(--m) }
+/* the name and the captions stay readable over the stone: the 3D fades out behind them into the page's own ground. Two
+   veils of exactly that ground over the canvas (not a mask on it: Safari flickers a masked WebGL canvas as it redraws,
+   and a veil of the ground's own colour cannot band against the ground) */
+.scrim { position: absolute; left: 0; right: 0; pointer-events: none }
+#scrim-t { top: 0; height: var(--fadeTop, 18vh); background: linear-gradient(var(--ground) calc(100% - 7vh), transparent) }
+#scrim-b { top: calc(var(--fadeBot, 70vh) - 8vh); bottom: 0; background: linear-gradient(transparent, var(--ground) 8vh) }
 
 /* the picture area: the poster frame, the film, the lamps (with the poster's side margins) */
 #stage { position: absolute; left: 0; right: 0; top: 33vh; height: 45vh; pointer-events: none; container-type: size; transition: top .9s var(--ease), height .9s var(--ease) }
@@ -180,7 +184,8 @@ img, video { display: block }
 
 /* sideways: the A3 board (the name column left, the picture right) */
 @media (orientation: landscape) {
-  #gl { -webkit-mask: linear-gradient(90deg, transparent calc(var(--sl) + 33vw), #000 calc(var(--sl) + 43vw)); mask: linear-gradient(90deg, transparent calc(var(--sl) + 33vw), #000 calc(var(--sl) + 43vw)) }
+  #scrim-t { top: 0; bottom: 0; height: auto; right: auto; width: calc(var(--sl) + 43vw); background: linear-gradient(90deg, var(--ground) calc(100% - 10vw), transparent) }
+  #scrim-b { display: none }
   /* the name column, as the A3 board's: the lotus and the name at its top, the walk's controls, the foot at its bottom;
      one flowing column sized by the phone's height, so nothing can overlap */
   #side { position: absolute; left: calc(var(--sl) + 3vw); width: 38vw; top: 0; bottom: 0; display: flex; flex-direction: column; align-items: center;

@@ -190,7 +190,7 @@ function handoff() {
   if (!stage || !stageReady) { set('handoff'); setTimeout(stillWalk, 900); return; }
   layout(); stage.setMode(START); stage.setSettle(0); stage.shown = true;
   set('handoff');
-  const ms = ((!reduce && HANDOVER[qs.get('ho')]) || HANDOVER.a)();      // (under reduced motion, A's quiet cross-fade)
+  const ms = handOver();
   setTimeout(() => {
     for (const a of hoAnims.splice(0)) a.cancel();      // the page's own CSS holds the end state
     if (!stage) { stillWalk(); return; }
@@ -203,42 +203,24 @@ function handoff() {
     }
   }, ms);
 }
-// Three ways for the picture to become the 3D, in place, to compare (?ho=a|b|c; a the default). Light carries each one.
+// The picture becomes the 3D in place, by light: the lamps stay, the stone returns (Harsh chose it of three, 23 Oct). The
+// floods go down and the lamps stay lit; the 3D rises under those lamps with its stone dark (its own lamps-only look);
+// the picture leaves; then the stone comes back by light (1.6 s, a flood). The temple's lamps are its windows and door,
+// lit in the picture and in the 3D alike. Nandi's lamps-only picture is its lamp's light on the ceiling alone, a bar of
+// light in the dark (Harsh, 22 Oct: "a rectangular patch"): the mandapa dims instead to the 3D's own lamp, which rises
+// as the picture goes. Under reduced motion, a quiet cross-fade.
 const SINE = 'cubic-bezier(.37, 0, .63, 1)';
 let hoAnims = [];
 // (a second fade of the same element waits for its own start: fill 'forwards', or its first value would apply at once)
 const fadeTo = (el, from, to, ms, delay = 0, fill = 'both') => hoAnims.push(el.animate([{ opacity: from }, { opacity: to }], { duration: ms, delay, easing: SINE, fill }));
-const HANDOVER = {
-  // A, the lamps stay, the stone returns: the floods go down and the lamps stay lit; the 3D rises under those lamps with
-  // its stone dark (its own lamps-only look); the picture leaves; then the stone comes back by light (1.6 s, a flood).
-  // The temple's lamps are its windows and door, lit in the picture and in the 3D alike. Nandi's lamps-only picture is
-  // its lamp's light on the ceiling alone, a bar of light in the dark (Harsh, 22 Oct: "a rectangular patch"): the
-  // mandapa dims instead to the 3D's own lamp, which rises as the picture goes.
-  a() {
-    if (reduce) { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#frame'), 1, 0, 300, 150); return 500; }
-    stage.setLight(0, 1);
-    if (START === 'nandi') { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#last'), 1, 0, 900); fadeTo($('#frame'), 1, 0, 700, 400); }
-    else { fadeTo($('#lamps'), 0, 1, 600); fadeTo($('#last'), 1, 0, 900); fadeTo($('#gl'), .002, 1, 400, 400); fadeTo($('#frame'), 1, 0, 600, 1000); }
-    setTimeout(() => stage && stage.tweenTo('stone', 1, 1600), 1200);
-    return 2900;
-  },
-  // B, a breath of light: the scene dims to under half; at its lowest the picture becomes the 3D; the light comes back.
-  // (The picture dims inside its frame, over the frame's own ground, while the 3D rises unseen under the frame at the
-  // same light; then the frame leaves: dimmed picture to dimmed 3D, with no brightening between.)
-  b() {
-    stage.setLight(1, .42);
-    fadeTo($('#last'), 1, .42, 550); fadeTo($('#gl'), .002, 1, 300, 300); fadeTo($('#frame'), 1, 0, 500, 650);
-    setTimeout(() => stage && stage.tweenTo('exposure', 1, 1000), 1100);
-    return 2200;
-  },
-  // C, the poster comes alive: the 3D takes over as it begins to turn, so its depth is what tells the change
-  c() {
-    stage.setLight(1, 1);
-    fadeTo($('#gl'), .002, 1, 300); fadeTo($('#frame'), 1, 0, 1300, 300);
-    stage.settleTo(1, 4500); stage.spin(); $('#walk').classList.add('on');
-    return 1500;
-  },
-};
+function handOver() {
+  if (reduce) { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#frame'), 1, 0, 300, 150); return 500; }
+  stage.setLight(0, 1);
+  if (START === 'nandi') { fadeTo($('#gl'), .002, 1, 300); fadeTo($('#last'), 1, 0, 900); fadeTo($('#frame'), 1, 0, 700, 400); }
+  else { fadeTo($('#lamps'), 0, 1, 600); fadeTo($('#last'), 1, 0, 900); fadeTo($('#gl'), .002, 1, 400, 400); fadeTo($('#frame'), 1, 0, 600, 1000); }
+  setTimeout(() => stage && stage.tweenTo('stone', 1, 1600), 1200);
+  return 2900;
+}
 
 // keep the 3D framed on the picture area while the layout moves (state changes, rotation)
 // Upright: the A2 poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection and look

@@ -146,8 +146,12 @@ export class Stage {
     const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
     const mat = (o) => new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: o, depthWrite: false, blending: THREE.AdditiveBlending });
     const win = mat(.42), lamp = mat(.5);
+    // each window's glow fades as its window turns from the camera: seen edge on, a glow standing in front of the wall
+    // cut through it and flickered as the walk turned. Its own material, at the master's (glows[0]) times its facing
+    this.faced = [];
     for (const [x, y, z, nx, nz, w, h] of L.temple.windows) {
-      const sp = new THREE.Sprite(win); sp.position.set(x + nx * .012, y, z + nz * .012); sp.scale.set(w * 2.4, h * 2.4, 1); this.groups.temple.add(sp);
+      const sp = new THREE.Sprite(win.clone()); sp.position.set(x + nx * .012, y, z + nz * .012); sp.scale.set(w * 2.4, h * 2.4, 1); this.groups.temple.add(sp);
+      this.faced.push({ sp, n: [nx, nz], of: 0 });
     }
     // the door's light is the landing's thread: a thin vertical line of lamplight in the gap of the door, fading at its
     // ends (a round glow there read as nothing at all)
@@ -162,10 +166,11 @@ export class Stage {
     const tt = new THREE.CanvasTexture(t); tt.colorSpace = THREE.SRGBColorSpace;
     const doorLight = new THREE.SpriteMaterial({ map: tt, transparent: true, opacity: .6, depthWrite: false, blending: THREE.AdditiveBlending });
     const [dx, dy, dz, dh] = L.temple.door;
-    const sd = new THREE.Sprite(doorLight); sd.position.set(dx, dy, dz + .012); sd.scale.set(.02, dh * 1.25, 1); this.groups.temple.add(sd);
+    const sd = new THREE.Sprite(doorLight.clone()); sd.position.set(dx, dy, dz + .012); sd.scale.set(.02, dh * 1.25, 1); this.groups.temple.add(sd);
+    this.faced.push({ sp: sd, n: [0, 1], of: 1 });                // (the door faces +z, as the windows their normals)
     const [lx, ly, lz, ls] = L.nandi.lamp;
     const sl = new THREE.Sprite(lamp); sl.position.set(lx, ly, lz); sl.scale.set(ls, ls * .55, 1); this.groups.nandi.add(sl);
-    this.glows = [win, doorLight, lamp]; this.dirty = true;
+    this.glows = [win, doorLight, lamp]; this.dirty = true;        // (the masters: the page brightens these)
   }
 
   // one set of models for the whole visit, never swapped mid-walk: the sharp ones on a desktop, the light ones on phones
@@ -349,6 +354,11 @@ export class Stage {
     const ox = k ? A.shift[0] * 2 * f.w / W * k : 0, oy = k ? A.shift[1] * 2 * f.h / H * k : 0;
     cam.projectionMatrix.elements[8] = -sx + cx - ox - dx / (W / 2); cam.projectionMatrix.elements[9] = -sy + dy / (H / 2) + oy;
     cam.projectionMatrixInverse.copy(cam.projectionMatrix).invert();
+    // the glows by their windows' facing: full face on, gone by edge on (1 face on, 0 edge on, below 0 turned away)
+    if (this.faced && !bare) for (const g of this.faced) {
+      const p = g.sp.position, ex = cam.position.x - p.x, ez = cam.position.z - p.z, f = (g.n[0] * ex + g.n[1] * ez) / (Math.hypot(ex, ez) || 1);
+      g.sp.material.opacity = this.glows[g.of].opacity * smoothstep((f - .08) / .32);
+    }
   }
 
   setFrame(rect) { this.frame = rect; this.dirty = true; this.fitWalk(); }
