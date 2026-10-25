@@ -35,7 +35,6 @@ body.dataset.tier = tier;
 const WORDS = {
   intro: ['अब मंदिर आपका है', 'Swipe to walk around it'],
   introNandi: ['नन्दी · अपने स्वामी की ओर', 'Swipe to walk around Nandi'],
-  poster: ['प्रस्तावित स्वरूप', 'Proposed design'],          // (the posters' own note: the kicker is already above)
   door: ['द्वार · दीप की एक रेखा', 'The door · a thread of lamplight'],
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
@@ -68,7 +67,6 @@ function swapCaption() {
 // what is in front of you, as you walk round
 function sectorWord(mode, az, facing) {
   if (mode === 'temple') {
-    if (Math.abs(((az - MODES.temple.home) % 360 + 540) % 360 - 180) < 14) return 'poster';
     const f = Math.abs(facing);
     if (f <= 35) return 'door';
     if (f >= 135) return 'tower';
@@ -93,7 +91,9 @@ const START = subject === 'nandi' ? 'nandi' : 'temple';
 document.documentElement.style.setProperty('--cap', Math.round(Math.min(1700, Math.max(1000, 1700 / (devicePixelRatio || 1)))) + 'px');
 // the stone on the A2 poster (left, top, right; its width = 100) and where its reflection fades out; and the stone's place
 // in the film's frame (left, top, right, base, %: sandhya_film.py, written in by the build). fitPoster sets one on the other
-const A2 = { temple: [8.25, 60.0, 91.69], nandi: [14.94, 60.62, 85.06] }, A2_END = 122.75;
+// the final upright poster (1B, 25 Oct 2026): its stone's left, top and right, and its reflection's end, in its own unit
+// (its width / 100), measured on rtam-posters/out/final/A2B-*-crowned.png (were the approved A2's 8.25-91.69 from 60.0)
+const A2 = { temple: [3.69, 54.25, 96.06], nandi: [10.69, 54.31, 89.31] }, A2_END = 124.0;
 const BOX = (getComputedStyle(document.documentElement).getPropertyValue('--box').trim() || '3.3 1.3 96.3 80').split(/\s+/).map(Number);
 let stage = null, has3D = tier !== 'still', stageReady = false, filmDone = false, introUntil = 0;
 // the 3D (three.js and the models) starts arriving once the page itself is ready (intro.js: rtam:ready; 8 s at most),
@@ -125,11 +125,11 @@ function lost() {
 
 function startFilm() {
   if (state !== 'poster') return;
-  $('#play').hidden = true; set('film'); watch();
+  lampLit(); set('film'); watch();
   const p = film.play();                                // inside the tap itself: a WebView refuses a play() that comes later
   if (p && p.catch) p.catch(() => {
     if (PILOT) filmEnded();                             // refused or broken: on to the stone (never a lamp that does nothing)
-    else { set('poster'); $('#play').hidden = false; }  // autoplay refused: the visitor lights the lamps
+    else { set('poster'); lampBack(); }                 // autoplay refused: the visitor lights the lamps
   });
 }
 // a film that stalls (a weak line) does not hold the visit up: 8 s for its first frame, then 4 s without a new one,
@@ -161,6 +161,18 @@ $('#app').addEventListener('click', (e) => {
   if (e.target.closest('button, a, #visit')) return;                   // the address, share and the sheet never light the lamps
   if (state === 'poster' && !$('#play').hidden) startFilm();
 });
+// the lamp under a finger gives at once (pointerdown: iOS shows no :active on a button without a touch handler); lit, it
+// fills with light and goes as the film starts
+const lampEl = $('#play');
+lampEl.addEventListener('pointerdown', () => lampEl.classList.add('down'));
+for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) lampEl.addEventListener(ev, () => lampEl.classList.remove('down'));
+let litT = 0;
+function lampLit() {
+  if (lampEl.hidden) return;
+  lampEl.classList.add('lit');
+  litT = setTimeout(() => { lampEl.hidden = true; lampEl.classList.remove('lit', 'down'); }, 420);
+}
+function lampBack() { clearTimeout(litT); lampEl.classList.remove('lit', 'down'); lampEl.hidden = false; }
 
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)

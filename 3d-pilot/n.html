@@ -96,14 +96,15 @@ img, video { display: block }
 #title .kicker { width: min(46vw, 260px); transition: opacity .6s }
 #title .lockup { width: min(84vw, 470px); margin-top: -1vh }
 #title picture { display: contents } #title source { display: none }   /* (the lockup's own box in the column, as before) */
-/* upright: the A2 poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection and
-   look is exactly like" the poster people scan): the kicker and the name where the A2 has them, placed by their ink, in
+/* upright: the upright poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection
+   and look is exactly like" the poster people scan; the final 1B since 25 Oct: the name and the kicker at .85 of the A2's,
+   the stone 140 tall): the kicker and the name where the poster has them, placed by their ink, in
    the A2's own unit (--u: its width / 100, and --y0: its top, both set by app.js, which places the picture under them
    the same way); the name is the lockup cut to its letters (lockup-tight.svg); sideways it stays as the A3 board */
 @media (orientation: portrait) {
-  #title { top: var(--y0, 0px); height: calc(var(--u, 1vw) * 57); display: block }
-  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 20.05); top: calc(var(--u, 1vw) * 7.93); width: calc(var(--u, 1vw) * 40.04) }
-  #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 42.64); top: calc(var(--u, 1vw) * 17.73); width: calc(var(--u, 1vw) * 85.61); margin: 0 }
+  #title { top: var(--y0, 0px); height: calc(var(--u, 1vw) * 50.5); display: block }
+  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 17.07); top: calc(var(--u, 1vw) * 7.97); width: calc(var(--u, 1vw) * 34.08) }
+  #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 36.3); top: calc(var(--u, 1vw) * 16.89); width: calc(var(--u, 1vw) * 72.78); margin: 0 }
 }
 
 #side { display: contents }
@@ -226,7 +227,7 @@ img, video { display: block }
   #frame { width: min(100cqw, 133.333cqh, var(--cap, 1000px)) }   /* (--cap: app.js, by the screen's own pixels) */
   #title { gap: 1.2vh; width: 100% }
   #title .lotus { display: block; width: min(7vh, 48px) }
-  #title .kicker { width: min(var(--bw) * .21, 31vh) }
+  #title .kicker { width: min(var(--bw) * .168, 24.8vh) }    /* .8 of the A3's: the final wide poster's kicker (8.5, was 10.6) */
   #title .lockup { width: min(var(--bw) * .25, 40vh); margin-top: 0 }
   #ui { gap: 1.2vh; width: 100% }
   #caption { min-height: 2.6em; justify-content: center; padding-inline: 0 }     /* a steady height: the controls never jump */
@@ -271,11 +272,24 @@ img, video { display: block }
 [data-pilot] #walk.on .dial i::before { box-shadow: none }
 [data-pilot] #walk .dial svg.trace { position: absolute; left: -5px; top: -5px; width: calc(100% + 10px); height: calc(100% + 10px); transform: rotate(-90deg); pointer-events: none; overflow: visible }
 [data-pilot] #walk .dial svg.trace circle { fill: none; stroke: var(--ash); stroke-width: 1.3; stroke-linecap: butt; stroke-dasharray: 120.6 120.6; stroke-dashoffset: 120.6; opacity: 0 }
-[data-pilot] #play .lamp::before, [data-pilot] #play .lamp::after { display: none }
-[data-pilot] #play .lamp { background: none; animation: lampRing 2.8s cubic-bezier(.45, 0, .55, 1) infinite alternate }
-[data-pilot] #play .lamp svg { filter: none; fill: var(--lamp); animation: lampFlame 3s cubic-bezier(.45, 0, .55, 1) infinite }
-@keyframes lampFlame { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .72 } }
-[data-pilot].intro-run #play .lamp, [data-pilot].intro-run #play .lamp svg { animation-play-state: paused }
+/* the lamp, plainly a thing to tap (Harsh, 25 Oct: "add the circle ... and then just make it look more clickable"): a lit
+   glass disc with a flame on it, which sends out one ring of light every 3.2 s (its glow swells as it does); under a
+   finger it gives (.94, at once), and lit it fills with light as the lamp goes */
+[data-pilot] #play .lamp { border: 1.5px solid rgba(243,217,160,.92); background: radial-gradient(closest-side, rgba(243,217,160,.26), rgba(243,217,160,.09) 70%, rgba(243,217,160,.05));
+  transition: transform .22s cubic-bezier(.22, 1, .36, 1) }
+[data-pilot] #play .lamp::before { inset: -50%; border: 0; z-index: -1; background: radial-gradient(closest-side, rgba(243,217,160,.28), rgba(243,217,160,.08) 55%, rgba(243,217,160,0));
+  animation: lampGlow 3.2s cubic-bezier(.37, 0, .63, 1) infinite }
+[data-pilot] #play .lamp::after { inset: -1.5px; border-width: 1.5px; border-color: rgba(243,217,160,.9); opacity: 0; animation: lampPulse 3.2s cubic-bezier(.22, 1, .36, 1) infinite }
+@keyframes lampGlow { 0%, 100% { opacity: .55 } 12% { opacity: 1 } 45% { opacity: .55 } }
+@keyframes lampPulse { 0% { transform: scale(1); opacity: .9 } 62%, 100% { transform: scale(1.8); opacity: 0 } }
+[data-pilot] #play .lamp svg { width: 26px; height: 26px; filter: none; fill: var(--lamp); animation: none }
+[data-pilot] #play .lamp i { position: absolute; inset: 0; border-radius: 50%; opacity: 0; background: radial-gradient(closest-side, rgba(255,244,214,.95), rgba(243,217,160,.45) 60%, rgba(243,217,160,0)) }
+[data-pilot] #play.down .lamp { transform: scale(.94); transition-duration: 90ms }
+[data-pilot] #play.lit { pointer-events: none; animation: lampGone .3s cubic-bezier(.37, 0, .63, 1) .12s both }
+[data-pilot] #play.lit .lamp i { animation: lampLit .42s cubic-bezier(.22, 1, .36, 1) both }
+@keyframes lampLit { 0% { opacity: 0; transform: scale(.85) } 30% { opacity: 1; transform: scale(1.05) } 100% { opacity: .9; transform: scale(1.25) } }
+@keyframes lampGone { to { opacity: 0 } }
+[data-pilot].intro-run #play .lamp::before, [data-pilot].intro-run #play .lamp::after { animation-play-state: paused }
 [data-pilot].intro #title, [data-pilot].intro #still, [data-pilot].intro #foot, [data-pilot].intro #play { opacity: 0; animation: failsafe 0s linear 8s forwards }
 @keyframes failsafe { to { opacity: 1 } }   /* the loader's script never ran (JS off or failed): the landing shows by itself */
 /* the door's thread, once lit by the opening, breathes with the lamp (3 s, sine), from its ignition's .85 */
@@ -290,8 +304,7 @@ img, video { display: block }
   margin: calc(var(--s, 132px) / -2) 0 0 calc(var(--s, 132px) / -2) }
 #intro .lt canvas { position: absolute; left: -60%; top: -60%; width: 220%; height: 220%; mix-blend-mode: lighten }   /* its ground never darkens the temple rising beneath */
 #intro .ck { position: absolute; inset: 0; width: 100%; height: 100% }
-@keyframes lampRing { from { border-color: rgba(243,217,160,.35) } to { border-color: rgba(243,217,160,.85) } }
-@media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp, [data-pilot] #play .lamp svg { animation: none } }
+@media (prefers-reduced-motion: reduce) { [data-pilot] #play .lamp::before, [data-pilot] #play .lamp::after { animation: none } }
 </style>
 <link rel="modulepreload" href="js/motion.js">
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
@@ -331,7 +344,7 @@ img, video { display: block }
     <button type="button" class="txt" data-act="visit"><span>संपर्क</span><span class="en">Contact</span></button>
   </footer>
   </div>
-  <button type="button" id="play" hidden><span class="lamp" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5c3 3.9 4.6 6.7 4.6 9.3a4.6 4.6 0 0 1-9.2 0c0-2.6 1.6-5.4 4.6-9.3z"/></svg></span><span>दीप जलाएँ</span><span class="en">Tap to light the lamps</span></button>
+  <button type="button" id="play" hidden><span class="lamp" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.6 1.6C13.4 4.6 15.8 6.7 17.3 9.2C18.3 10.8 18.9 12.5 18.9 14.3C18.9 18.6 15.8 22 12 22C8.2 22 5.1 18.6 5.1 14.6C5.1 12.1 6.2 10.1 7.6 8.4C7.8 10.1 8.6 11.4 9.8 12.1C9.4 8.4 10.6 4.6 12.6 1.6ZM12 20.1C10.1 20.1 8.9 18.7 8.9 17C8.9 15.3 10 13.9 11.2 12.6C11.5 14.2 12.5 15.1 13.7 15.7C14.6 16.2 15.1 17 15.1 17.9C15.1 19.2 13.8 20.1 12 20.1Z"/></svg><i></i></span><span>दीप जलाएँ</span><span class="en">Tap to light the lamps</span></button>
   <button type="button" id="skip"><span>छोड़ें</span><span class="en">Skip</span></button>
   <section id="visit" role="dialog" aria-modal="true" aria-label="पता और संपर्क · address and contact" hidden>
     <button type="button" class="close" data-act="close"><span>बंद करें</span><span class="en">Close</span></button>

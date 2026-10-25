@@ -9,7 +9,7 @@ import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, 
 
 export { MODES };
 const GROUND = new THREE.Color(0x141414);
-const TINT = { temple: [.99, .915, .832], nandi: [.937, .883, .829] };   // the film's stone ÷ the model's (red, green, blue)
+const TINT = { temple: [1.053, 0.973, 0.89], nandi: [1.194, 1.123, 1.07] };   // the film's stone ÷ the model's (red, green, blue)
 // the floor's reflection, as the A2 poster's (reflect.py; final_light.SUBJECTS[..]['refl']['a2']): from .65 of the stone at
 // its base, falling as (1 - depth/len)^1.3 over .235 (.238) of the stone's height; and the floor's pool of ground light,
 // .22 of the stone's colour falling as (1 - depth/pool)^2 over 10 of the A2's units. World units, at the film's camera
