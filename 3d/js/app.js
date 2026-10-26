@@ -18,7 +18,6 @@ const PILOT = document.documentElement.dataset.pilot === '1';
 // ?fire=blue (his blue GIF's colours), ?disc=0 (the fire alone and larger, no disc)
 const FIRE_BLUE = qs.get('fire') === 'blue';
 if (qs.get('disc') === '0') document.documentElement.classList.add('fire-nodisc');
-let lampsLit = true;                                    // the walk's lamp: the temple's lamps lit, or at rest
 
 // ---------------------------------------------------------------- what this phone gets
 // One set of models for the whole visit, never swapped mid-walk: a desktop (a fine pointer and no touch) gets the sharp
@@ -43,8 +42,6 @@ const WORDS = {
   introNandi: ['नन्दी · अपने स्वामी की ओर', 'Swipe to walk around Nandi'],
   door: ['द्वार · दीप की एक रेखा', 'The door · a thread of lamplight'],
   jali: ['जाली · भीतर दीप जल रहे हैं', 'The jali · lamps burning within'],
-  doorOut: ['द्वार · दीप शांत', 'The door · its lamp at rest'],
-  jaliOut: ['जाली · भीतर दीप शांत हैं', 'The jali · the lamps at rest within'],
   tower: ['शिखर · गर्भगृह के ठीक ऊपर', 'The tower · over the sanctum'],
   side: ['प्रदक्षिणा · मंदिर सदा दाहिने हाथ', 'Keep the temple on your right'],
   returned: ['प्रदक्षिणा पूर्ण', 'One round, complete'],
@@ -67,8 +64,7 @@ function swapCaption() {
   busy = true; const key = want, c = $('#caption');
   c.classList.add('fade');
   setTimeout(() => {
-    const w = (!lampsLit && WORDS[key + 'Out']) || WORDS[key];       // (the lamps at rest: the door and the jali say so)
-    shown = key; c.querySelector('.dn').textContent = w[0]; c.querySelector('.en').textContent = w[1];
+    shown = key; c.querySelector('.dn').textContent = WORDS[key][0]; c.querySelector('.en').textContent = WORDS[key][1];
     c.classList.remove('fade');
     setTimeout(() => { busy = false; if (want !== shown) swapCaption(); }, 380);
   }, shown ? 380 : 0);
@@ -195,42 +191,6 @@ function lampLit() {
 }
 function lampBack() { clearTimeout(litT); lampEl.classList.remove('lit', 'down'); lampEl.hidden = false; if (fire) fire.life = new Life(); }
 
-// the walk's lamp (Harsh, 25 Oct: "a lights on and off feature? where we click on fire and internal lights are on and
-// when we click the fire just the black smoke moves instead of the fire"): the landing's lamp again, on the water before
-// the temple; a tap rests the lamps (its fire sinks into smoke, the disc dims, the jali and the door go dark), another
-// lights them again (the fire catches, the lamps come back)
-const lampsEl = $('#diya');                             // (#lamps is the hand-over's lamps-only picture)
-let walkFire = null;
-function lampsShow() {
-  if (!stage || !lampsEl.hidden) return;
-  lampsEl.hidden = false; placeLamps();
-  walkFire = mkFire(lampsEl.querySelector('canvas'));
-  if (!walkFire) { lampsEl.classList.add('noglfire'); return; }
-  if (reduce) walkFire.render(1.2); else walkFire.run(true);
-  document.addEventListener('visibilitychange', () => walkFire && walkFire.wake());
-}
-function placeLamps() {
-  if (lampsEl.hidden) return;
-  const h = lampsEl.offsetHeight || 52;
-  if (matchMedia('(orientation: landscape)').matches) {      // sideways: at the picture's foot, on its reflection
-    const f = $('#frame').getBoundingClientRect(); lampsEl.style.left = (f.left + f.width / 2).toFixed(1) + 'px'; lampsEl.style.top = (f.bottom - h - 6).toFixed(1) + 'px';
-  } else {                                                    // upright: over the caption
-    const u = $('#ui').getBoundingClientRect(); lampsEl.style.left = '50%'; lampsEl.style.top = (u.top - h - 4).toFixed(1) + 'px';
-  }
-}
-lampsEl.addEventListener('pointerdown', () => lampsEl.classList.add('down'));
-for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) lampsEl.addEventListener(ev, () => lampsEl.classList.remove('down'));
-lampsEl.addEventListener('click', (e) => {
-  e.stopPropagation(); if (!stage) return;
-  lampsLit = !lampsLit;
-  stage.setLamps(lampsLit, lampsLit ? 1600 : 1100);
-  if (walkFire) { if (reduce) { walkFire.life.set(lampsLit, walkFire.now - 5); walkFire.render(walkFire.now); } else walkFire.set(lampsLit); }   // (reduced motion: the new state at once)
-  lampsEl.classList.toggle('out', !lampsLit);
-  const [dn, en] = lampsLit ? ['दीप शांत करें', 'Rest the lamps'] : ['दीप जलाएँ', 'Light the lamps'];
-  lampsEl.querySelector('.lbl > span:first-child').textContent = dn; lampsEl.querySelector('.lbl .en').textContent = en;
-  if (shown === 'door' || shown === 'jali') { const k = shown; shown = ''; caption(k, true); }     // its words follow the lamps
-});
-
 if (reduce) filmEnded();
 else if (qs.has('skip')) setTimeout(filmEnded, 700);   // (the tests: straight to the walk)
 else if (PILOT) {                                     // the pilot: the visitor lights the lamps; nothing starts by itself
@@ -266,7 +226,7 @@ function handoff() {
   setTimeout(() => {
     for (const a of hoAnims.splice(0)) a.cancel();      // the page's own CSS holds the end state
     if (!stage) { stillWalk(); return; }
-    set('walk'); markMode(START); lampsShow();
+    set('walk'); markMode(START);
     if (PILOT) beginWalk();
     else {
       stage.setSettle(1); introUntil = performance.now() + 4200;
@@ -334,7 +294,6 @@ function layout() {
   const sc = $('#stage').getBoundingClientRect();
   stage.setBand(matchMedia('(orientation: landscape)').matches ? { top: Math.min(r.top, sc.top) + 4, bottom: Math.max(r.bottom, sc.bottom) - 4, left: r.left, right: r.right }
                                                                 : { top: tt.bottom, bottom: ui.top, left: 0, right: innerWidth });
-  placeLamps();
 }
 // the 3D's mask edges, set only when they move (each change restyles the page and redraws the mask)
 const fades = {};
