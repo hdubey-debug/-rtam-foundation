@@ -531,7 +531,7 @@ function stillWalk() {
 // ---------------------------------------------------------------- address, contact, sharing
 async function share() {
   const url = location.origin + location.pathname.replace(/[^/]*$/, '');
-  const text = 'पहाड़ीखेड़ा में बन रहा है · ऋतम्भरेश्वर मंदिर';
+  const text = 'ग्राम पहाड़ीखेड़ा, जबलपुर में निर्माणाधीन · ऋतम्भरेश्वर मंदिर';
   try { if (navigator.share) { await navigator.share({ title: 'ऋतम्भरेश्वर मंदिर', text, url }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
   const a = document.createElement('a');                 // WhatsApp in a new tab: the visit stays where it was
   a.href = 'https://wa.me/?text=' + encodeURIComponent(text + '\n' + url); a.target = '_blank'; a.rel = 'noopener';

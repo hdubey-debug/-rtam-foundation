@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#141414">
 <title>ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir</title>
-<meta name="description" content="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda. ऋतम्भरेश्वर मंदिर, ṚTAM Foundation, Jabalpur.">
+<meta name="description" content="ग्राम पहाड़ीखेड़ा, जबलपुर में निर्माणाधीन · Under construction at Pahadi Kheda, Jabalpur. ऋतम्भरेश्वर मंदिर, ṚTAM Foundation.">
 <meta property="og:title" content="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir">
-<meta property="og:description" content="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
+<meta property="og:description" content="ग्राम पहाड़ीखेड़ा, जबलपुर में निर्माणाधीन · Under construction at Pahadi Kheda, Jabalpur">
 <meta property="og:image" content="https://rtamfoundation.org/3d/media/share.jpg">
 <meta property="og:url" content="https://rtamfoundation.org/3d/">
 <meta property="og:type" content="website">
@@ -92,7 +92,7 @@ img, video { display: block }
 #title { position: absolute; left: 0; right: 0; top: calc(var(--st) + 5vh); display: flex; flex-direction: column; align-items: center; gap: 1.2vh;
   pointer-events: none; transform-origin: 50% 0; transition: transform .9s var(--ease), opacity .6s }
 #title .lotus { display: none }
-#title .kicker { width: min(46vw, 260px); transition: opacity .6s }
+#title .kicker { width: min(71.45vw, 404px); transition: opacity .6s }   /* (×1.553 since 26 Oct: the formal kicker is longer; its letters as before) */
 #title .lockup { width: min(84vw, 470px); margin-top: -1vh }
 #title picture { display: contents } #title source { display: none }   /* (the lockup's own box in the column, as before) */
 /* upright: the upright poster at the screen's width (Harsh, 23 Oct: "make sure the dimensions and size and reflection
@@ -100,12 +100,12 @@ img, video { display: block }
    the stone 140 tall): the kicker and the name where the poster has them, placed by their ink, in
    the A2's own unit (--u: its width / 100, and --y0: its top, both set by app.js, which places the picture under them
    the same way); the name is the lockup cut to its letters (lockup-tight.svg); sideways it stays as the A3 board.
-   Since 26 Oct the name is 12 % larger on the poster and here (Harsh: "we still have a little bit of space up top.
+   Since 26 Oct the kicker is formal (ग्राम पहाड़ीखेड़ा, जबलपुर में निर्माणाधीन) and the name is 12 % larger on the poster and here (Harsh: "we still have a little bit of space up top.
    Maybe we could increase the font"; he took the recommendation), grown upward: its bottom and the stone stay where
    they were, the kicker moves up with it (rtam-posters final.a2b, NAME_K) */
 @media (orientation: portrait) {
   #title { top: var(--y0, 0px); height: calc(var(--u, 1vw) * 50.5); display: block }
-  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 17.07); top: calc(var(--u, 1vw) * 4.26); width: calc(var(--u, 1vw) * 34.08) }
+  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 26.58); top: calc(var(--u, 1vw) * 4.10); width: calc(var(--u, 1vw) * 53.13) }
   #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 40.63); top: calc(var(--u, 1vw) * 13.09); width: calc(var(--u, 1vw) * 81.54); margin: 0 }
 }
 
@@ -231,7 +231,7 @@ img, video { display: block }
   #frame { width: min(100cqw, 133.333cqh, var(--cap, 1000px)) }   /* (--cap: app.js, by the screen's own pixels) */
   #title { gap: 1.2vh; width: 100% }
   #title .lotus { display: block; width: min(7vh, 48px) }
-  #title .kicker { width: min(var(--bw) * .168, 24.8vh) }    /* .8 of the A3's: the final wide poster's kicker (8.5, was 10.6) */
+  #title .kicker { width: min(var(--bw) * .261, 38.52vh) }   /* .8 of the A3's: the final wide poster's kicker (8.5, was 10.6); ×1.553 for the formal line (26 Oct) */
   #title .lockup { width: min(var(--bw) * .25, 40vh); margin-top: 0 }
   #ui { gap: 1.2vh; width: 100% }
   #caption { min-height: 2.6em; justify-content: center; padding-inline: 0 }     /* a steady height: the controls never jump */
@@ -357,7 +357,7 @@ img, video { display: block }
   <div id="side">
   <header id="title">
     <img class="lotus" src="img/lotus.svg" alt="">
-    <img class="kicker" src="img/kicker.svg" alt="पहाड़ीखेड़ा में बन रहा है · Now rising at Pahadi Kheda">
+    <img class="kicker" src="img/kicker.svg" alt="ग्राम पहाड़ीखेड़ा, जबलपुर में निर्माणाधीन · Under construction at Pahadi Kheda, Jabalpur">
     <picture><source media="(orientation: portrait)" srcset="img/lockup-tight.svg"><img class="lockup" src="img/lockup.svg" alt="ऋतम्भरेश्वर मंदिर · Rtambhareshvara Mandir"></picture>
   </header>
   <div id="ui">
