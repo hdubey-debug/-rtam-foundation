@@ -41,11 +41,12 @@ function open() {
   box.innerHTML = `<div class="lt"><canvas></canvas>${mark}</div>`;
   const lt = box.firstChild, halo = lt.firstChild, ck = lt.lastChild;
   // in the centre of what is visible, upright or sideways (Harsh, 22 Oct: "the icon has to be centered"; a phone's fixed
-  // layer can be taller than the screen while the browser's bars show); a third of the shorter side, 112-160 px
+  // layer can be taller than the screen while the browser's bars show); a third of the shorter side, 112-160 px (on a
+  // screen taller than a laptop's, up to half again)
   let size = 0;
   const place = () => {
     const vv = window.visualViewport, W = vv ? vv.width : innerWidth, H = vv ? vv.height : innerHeight;
-    const s = Math.round(Math.min(160, Math.max(112, Math.min(W, H) * .34)));
+    const s = Math.round(Math.min(160 * Math.min(1.6, Math.max(1, H / 945)), Math.max(112, Math.min(W, H) * .34)));   // (a tall screen: larger, as its column's words)
     box.style.setProperty('--x', Math.round((vv ? vv.offsetLeft : 0) + W / 2) + 'px'); box.style.setProperty('--y', Math.round((vv ? vv.offsetTop : 0) + H / 2) + 'px');
     box.style.setProperty('--s', s + 'px');
     if (s !== size) { size = s; drawHalo(halo, s); }

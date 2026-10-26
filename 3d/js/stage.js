@@ -9,7 +9,7 @@ import { MODES, wrap, orbitView, worldHull, fitCentring, centreAt, walkExtents, 
 
 export { MODES };
 const GROUND = new THREE.Color(0x141414);
-const TINT = { temple: [.99, .915, .832], nandi: [.937, .883, .829] };   // the film's stone ÷ the model's (red, green, blue)
+const TINT = { temple: [1.053, 0.973, 0.89], nandi: [1.194, 1.123, 1.07] };   // the film's stone ÷ the model's (red, green, blue)
 // the floor's reflection, as the A2 poster's (reflect.py; final_light.SUBJECTS[..]['refl']['a2']): from .65 of the stone at
 // its base, falling as (1 - depth/len)^1.3 over .235 (.238) of the stone's height; and the floor's pool of ground light,
 // .22 of the stone's colour falling as (1 - depth/pool)^2 over 10 of the A2's units. World units, at the film's camera
@@ -37,7 +37,8 @@ export class Stage {
     this.zoom = 1; this.anim = null;
     // the light on the stone (stone: 1 lit by its floods, 0 only its own lamps, as the film's lamps-only frame) and an
     // overall exposure: shared by every material, so the hand-over can bring the stone back by light
-    this.u = { stone: { value: 1 }, exposure: { value: 1 }, tint: {} }; this.tweens = {};
+    // and its lamps (1 lit, 0 at rest: the walk's lamp, app.js): the lit jali and the door go dark with them
+    this.u = { stone: { value: 1 }, exposure: { value: 1 }, lamps: { value: 1 }, tint: {} }; this.tweens = {};
     // each subject's stone in the film's own colour: the baked models are paler and cooler than the film's last frame,
     // the poster's look (mean ratios over the stone both draw at the hand-over, 23 Oct 2026), so a change from the
     // picture to the 3D showed as a change of stone; warmed alike, only the light and the detail change hands
@@ -80,22 +81,24 @@ export class Stage {
     // the stone's light: at uStone 0 only the texture's lamps remain (its brightest, warm pixels: the lit jali, the door),
     // as in the film's lamps-only frame; the stone returns as uStone rises. uExposure dims the whole. Both go to the
     // page's own ground (#141414), as a picture fading on it does: unlit stone is never a black shape on the ground.
-    const light = 'vec3 lit = gl_FragColor.rgb * uTint, g = vec3(20.0 / 255.0); float lum = dot(lit, vec3(.2126, .7152, .0722));\n' +
-      'gl_FragColor.rgb = mix(g, mix(mix(g, lit, smoothstep(.62, .86, lum)), lit, uStone), uExposure);';
+    // uLamps 0 rests the lamps: the same bright warm pixels go to the dark of the stone round them
+    const light = 'vec3 lit = gl_FragColor.rgb * uTint, g = vec3(20.0 / 255.0); float lum = dot(lit, vec3(.2126, .7152, .0722)), lamp = smoothstep(.62, .86, lum);\n' +
+      'lit = mix(lit, mix(g, lit, .2), lamp * (1.0 - uLamps));\n' +
+      'gl_FragColor.rgb = mix(g, mix(mix(g, lit, lamp), lit, uStone), uExposure);';
     m.onBeforeCompile = (sh) => {
-      sh.uniforms.uStone = this.u.stone; sh.uniforms.uExposure = this.u.exposure; sh.uniforms.uTint = this.u.tint[name];
+      sh.uniforms.uStone = this.u.stone; sh.uniforms.uExposure = this.u.exposure; sh.uniforms.uLamps = this.u.lamps; sh.uniforms.uTint = this.u.tint[name];
       if (mirror) {
         // the reflection: the same picture mirrored on the polished floor, as the A2 poster's (REFL)
         sh.uniforms.uGround = { value: new THREE.Vector3(20 / 255, 20 / 255, 20 / 255) }; sh.uniforms.uK = { value: .65 };
         sh.uniforms.uLen = { value: REFL[name].len }; sh.uniforms.uPool = { value: REFL[name].pool };
         sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vWY;')
           .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWY = (modelMatrix * vec4(transformed, 1.0)).y;');
-        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen; uniform float uPool; uniform float uStone; uniform float uExposure; uniform vec3 uTint;')
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vWY;\nuniform vec3 uGround; uniform float uK; uniform float uLen; uniform float uPool; uniform float uStone; uniform float uExposure; uniform float uLamps; uniform vec3 uTint;')
           .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light + '\nfloat d = max(0.0, -vWY), k = uK * pow(clamp(1.0 - d / uLen, 0.0, 1.0), 1.3);\n' +
             'vec3 c = gl_FragColor.rgb, lin = pow(mix(uGround, c, k), vec3(2.2)) + .22 * pow(clamp(1.0 - d / uPool, 0.0, 1.0), 2.0) * pow(c, vec3(2.2));\n' +
             'gl_FragColor.rgb = pow(lin, vec3(1.0 / 2.2));');
       } else {
-        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uStone; uniform float uExposure; uniform vec3 uTint;')
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uStone; uniform float uExposure; uniform float uLamps; uniform vec3 uTint;')
           .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n' + light);
       }
     };
@@ -169,7 +172,7 @@ export class Stage {
     const sd = new THREE.Sprite(doorLight.clone()); sd.position.set(dx, dy, dz + .012); sd.scale.set(.02, dh * 1.25, 1); this.groups.temple.add(sd);
     this.faced.push({ sp: sd, n: [0, 1], of: 1 });                // (the door faces +z, as the windows their normals)
     const [lx, ly, lz, ls] = L.nandi.lamp;
-    const sl = new THREE.Sprite(lamp); sl.position.set(lx, ly, lz); sl.scale.set(ls, ls * .55, 1); this.groups.nandi.add(sl);
+    const sl = new THREE.Sprite(lamp.clone()); sl.position.set(lx, ly, lz); sl.scale.set(ls, ls * .55, 1); this.groups.nandi.add(sl); this.nandiLamp = sl;
     this.glows = [win, doorLight, lamp]; this.dirty = true;        // (the masters: the page brightens these)
   }
 
@@ -213,6 +216,8 @@ export class Stage {
   settleTo(k, ms) { this.tweenTo('settle', k, ms); }
   // the stone's light and the exposure, now or over ms (the hand-over: the stone returns by light)
   setLight(stone, exposure = this.u.exposure.value) { delete this.tweens.stone; delete this.tweens.exposure; this.u.stone.value = stone; this.u.exposure.value = exposure; this.dirty = true; }
+  // the lamps at rest (0) or lit (1), over ms
+  setLamps(on, ms) { this.tweenTo('lamps', on ? 1 : 0, ms); }
   tweenTo(name, to, ms) { this.tweens[name] = { from: this.value(name), to, dur: Math.max(.001, ms / 1000), t0: null }; this.request(); }
   value(name) { return name === 'settle' ? this.settle : this.u[name].value; }
   get settleTween() { return this.tweens.settle || null; }
@@ -357,8 +362,9 @@ export class Stage {
     // the glows by their windows' facing: full face on, gone by edge on (1 face on, 0 edge on, below 0 turned away)
     if (this.faced && !bare) for (const g of this.faced) {
       const p = g.sp.position, ex = cam.position.x - p.x, ez = cam.position.z - p.z, f = (g.n[0] * ex + g.n[1] * ez) / (Math.hypot(ex, ez) || 1);
-      g.sp.material.opacity = this.glows[g.of].opacity * smoothstep((f - .08) / .32);
+      g.sp.material.opacity = this.glows[g.of].opacity * this.u.lamps.value * smoothstep((f - .08) / .32);
     }
+    if (this.nandiLamp) this.nandiLamp.material.opacity = this.glows[2].opacity * this.u.lamps.value;
   }
 
   setFrame(rect) { this.frame = rect; this.dirty = true; this.fitWalk(); }
