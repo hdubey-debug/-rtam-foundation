@@ -100,11 +100,14 @@ img, video { display: block }
    and look is exactly like" the poster people scan; the final 1B since 25 Oct: the name and the kicker at .85 of the A2's,
    the stone 140 tall): the kicker and the name where the poster has them, placed by their ink, in
    the A2's own unit (--u: its width / 100, and --y0: its top, both set by app.js, which places the picture under them
-   the same way); the name is the lockup cut to its letters (lockup-tight.svg); sideways it stays as the A3 board */
+   the same way); the name is the lockup cut to its letters (lockup-tight.svg); sideways it stays as the A3 board.
+   Since 26 Oct the name is 12 % larger on the poster and here (Harsh: "we still have a little bit of space up top.
+   Maybe we could increase the font"; he took the recommendation), grown upward: its bottom and the stone stay where
+   they were, the kicker moves up with it (rtam-posters final.a2b, NAME_K) */
 @media (orientation: portrait) {
   #title { top: var(--y0, 0px); height: calc(var(--u, 1vw) * 50.5); display: block }
-  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 17.07); top: calc(var(--u, 1vw) * 7.97); width: calc(var(--u, 1vw) * 34.08) }
-  #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 36.3); top: calc(var(--u, 1vw) * 16.89); width: calc(var(--u, 1vw) * 72.78); margin: 0 }
+  #title .kicker { position: absolute; left: calc(50% - var(--u, 1vw) * 17.07); top: calc(var(--u, 1vw) * 4.26); width: calc(var(--u, 1vw) * 34.08) }
+  #title .lockup { position: absolute; left: calc(50% - var(--u, 1vw) * 40.63); top: calc(var(--u, 1vw) * 13.09); width: calc(var(--u, 1vw) * 81.54); margin: 0 }
 }
 
 #side { display: contents }
@@ -209,6 +212,8 @@ img, video { display: block }
 #visit .close { position: absolute; top: 14px; right: 10px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px }
 #visit .close > span:first-child { font: 400 14px/1 var(--deva) } #visit .close .en { font-size: 7px; letter-spacing: .2em; color: var(--quiet) }
 #visit .note { font: 400 13px/1.4 var(--deva); color: var(--quiet) } #visit .note .en { font-size: 8px; letter-spacing: .2em; margin-left: 8px }
+/* a short phone upright: the sheet whole, with no scrolling, since it holds two numbers and WhatsApp (26 Oct) */
+@media (orientation: portrait) and (max-height: 700px) { #visit { gap: 12px; padding-top: 20px } #visit li > a, #visit li > button { padding-block: 11px } }
 
 /* sideways: the A3 board (the name column left, the picture right) */
 @media (orientation: landscape) {
@@ -388,6 +393,7 @@ img, video { display: block }
       <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Pahadi%20Kheda%2C%20Maneri%20Road%2C%20Barela%2C%20Jabalpur%2C%20Madhya%20Pradesh%20483001" target="_blank" rel="noopener">रास्ता देखें<span class="en">Directions ↗</span></a></li>
       <li><a href="tel:+919329240069"><span>मो. 93292 40069</span><span class="en">Call</span></a></li>
       <li><a href="tel:+919098225177"><span>मो. 90982 25177</span><span class="en">Call</span></a></li>
+      <li><a href="https://wa.me/919098225177" target="_blank" rel="noopener">व्हाट्सऐप पर लिखें<span class="en">WhatsApp ↗</span></a></li>
       <li><button type="button" data-act="share">भेजें<span class="en">Share</span></button></li>
     </ul>
   </section>
